@@ -1,7 +1,6 @@
 package com.dedaulus.cinematty;
 
 import android.app.Application;
-import android.content.ComponentCallbacks;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
@@ -9,8 +8,6 @@ import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.ScheduleReceiver;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
-
-import java.util.*;
 
 /*
  * User: Dedaulus

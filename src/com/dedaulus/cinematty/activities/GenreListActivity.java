@@ -14,7 +14,6 @@ import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * User: Dedaulus

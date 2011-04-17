@@ -7,9 +7,8 @@ import com.dedaulus.cinematty.framework.MovieGenre;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.net.*;
-import java.util.List;
-import java.util.NavigableSet;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * User: Dedaulus

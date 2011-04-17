@@ -3,7 +3,9 @@ package com.dedaulus.cinematty.framework;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * User: Dedaulus
