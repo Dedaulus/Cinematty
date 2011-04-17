@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <TextView
+        android:id="@+id/movie_label_in_actor_list"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="30dp"
+        android:textColor="#ffffff"/>
+
+    <ListView
+        android:id="@+id/actor_list"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/movie_label_in_actor_list"/>
+
+</RelativeLayout>

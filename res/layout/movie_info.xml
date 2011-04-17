@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:id="@+id/advanced_movie_panel"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/show_schedules_button"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/look_for_all_schedule">
+        </Button>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_above="@id/advanced_movie_panel">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/movie_caption"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:textSize="26dp"
+                android:paddingBottom="6dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_height="2dp"
+                android:layout_width="fill_parent"
+                android:background="#c0c0c0"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/schedule_enum_for_one_cinema"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:padding="4dp"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_height="2dp"
+                android:layout_width="fill_parent"
+                android:background="#c0c0c0"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/movie_length"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:padding="4dp"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_height="2dp"
+                android:layout_width="fill_parent"
+                android:background="#c0c0c0"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/movie_genre"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:padding="4dp"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_height="2dp"
+                android:layout_width="fill_parent"
+                android:background="#c0c0c0"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/movie_actors"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:padding="4dp"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+            <View
+                android:layout_height="2dp"
+                android:layout_width="fill_parent"
+                android:background="#c0c0c0"
+                android:paddingBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/movie_description"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:padding="4dp"
+                android:textSize="20dp"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/cinemas_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cinemas_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/movies_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/movies_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/actors_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/actors_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/genres_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genres_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+
+        <LinearLayout
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/cinema_caption_panel"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingRight="6dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/cinema_caption"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textSize="26dp"
+                    android:textColor="#000000"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="6dp"
+                    android:background="#c0c0c0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cinema_address_panel"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:onClick="onAddressClick">
+
+                <TextView
+                    android:id="@+id/cinema_address"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textSize="22dp"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/cinema_metro"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textSize="18dp"
+                    android:textColor="#000000"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="6dp"
+                    android:background="#c0c0c0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cinema_phone_panel"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:onClick="onPhoneClick">
+
+                <TextView
+                    android:id="@+id/cinema_phone"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textSize="22dp"
+                    android:textColor="#000000"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="6dp"
+                    android:background="#c0c0c0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cinema_url_panel"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:onClick="onUrlClick">
+
+                <TextView
+                    android:id="@+id/cinema_url"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="18dp"
+                    android:textColor="#0000ff"/>
+
+                <View
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="6dp"
+                    android:background="#c0c0c0"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

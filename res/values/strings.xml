@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cinematty</string>
+    <string name="cinemas_caption">Кинотеатры</string>
+    <string name="movies_caption">Фильмы</string>
+    <string name="actors_caption">Актёры</string>
+    <string name="genres_caption">Жанры</string>
+    <string name="wait_dialog_caption">Синхронизация</string>
+    <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
+
+    <string name="movie_length">Продолжительность</string>
+    <string name="genre">Жанр</string>
+    <string name="actors">Актёры</string>
+    <string name="minutes">минут(ы)</string>
+    <string name="unknown">неизвестно</string>
+    <string name="look_for_schedule">Посмотреть сеансы</string>
+    <string name="look_for_all_schedule">Посмотреть все сеансы</string>
+    <string name="schedule_enum">Сеансы</string>
+
+    <string name="metro_near">Метро рядом</string>
+
+    <string name="default_url">http://dl.dropbox.com/u/12049381/schedule.xml</string>
+</resources>
