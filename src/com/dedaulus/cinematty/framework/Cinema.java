@@ -1,7 +1,6 @@
 package com.dedaulus.cinematty.framework;
 
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.*;
 
