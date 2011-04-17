@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// this is commit test!!!
-
 /**
  * User: Dedaulus
  * Date: 13.03.11
