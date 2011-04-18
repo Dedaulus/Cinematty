@@ -55,8 +55,7 @@ public class CinemaActivity extends Activity {
             }
 
             view.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             view.setVisibility(View.GONE);
         }
     }
@@ -78,10 +77,16 @@ public class CinemaActivity extends Activity {
         View view = findViewById(R.id.cinema_url_panel);
         if (mCurrentCinema.getUrl() != null) {
             StringBuffer buf = new StringBuffer(mCurrentCinema.getUrl());
+
+            if (mCurrentCinema.getUrl().startsWith("http://")) {
+                buf.delete(0, "http://".length());
+            }
+
             int slashPos = buf.indexOf("/");
             if (slashPos != -1) {
                 buf.delete(slashPos, buf.length());
             }
+
             SpannableString str = new SpannableString(buf.toString());
             str.setSpan(new UnderlineSpan(), 0, buf.length(), 0);
 
@@ -89,8 +94,7 @@ public class CinemaActivity extends Activity {
             url.setText(str);
 
             view.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             view.setVisibility(View.GONE);
         }
     }
@@ -109,7 +113,7 @@ public class CinemaActivity extends Activity {
 
     public void onUrlClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mCurrentCinema.getPlainUrl()));
+        intent.setData(Uri.parse(mCurrentCinema.getUrl()));
         startActivity(intent);
     }
 }
