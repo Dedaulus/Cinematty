@@ -53,26 +53,35 @@ public class Cinema implements Comparable<Cinema> {
     }
 
     public String getPlainPhone() {
-        StringBuffer plain = new StringBuffer(mPhone.length());
-        for (char c : mPhone.toCharArray()) {
-            if (c != '(' && c!= ')' && c != ' ') {
-                plain.append(c);
+        if (mPhone != null) {
+            StringBuffer plain = new StringBuffer(mPhone.length());
+            for (char c : mPhone.toCharArray()) {
+                if (c != '(' && c!= ')' && c != ' ') {
+                    plain.append(c);
+                }
             }
+
+            return plain.toString();
         }
 
-        return plain.toString();
+        return null;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        if (url != null) {
+            if (url.startsWith("http://")) {
+                mUrl = url;
+            }
+            else {
+                mUrl = "http://" + url;
+            }
+        } else {
+            mUrl = null;
+        }
     }
 
     public String getUrl() {
         return mUrl;
-    }
-
-    public String getPlainUrl() {
-        return "http://" + mUrl;
     }
 
     public void addShowTime(Movie movie, List<String> times) {
