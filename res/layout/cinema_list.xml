@@ -18,7 +18,7 @@
         android:layout_width="fill_parent"
         android:layout_below="@id/movie_label_in_cinema_list"
         android:divider="#c0c0c0"
-        android:dividerHeight="1dp"
+        android:dividerHeight="0dp"
         android:cacheColorHint="#ffffff"/>
 
 </RelativeLayout>
