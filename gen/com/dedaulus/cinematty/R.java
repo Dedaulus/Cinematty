@@ -13,6 +13,7 @@ public final class R {
     public static final class drawable {
         public static final int icon=0x7f020000;
         public static final int list_divider=0x7f020001;
+        public static final int movie_data_divider=0x7f020002;
     }
     public static final class id {
         public static final int actor_item_in_list=0x7f050000;
@@ -20,7 +21,7 @@ public final class R {
         public static final int actors_label=0x7f050019;
         public static final int advanced_data_in_cinema_list=0x7f05000e;
         public static final int advanced_movie_panel=0x7f05001b;
-        public static final int caption_label_in_movie_list=0x7f050025;
+        public static final int caption_label_in_movie_list=0x7f05002a;
         public static final int cinema_address=0x7f050006;
         public static final int cinema_address_panel=0x7f050005;
         public static final int cinema_caption=0x7f050004;
@@ -39,19 +40,24 @@ public final class R {
         public static final int genre_item_in_list=0x7f050014;
         public static final int genre_list=0x7f050016;
         public static final int genres_label=0x7f05001a;
-        public static final int movie_actors=0x7f050021;
+        public static final int movie_actors=0x7f050025;
+        public static final int movie_actors_panel=0x7f050024;
         public static final int movie_caption=0x7f05001d;
-        public static final int movie_description=0x7f050022;
-        public static final int movie_genre=0x7f050020;
-        public static final int movie_genre_in_list=0x7f050024;
-        public static final int movie_item_in_list=0x7f050023;
+        public static final int movie_description=0x7f050027;
+        public static final int movie_description_panel=0x7f050026;
+        public static final int movie_genre=0x7f050023;
+        public static final int movie_genre_in_list=0x7f050029;
+        public static final int movie_genre_panel=0x7f050022;
+        public static final int movie_item_in_list=0x7f050028;
         public static final int movie_label_in_actor_list=0x7f050001;
         public static final int movie_label_in_cinema_list=0x7f050012;
         public static final int movie_label_in_genre_list=0x7f050015;
-        public static final int movie_length=0x7f05001f;
-        public static final int movie_list=0x7f050026;
+        public static final int movie_length=0x7f050021;
+        public static final int movie_length_panel=0x7f050020;
+        public static final int movie_list=0x7f05002b;
+        public static final int movie_schedule_enum_panel=0x7f05001e;
         public static final int movies_label=0x7f050018;
-        public static final int schedule_enum_for_one_cinema=0x7f05001e;
+        public static final int schedule_enum_for_one_cinema=0x7f05001f;
         public static final int schedule_enum_in_schedule_list=0x7f050011;
         public static final int show_schedules_button=0x7f05001c;
     }
@@ -74,17 +80,18 @@ public final class R {
         public static final int actors_caption=0x7f040003;
         public static final int app_name=0x7f040000;
         public static final int cinemas_caption=0x7f040001;
-        public static final int default_url=0x7f040010;
+        public static final int default_url=0x7f040011;
         public static final int genre=0x7f040008;
         public static final int genres_caption=0x7f040004;
-        public static final int look_for_all_schedule=0x7f04000d;
-        public static final int look_for_schedule=0x7f04000c;
-        public static final int metro_near=0x7f04000f;
-        public static final int minutes=0x7f04000a;
+        public static final int look_for_all_schedule=0x7f04000e;
+        public static final int look_for_schedule=0x7f04000d;
+        public static final int metro_near=0x7f040010;
+        public static final int minutes=0x7f04000b;
+        public static final int movie_description=0x7f04000a;
         public static final int movie_length=0x7f040007;
         public static final int movies_caption=0x7f040002;
-        public static final int schedule_enum=0x7f04000e;
-        public static final int unknown=0x7f04000b;
+        public static final int schedule_enum=0x7f04000f;
+        public static final int unknown=0x7f04000c;
         public static final int wait_dialog_caption=0x7f040005;
         public static final int wait_dialog_text=0x7f040006;
     }
