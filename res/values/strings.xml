@@ -11,13 +11,14 @@
     <string name="movie_length">Продолжительность</string>
     <string name="genre">Жанр</string>
     <string name="actors">Актёры</string>
+    <string name="movie_description">Описание</string>
     <string name="minutes">минут(ы)</string>
     <string name="unknown">неизвестно</string>
     <string name="look_for_schedule">Посмотреть сеансы</string>
     <string name="look_for_all_schedule">Посмотреть все сеансы</string>
     <string name="schedule_enum">Сеансы</string>
 
-    <string name="metro_near">Метро рядом</string>
+    <string name="metro_near">Метро</string>
 
     <string name="default_url">http://dl.dropbox.com/u/12049381/schedule.xml</string>
 </resources>
