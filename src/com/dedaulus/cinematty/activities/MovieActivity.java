@@ -95,9 +95,9 @@ public class MovieActivity extends Activity {
         if (mApp.getCurrentMovie().getGenres().size() != 0) {
             StringBuilder genres = new StringBuilder();
             for (MovieGenre genre : mApp.getCurrentMovie().getGenres()) {
-                genres.append(genre.getGenre() + ", ");
+                genres.append(genre.getGenre() + "/");
             }
-            genres.delete(genres.length() - 2, genres.length() - 1);
+            genres.delete(genres.length() - 1, genres.length());
             text.setText(genres.toString());
 
             findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
