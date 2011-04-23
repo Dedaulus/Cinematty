@@ -19,6 +19,7 @@ public class Cinema implements Comparable<Cinema> {
     private String mPhone;
     private String mUrl;
     private Map<Movie, List<String>> mShowTimes = new HashMap<Movie, List<String>>();
+    private long mFavValue = 0;
 
     public Cinema(String caption) {
         mCaption = caption;
@@ -99,6 +100,22 @@ public class Cinema implements Comparable<Cinema> {
                 return o1.compareTo(o2);
             }
         });
+    }
+
+    public void setFavourite(boolean addToFavourite) {
+        if (addToFavourite) {
+            mFavValue = System.currentTimeMillis();
+        } else {
+            mFavValue = 0;
+        }
+    }
+
+    public void setFavourite(long favValue) {
+        mFavValue = favValue;
+    }
+
+    public long getFavourite() {
+        return mFavValue;
     }
 
     @Override
