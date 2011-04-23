@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
@@ -43,11 +44,20 @@ public class CinemaItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
+        Cinema cinema = mCinemas.get(position);
+
+        ImageView image = (ImageView)view.findViewById(R.id.fav_cinema_in_cinema_list);
+        if (cinema.getFavourite() > 0) {
+            image.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            image.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+
         TextView text = (TextView)view.findViewById(R.id.cinema_item_in_list);
-        text.setText(mCinemas.get(position).getCaption());
+        text.setText(cinema.getCaption());
 
         text = (TextView)view.findViewById(R.id.advanced_data_in_cinema_list);
-        String address = mCinemas.get(position).getAddress();
+        String address = cinema.getAddress();
         if (address != null) {
             text.setText(address);
             text.setVisibility(View.VISIBLE);

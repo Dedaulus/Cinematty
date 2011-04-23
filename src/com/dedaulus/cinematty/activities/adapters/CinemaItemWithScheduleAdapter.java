@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
@@ -47,6 +48,13 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter {
 
     private void bindView(int position, View view) {
         Cinema cinema = mCinemas.get(position);
+
+        ImageView image = (ImageView)view.findViewById(R.id.fav_cinema_in_schedule_list);
+        if (cinema.getFavourite() > 0) {
+            image.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            image.setImageResource(android.R.drawable.btn_star_big_off);
+        }
 
         TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_schedule_list);
         text.setText(cinema.getCaption());
