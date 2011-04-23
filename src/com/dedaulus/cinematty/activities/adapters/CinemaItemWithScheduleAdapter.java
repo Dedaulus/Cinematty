@@ -11,6 +11,8 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ import java.util.List;
  * Date: 31.03.11
  * Time: 23:02
  */
-public class CinemaItemWithScheduleAdapter extends BaseAdapter {
+public class CinemaItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Cinema> {
     private Context mContext;
     private List<Cinema> mCinemas;
     private Movie mCurrentMovie;
@@ -84,5 +86,10 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter {
         bindView(i, myView);
 
         return myView;
+    }
+
+    public void sortBy(Comparator<Cinema> cinemaComparator) {
+        Collections.sort(mCinemas, cinemaComparator);
+        notifyDataSetChanged();
     }
 }

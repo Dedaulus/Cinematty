@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
  * Date: 14.03.11
  * Time: 22:11
  */
-public class CinemaItemAdapter extends BaseAdapter {
+public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Cinema> {
     private Context mContext;
     private List<Cinema> mCinemas;
 
@@ -80,5 +82,10 @@ public class CinemaItemAdapter extends BaseAdapter {
         bindView(i, myView);
 
         return myView;
+    }
+
+    public void sortBy(Comparator<Cinema> cinemaComparator) {
+        Collections.sort(mCinemas, cinemaComparator);
+        notifyDataSetChanged();
     }
 }

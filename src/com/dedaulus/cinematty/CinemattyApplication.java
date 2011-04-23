@@ -6,6 +6,7 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.ScheduleReceiver;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
@@ -28,7 +29,8 @@ public class CinemattyApplication extends Application {
     private MovieGenre mCurrentGenre;
 
     private static final String FAV_CINEMAS_FILE = "cinematty_fav_cinemas";
-    private static final String FAV_CINEMAS_PREFERENCE = "fav_cinemas";
+    private static final String PREFERENCES_FILE = "cinematty_preferences";
+    private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
 
     {
         mCinemas = new UniqueSortedList<Cinema>(new DefaultComparator<Cinema>());
@@ -120,5 +122,24 @@ public class CinemattyApplication extends Application {
     private Map<String, ?> getFavouriteCinemas() {
         SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE, MODE_PRIVATE);
         return preferences.getAll();
+    }
+
+    public void saveCinemasSortOrder(CinemaSortOrder sortOrder) {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREF_CINEMA_SORT_ORDER, sortOrder.ordinal());
+
+        editor.commit();
+    }
+
+    public CinemaSortOrder getCinemaSortOrder() {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        int order = preferences.getInt(PREF_CINEMA_SORT_ORDER, CinemaSortOrder.BY_CAPTION.ordinal());
+
+        for (CinemaSortOrder sortOrder : CinemaSortOrder.values()) {
+            if (sortOrder.ordinal() == order) return sortOrder;
+        }
+
+        return CinemaSortOrder.BY_CAPTION;
     }
 }
