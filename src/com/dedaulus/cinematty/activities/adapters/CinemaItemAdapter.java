@@ -48,14 +48,14 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     private void bindView(int position, View view) {
         Cinema cinema = mCinemas.get(position);
 
-        ImageView image = (ImageView)view.findViewById(R.id.fav_cinema_in_cinema_list);
+        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
             image.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
             image.setImageResource(android.R.drawable.btn_star_big_off);
         }
 
-        TextView text = (TextView)view.findViewById(R.id.cinema_item_in_list);
+        TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
         text.setText(cinema.getCaption());
 
         text = (TextView)view.findViewById(R.id.advanced_data_in_cinema_list);

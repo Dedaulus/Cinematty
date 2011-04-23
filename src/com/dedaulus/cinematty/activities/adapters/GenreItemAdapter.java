@@ -43,7 +43,7 @@ public class GenreItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
-        TextView text = (TextView)view.findViewById(R.id.genre_item_in_list);
+        TextView text = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
         text.setText(mGenres.get(position).getGenre());
     }
 

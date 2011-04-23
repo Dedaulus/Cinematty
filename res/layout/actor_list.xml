@@ -4,7 +4,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
     <TextView
-        android:id="@+id/movie_label_in_actor_list"
+        android:id="@+id/movie_caption_in_actor_list"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textSize="30dp"
@@ -14,6 +14,6 @@
         android:id="@+id/actor_list"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-        android:layout_below="@id/movie_label_in_actor_list"/>
+        android:layout_below="@id/movie_caption_in_actor_list"/>
 
 </RelativeLayout>

@@ -6,7 +6,7 @@
     android:background="#ffffff">
 
     <TextView
-        android:id="@+id/caption_label_in_movie_list"
+        android:id="@+id/cinema_caption_in_movie_list"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textSize="30dp"
@@ -17,7 +17,7 @@
         android:id="@+id/movie_list"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-        android:layout_below="@id/caption_label_in_movie_list"
+        android:layout_below="@id/cinema_caption_in_movie_list"
         android:divider="@drawable/list_divider"
         android:dividerHeight="1px"
         android:cacheColorHint="#ffffff"/>

@@ -29,7 +29,7 @@ public class ActorListActivity extends Activity {
 
         mApp = (CinemattyApplication)getApplication();
         Movie movie = mApp.getCurrentMovie();
-        TextView movieLabel = (TextView)findViewById(R.id.movie_label_in_actor_list);
+        TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
         if (movie == null) {

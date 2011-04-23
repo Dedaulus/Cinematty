@@ -44,10 +44,10 @@ public class MovieItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
-        TextView text = (TextView)view.findViewById(R.id.movie_item_in_list);
+        TextView text = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
         text.setText(mMovies.get(position).getCaption());
 
-        text = (TextView)view.findViewById(R.id.movie_genre_in_list);
+        text = (TextView)view.findViewById(R.id.movie_genre_in_movie_list);
         if (mMovies.get(position).getGenres().size() != 0) {
             StringBuilder genres = new StringBuilder();
             for (MovieGenre genre : mMovies.get(position).getGenres()) {

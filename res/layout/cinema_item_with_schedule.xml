@@ -6,7 +6,7 @@
     android:layout_width="fill_parent">
 
     <ImageView
-        android:id="@+id/fav_cinema_in_schedule_list"
+        android:id="@+id/fav_icon_in_schedule_list"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/fav_cinema_in_schedule_list">
+        android:layout_toRightOf="@id/fav_icon_in_schedule_list">
 
         <TextView
             android:id="@+id/cinema_caption_in_schedule_list"

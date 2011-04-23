@@ -37,7 +37,7 @@ public class MovieListActivity extends Activity {
         MovieActor actor = mApp.getCurrentActor();
         MovieGenre genre = mApp.getCurrentGenre();
 
-        TextView captionLabel = (TextView)findViewById(R.id.caption_label_in_movie_list);
+        TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
         if (cinema != null) {
@@ -79,7 +79,7 @@ public class MovieListActivity extends Activity {
     }
 
     private void onMovieItemClick(View view) {
-        TextView textView = (TextView)view.findViewById(R.id.movie_item_in_list);
+        TextView textView = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
         String caption = textView.getText().toString();
         int movieId = mScopeMovies.indexOf(new Movie(caption));
         if (movieId != -1) {

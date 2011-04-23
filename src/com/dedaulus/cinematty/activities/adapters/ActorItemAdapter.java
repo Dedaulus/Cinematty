@@ -43,7 +43,7 @@ public class ActorItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
-        TextView text = (TextView)view.findViewById(R.id.actor_item_in_list);
+        TextView text = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
         text.setText(mActors.get(position).getActor());
     }
 

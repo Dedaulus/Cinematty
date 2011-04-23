@@ -51,7 +51,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private void bindView(int position, View view) {
         Cinema cinema = mCinemas.get(position);
 
-        ImageView image = (ImageView)view.findViewById(R.id.fav_cinema_in_schedule_list);
+        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_schedule_list);
         if (cinema.getFavourite() > 0) {
             image.setImageResource(android.R.drawable.btn_star_big_on);
         } else {

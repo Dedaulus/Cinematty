@@ -38,7 +38,7 @@ public class CinemaListActivity extends Activity {
 
         mApp = (CinemattyApplication)getApplication();
         Movie movie = mApp.getCurrentMovie();
-        TextView movieLabel = (TextView)findViewById(R.id.movie_label_in_cinema_list);
+        TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
         if (movie == null) {
@@ -123,7 +123,7 @@ public class CinemaListActivity extends Activity {
     }
 
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.cinema_item_in_list);
+        TextView textView = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
         String caption = textView.getText().toString();
         int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
         if (cinemaId != -1) {
@@ -151,7 +151,7 @@ public class CinemaListActivity extends Activity {
         if (mApp.getCurrentMovie() != null) {
             caption = (TextView)parent.findViewById(R.id.cinema_caption_in_schedule_list);
         } else {
-            caption = (TextView)parent.findViewById(R.id.cinema_item_in_list);
+            caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
         }
 
         int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption.getText().toString()));

@@ -29,7 +29,7 @@ public class GenreListActivity extends Activity {
 
         mApp = (CinemattyApplication)getApplication();
         Movie movie = mApp.getCurrentMovie();
-        TextView movieLabel = (TextView)findViewById(R.id.movie_label_in_genre_list);
+        TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_genre_list);
         ListView list = (ListView)findViewById(R.id.genre_list);
 
         if (movie == null) {
