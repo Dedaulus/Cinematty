@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_cinema_list_sort"
+        android:title="@string/sort"
+        android:icon="@android:drawable/ic_menu_sort_by_size">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/submenu_sort_by_caption"
+                    android:title="@string/sort_by_caption"/>
+
+                <item
+                    android:id="@+id/submenu_sort_by_favourite"
+                    android:title="@string/sort_by_fav"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>
