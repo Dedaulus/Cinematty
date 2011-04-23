@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -56,6 +57,13 @@ public class CinemaListActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mApp.saveFavouriteCinemas();
+    }
+
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView textView = (TextView)view.findViewById(R.id.cinema_item_in_list);
         String caption = textView.getText().toString();
@@ -79,6 +87,26 @@ public class CinemaListActivity extends Activity {
     }
 
     public void onFavIconClick(View view) {
-        //((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
+        View parent = (View)view.getParent();
+        TextView caption = null;
+
+        if (mApp.getCurrentMovie() != null) {
+            caption = (TextView)parent.findViewById(R.id.cinema_caption_in_schedule_list);
+        } else {
+            caption = (TextView)parent.findViewById(R.id.cinema_item_in_list);
+        }
+
+        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption.getText().toString()));
+        if (cinemaId != -1) {
+            Cinema cinema = mApp.getCinemas().get(cinemaId);
+
+            if (cinema.getFavourite() > 0) {
+                cinema.setFavourite(false);
+                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+            } else {
+                cinema.setFavourite(true);
+                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
+            }
+        }
     }
 }
