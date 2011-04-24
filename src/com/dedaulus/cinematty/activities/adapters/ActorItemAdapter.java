@@ -52,8 +52,7 @@ public class ActorItemAdapter extends BaseAdapter {
 
         if (view != null) {
             myView = view;
-        }
-        else {
+        } else {
             myView = newView(mContext, viewGroup);
         }
 

@@ -63,8 +63,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         if (address != null) {
             text.setText(address);
             text.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             text.setVisibility(View.GONE);
         }
     }
@@ -74,8 +73,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
 
         if (view != null) {
             myView = view;
-        }
-        else {
+        } else {
             myView = newView(mContext, viewGroup);
         }
 

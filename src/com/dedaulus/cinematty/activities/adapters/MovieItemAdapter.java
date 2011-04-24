@@ -57,8 +57,7 @@ public class MovieItemAdapter extends BaseAdapter {
             text.setText(genres.toString());
 
             text.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             text.setVisibility(View.GONE);
         }
     }
@@ -68,8 +67,7 @@ public class MovieItemAdapter extends BaseAdapter {
 
         if (view != null) {
             myView = view;
-        }
-        else {
+        } else {
             myView = newView(mContext, viewGroup);
         }
 
