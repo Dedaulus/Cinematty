@@ -12,6 +12,7 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -72,13 +73,23 @@ public class MovieActivity extends Activity {
         TextView text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
 
         if (mApp.getCurrentCinema() != null) {
-            List<String> showTime = mApp.getCurrentCinema().getShowTimes().get(mApp.getCurrentMovie());
-            if (showTime != null) {
-                StringBuilder times = new StringBuilder();
-                for (String str : showTime) {
-                    times.append(str + ", ");
+            List<Calendar> showTimes = mApp.getCurrentCinema().getShowTimes().get(mApp.getCurrentMovie());
+            if (showTimes != null) {
+                StringBuffer times = new StringBuffer();
+                for (Calendar showTime : showTimes) {
+                    String hours = Integer.toString(showTime.get(Calendar.HOUR_OF_DAY));
+                    if (hours.length() == 1) {
+                        hours = "0" + hours;
+                    }
+
+                    String minutes = Integer.toString(showTime.get(Calendar.MINUTE));
+                    if (minutes.length() == 1) {
+                        minutes = "0" + minutes;
+                    }
+                    times.append(hours + ":" + minutes + ", ");
                 }
-                times.delete(times.length() - 2, times.length() - 1);
+
+                times.delete(times.length() - 2, times.length());
                 text.setText(times.toString());
             }
 

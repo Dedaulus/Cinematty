@@ -8,10 +8,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -176,15 +173,30 @@ public class ScheduleHandler extends DefaultHandler {
             StringTokenizer st = new StringTokenizer(time, ":");
             return Integer.parseInt(st.nextToken()) * 60 + Integer.parseInt(st.nextToken());
         }
-        else return Integer.getInteger(time);
+        else return Integer.parseInt(time);
     }
 
-    private List<String> parseTimes(String times) {
-        List<String> list = new ArrayList<String>();
+    private List<Calendar> parseTimes(String times) {
+        List<Calendar> list = new ArrayList<Calendar>();
         StringTokenizer st = new StringTokenizer(times, ";");
 
         while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
+            StringTokenizer hoursAndMinutes = new StringTokenizer(st.nextToken(), ":");
+
+            if (hoursAndMinutes.hasMoreTokens()) {
+                int hours = Integer.parseInt(hoursAndMinutes.nextToken());
+                int minutes = Integer.parseInt(hoursAndMinutes.nextToken());
+
+                Calendar now = Calendar.getInstance();
+                now.set(Calendar.HOUR_OF_DAY, hours);
+                now.set(Calendar.MINUTE, minutes);
+
+                if (hours < 5) { /* holly fuck!*/
+                    now.add(Calendar.DAY_OF_MONTH, 1);
+                }
+
+                list.add(now);
+            }
         }
 
         return list;

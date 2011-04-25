@@ -2,10 +2,7 @@ package com.dedaulus.cinematty.framework;
 
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -18,7 +15,7 @@ public class Cinema implements Comparable<Cinema> {
     private String mMetro;
     private String mPhone;
     private String mUrl;
-    private Map<Movie, List<String>> mShowTimes = new HashMap<Movie, List<String>>();
+    private Map<Movie, List<Calendar>> mShowTimes = new HashMap<Movie, List<Calendar>>();
     private long mFavValue = 0;
 
     public Cinema(String caption) {
@@ -85,12 +82,12 @@ public class Cinema implements Comparable<Cinema> {
         return mUrl;
     }
 
-    public void addShowTime(Movie movie, List<String> times) {
+    public void addShowTime(Movie movie, List<Calendar> times) {
         mShowTimes.put(movie, times);
         movie.addCinema(this);
     }
 
-    public Map<Movie, List<String>> getShowTimes() {
+    public Map<Movie, List<Calendar>> getShowTimes() {
         return mShowTimes;
     }
 
