@@ -9,8 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -75,22 +74,7 @@ public class MovieActivity extends Activity {
         if (mApp.getCurrentCinema() != null) {
             List<Calendar> showTimes = mApp.getCurrentCinema().getShowTimes().get(mApp.getCurrentMovie());
             if (showTimes != null) {
-                StringBuffer times = new StringBuffer();
-                for (Calendar showTime : showTimes) {
-                    String hours = Integer.toString(showTime.get(Calendar.HOUR_OF_DAY));
-                    if (hours.length() == 1) {
-                        hours = "0" + hours;
-                    }
-
-                    String minutes = Integer.toString(showTime.get(Calendar.MINUTE));
-                    if (minutes.length() == 1) {
-                        minutes = "0" + minutes;
-                    }
-                    times.append(hours + ":" + minutes + ", ");
-                }
-
-                times.delete(times.length() - 2, times.length());
-                text.setText(times.toString());
+                text.setText(DataConverter.showTimesToSpannableString(showTimes));
             }
 
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
@@ -113,12 +97,7 @@ public class MovieActivity extends Activity {
     private void setGenre() {
         TextView text = (TextView)findViewById(R.id.movie_genre);
         if (mApp.getCurrentMovie().getGenres().size() != 0) {
-            StringBuilder genres = new StringBuilder();
-            for (MovieGenre genre : mApp.getCurrentMovie().getGenres()) {
-                genres.append(genre.getGenre() + "/");
-            }
-            genres.delete(genres.length() - 1, genres.length());
-            text.setText(genres.toString());
+            text.setText(DataConverter.genresToString(mApp.getCurrentMovie().getGenres()));
 
             findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
         } else {
@@ -129,12 +108,7 @@ public class MovieActivity extends Activity {
     private void setActors() {
         TextView text = (TextView)findViewById(R.id.movie_actors);
         if (mApp.getCurrentMovie().getActors().size() != 0) {
-            StringBuilder actors = new StringBuilder();
-            for (MovieActor actor : mApp.getCurrentMovie().getActors()) {
-                actors.append(actor.getActor() + ", ");
-            }
-            actors.delete(actors.length() - 2, actors.length() - 1);
-            text.setText(actors.toString());
+            text.setText(DataConverter.actorsToString(mApp.getCurrentMovie().getActors()));
 
             findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
         } else {

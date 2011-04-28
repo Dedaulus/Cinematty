@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
+import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
@@ -49,23 +50,28 @@ public class MovieListActivity extends Activity {
                 }
             });
             mScopeMovies = cinema.getMovies();
-        }
-        else if (actor != null) {
-            captionLabel.setVisibility(View.VISIBLE);
-            captionLabel.setText(actor.getActor());
-            mScopeMovies = actor.getMovies();
-        }
-        else if (genre != null) {
-            captionLabel.setVisibility(View.VISIBLE);
-            captionLabel.setText(genre.getGenre());
-            mScopeMovies = genre.getMovies();
-        }
-        else {
-            captionLabel.setVisibility(View.GONE);
-            mScopeMovies = mApp.getMovies();
+
+            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), cinema));
+
+        } else {
+            if (actor != null) {
+                captionLabel.setVisibility(View.VISIBLE);
+                captionLabel.setText(actor.getActor());
+                mScopeMovies = actor.getMovies();
+            }
+            else if (genre != null) {
+                captionLabel.setVisibility(View.VISIBLE);
+                captionLabel.setText(genre.getGenre());
+                mScopeMovies = genre.getMovies();
+            }
+            else {
+                captionLabel.setVisibility(View.GONE);
+                mScopeMovies = mApp.getMovies();
+            }
+
+            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies)));
         }
 
-        list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies)));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(view);
