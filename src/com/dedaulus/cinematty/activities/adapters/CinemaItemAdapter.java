@@ -62,6 +62,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         String address = cinema.getAddress();
         if (address != null) {
             text.setText(address);
+
             text.setVisibility(View.VISIBLE);
         } else {
             text.setVisibility(View.GONE);
