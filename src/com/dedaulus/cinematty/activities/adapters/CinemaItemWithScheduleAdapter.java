@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -65,21 +66,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         text = (TextView)view.findViewById(R.id.schedule_enum_in_schedule_list);
         List<Calendar> showTimes = cinema.getShowTimes().get(mCurrentMovie);
         if (showTimes != null) {
-            StringBuffer times = new StringBuffer();
-            for (Calendar showTime : showTimes) {
-                String hours = Integer.toString(showTime.get(Calendar.HOUR_OF_DAY));
-                if (hours.length() == 1) {
-                    hours = "0" + hours;
-                }
-
-                String minutes = Integer.toString(showTime.get(Calendar.MINUTE));
-                if (minutes.length() == 1) {
-                    minutes = "0" + minutes;
-                }
-                times.append(hours + ":" + minutes + ", ");
-            }
-            times.delete(times.length() - 2, times.length());
-            text.setText(times.toString());
+            text.setText(DataConverter.showTimesToSpannableString(showTimes));
         }
     }
 
