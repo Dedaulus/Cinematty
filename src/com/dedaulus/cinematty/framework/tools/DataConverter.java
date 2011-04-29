@@ -1,8 +1,10 @@
 package com.dedaulus.cinematty.framework.tools;
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StrikethroughSpan;
+import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
@@ -117,5 +119,22 @@ public class DataConverter {
         }
 
         return new SpannableString("");
+    }
+
+    public static String timeToTimeLeft(Context context, Calendar time) {
+        int hour = time.get(Calendar.HOUR_OF_DAY);
+        int minute = time.get(Calendar.MINUTE);
+
+        StringBuffer buffer = new StringBuffer();
+        if (minute > 0) {
+            buffer.append(" " + Integer.toString(minute) + " " + context.getString(R.string.minute));
+        }
+        if (hour > 0) {
+            buffer.insert(0, " " + Integer.toString(hour) + " " + context.getString(R.string.hour));
+        }
+
+        buffer.insert(0, context.getString(R.string.schedule_start_in));
+        return buffer.toString();
+
     }
 }

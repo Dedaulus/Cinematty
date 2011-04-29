@@ -86,7 +86,7 @@ public class MovieActivity extends Activity {
     private void setLength() {
         TextView text = (TextView)findViewById(R.id.movie_length);
         if (mApp.getCurrentMovie().getLengthInMinutes() != 0) {
-            text.setText(mApp.getCurrentMovie().getLengthInMinutes() + " " + getString(R.string.minutes));
+            text.setText(mApp.getCurrentMovie().getLengthInMinutes() + " " + getString(R.string.minute));
 
             findViewById(R.id.movie_length_panel).setVisibility(View.VISIBLE);
         } else {

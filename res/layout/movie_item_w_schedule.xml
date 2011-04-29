@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textColor="#404040"/>
+        android:textColor="#404040"
+        android:layout_below="@id/movie_caption_in_movie_list"/>
 
     <TextView
         android:id="@+id/movie_schedule_in_movie_list"
@@ -30,6 +31,15 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:paddingRight="4dp"
-        android:textColor="#4d67a2"/>
+        android:textColor="#4d67a2"
+        android:layout_below="@id/movie_genre_in_movie_list"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/time_left_in_movie_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#404040"
+        android:layout_below="@id/movie_schedule_in_movie_list"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
