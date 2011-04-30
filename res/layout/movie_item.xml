@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="6dp">
 
-    <TextView
-        android:id="@+id/movie_caption_in_movie_list"
-        android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/movie_list_icon"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textSize="20dp"
-        android:textColor="#000000"/>
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingRight="6dp"
+        android:src="@drawable/ic_blank_movie"/>
 
-    <TextView
-        android:id="@+id/movie_genre_in_movie_list"
-        android:layout_width="fill_parent"
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textColor="#404040"/>
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/movie_list_icon"
+        android:layout_centerVertical="true">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/movie_caption_in_movie_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="18dp"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:id="@+id/movie_genre_in_movie_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="#404040"
+            android:layout_below="@id/movie_caption_in_movie_list"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,7 +3,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_height="wrap_content"
-    android:layout_width="fill_parent">
+    android:layout_width="fill_parent"
+    android:padding="6dp">
 
     <ImageView
         android:id="@+id/fav_icon_in_cinema_list"
@@ -11,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:clickable="true"
-        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
         android:src="@android:drawable/btn_star_big_off"
         android:onClick="onFavIconClick"/>
 
@@ -19,9 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/fav_icon_in_cinema_list"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp">
+        android:layout_toRightOf="@id/fav_icon_in_cinema_list">
 
         <TextView
             android:id="@+id/cinema_caption_in_cinema_list"
@@ -29,9 +28,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ellipsize="end"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textColor="#000000"/>
 
         <TextView
@@ -40,8 +37,6 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ellipsize="end"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
             android:textColor="#404040"/>
 
     </LinearLayout>
