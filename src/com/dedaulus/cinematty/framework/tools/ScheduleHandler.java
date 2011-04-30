@@ -29,6 +29,8 @@ public class ScheduleHandler extends DefaultHandler {
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
 
+    private static final int LAST_SHOWTIME_HOUR = 6;
+
     private HashMap<String, Cinema> mCinemaIds;
     private HashMap<String, Movie> mMovieIds;
     private HashMap<String, MovieActor> mActors;
@@ -193,11 +195,11 @@ public class ScheduleHandler extends DefaultHandler {
                 now.set(Calendar.HOUR_OF_DAY, hours);
                 now.set(Calendar.MINUTE, minutes);
 
-                if (hourNow < 5) {
+                if (hourNow < LAST_SHOWTIME_HOUR) {
                     now.add(Calendar.DAY_OF_MONTH, -1);
                 }
 
-                if (hours < 5) { /* holly fuck!*/
+                if (hours < LAST_SHOWTIME_HOUR) { /* holly fuck!*/
                     now.add(Calendar.DAY_OF_MONTH, 1);
                 }
 
