@@ -177,7 +177,7 @@ public class ScheduleHandler extends DefaultHandler {
     }
 
     private List<Calendar> parseTimes(String times) {
-        List<Calendar> list = new ArrayList<Calendar>();
+        List<Calendar> list = new UniqueSortedList<Calendar>(new DefaultComparator<Calendar>());
         StringTokenizer st = new StringTokenizer(times, ";");
 
         while (st.hasMoreTokens()) {
@@ -188,8 +188,14 @@ public class ScheduleHandler extends DefaultHandler {
                 int minutes = Integer.parseInt(hoursAndMinutes.nextToken());
 
                 Calendar now = Calendar.getInstance();
+                int hourNow = now.get(Calendar.HOUR_OF_DAY);
+
                 now.set(Calendar.HOUR_OF_DAY, hours);
                 now.set(Calendar.MINUTE, minutes);
+
+                if (hourNow < 5) {
+                    now.add(Calendar.DAY_OF_MONTH, -1);
+                }
 
                 if (hours < 5) { /* holly fuck!*/
                     now.add(Calendar.DAY_OF_MONTH, 1);
