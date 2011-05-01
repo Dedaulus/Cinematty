@@ -43,9 +43,6 @@ public class ActorListActivity extends Activity {
                 }
             });
         }
-        else {
-            // to think!!!
-        }
     }
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {

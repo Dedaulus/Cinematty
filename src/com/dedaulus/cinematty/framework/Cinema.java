@@ -69,8 +69,7 @@ public class Cinema implements Comparable<Cinema> {
         if (url != null) {
             if (url.startsWith("http://")) {
                 mUrl = url;
-            }
-            else {
+            } else {
                 mUrl = "http://" + url;
             }
         } else {

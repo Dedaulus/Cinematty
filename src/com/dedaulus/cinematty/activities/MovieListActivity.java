@@ -52,19 +52,16 @@ public class MovieListActivity extends Activity {
             mScopeMovies = cinema.getMovies();
 
             list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), cinema));
-
         } else {
             if (actor != null) {
                 captionLabel.setVisibility(View.VISIBLE);
                 captionLabel.setText(actor.getActor());
                 mScopeMovies = actor.getMovies();
-            }
-            else if (genre != null) {
+            } else if (genre != null) {
                 captionLabel.setVisibility(View.VISIBLE);
                 captionLabel.setText(genre.getGenre());
                 mScopeMovies = genre.getMovies();
-            }
-            else {
+            } else {
                 captionLabel.setVisibility(View.GONE);
                 mScopeMovies = mApp.getMovies();
             }

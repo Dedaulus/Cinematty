@@ -119,8 +119,7 @@ public class ScheduleHandler extends DefaultHandler {
                     movieActor = new MovieActor(actor);
                     mCurrentMovie.addActor(movieActor);
                     mActors.put(actor, movieActor);
-                }
-                else {
+                } else {
                     mCurrentMovie.addActor(movieActor);
                 }
             }
@@ -157,6 +156,7 @@ public class ScheduleHandler extends DefaultHandler {
         if (actors.endsWith(ACTORS_BUG_SUFFIX)) {
             actors = actors.substring(0, actors.length() - ACTORS_BUG_SUFFIX.length());
         }
+
         List<String> list = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(actors, ";");
 
@@ -168,14 +168,11 @@ public class ScheduleHandler extends DefaultHandler {
     }
 
     private int parseLength(String time) {
-        if (time == null || time.length() == 0) {
-            return 0;
-        }
+        if (time == null || time.length() == 0) return 0;
         else if (time.contains(":")) {
             StringTokenizer st = new StringTokenizer(time, ":");
             return Integer.parseInt(st.nextToken()) * 60 + Integer.parseInt(st.nextToken());
-        }
-        else return Integer.parseInt(time);
+        } else return Integer.parseInt(time);
     }
 
     private List<Calendar> parseTimes(String times) {

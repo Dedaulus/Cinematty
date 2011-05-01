@@ -60,6 +60,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter {
             for (MovieGenre genre : movie.getGenres()) {
                 genres.append(genre.getGenre() + "/");
             }
+
             genres.delete(genres.length() - 1, genres.length());
             genreView.setText(genres.toString());
 
@@ -154,15 +155,11 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter {
             }
         });
 
-        if (id >= 0) {
-            return time;
-        } else {
+        if (id >= 0) return time;
+        else {
             id = -(id + 1);
-            if (id == showTimes.size()) {
-                return null;
-            } else {
-                return showTimes.get(id);
-            }
+            if (id == showTimes.size()) return null;
+            else return showTimes.get(id);
         }
     }
 }

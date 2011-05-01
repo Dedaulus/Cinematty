@@ -43,9 +43,6 @@ public class GenreListActivity extends Activity {
                 }
             });
         }
-        else {
-            // to think!!!
-        }
     }
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {

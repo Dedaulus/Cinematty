@@ -49,8 +49,7 @@ public class MovieActivity extends Activity {
 
         if (mApp.getCurrentCinema() == null) {
             btn.setText(getString(R.string.look_for_schedule));
-        }
-        else {
+        } else {
             btn.setText(getString(R.string.look_for_all_schedule));
         }
     }
@@ -60,6 +59,7 @@ public class MovieActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mApp.setCurrentMovie(null);
         }
+
         return super.onKeyDown(keyCode, event);
     }
 

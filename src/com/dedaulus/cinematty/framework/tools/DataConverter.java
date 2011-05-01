@@ -19,6 +19,7 @@ public class DataConverter {
             for (MovieGenre genre : genres) {
                 genresString.append(genre.getGenre() + "/");
             }
+
             genresString.delete(genresString.length() - 1, genresString.length());
             return genresString.toString();
         } else {
@@ -32,6 +33,7 @@ public class DataConverter {
             for (MovieActor genre : actors) {
                 actorsString.append(genre.getActor() + ", ");
             }
+
             actorsString.delete(actorsString.length() - 2, actorsString.length());
             return actorsString.toString();
         } else {

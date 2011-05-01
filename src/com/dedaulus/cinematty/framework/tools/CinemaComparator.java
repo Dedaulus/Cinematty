@@ -22,15 +22,11 @@ public class CinemaComparator implements Comparator<Cinema> {
             return o1.getCaption().compareTo(o2.getCaption());
 
         case BY_FAVOURITE:
-            if (o1.getFavourite() == o2.getFavourite()) {
-                return 0;
-            }
+            if (o1.getFavourite() == o2.getFavourite()) return 0;
 
             return (o1.getFavourite() < o2.getFavourite()) ? 1 : -1;
 
         case BY_DISTANCE:
-            throw new RuntimeException("Sort order not implemented!");
-
         default:
             throw new RuntimeException("Sort order not implemented!");
         }

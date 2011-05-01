@@ -51,8 +51,7 @@ public class CinemaListActivity extends Activity {
                     onCinemaItemClick(adapterView, view, i, l);
                 }
             });
-        }
-        else {
+        } else {
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(movie.getCaption());
 
