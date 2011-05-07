@@ -53,8 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#404040"
-            android:layout_below="@id/movie_schedule_in_movie_list"
-            android:layout_alignParentRight="true"/>
+            android:layout_below="@id/movie_schedule_in_movie_list"/>
 
     </RelativeLayout>
 
