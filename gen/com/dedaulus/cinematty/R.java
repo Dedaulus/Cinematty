@@ -91,7 +91,6 @@ public final class R {
         public static final int actors_caption=0x7f040003;
         public static final int app_name=0x7f040000;
         public static final int cinemas_caption=0x7f040001;
-        public static final int default_url=0x7f040018;
         public static final int genre=0x7f040008;
         public static final int genres_caption=0x7f040004;
         public static final int hour=0x7f04000b;
@@ -106,6 +105,7 @@ public final class R {
         public static final int schedule_enum=0x7f040010;
         public static final int schedule_now=0x7f040012;
         public static final int schedule_start_in=0x7f040013;
+        public static final int settings_url=0x7f040018;
         public static final int sort=0x7f040015;
         public static final int sort_by_caption=0x7f040017;
         public static final int sort_by_fav=0x7f040016;
