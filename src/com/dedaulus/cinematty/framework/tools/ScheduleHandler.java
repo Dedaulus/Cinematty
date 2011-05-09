@@ -25,7 +25,10 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String CINEMA_URL_ATTR     = "www";
 
     private static final String MOVIE_TAG = "movie";
+
     private static final String SHOWTIME_TAG = "showtime";
+
+    private static final String PICTURES_FOLDER_TAG = "pictures_folder";
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
 
@@ -35,6 +38,7 @@ public class ScheduleHandler extends DefaultHandler {
     private HashMap<String, Movie> mMovieIds;
     private HashMap<String, MovieActor> mActors;
     private HashMap<String, MovieGenre> mGenres;
+    private String mPictureFolder;
     private StringBuilder mBuffer;
     private Cinema mCurrentCinema;
     private Movie mCurrentMovie;
@@ -42,16 +46,19 @@ public class ScheduleHandler extends DefaultHandler {
     public void getSchedule(UniqueSortedList<Cinema> cinemas,
                             UniqueSortedList<Movie> movies,
                             UniqueSortedList<MovieActor> actors,
-                            UniqueSortedList<MovieGenre> genres) {
+                            UniqueSortedList<MovieGenre> genres,
+                            StringBuffer pictureFolder) {
         cinemas.clear();
         movies.clear();
         actors.clear();
         genres.clear();
+        pictureFolder.setLength(0);
 
         cinemas.addAll(mCinemaIds.values());
         movies.addAll(mMovieIds.values());
         actors.addAll(mActors.values());
         genres.addAll(mGenres.values());
+        pictureFolder.append(mPictureFolder);
     }
 
     @Override
@@ -77,9 +84,10 @@ public class ScheduleHandler extends DefaultHandler {
             cinema.setUrl(attributes.getValue(CINEMA_URL_ATTR));
 
             mCinemaIds.put(attributes.getValue(CINEMA_ID_ATTR), cinema);
-        }
-        else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
+        } else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
             Movie movie = new Movie(attributes.getValue("title"));
+
+            movie.setPicId(attributes.getValue("picid"));
 
             movie.setLengthInMinutes(parseLength(attributes.getValue("length")));
 
@@ -100,10 +108,11 @@ public class ScheduleHandler extends DefaultHandler {
 
             mMovieIds.put(attributes.getValue("id"), movie);
             mCurrentMovie = movie;
-        }
-        else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
+        } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
             mCurrentCinema = mCinemaIds.get(attributes.getValue("theater_id"));
             mCurrentMovie = mMovieIds.get(attributes.getValue("movie_id"));
+        } else if (qName.equalsIgnoreCase(PICTURES_FOLDER_TAG)) {
+            mPictureFolder = attributes.getValue("name");
         }
     }
 

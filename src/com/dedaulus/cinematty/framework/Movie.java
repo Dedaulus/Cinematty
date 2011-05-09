@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Movie implements Comparable<Movie> {
     private String mCaption;
+    private String mPicId = null;
     private String mDescription = "";
     private int mLengthInMinutes;
     private List<MovieGenre> mGenres = new ArrayList<MovieGenre>();
@@ -27,6 +28,14 @@ public class Movie implements Comparable<Movie> {
 
     public String getCaption() {
         return mCaption;
+    }
+
+    public void setPicId(String picId) {
+        mPicId = picId;
+    }
+
+    public String getPicId() {
+        return mPicId;
     }
 
     public void setDescription(String description) {

@@ -51,7 +51,7 @@ public class MovieListActivity extends Activity {
             });
             mScopeMovies = cinema.getMovies();
 
-            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), cinema));
+            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), cinema, mApp.getPictureRetriever()));
         } else {
             if (actor != null) {
                 captionLabel.setVisibility(View.VISIBLE);
@@ -66,7 +66,7 @@ public class MovieListActivity extends Activity {
                 mScopeMovies = mApp.getMovies();
             }
 
-            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies)));
+            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
         }
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

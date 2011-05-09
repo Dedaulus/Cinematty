@@ -6,19 +6,35 @@
     android:orientation="horizontal"
     android:padding="6dp">
 
-    <ImageView
-        android:id="@+id/movie_list_icon"
+    <LinearLayout
+        android:id="@+id/movie_list_icon_panel"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentTop="true"
-        android:paddingRight="6dp"
-        android:src="@drawable/ic_blank_movie"/>
+        android:layout_width="wrap_content">
+
+        <ProgressBar
+             android:id="@+id/movie_list_icon_loading"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@android:style/Widget.ProgressBar.Inverse"
+             android:paddingRight="10dp"/>
+
+        <ImageView
+            android:id="@+id/movie_list_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingRight="6dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="62dp"
+            android:src="@drawable/ic_blank_movie"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@+id/movie_list_icon"
+        android:layout_toRightOf="@+id/movie_list_icon_panel"
         android:layout_centerVertical="true">
 
         <TextView

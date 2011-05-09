@@ -16,6 +16,11 @@ public class UniqueSortedList<T> extends AbstractList<T> {
         mSource = new ArrayList<T>();
     }
 
+    public UniqueSortedList(int capacity, Comparator<T> comparator) {
+        mComparator = comparator;
+        mSource = new ArrayList<T>(capacity);
+    }
+
     public UniqueSortedList(Collection<T> collection, Comparator<T> comparator) {
         mComparator = comparator;
         mSource = new ArrayList<T>(new HashSet<T>(collection));
@@ -53,6 +58,11 @@ public class UniqueSortedList<T> extends AbstractList<T> {
     @Override
     public int size() {
         return mSource.size();
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return indexOf(o) == -1 ? false : true;
     }
 
     @Override

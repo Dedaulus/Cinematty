@@ -1,14 +1,22 @@
 package com.dedaulus.cinematty.activities.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.PictureRetriever;
+import com.dedaulus.cinematty.framework.tools.PictureReceiver;
+import com.dedaulus.cinematty.framework.tools.PictureType;
+import com.dedaulus.cinematty.framework.tools.UpdatableByNeed;
 
 import java.util.List;
 
@@ -17,13 +25,39 @@ import java.util.List;
  * Date: 14.03.11
  * Time: 23:40
  */
-public class MovieItemAdapter extends BaseAdapter {
+public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, UpdatableByNeed {
     private Context mContext;
     private List<Movie> mMovies;
+    private PictureRetriever mPictureRetriever;
+    private boolean mPicturesUpdated = false;
 
-    public MovieItemAdapter(Context context, List<Movie> movies) {
+    //private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
+
+    public MovieItemAdapter(Context context, List<Movie> movies, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
+        mPictureRetriever = pictureRetriever;
+
+        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+            @Override
+            protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
+                while (true) {
+                    if (updatableByNeeds[0].isUpdateNeeded()) {
+                        publishProgress(updatableByNeeds[0]);
+                    }
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+
+            @Override
+            protected void onProgressUpdate(UpdatableByNeed... values) {
+                values[0].update();
+            }
+        }.execute(this);
     }
 
     public int getCount() {
@@ -44,13 +78,37 @@ public class MovieItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
+        Movie movie = mMovies.get(position);
+
+        ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.movie_list_icon_loading);
+        ImageView imageView = (ImageView)view.findViewById(R.id.movie_list_icon);
+
+        imageView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+
+        String picId = movie.getPicId();
+        if (picId != null) {
+            Bitmap picture = mPictureRetriever.getPicture(picId, PictureType.LIST_BIG);
+            if (picture != null) {
+                imageView.setImageBitmap(picture);
+                imageView.setVisibility(View.VISIBLE);
+            } else {
+                //imageView.setImageResource(R.drawable.ic_blank_movie);
+                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, this);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        } else {
+            imageView.setImageResource(R.drawable.ic_blank_movie);
+            imageView.setVisibility(View.VISIBLE);
+        }
+
         TextView text = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        text.setText(mMovies.get(position).getCaption());
+        text.setText(movie.getCaption());
 
         text = (TextView)view.findViewById(R.id.movie_genre_in_movie_list);
-        if (mMovies.get(position).getGenres().size() != 0) {
+        if (movie.getGenres().size() != 0) {
             StringBuilder genres = new StringBuilder();
-            for (MovieGenre genre : mMovies.get(position).getGenres()) {
+            for (MovieGenre genre : movie.getGenres()) {
                 genres.append(genre.getGenre() + "/");
             }
             genres.delete(genres.length() - 1, genres.length());
@@ -74,5 +132,18 @@ public class MovieItemAdapter extends BaseAdapter {
         bindView(i, myView);
 
         return myView;
+    }
+
+    public void onPictureReceive(String picId, int pictureType) {
+        mPicturesUpdated = true;
+    }
+
+    public boolean isUpdateNeeded() {
+        return mPicturesUpdated;
+    }
+
+    public void update() {
+        notifyDataSetChanged();
+        mPicturesUpdated = false;
     }
 }

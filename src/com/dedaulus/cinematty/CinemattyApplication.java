@@ -2,10 +2,7 @@ package com.dedaulus.cinematty;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.ScheduleReceiver;
@@ -28,6 +25,9 @@ public class CinemattyApplication extends Application {
     private MovieActor mCurrentActor;
     private MovieGenre mCurrentGenre;
 
+    private PictureRetriever mPictureRetriever = null;
+    private static final String LOCAL_PICTURES_FOLDER = "pictures";
+
     private static final String FAV_CINEMAS_FILE = "cinematty_fav_cinemas";
     private static final String PREFERENCES_FILE = "cinematty_preferences";
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
@@ -41,8 +41,17 @@ public class CinemattyApplication extends Application {
 
     public void retrieveData() {
         // TODO: this MUST be replaced when method for get current city will be released!
-        ScheduleReceiver receiver = new ScheduleReceiver(getString(R.string.settings_url) + "spb_schedule.xml");
-        receiver.getSchedule(mCinemas, mMovies, mActors, mGenres);
+        ScheduleReceiver receiver = new ScheduleReceiver(getString(R.string.settings_url) + "/spb_schedule.xml");
+        StringBuffer pictureFolder = new StringBuffer();
+
+        receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder);
+
+        String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
+        if (mPictureRetriever == null) {
+            mPictureRetriever = new PictureRetriever(this, remotePictureFolder, LOCAL_PICTURES_FOLDER);
+        } else {
+            mPictureRetriever.setRemotePictureFolder(remotePictureFolder);
+        }
 
         Map<String, ?> favs = getFavouriteCinemas();
         for (String caption : favs.keySet()) {
@@ -72,6 +81,10 @@ public class CinemattyApplication extends Application {
 
     public UniqueSortedList<MovieGenre> getGenres() {
         return mGenres;
+    }
+
+    public PictureRetriever getPictureRetriever() {
+        return mPictureRetriever;
     }
 
     public void setCurrentCinema(Cinema cinema) {

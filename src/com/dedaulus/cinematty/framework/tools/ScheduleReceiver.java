@@ -30,13 +30,14 @@ public class ScheduleReceiver {
     public void getSchedule(UniqueSortedList<Cinema> cinemas,
                             UniqueSortedList<Movie> movies,
                             UniqueSortedList<MovieActor> actors,
-                            UniqueSortedList<MovieGenre> genres) {
+                            UniqueSortedList<MovieGenre> genres,
+                            StringBuffer pictureFolder) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
             ScheduleHandler handler = new ScheduleHandler();
             parser.parse(mXmlUrl.openConnection().getInputStream(), handler);
-            handler.getSchedule(cinemas, movies, actors, genres);
+            handler.getSchedule(cinemas, movies, actors, genres, pictureFolder);
         }
         catch (Exception e) {
             throw new RuntimeException(e);
