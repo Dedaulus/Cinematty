@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Pair;
+import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.PictureReceiver;
 import com.dedaulus.cinematty.framework.tools.PictureType;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
@@ -11,7 +12,6 @@ import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -22,6 +22,30 @@ import java.util.Queue;
  * Time: 18:40
  */
 public class PictureRetriever implements Runnable {
+
+    private class PictureWrapper implements Comparable<PictureWrapper> {
+        public String picId = null;
+        public Integer pictureType = 0;
+        public Bitmap picture = null;
+
+        public PictureWrapper(String picId, int pictureType, Bitmap picture) {
+            this.picId = picId;
+            this.pictureType = pictureType;
+            this.picture = picture;
+        }
+
+        public int compareTo(PictureWrapper o) {
+            if (this == o) return 0;
+            else {
+                int cmp = picId.compareTo(o.picId);
+                if (cmp == 0) {
+                    return pictureType.compareTo(o.pictureType);
+                } else if (cmp > 0) return 1;
+                else return -1;
+            }
+        }
+    }
+
     private static final int APROX_PICS_COUNT = 80; // This is a nearly count of moscow movies at once
 
     Context mContext;
@@ -29,16 +53,7 @@ public class PictureRetriever implements Runnable {
     String mLocalPictureFolder;
 
     Queue<Pair<Pair<String, Integer>, PictureReceiver>> mTaskQueue = new LinkedList<Pair<Pair<String, Integer>, PictureReceiver>>();
-    List<Pair<String, Integer>> mReadyPictures = new UniqueSortedList<Pair<String, Integer>>(APROX_PICS_COUNT, new Comparator<Pair<String, Integer>>() {
-        public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-            if (o1.equals(o2)) return 0;
-            else {
-                int cmp = o1.first.compareTo(o2.first);
-                if (cmp != 0) return cmp;
-                else return o1.second.compareTo(o2.second);
-            }
-        }
-    });
+    List<PictureWrapper> mReadyPictures = new UniqueSortedList<PictureWrapper>(APROX_PICS_COUNT, new DefaultComparator<PictureWrapper>());
 
     public PictureRetriever(Context context, String remotePictureFolder, String localPictureFolder) {
         mContext = context;
@@ -64,20 +79,19 @@ public class PictureRetriever implements Runnable {
 
     public Bitmap getPicture(String picId, int pictureType) {
         synchronized (mReadyPictures) {
-            int id = mReadyPictures.indexOf(new Pair<String, Integer>(picId, pictureType));
+            int id = mReadyPictures.indexOf(new PictureWrapper(picId, pictureType, null));
             if (id == -1) return null;
 
-            File picturePath = getLocalPicturePath(picId, pictureType);
-            InputStream is = null;
-            try {
-                is = new FileInputStream(picturePath);
-            } catch (FileNotFoundException e) {
-
-                mReadyPictures.remove(id);
-                return null;
+            Bitmap picture = mReadyPictures.get(id).picture;
+            if (picture != null) return picture;
+            else {
+                picture = loadPicture(picId, pictureType);
+                if (picture != null) return picture;
+                else {
+                    mReadyPictures.remove(id);
+                    return null;
+                }
             }
-
-            return BitmapFactory.decodeStream(is);
         }
     }
 
@@ -103,7 +117,14 @@ public class PictureRetriever implements Runnable {
             String picId = name.substring(picIdStart, picIdEnd);
             int pictureType = postfixToPictureType(name.substring(picIdEnd + 1, name.indexOf(".", picIdEnd)));
 
-            mReadyPictures.add(new Pair<String, Integer>(picId, pictureType));
+            Bitmap picture = null;
+            if (pictureType == PictureType.LIST_BIG
+                    || pictureType == PictureType.LIST_MEDIUM
+                    || pictureType == PictureType.LIST_SMALL) {
+                picture = loadPicture(picId, pictureType);
+            }
+
+            mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
         }
     }
 
@@ -114,21 +135,21 @@ public class PictureRetriever implements Runnable {
         else return PictureType.ORIGINAL;
     }
 
-    private String getPicturePostfix(int pictureType) {
+    private String pictureTypeToPostfix(int pictureType) {
         String postfix = null;
         switch (pictureType) {
         case PictureType.LIST_SMALL:
-            postfix = "_s.jpg";
+            postfix = "s";
             break;
         case PictureType.LIST_MEDIUM:
-            postfix = "_m.jpg";
+            postfix = "m";
             break;
         case PictureType.LIST_BIG:
-            postfix = "_h.jpg";
+            postfix = "h";
             break;
         case PictureType.ORIGINAL:
         default:
-            postfix = "_.jpg";
+            postfix = "";
             break;
         }
 
@@ -136,7 +157,7 @@ public class PictureRetriever implements Runnable {
     }
 
     private String getRemotePicturePath(String picId, int pictureType) {
-        String name = "pic" + getPicturePostfix(pictureType);
+        String name = "pic_" + pictureTypeToPostfix(pictureType) + ".jpg";
 
         synchronized (mRemotePictureFolder) {
             StringBuffer buffer = new StringBuffer(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
@@ -147,7 +168,7 @@ public class PictureRetriever implements Runnable {
     private File getLocalPicturePath(String picId, int pictureType) {
         //File path = mContext.getDir(mLocalPictureFolder, Context.MODE_PRIVATE);
         File path = mContext.getCacheDir();
-        return new File(path, "pic_" + picId + getPicturePostfix(pictureType));
+        return new File(path, "pic_" + picId + "_" + pictureTypeToPostfix(pictureType) + ".jpg");
     }
 
     private boolean downloadPicture(String loadFrom, File saveTo) {
@@ -176,6 +197,18 @@ public class PictureRetriever implements Runnable {
         return true;
     }
 
+    private Bitmap loadPicture(String picId, int pictureType) {
+        File picturePath = getLocalPicturePath(picId, pictureType);
+        InputStream is = null;
+        try {
+            is = new FileInputStream(picturePath);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+
+        return BitmapFactory.decodeStream(is);
+    }
+
     public void run() {
         while (true) {
             Pair<Pair<String, Integer>, PictureReceiver> task = null;
@@ -201,13 +234,18 @@ public class PictureRetriever implements Runnable {
                 File to = getLocalPicturePath(picId, pictureType);
 
                 if (downloadPicture(from, to)) {
-                    synchronized (mReadyPictures) {
-                        mReadyPictures.add(new Pair<String, Integer>(picId, pictureType));
+                    Bitmap picture = null;
+                    if (pictureType == PictureType.LIST_BIG
+                            || pictureType == PictureType.LIST_MEDIUM
+                            || pictureType == PictureType.LIST_SMALL) {
+                        picture = loadPicture(picId, pictureType);
                     }
+
+                    synchronized (mReadyPictures) {
+                        mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
+                    }
+
                     task.second.onPictureReceive(picId, pictureType);
-                    //if (mTaskQueue.peek() == null) {
-                    //    task.second.onPictureReceive(picId, pictureType);
-                    //}
                 }
             }
         }
