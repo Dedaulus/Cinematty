@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
@@ -80,7 +80,7 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
     private void bindView(int position, View view) {
         Movie movie = mMovies.get(position);
 
-        ProgressBar progressBar = (ProgressBar)view.findViewById(R.id.movie_list_icon_loading);
+        RelativeLayout progressBar = (RelativeLayout)view.findViewById(R.id.movie_list_icon_loading);
         ImageView imageView = (ImageView)view.findViewById(R.id.movie_list_icon);
 
         imageView.setVisibility(View.GONE);
@@ -93,7 +93,6 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
                 imageView.setImageBitmap(picture);
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                //imageView.setImageResource(R.drawable.ic_blank_movie);
                 mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, this);
                 progressBar.setVisibility(View.VISIBLE);
             }
