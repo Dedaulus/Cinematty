@@ -35,13 +35,15 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
     private PictureRetriever mPictureRetriever;
     private boolean mPicturesUpdated = false;
 
+    private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
+
     public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mCinema = cinema;
         mPictureRetriever = pictureRetriever;
 
-        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+        mPictureUpdater = new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
             @Override
             protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
                 while (true) {

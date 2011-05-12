@@ -8,6 +8,7 @@
     <string name="wait_dialog_caption">Синхронизация</string>
     <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
 
+    <string name="movie_trailer_link">"Трейлеры на YouTube</string>
     <string name="movie_length">Продолжительность</string>
     <string name="genre">Жанр</string>
     <string name="actors">Актёры</string>
@@ -30,4 +31,5 @@
     <string name="sort_by_caption">По названию</string>
 
     <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
+    <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
 </resources>

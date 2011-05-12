@@ -139,4 +139,21 @@ public class DataConverter {
         return buffer.toString();
 
     }
+
+    public static String timeInMinutesToTimeHoursAndMinutes(Context context, int minutes) {
+        StringBuffer buffer = new StringBuffer();
+        if (minutes > 59) {
+            int hours = minutes / 60;
+            minutes = minutes - hours * 60;
+
+            buffer.append(Integer.toString(hours)).append(" ").append(context.getString(R.string.hour));
+            if (minutes != 0) {
+                buffer.append(" ").append(Integer.toString(minutes)).append(" ").append(context.getString(R.string.minute));
+            }
+        } else {
+            buffer.append(Integer.toString(minutes)).append(" ").append(context.getString(R.string.minute));
+        }
+
+        return buffer.toString();
+    }
 }

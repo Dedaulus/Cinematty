@@ -31,14 +31,14 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
     private PictureRetriever mPictureRetriever;
     private boolean mPicturesUpdated = false;
 
-    //private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
+    private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
 
     public MovieItemAdapter(Context context, List<Movie> movies, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mPictureRetriever = pictureRetriever;
 
-        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+        mPictureUpdater = new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
             @Override
             protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
                 while (true) {
