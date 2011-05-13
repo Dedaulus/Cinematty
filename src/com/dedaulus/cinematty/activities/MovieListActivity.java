@@ -3,6 +3,7 @@ package com.dedaulus.cinematty.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,10 +12,8 @@ import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
-import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.tools.CurrentState;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
 import java.util.ArrayList;
@@ -27,40 +26,45 @@ import java.util.ArrayList;
 public class MovieListActivity extends Activity {
     CinemattyApplication mApp;
     UniqueSortedList<Movie> mScopeMovies;
+    CurrentState mCurrentState;
+
+    @Override
+    protected void onResume() {
+        mCurrentState = mApp.getCurrentState();
+
+        super.onResume();
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
 
         mApp = (CinemattyApplication)getApplication();
-
-        Cinema cinema = mApp.getCurrentCinema();
-        MovieActor actor = mApp.getCurrentActor();
-        MovieGenre genre = mApp.getCurrentGenre();
+        mCurrentState = mApp.getCurrentState();
 
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
-        if (cinema != null) {
+        if (mCurrentState.cinema != null) {
             captionLabel.setVisibility(View.VISIBLE);
-            captionLabel.setText(cinema.getCaption());
+            captionLabel.setText(mCurrentState.cinema.getCaption());
             captionLabel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     onCinemaClick(view);
                 }
             });
-            mScopeMovies = cinema.getMovies();
+            mScopeMovies = mCurrentState.cinema.getMovies();
 
-            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), cinema, mApp.getPictureRetriever()));
+            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mCurrentState.cinema, mApp.getPictureRetriever()));
         } else {
-            if (actor != null) {
+            if (mCurrentState.actor != null) {
                 captionLabel.setVisibility(View.VISIBLE);
-                captionLabel.setText(actor.getActor());
-                mScopeMovies = actor.getMovies();
-            } else if (genre != null) {
+                captionLabel.setText(mCurrentState.actor.getActor());
+                mScopeMovies = mCurrentState.actor.getMovies();
+            } else if (mCurrentState.genre != null) {
                 captionLabel.setVisibility(View.VISIBLE);
-                captionLabel.setText(genre.getGenre());
-                mScopeMovies = genre.getMovies();
+                captionLabel.setText(mCurrentState.genre.getGenre());
+                mScopeMovies = mCurrentState.genre.getMovies();
             } else {
                 captionLabel.setVisibility(View.GONE);
                 mScopeMovies = mApp.getMovies();
@@ -76,7 +80,19 @@ public class MovieListActivity extends Activity {
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mApp.revertCurrentState();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void onCinemaClick(View view) {
+        CurrentState state = mCurrentState.clone();
+        mApp.setCurrentState(state);
+
         Intent intent = new Intent(this, CinemaActivity.class);
         startActivity(intent);
     }
@@ -86,7 +102,10 @@ public class MovieListActivity extends Activity {
         String caption = textView.getText().toString();
         int movieId = mScopeMovies.indexOf(new Movie(caption));
         if (movieId != -1) {
-            mApp.setCurrentMovie(mScopeMovies.get(movieId));
+            CurrentState state = mCurrentState.clone();
+            state.movie = mScopeMovies.get(movieId);
+            mApp.setCurrentState(state);
+
             Intent intent = new Intent(this, MovieActivity.class);
             startActivity(intent);
         }

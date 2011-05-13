@@ -6,11 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.tools.CurrentState;
 
 /**
  * User: Dedaulus
@@ -18,15 +19,22 @@ import com.dedaulus.cinematty.framework.Cinema;
  * Time: 14:48
  */
 public class CinemaActivity extends Activity {
-    CinemattyApplication mApp;
-    Cinema mCurrentCinema;
+    private CinemattyApplication mApp;
+    private CurrentState mCurrentState;
+
+    @Override
+    protected void onResume() {
+        mCurrentState = mApp.getCurrentState();
+
+        super.onResume();
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_info);
 
         mApp = (CinemattyApplication)getApplication();
-        mCurrentCinema = mApp.getCurrentCinema();
+        mCurrentState = mApp.getCurrentState();
 
         setCaption();
         setAddress();
@@ -34,20 +42,29 @@ public class CinemaActivity extends Activity {
         setUrl();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mApp.revertCurrentState();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
     private void setCaption() {
         TextView view = (TextView)findViewById(R.id.cinema_caption);
-        view.setText(mCurrentCinema.getCaption());
+        view.setText(mCurrentState.cinema.getCaption());
     }
 
     private void setAddress() {
         View view = findViewById(R.id.cinema_address_panel);
-        if (mCurrentCinema.getAddress() != null) {
+        if (mCurrentState.cinema.getAddress() != null) {
             TextView address = (TextView)findViewById(R.id.cinema_address);
-            address.setText(mCurrentCinema.getAddress());
+            address.setText(mCurrentState.cinema.getAddress());
 
             TextView metro = (TextView)findViewById(R.id.cinema_metro);
-            if (mCurrentCinema.getMetro() != null) {
-                metro.setText(getString(R.string.metro_near) + ": " + mCurrentCinema.getMetro());
+            if (mCurrentState.cinema.getMetro() != null) {
+                metro.setText(getString(R.string.metro_near) + ": " + mCurrentState.cinema.getMetro());
 
                 metro.setVisibility(View.VISIBLE);
             } else {
@@ -62,9 +79,9 @@ public class CinemaActivity extends Activity {
 
     private void setPhone() {
         View view = findViewById(R.id.cinema_phone_panel);
-        if (mCurrentCinema.getPhone() != null) {
+        if (mCurrentState.cinema.getPhone() != null) {
             TextView phone = (TextView)findViewById(R.id.cinema_phone);
-            phone.setText(mCurrentCinema.getPhone());
+            phone.setText(mCurrentState.cinema.getPhone());
 
             view.setVisibility(View.VISIBLE);
         }
@@ -75,10 +92,10 @@ public class CinemaActivity extends Activity {
 
     private void setUrl() {
         View view = findViewById(R.id.cinema_url_panel);
-        if (mCurrentCinema.getUrl() != null) {
-            StringBuffer buf = new StringBuffer(mCurrentCinema.getUrl());
+        if (mCurrentState.cinema.getUrl() != null) {
+            StringBuffer buf = new StringBuffer(mCurrentState.cinema.getUrl());
 
-            if (mCurrentCinema.getUrl().startsWith("http://")) {
+            if (mCurrentState.cinema.getUrl().startsWith("http://")) {
                 buf.delete(0, "http://".length());
             }
 
@@ -101,19 +118,19 @@ public class CinemaActivity extends Activity {
 
     public void onAddressClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:0,0?q=Россия, Санкт-Петербург, " + mCurrentCinema.getAddress()));
+        intent.setData(Uri.parse("geo:0,0?q=Россия, Санкт-Петербург, " + mCurrentState.cinema.getAddress()));
         startActivity(intent);
     }
 
     public void onPhoneClick(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:+7" + mCurrentCinema.getPlainPhone()));
+        intent.setData(Uri.parse("tel:+7" + mCurrentState.cinema.getPlainPhone()));
         startActivity(intent);
     }
 
     public void onUrlClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mCurrentCinema.getUrl()));
+        intent.setData(Uri.parse(mCurrentState.cinema.getUrl()));
         startActivity(intent);
     }
 }

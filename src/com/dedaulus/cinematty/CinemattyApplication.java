@@ -3,12 +3,10 @@ package com.dedaulus.cinematty;
 import android.app.Application;
 import android.content.SharedPreferences;
 import com.dedaulus.cinematty.framework.*;
-import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
-import com.dedaulus.cinematty.framework.tools.DefaultComparator;
-import com.dedaulus.cinematty.framework.tools.ScheduleReceiver;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
+import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Map;
+import java.util.Stack;
 
 /*
  * User: Dedaulus
@@ -20,10 +18,8 @@ public class CinemattyApplication extends Application {
     private UniqueSortedList<Movie> mMovies;
     private UniqueSortedList<MovieActor> mActors;
     private UniqueSortedList<MovieGenre> mGenres;
-    private Cinema mCurrentCinema;
-    private Movie mCurrentMovie;
-    private MovieActor mCurrentActor;
-    private MovieGenre mCurrentGenre;
+
+    private Stack<CurrentState> mState = new Stack<CurrentState>();
 
     private PictureRetriever mPictureRetriever = null;
     private static final String LOCAL_PICTURES_FOLDER = "pictures";
@@ -87,36 +83,16 @@ public class CinemattyApplication extends Application {
         return mPictureRetriever;
     }
 
-    public void setCurrentCinema(Cinema cinema) {
-        mCurrentCinema = cinema;
+    public CurrentState getCurrentState() {
+        return mState.peek();
     }
 
-    public Cinema getCurrentCinema() {
-        return mCurrentCinema;
+    public void setCurrentState(CurrentState currentState) {
+        mState.add(currentState);
     }
 
-    public void setCurrentMovie(Movie movie) {
-        mCurrentMovie = movie;
-    }
-
-    public Movie getCurrentMovie() {
-        return mCurrentMovie;
-    }
-
-    public void setCurrentActor(MovieActor actor) {
-        mCurrentActor = actor;
-    }
-
-    public MovieActor getCurrentActor() {
-        return mCurrentActor;
-    }
-
-    public void setCurrentGenre(MovieGenre genre) {
-        mCurrentGenre = genre;
-    }
-
-    public MovieGenre getCurrentGenre() {
-        return mCurrentGenre;
+    public void revertCurrentState() {
+        mState.pop();
     }
 
     public void saveFavouriteCinemas() {

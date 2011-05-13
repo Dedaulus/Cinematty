@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.framework.tools.CurrentState;
 
 public class StartupActivity extends Activity
 {
@@ -80,38 +81,26 @@ public class StartupActivity extends Activity
     }
 
     public void onCinemaClick(View view) {
-        mApp.setCurrentCinema(null);
-        mApp.setCurrentMovie(null);
-        mApp.setCurrentActor(null);
-        mApp.setCurrentGenre(null);
+        mApp.setCurrentState(new CurrentState(null, null, null, null));
         Intent intent = new Intent(this, CinemaListActivity.class);
         startActivity(intent);
     }
 
     public void onMoviesClick(View view) {
-        mApp.setCurrentCinema(null);
-        mApp.setCurrentMovie(null);
-        mApp.setCurrentActor(null);
-        mApp.setCurrentGenre(null);
+        mApp.setCurrentState(new CurrentState(null, null, null, null));
         Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);
     }
 
     public void onActorsClick(View view) {
-        mApp.setCurrentCinema(null);
-        mApp.setCurrentMovie(null);
-        mApp.setCurrentActor(null);
-        mApp.setCurrentGenre(null);
+        mApp.setCurrentState(new CurrentState(null, null, null, null));
         Intent intent = new Intent(this, ActorListActivity.class);
         startActivity(intent);
     }
 
 
     public void onGenresClick(View view) {
-        mApp.setCurrentCinema(null);
-        mApp.setCurrentMovie(null);
-        mApp.setCurrentActor(null);
-        mApp.setCurrentGenre(null);
+        mApp.setCurrentState(new CurrentState(null, null, null, null));
         Intent intent = new Intent(this, GenreListActivity.class);
         startActivity(intent);
     }

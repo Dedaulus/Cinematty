@@ -3,10 +3,7 @@ package com.dedaulus.cinematty.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,9 +14,9 @@ import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.tools.CinemaComparator;
 import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
+import com.dedaulus.cinematty.framework.tools.CurrentState;
 
 import java.util.ArrayList;
 
@@ -30,6 +27,7 @@ import java.util.ArrayList;
  */
 public class CinemaListActivity extends Activity {
     private CinemattyApplication mApp;
+    private CurrentState mCurrentState;
     private SortableAdapter<Cinema> mCinemaListAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -37,11 +35,12 @@ public class CinemaListActivity extends Activity {
         setContentView(R.layout.cinema_list);
 
         mApp = (CinemattyApplication)getApplication();
-        Movie movie = mApp.getCurrentMovie();
+        mCurrentState = mApp.getCurrentState();
+
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
-        if (movie == null) {
+        if (mCurrentState.movie == null) {
             movieLabel.setVisibility(View.GONE);
 
             mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()));
@@ -53,9 +52,9 @@ public class CinemaListActivity extends Activity {
             });
         } else {
             movieLabel.setVisibility(View.VISIBLE);
-            movieLabel.setText(movie.getCaption());
+            movieLabel.setText(mCurrentState.movie.getCaption());
 
-            mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(movie.getCinemas()), movie);
+            mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(mCurrentState.movie.getCinemas()), mCurrentState.movie);
             list.setAdapter(mCinemaListAdapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -68,10 +67,26 @@ public class CinemaListActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        mCurrentState = mApp.getCurrentState();
+
+        super.onResume();
+    }
+
+    @Override
     protected void onPause() {
         mApp.saveFavouriteCinemas();
 
         super.onPause();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mApp.revertCurrentState();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -126,7 +141,10 @@ public class CinemaListActivity extends Activity {
         String caption = textView.getText().toString();
         int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
         if (cinemaId != -1) {
-            mApp.setCurrentCinema(mApp.getCinemas().get(cinemaId));
+            CurrentState state = mCurrentState.clone();
+            state.cinema = mApp.getCinemas().get(cinemaId);
+            mApp.setCurrentState(state);
+
             Intent intent = new Intent(this, MovieListActivity.class);
             startActivity(intent);
         }
@@ -137,7 +155,10 @@ public class CinemaListActivity extends Activity {
         String caption = textView.getText().toString();
         int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
         if (cinemaId != -1) {
-            mApp.setCurrentCinema(mApp.getCinemas().get(cinemaId));
+            CurrentState state = mCurrentState.clone();
+            state.cinema = mApp.getCinemas().get(cinemaId);
+            mApp.setCurrentState(state);
+
             Intent intent = new Intent(this, CinemaActivity.class);
             startActivity(intent);
         }
@@ -147,7 +168,7 @@ public class CinemaListActivity extends Activity {
         View parent = (View)view.getParent();
         TextView caption = null;
 
-        if (mApp.getCurrentMovie() != null) {
+        if (mCurrentState.movie != null) {
             caption = (TextView)parent.findViewById(R.id.cinema_caption_in_schedule_list);
         } else {
             caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
