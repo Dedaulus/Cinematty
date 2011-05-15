@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
@@ -29,6 +30,13 @@ public class CinemaActivity extends Activity {
         super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        mApp.saveFavouriteCinemas();
+
+        super.onPause();
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_info);
@@ -36,6 +44,7 @@ public class CinemaActivity extends Activity {
         mApp = (CinemattyApplication)getApplication();
         mCurrentState = mApp.getCurrentState();
 
+        setFavourite();
         setCaption();
         setAddress();
         setPhone();
@@ -49,6 +58,16 @@ public class CinemaActivity extends Activity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void setFavourite() {
+        ImageView imageView = (ImageView)findViewById(R.id.fav_icon_in_cinema_info);
+
+        if (mCurrentState.cinema.getFavourite() > 0) {
+            imageView.setImageResource(R.drawable.ic_fav_cinema_on);
+        } else {
+            imageView.setImageResource(R.drawable.ic_fav_cinema_off);
+        }
     }
 
     private void setCaption() {
@@ -91,7 +110,7 @@ public class CinemaActivity extends Activity {
     }
 
     private void setUrl() {
-        View view = findViewById(R.id.cinema_url_panel);
+        TextView url = (TextView)findViewById(R.id.cinema_url);
         if (mCurrentState.cinema.getUrl() != null) {
             StringBuffer buf = new StringBuffer(mCurrentState.cinema.getUrl());
 
@@ -107,12 +126,11 @@ public class CinemaActivity extends Activity {
             SpannableString str = new SpannableString(buf.toString());
             str.setSpan(new UnderlineSpan(), 0, buf.length(), 0);
 
-            TextView url = (TextView)findViewById(R.id.cinema_url);
             url.setText(str);
 
-            view.setVisibility(View.VISIBLE);
+            url.setVisibility(View.VISIBLE);
         } else {
-            view.setVisibility(View.GONE);
+            url.setVisibility(View.GONE);
         }
     }
 
@@ -129,8 +147,27 @@ public class CinemaActivity extends Activity {
     }
 
     public void onUrlClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mCurrentState.cinema.getUrl()));
+        if (mCurrentState.cinema.getUrl() != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(mCurrentState.cinema.getUrl()));
+            startActivity(intent);
+        }
+    }
+
+    public void onFavIconClick(View view) {
+        if (mCurrentState.cinema.getFavourite() > 0) {
+            mCurrentState.cinema.setFavourite(false);
+            ((ImageView)view).setImageResource(R.drawable.ic_fav_cinema_off);
+        } else {
+            mCurrentState.cinema.setFavourite(true);
+            ((ImageView)view).setImageResource(R.drawable.ic_fav_cinema_on);
+        }
+    }
+
+    public void onSchedulesClick(View view) {
+        mApp.setCurrentState(mCurrentState.clone());
+
+        Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);
     }
 }

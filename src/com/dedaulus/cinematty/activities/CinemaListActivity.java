@@ -62,13 +62,12 @@ public class CinemaListActivity extends Activity {
                 }
             });
         }
-
-        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder()));
     }
 
     @Override
     protected void onResume() {
         mCurrentState = mApp.getCurrentState();
+        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder()));
 
         super.onResume();
     }

@@ -17,7 +17,6 @@
     <string name="minute">мин.</string>
     <string name="unknown">неизвестно</string>
     <string name="look_for_schedule">Посмотреть сеансы</string>
-    <string name="look_for_all_schedule">Посмотреть все сеансы</string>
 
     <string name="schedule_enum">Сеансы</string>
     <string name="no_schedule">сеансов нет</string>

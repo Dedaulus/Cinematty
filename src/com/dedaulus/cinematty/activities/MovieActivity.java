@@ -63,11 +63,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
             }
         });
 
-        if (mCurrentState.cinema == null) {
-            btn.setText(getString(R.string.look_for_schedule));
-        } else {
-            btn.setText(getString(R.string.look_for_all_schedule));
-        }
+        btn.setText(getString(R.string.look_for_schedule));
     }
 
     @Override
