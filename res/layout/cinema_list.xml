@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#ffffff">
+    style="@style/Background">
 
     <TextView
         android:id="@+id/movie_caption_in_cinema_list"
@@ -14,11 +12,7 @@
 
     <ListView
         android:id="@+id/cinema_list"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
         android:layout_below="@id/movie_caption_in_cinema_list"
-        android:divider="@drawable/list_divider"
-        android:dividerHeight="1px"
-        android:cacheColorHint="#ffffff"/>
+        style="@style/List.Cinemas"/>
 
 </RelativeLayout>

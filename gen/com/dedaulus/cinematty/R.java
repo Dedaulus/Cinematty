@@ -20,65 +20,65 @@ public final class R {
         public static final int movie_data_divider=0x7f020006;
     }
     public static final class id {
-        public static final int actor_caption_in_actor_list=0x7f060000;
-        public static final int actor_list=0x7f060002;
-        public static final int actors_label=0x7f06001f;
-        public static final int address_divider=0x7f06000a;
-        public static final int advanced_cinema_panel=0x7f060003;
-        public static final int advanced_data_in_cinema_list=0x7f060014;
-        public static final int advanced_movie_panel=0x7f060021;
-        public static final int call_ico=0x7f060010;
-        public static final int cinema_address=0x7f06000c;
-        public static final int cinema_address_panel=0x7f060009;
-        public static final int cinema_caption=0x7f060007;
-        public static final int cinema_caption_in_cinema_list=0x7f060013;
-        public static final int cinema_caption_in_movie_list=0x7f060036;
-        public static final int cinema_caption_in_schedule_list=0x7f060016;
-        public static final int cinema_caption_panel=0x7f060006;
-        public static final int cinema_list=0x7f060019;
-        public static final int cinema_metro=0x7f06000d;
-        public static final int cinema_phone=0x7f060011;
-        public static final int cinema_phone_panel=0x7f06000e;
-        public static final int cinema_url=0x7f060008;
-        public static final int cinemas_label=0x7f06001d;
-        public static final int fav_icon_in_cinema_info=0x7f060005;
-        public static final int fav_icon_in_cinema_list=0x7f060012;
-        public static final int fav_icon_in_schedule_list=0x7f060015;
-        public static final int genre_caption_in_genre_list=0x7f06001a;
-        public static final int genre_list=0x7f06001c;
-        public static final int genres_label=0x7f060020;
-        public static final int map_ico=0x7f06000b;
-        public static final int menu_cinema_list_sort=0x7f060038;
-        public static final int movie_actors=0x7f06002c;
-        public static final int movie_actors_panel=0x7f06002b;
-        public static final int movie_caption=0x7f060024;
-        public static final int movie_caption_in_actor_list=0x7f060001;
-        public static final int movie_caption_in_cinema_list=0x7f060018;
-        public static final int movie_caption_in_genre_list=0x7f06001b;
-        public static final int movie_caption_in_movie_list=0x7f060032;
-        public static final int movie_description=0x7f06002e;
-        public static final int movie_description_panel=0x7f06002d;
-        public static final int movie_genre=0x7f06002a;
-        public static final int movie_genre_in_movie_list=0x7f060033;
-        public static final int movie_genre_panel=0x7f060029;
-        public static final int movie_icon=0x7f060023;
-        public static final int movie_icon_loading=0x7f060022;
-        public static final int movie_length=0x7f060025;
-        public static final int movie_list=0x7f060037;
-        public static final int movie_list_icon=0x7f060031;
-        public static final int movie_list_icon_loading=0x7f060030;
-        public static final int movie_list_icon_panel=0x7f06002f;
-        public static final int movie_schedule_enum_panel=0x7f060027;
-        public static final int movie_schedule_in_movie_list=0x7f060034;
-        public static final int movie_trailer_url=0x7f060026;
-        public static final int movies_label=0x7f06001e;
-        public static final int phone_divider=0x7f06000f;
-        public static final int schedule_enum_for_one_cinema=0x7f060028;
-        public static final int schedule_enum_in_schedule_list=0x7f060017;
-        public static final int show_schedules_button=0x7f060004;
-        public static final int submenu_sort_by_caption=0x7f060039;
-        public static final int submenu_sort_by_favourite=0x7f06003a;
-        public static final int time_left_in_movie_list=0x7f060035;
+        public static final int actor_caption_in_actor_list=0x7f070000;
+        public static final int actor_list=0x7f070002;
+        public static final int actors_label=0x7f07001f;
+        public static final int address_divider=0x7f07000a;
+        public static final int advanced_cinema_panel=0x7f070003;
+        public static final int advanced_data_in_cinema_list=0x7f070014;
+        public static final int advanced_movie_panel=0x7f070021;
+        public static final int call_ico=0x7f070010;
+        public static final int cinema_address=0x7f07000c;
+        public static final int cinema_address_panel=0x7f070009;
+        public static final int cinema_caption=0x7f070007;
+        public static final int cinema_caption_in_cinema_list=0x7f070013;
+        public static final int cinema_caption_in_movie_list=0x7f070036;
+        public static final int cinema_caption_in_schedule_list=0x7f070016;
+        public static final int cinema_caption_panel=0x7f070006;
+        public static final int cinema_list=0x7f070019;
+        public static final int cinema_metro=0x7f07000d;
+        public static final int cinema_phone=0x7f070011;
+        public static final int cinema_phone_panel=0x7f07000e;
+        public static final int cinema_url=0x7f070008;
+        public static final int cinemas_label=0x7f07001d;
+        public static final int fav_icon_in_cinema_info=0x7f070005;
+        public static final int fav_icon_in_cinema_list=0x7f070012;
+        public static final int fav_icon_in_schedule_list=0x7f070015;
+        public static final int genre_caption_in_genre_list=0x7f07001a;
+        public static final int genre_list=0x7f07001c;
+        public static final int genres_label=0x7f070020;
+        public static final int map_ico=0x7f07000b;
+        public static final int menu_cinema_list_sort=0x7f070038;
+        public static final int movie_actors=0x7f07002c;
+        public static final int movie_actors_panel=0x7f07002b;
+        public static final int movie_caption=0x7f070024;
+        public static final int movie_caption_in_actor_list=0x7f070001;
+        public static final int movie_caption_in_cinema_list=0x7f070018;
+        public static final int movie_caption_in_genre_list=0x7f07001b;
+        public static final int movie_caption_in_movie_list=0x7f070032;
+        public static final int movie_description=0x7f07002e;
+        public static final int movie_description_panel=0x7f07002d;
+        public static final int movie_genre=0x7f07002a;
+        public static final int movie_genre_in_movie_list=0x7f070033;
+        public static final int movie_genre_panel=0x7f070029;
+        public static final int movie_icon=0x7f070023;
+        public static final int movie_icon_loading=0x7f070022;
+        public static final int movie_length=0x7f070025;
+        public static final int movie_list=0x7f070037;
+        public static final int movie_list_icon=0x7f070031;
+        public static final int movie_list_icon_loading=0x7f070030;
+        public static final int movie_list_icon_panel=0x7f07002f;
+        public static final int movie_schedule_enum_panel=0x7f070027;
+        public static final int movie_schedule_in_movie_list=0x7f070034;
+        public static final int movie_trailer_url=0x7f070026;
+        public static final int movies_label=0x7f07001e;
+        public static final int phone_divider=0x7f07000f;
+        public static final int schedule_enum_for_one_cinema=0x7f070028;
+        public static final int schedule_enum_in_schedule_list=0x7f070017;
+        public static final int show_schedules_button=0x7f070004;
+        public static final int submenu_sort_by_caption=0x7f070039;
+        public static final int submenu_sort_by_favourite=0x7f07003a;
+        public static final int time_left_in_movie_list=0x7f070035;
     }
     public static final class layout {
         public static final int actor_item=0x7f030000;
@@ -96,7 +96,7 @@ public final class R {
         public static final int movie_list=0x7f03000c;
     }
     public static final class menu {
-        public static final int cinema_list_menu=0x7f050000;
+        public static final int cinema_list_menu=0x7f060000;
     }
     public static final class string {
         public static final int actors=0x7f04000a;
@@ -125,5 +125,21 @@ public final class R {
         public static final int wait_dialog_caption=0x7f040005;
         public static final int wait_dialog_text=0x7f040006;
         public static final int youtube_search_url=0x7f040019;
+    }
+    public static final class style {
+        public static final int Background=0x7f050000;
+        public static final int List=0x7f050001;
+        public static final int List_Cinemas=0x7f050002;
+        public static final int List_Movies=0x7f050003;
+        public static final int ListItem=0x7f050004;
+        public static final int ListItem_Caption=0x7f050005;
+        public static final int ListItem_Caption_Cinema=0x7f050006;
+        public static final int ListItem_Caption_Movie=0x7f050007;
+        public static final int ListItem_Data=0x7f050008;
+        public static final int ListItem_Data_CinemaAddress=0x7f050009;
+        public static final int ListItem_Data_CinemaSchedule=0x7f05000a;
+        public static final int ListItem_Data_MovieGenre=0x7f05000b;
+        public static final int ListItem_Data_MovieSchedule=0x7f05000c;
+        public static final int ListItem_Data_MovieTimeLeft=0x7f05000d;
     }
 }

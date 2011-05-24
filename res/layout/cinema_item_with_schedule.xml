@@ -24,18 +24,11 @@
 
         <TextView
             android:id="@+id/cinema_caption_in_schedule_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textSize="18dp"
-            android:textColor="#000000"/>
+            style="@style/ListItem.Caption.Cinema"/>
 
         <TextView
             android:id="@+id/schedule_enum_in_schedule_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#4d67a2"/>
+            style="@style/ListItem.Data.CinemaSchedule"/>
 
     </LinearLayout>
 

@@ -45,38 +45,22 @@
 
         <TextView
             android:id="@+id/movie_caption_in_movie_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textSize="18dp"
-            android:textColor="#000000"/>
+            style="@style/ListItem.Caption.Movie"/>
 
         <TextView
             android:id="@+id/movie_genre_in_movie_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textColor="#404040"
-            android:layout_below="@id/movie_caption_in_movie_list"/>
+            android:layout_below="@id/movie_caption_in_movie_list"
+            style="@style/ListItem.Data.MovieGenre"/>
 
         <TextView
             android:id="@+id/movie_schedule_in_movie_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:paddingRight="4dp"
-            android:textColor="#4d67a2"
-            android:layout_below="@id/movie_genre_in_movie_list"/>
+            android:layout_below="@id/movie_genre_in_movie_list"
+            style="@style/ListItem.Data.MovieSchedule"/>
 
         <TextView
             android:id="@+id/time_left_in_movie_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#404040"
-            android:layout_below="@id/movie_schedule_in_movie_list"/>
+            android:layout_below="@id/movie_schedule_in_movie_list"
+            style="@style/ListItem.Data.MovieTimeLeft"/>
 
     </RelativeLayout>
 

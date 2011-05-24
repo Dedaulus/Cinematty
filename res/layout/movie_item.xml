@@ -46,20 +46,11 @@
 
         <TextView
             android:id="@+id/movie_caption_in_movie_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textSize="18dp"
-            android:textColor="#000000"/>
+            style="@style/ListItem.Caption.Movie"/>
 
         <TextView
             android:id="@+id/movie_genre_in_movie_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textColor="#404040"
+            style="@style/ListItem.Data.MovieGenre"
             android:layout_below="@id/movie_caption_in_movie_list"/>
 
     </RelativeLayout>

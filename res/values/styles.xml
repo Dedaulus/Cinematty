@@ -1,0 +1,50 @@
+<resources>
+    <style name="Background">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">#ffffff</item>
+    </style>
+
+    <style name="List">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:divider">@drawable/list_divider</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:cacheColorHint">#ffffff</item>
+    </style>
+
+    <style name="List.Cinemas"/>
+    <style name="List.Movies"/>
+
+    <style name="ListItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ListItem.Caption">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="ListItem.Caption.Cinema"/>
+    <style name="ListItem.Caption.Movie"/>
+
+    <style name="ListItem.Data">
+        <item name="android:textColor">#404040</item>
+    </style>
+
+    <style name="ListItem.Data.CinemaAddress"/>
+    <style name="ListItem.Data.CinemaSchedule">
+        <item name="android:singleLine">false</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:textColor">#4d67a2</item>
+    </style>
+    <style name="ListItem.Data.MovieGenre"/>
+    <style name="ListItem.Data.MovieSchedule">
+        <item name="android:textColor">#4d67a2</item>
+    </style>
+    <style name="ListItem.Data.MovieTimeLeft"/>
+
+</resources>
