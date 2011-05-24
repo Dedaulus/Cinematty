@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textSize="30dp"
-        android:textColor="#000000"/>
+        android:textColor="#ffffff"/>
 
     <ListView
         android:id="@+id/cinema_list"

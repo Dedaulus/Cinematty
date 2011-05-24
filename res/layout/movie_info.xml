@@ -69,14 +69,14 @@
                         android:layout_width="fill_parent"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        android:textColor="#000000"/>
+                        android:textColor="#ffffff"/>
 
                     <TextView
                         android:id="@+id/movie_length"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:textSize="16dp"
-                        android:textColor="#404040"/>
+                        android:textColor="#c0c0c0"/>
 
                     <TextView
                         android:id="@+id/movie_trailer_url"
@@ -84,7 +84,7 @@
                         android:layout_width="fill_parent"
                         android:paddingTop="8dp"
                         android:textSize="16dp"
-                        android:textColor="#0000ff"/>
+                        android:textColor="#0094FF"/>
 
                 </LinearLayout>
 
@@ -116,7 +116,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#000000"/>
+                    android:textColor="#c0c0c0"/>
 
             </LinearLayout>
 
@@ -146,7 +146,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#000000"/>
+                    android:textColor="#c0c0c0"/>
 
             </LinearLayout>
 
@@ -176,7 +176,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#000000"/>
+                    android:textColor="#c0c0c0"/>
 
             </LinearLayout>
 
@@ -206,7 +206,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#000000"/>
+                    android:textColor="#c0c0c0"/>
 
             </LinearLayout>
 
