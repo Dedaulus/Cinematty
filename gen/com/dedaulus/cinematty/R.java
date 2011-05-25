@@ -18,6 +18,7 @@ public final class R {
         public static final int icon=0x7f020004;
         public static final int list_divider=0x7f020005;
         public static final int movie_data_divider=0x7f020006;
+        public static final int picture_border=0x7f020007;
     }
     public static final class id {
         public static final int actor_caption_in_actor_list=0x7f070000;
@@ -140,6 +141,8 @@ public final class R {
         public static final int ListItem_Data_CinemaSchedule=0x7f05000a;
         public static final int ListItem_Data_MovieGenre=0x7f05000b;
         public static final int ListItem_Data_MovieSchedule=0x7f05000c;
+        /**  0094FF 
+         */
         public static final int ListItem_Data_MovieTimeLeft=0x7f05000d;
     }
 }

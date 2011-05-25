@@ -39,12 +39,13 @@
     <style name="ListItem.Data.CinemaSchedule">
         <item name="android:singleLine">false</item>
         <item name="android:ellipsize">none</item>
-        <item name="android:textColor">#0094FF</item>
+        <item name="android:textColor">#FF6A00</item>
     </style>
     <style name="ListItem.Data.MovieGenre"/>
     <style name="ListItem.Data.MovieSchedule">
-        <item name="android:textColor">#0094FF</item>
+        <item name="android:textColor">#FF6A00</item>
     </style>
+    <!-- 0094FF -->
     <style name="ListItem.Data.MovieTimeLeft"/>
 
 </resources>

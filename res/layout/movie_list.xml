@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textSize="30dp"
-        android:textColor="#ffffff"
+        android:textColor="#FF6A00"
         android:onClick="onCinemaClick"/>
 
     <ListView

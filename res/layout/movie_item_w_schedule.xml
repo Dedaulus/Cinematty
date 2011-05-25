@@ -30,9 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_alignParentTop="true"
-            android:paddingRight="6dp"
+            android:layout_marginRight="6dp"
             android:adjustViewBounds="true"
             android:maxWidth="62dp"
+            android:background="@drawable/picture_border"
             android:src="@drawable/ic_blank_movie"/>
 
     </LinearLayout>
