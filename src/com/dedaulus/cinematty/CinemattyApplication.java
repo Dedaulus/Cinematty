@@ -37,7 +37,7 @@ public class CinemattyApplication extends Application {
 
     public void retrieveData() {
         // TODO: this MUST be replaced when method for get current city will be released!
-        ScheduleReceiver receiver = new ScheduleReceiver(getString(R.string.settings_url) + "/spb_schedule.xml");
+        ScheduleReceiver receiver = new ScheduleReceiver(this, "spb_schedule.xml");
         StringBuffer pictureFolder = new StringBuffer();
 
         receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder);
