@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        style="@android:style/Widget.ProgressBar.Inverse"/>
+                        style="@android:style/Widget.ProgressBar"/>
 
                 </RelativeLayout>
 
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:paddingRight="6dp"
+                    android:layout_marginRight="6dp"
                     android:adjustViewBounds="true"
                     android:maxWidth="100dp"/>
 
