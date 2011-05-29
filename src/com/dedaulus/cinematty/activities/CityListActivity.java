@@ -59,6 +59,15 @@ public class CityListActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        int id = mCities.indexOf(new City(mApp.getCurrentCityId(), null, null));
+        ListView list = (ListView)findViewById(R.id.city_list);
+        list.smoothScrollToPosition(id);
+
+        super.onResume();
+    }
+
     private void onCityItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TextView textView = (TextView)view.findViewById(R.id.city_caption_in_city_list);
         String caption = textView.getText().toString();

@@ -91,8 +91,10 @@ public class CinemaActivity extends Activity {
             }
 
             view.setVisibility(View.VISIBLE);
+            findViewById(R.id.address_divider).setVisibility(View.VISIBLE);
         } else {
             view.setVisibility(View.GONE);
+            findViewById(R.id.address_divider).setVisibility(View.GONE);
         }
     }
 
@@ -103,9 +105,11 @@ public class CinemaActivity extends Activity {
             phone.setText(mCurrentState.cinema.getPhone());
 
             view.setVisibility(View.VISIBLE);
+            findViewById(R.id.phone_divider).setVisibility(View.VISIBLE);
         }
         else {
             view.setVisibility(View.GONE);
+            findViewById(R.id.phone_divider).setVisibility(View.GONE);
         }
     }
 

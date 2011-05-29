@@ -96,6 +96,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
             Bitmap picture = mPictureRetriever.getPicture(picId, PictureType.LIST_BIG);
             if (picture != null) {
                 imageView.setImageBitmap(picture);
+                imageView.setBackgroundResource(R.drawable.picture_border);
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, this);
@@ -103,6 +104,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
             }
         } else {
             imageView.setImageResource(R.drawable.ic_blank_movie);
+            imageView.setBackgroundResource(0);
             imageView.setVisibility(View.VISIBLE);
         }
 

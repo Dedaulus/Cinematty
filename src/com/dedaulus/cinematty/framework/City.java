@@ -5,7 +5,7 @@ package com.dedaulus.cinematty.framework;
  * Date: 28.05.11
  * Time: 15:27
  */
-public class City {
+public class City implements Comparable<City> {
     private int mId;
     private String mName;
     private String mFileName;
@@ -26,5 +26,32 @@ public class City {
 
     public String getFileName() {
         return mFileName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        City city = (City) o;
+
+        if (mId != city.mId) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return mId;
+    }
+
+    public int compareTo(City city) {
+        if (this == city) return 0;
+        if (city == null) return 1;
+
+        if (mId > city.mId) return 1;
+        else if (mId < city.mId) return -1;
+        else return 0;
+
     }
 }

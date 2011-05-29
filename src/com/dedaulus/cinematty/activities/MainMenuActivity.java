@@ -32,35 +32,6 @@ public class MainMenuActivity extends Activity {
 
         TextView cityLabel = (TextView)findViewById(R.id.city_caption);
         cityLabel.setText(mApp.getCurrentCity().getName());
-
-        TextView cinemasLabel = (TextView)findViewById(R.id.cinemas_label);
-        cinemasLabel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onCinemaClick(view);
-            }
-        });
-
-        TextView moviesLabel = (TextView)findViewById(R.id.movies_label);
-        moviesLabel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onMoviesClick(view);
-            }
-        });
-
-        TextView actorsLabel = (TextView)findViewById(R.id.actors_label);
-        actorsLabel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onActorsClick(view);
-            }
-        });
-
-        TextView genresLabel = (TextView)findViewById(R.id.genres_label);
-        genresLabel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onGenresClick(view);
-            }
-        });
-
     }
 
     public void onCityClick(View view) {
