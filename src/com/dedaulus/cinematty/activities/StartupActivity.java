@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -16,16 +17,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.List;
 
 public class StartupActivity extends Activity
 {
     private static final int GET_CURRENT_CITY = RESULT_FIRST_USER + 1;
-    private static final int GET_CITIES_TIMEOUT = 10000;
-    private static final int GET_SCHEDULE_TIMEOUT = 15000;
+    private static final int GET_CITIES_TIMEOUT = 5000;
+    private static final int GET_SCHEDULE_TIMEOUT = 10000;
 
     private CinemattyApplication mApp;
     private String mErrorString;
@@ -63,12 +62,38 @@ public class StartupActivity extends Activity
         }
     }
 
-    public void setErrorString(String errorString) {
-        mErrorString = errorString;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // This is need due to frozen internet connection
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
 
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void onTryAgainClick(View view) {
+        deleteFile(getString(R.string.cities_file));
+
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
+    private void setErrorString(String errorString, String errorMessage) {
         TextView textView = (TextView)findViewById(R.id.error_string);
-        textView.setText(mErrorString);
-        textView.setVisibility(View.VISIBLE);
+        textView.setText(errorString);
+
+        textView = (TextView)findViewById(R.id.error_message);
+        textView.setText(errorMessage);
+
+        findViewById(R.id.loading_schedule_panel).setVisibility(View.INVISIBLE);
+        findViewById(R.id.loading_cities_panel).setVisibility(View.INVISIBLE);
+        findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -112,6 +137,7 @@ public class StartupActivity extends Activity
         if (download) {
             (mGetScheduleTask = new AsyncTask<Void, Void, Void>() {
                 private String error;
+                private String message = getString(R.string.unknown_error);
                 private boolean success = false;
 
                 @Override
@@ -119,6 +145,12 @@ public class StartupActivity extends Activity
                     try {
                         mApp.retrieveData();
                         success = true;
+                    } catch (UnknownHostException e) {
+                        error = e.toString();
+                        message = getString(R.string.connect_error);
+                    } catch (SocketException e) {
+                        error = e.toString();
+                        message = getString(R.string.connect_error);
                     } catch (IOException e) {
                         error = e.toString();
                     } catch (ParserConfigurationException e) {
@@ -133,7 +165,7 @@ public class StartupActivity extends Activity
                 @Override
                 protected void onPostExecute(Void nothing) {
                     if (success) getSchedule(false);
-                    else setErrorString(error);
+                    else setErrorString(error, message);
                 }
             }).execute();
         } else {
@@ -148,6 +180,7 @@ public class StartupActivity extends Activity
         if (download) {
             (mGetCitiesTask = new AsyncTask<String, Void, Void>() {
                 private String error;
+                private String message = getString(R.string.unknown_error);
                 private boolean success = false;
 
                 @Override
@@ -161,6 +194,12 @@ public class StartupActivity extends Activity
                         dumpStream(is);
 
                         success = true;
+                    } catch (UnknownHostException e) {
+                        error = e.toString();
+                        message = getString(R.string.connect_error);
+                    } catch (SocketException e) {
+                        error = e.toString();
+                        message = getString(R.string.connect_error);
                     } catch (MalformedURLException e) {
                         error = e.toString();
                     } catch (IOException e) {
@@ -173,7 +212,7 @@ public class StartupActivity extends Activity
                 @Override
                 protected void onPostExecute(Void nothing) {
                     if (success) getCitiesList(false);
-                    else setErrorString(error);
+                    else setErrorString(error, message);
                 }
             }).execute(getString(R.string.settings_url) + "/" + getString(R.string.cities_file));
         } else {

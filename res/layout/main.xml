@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background">
+
+    <RelativeLayout
+        android:id="@+id/loading_error_panel"
+        android:layout_margin="4dp"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:visibility="invisible"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="16dp"
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/error_string"
+            android:layout_marginTop="2dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/error_message"/>
+
+        <Button
+            android:layout_marginBottom="2dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/try_again"
+            android:onClick="onTryAgainClick"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/loading_schedules"
@@ -40,13 +75,6 @@
             android:textColor="#FF6A00"
             android:textSize="26dp"/>
 
-        <TextView
-            android:id="@+id/error_string"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -75,15 +103,7 @@
                 android:text="@string/loading_cities"/>
 
         </LinearLayout>
-        <!--
-        <TextView
-            android:id="@+id/error_string"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"/>
-        -->
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -4,6 +4,10 @@
 
     <string name="loading_schedule">Загружается расписание...</string>
     <string name="loading_cities">Загружается список городов...</string>
+    <string name="try_again">Попробовать еще раз</string>
+
+    <string name="unknown_error">Произошла непредвиденная ошибка</string>
+    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ к интернет</string>
 
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
