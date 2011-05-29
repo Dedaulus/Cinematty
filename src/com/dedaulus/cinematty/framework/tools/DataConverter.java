@@ -1,8 +1,10 @@
 package com.dedaulus.cinematty.framework.tools;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
@@ -113,7 +115,9 @@ public class DataConverter {
                 SpannableString str = new SpannableString(times.toString());
 
                 if (outdateEndIndex != 0) {
-                    str.setSpan(new StrikethroughSpan(), 0, outdateEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    int endPosition = outdateEndIndex >= str.length() ? str.length() : outdateEndIndex + 1;
+                    str.setSpan(new StrikethroughSpan(), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    str.setSpan(new ForegroundColorSpan(Color.rgb(192, 192, 192)), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 return str;

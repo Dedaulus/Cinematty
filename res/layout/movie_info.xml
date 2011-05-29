@@ -116,7 +116,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#c0c0c0"/>
+                    android:textColor="#FF6A00"/>
 
             </LinearLayout>
 
