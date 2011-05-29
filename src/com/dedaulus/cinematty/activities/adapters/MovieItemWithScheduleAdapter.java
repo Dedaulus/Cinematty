@@ -218,8 +218,8 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
         }
     }
 
-    public void onPictureReceive(String picId, int pictureType) {
-        mPicturesUpdated = true;
+    public void onPictureReceive(String picId, int pictureType, boolean success) {
+        mPicturesUpdated = success;
     }
 
     public boolean isUpdateNeeded() {

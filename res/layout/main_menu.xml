@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Background">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_margin="6dp"
+            android:onClick="onCityClick">
+
+            <ImageView
+                android:id="@+id/select_city_ico"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/circle_arrow"/>
+
+            <TextView
+                android:id="@+id/city_caption"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/select_city_ico"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="#FF6A00"
+                android:textSize="26dp"/>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/cinemas_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cinemas_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/movies_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/movies_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/actors_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/actors_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+        <TextView
+            android:id="@+id/genres_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genres_caption"
+            android:textSize="40dp"
+            android:textColor="#ffffff"
+            android:paddingTop="10dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

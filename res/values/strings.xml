@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cinematty</string>
+
+    <string name="loading_schedule">Загружается расписание...</string>
+    <string name="loading_cities">Загружается список городов...</string>
+
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
     <string name="actors_caption">Актёры</string>
@@ -29,6 +33,7 @@
     <string name="sort_by_fav">Сначала любимые</string>
     <string name="sort_by_caption">По названию</string>
 
+    <string name="cities_file">cities.xml</string>
     <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
 </resources>

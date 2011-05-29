@@ -216,8 +216,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         startActivity(intent);
     }
 
-    public void onPictureReceive(String picId, int pictureType) {
-        mPictureReady = true;
+    public void onPictureReceive(String picId, int pictureType, boolean success) {
+        mPictureReady = success;
     }
 
     public boolean isUpdateNeeded() {

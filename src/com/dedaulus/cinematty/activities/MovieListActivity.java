@@ -42,32 +42,41 @@ public class MovieListActivity extends Activity {
         mApp = (CinemattyApplication)getApplication();
         mCurrentState = mApp.getCurrentState();
 
+        View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
+        View iconView = findViewById(R.id.select_cinema_ico);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
         if (mCurrentState.cinema != null) {
-            captionLabel.setVisibility(View.VISIBLE);
             captionLabel.setText(mCurrentState.cinema.getCaption());
-            captionLabel.setOnClickListener(new View.OnClickListener() {
+            captionView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     onCinemaClick(view);
                 }
             });
-            mScopeMovies = mCurrentState.cinema.getMovies();
 
+            mScopeMovies = mCurrentState.cinema.getMovies();
             list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mCurrentState.cinema, mApp.getPictureRetriever()));
+
+            captionView.setVisibility(View.VISIBLE);
+            iconView.setVisibility(View.VISIBLE);
         } else {
+            iconView.setVisibility(View.GONE);
+
             if (mCurrentState.actor != null) {
-                captionLabel.setVisibility(View.VISIBLE);
                 captionLabel.setText(mCurrentState.actor.getActor());
                 mScopeMovies = mCurrentState.actor.getMovies();
+
+                captionView.setVisibility(View.VISIBLE);
             } else if (mCurrentState.genre != null) {
-                captionLabel.setVisibility(View.VISIBLE);
                 captionLabel.setText(mCurrentState.genre.getGenre());
                 mScopeMovies = mCurrentState.genre.getMovies();
+
+                captionView.setVisibility(View.VISIBLE);
             } else {
-                captionLabel.setVisibility(View.GONE);
                 mScopeMovies = mApp.getMovies();
+
+                captionView.setVisibility(View.GONE);
             }
 
             list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));

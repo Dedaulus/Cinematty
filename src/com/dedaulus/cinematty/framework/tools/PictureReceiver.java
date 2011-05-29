@@ -6,5 +6,5 @@ package com.dedaulus.cinematty.framework.tools;
  * Time: 18:58
  */
 public interface PictureReceiver {
-    void onPictureReceive(String picId, int pictureType);
+    void onPictureReceive(String picId, int pictureType, boolean success);
 }

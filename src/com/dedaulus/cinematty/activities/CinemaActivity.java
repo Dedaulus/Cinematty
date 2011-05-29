@@ -136,7 +136,7 @@ public class CinemaActivity extends Activity {
 
     public void onAddressClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:0,0?q=Россия, Санкт-Петербург, " + mCurrentState.cinema.getAddress()));
+        intent.setData(Uri.parse("geo:0,0?q=Россия, " + mApp.getCurrentCity().getName() + ", " + mCurrentState.cinema.getAddress()));
         startActivity(intent);
     }
 

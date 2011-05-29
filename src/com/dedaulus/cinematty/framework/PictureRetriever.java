@@ -166,7 +166,6 @@ public class PictureRetriever implements Runnable {
     }
 
     private File getLocalPicturePath(String picId, int pictureType) {
-        //File path = mContext.getDir(mLocalPictureFolder, Context.MODE_PRIVATE);
         File path = mContext.getCacheDir();
         return new File(path, "pic_" + picId + "_" + pictureTypeToPostfix(pictureType) + ".jpg");
     }
@@ -199,14 +198,12 @@ public class PictureRetriever implements Runnable {
 
     private Bitmap loadPicture(String picId, int pictureType) {
         File picturePath = getLocalPicturePath(picId, pictureType);
-        InputStream is = null;
         try {
-            is = new FileInputStream(picturePath);
+            InputStream is = new FileInputStream(picturePath);
+            return BitmapFactory.decodeStream(is);
         } catch (FileNotFoundException e) {
             return null;
         }
-
-        return BitmapFactory.decodeStream(is);
     }
 
     public void run() {
@@ -230,7 +227,6 @@ public class PictureRetriever implements Runnable {
                 PictureReceiver receiver = task.second;
 
                 String from = getRemotePicturePath(picId, pictureType);
-
                 File to = getLocalPicturePath(picId, pictureType);
 
                 if (downloadPicture(from, to)) {
@@ -245,7 +241,9 @@ public class PictureRetriever implements Runnable {
                         mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
                     }
 
-                    task.second.onPictureReceive(picId, pictureType);
+                    receiver.onPictureReceive(picId, pictureType, true);
+                } else {
+                    receiver.onPictureReceive(picId, pictureType, false);
                 }
             }
         }

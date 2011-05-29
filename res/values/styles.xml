@@ -15,6 +15,9 @@
 
     <style name="List.Cinemas"/>
     <style name="List.Movies"/>
+    <style name="List.Cities">
+        <item name="android:divider">@drawable/cinema_data_divider</item>
+    </style>
 
     <style name="ListItem">
         <item name="android:layout_height">wrap_content</item>
@@ -30,6 +33,9 @@
 
     <style name="ListItem.Caption.Cinema"/>
     <style name="ListItem.Caption.Movie"/>
+    <style name="ListItem.Caption.City">
+        <item name="android:textSize">22dp</item>
+    </style>
 
     <style name="ListItem.Data">
         <item name="android:textColor">#c0c0c0</item>

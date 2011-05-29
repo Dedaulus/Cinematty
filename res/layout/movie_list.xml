@@ -3,17 +3,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background">
 
-    <TextView
-        android:id="@+id/cinema_caption_in_movie_list"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:textSize="26dp"
-        android:textColor="#FF6A00"
-        android:onClick="onCinemaClick"/>
+    <RelativeLayout
+            android:id="@+id/cinema_panel_in_movie_list"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+
+        <ImageView
+            android:id="@+id/select_cinema_ico"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/circle_arrow"/>
+
+        <TextView
+            android:id="@+id/cinema_caption_in_movie_list"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/select_cinema_ico"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="26dp"
+            android:textColor="#FF6A00"/>
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/movie_list"
-        android:layout_below="@id/cinema_caption_in_movie_list"
+        android:layout_below="@id/cinema_panel_in_movie_list"
         style="@style/List.Movies"/>
 
 </RelativeLayout>

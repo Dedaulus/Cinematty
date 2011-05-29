@@ -4,7 +4,10 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Stack;
 
@@ -19,6 +22,8 @@ public class CinemattyApplication extends Application {
     private UniqueSortedList<MovieActor> mActors;
     private UniqueSortedList<MovieGenre> mGenres;
 
+    private City mCurrentCity;
+
     private Stack<CurrentState> mState = new Stack<CurrentState>();
 
     private PictureRetriever mPictureRetriever = null;
@@ -27,6 +32,7 @@ public class CinemattyApplication extends Application {
     private static final String FAV_CINEMAS_FILE = "cinematty_fav_cinemas";
     private static final String PREFERENCES_FILE = "cinematty_preferences";
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
+    private static final String PREF_CURRENT_CITY = "current_city";
 
     {
         mCinemas = new UniqueSortedList<Cinema>(new DefaultComparator<Cinema>());
@@ -35,11 +41,9 @@ public class CinemattyApplication extends Application {
         mGenres = new UniqueSortedList<MovieGenre>(new DefaultComparator<MovieGenre>());
     }
 
-    public void retrieveData() {
-        // TODO: this MUST be replaced when method for get current city will be released!
-        ScheduleReceiver receiver = new ScheduleReceiver(this, "spb_schedule.xml");
+    public void retrieveData() throws IOException, ParserConfigurationException, SAXException {
+        ScheduleReceiver receiver = new ScheduleReceiver(this, mCurrentCity.getFileName());
         StringBuffer pictureFolder = new StringBuffer();
-
         receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder);
 
         String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
@@ -96,7 +100,7 @@ public class CinemattyApplication extends Application {
     }
 
     public void saveFavouriteCinemas() {
-        SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE + mCurrentCity.getId(), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         for (Cinema cinema : mCinemas) {
             if (cinema.getFavourite() > 0) {
@@ -110,7 +114,7 @@ public class CinemattyApplication extends Application {
     }
 
     private Map<String, ?> getFavouriteCinemas() {
-        SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE + mCurrentCity.getId(), MODE_PRIVATE);
         return preferences.getAll();
     }
 
@@ -131,5 +135,26 @@ public class CinemattyApplication extends Application {
         }
 
         return CinemaSortOrder.BY_CAPTION;
+    }
+
+    public void saveCurrentCityId(int id) {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREF_CURRENT_CITY, id);
+
+        editor.commit();
+    }
+
+    public int getCurrentCityId() {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        return preferences.getInt(PREF_CURRENT_CITY, 1);
+    }
+
+    public City getCurrentCity() {
+        return mCurrentCity;
+    }
+
+    public void setCurrentCity(City city) {
+        mCurrentCity = city;
     }
 }

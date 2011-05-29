@@ -133,8 +133,8 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
         return myView;
     }
 
-    public void onPictureReceive(String picId, int pictureType) {
-        mPicturesUpdated = true;
+    public void onPictureReceive(String picId, int pictureType, boolean success) {
+        mPicturesUpdated = success;
     }
 
     public boolean isUpdateNeeded() {

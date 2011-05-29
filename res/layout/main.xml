@@ -1,49 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/loading_schedules"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/loading_schedule_panel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="1dp"
+                 style="@android:style/Widget.ProgressBar.Small"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:textColor="#ffffff"
+                android:text="@string/loading_schedule"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/cinemas_label"
-            android:layout_width="fill_parent"
+            android:id="@+id/current_city"
+            android:paddingBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/loading_schedule_panel"
             android:layout_height="wrap_content"
-            android:text="@string/cinemas_caption"
-            android:textSize="40dp"
-            android:textColor="#ffffff"
-            android:paddingTop="10dp"/>
+            android:layout_width="wrap_content"
+            android:textColor="#FF6A00"
+            android:textSize="26dp"/>
 
         <TextView
-            android:id="@+id/movies_label"
-            android:layout_width="fill_parent"
+            android:id="@+id/error_string"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
-            android:text="@string/movies_caption"
-            android:textSize="40dp"
-            android:textColor="#ffffff"
-            android:paddingTop="10dp"/>
+            android:layout_width="wrap_content"/>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loading_cities"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/loading_cities_panel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="1dp"
+                 style="@android:style/Widget.ProgressBar.Small"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:textColor="#ffffff"
+                android:text="@string/loading_cities"/>
+
+        </LinearLayout>
+        <!--
         <TextView
-            android:id="@+id/actors_label"
-            android:layout_width="fill_parent"
+            android:id="@+id/error_string"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
-            android:text="@string/actors_caption"
-            android:textSize="40dp"
-            android:textColor="#ffffff"
-            android:paddingTop="10dp"/>
+            android:layout_width="wrap_content"/>
+        -->
 
-        <TextView
-            android:id="@+id/genres_label"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/genres_caption"
-            android:textSize="40dp"
-            android:textColor="#ffffff"
-            android:paddingTop="10dp"/>
+    </RelativeLayout>
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
