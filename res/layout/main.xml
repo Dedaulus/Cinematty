@@ -43,27 +43,29 @@
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/loading_schedule_panel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            android:layout_centerInParent="true">
 
             <ProgressBar
+                 android:id="@+id/loading_schedules_progress"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:layout_marginRight="1dp"
+                 android:layout_centerVertical="true"
                  style="@android:style/Widget.ProgressBar.Small"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/loading_schedules_progress"
+                android:layout_marginLeft="2dp"
                 android:textColor="#ffffff"
                 android:text="@string/loading_schedule"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/current_city"
@@ -82,7 +84,7 @@
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/loading_cities_panel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -90,19 +92,22 @@
             android:orientation="horizontal">
 
             <ProgressBar
+                 android:id="@+id/loading_cities_progress"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:layout_marginRight="1dp"
+                 android:layout_centerVertical="true"
                  style="@android:style/Widget.ProgressBar.Small"/>
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/loading_cities_progress"
+                android:layout_marginLeft="2dp"
                 android:textColor="#ffffff"
                 android:text="@string/loading_cities"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 
