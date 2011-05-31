@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_alignParentTop="true"
         android:onClick="onCityClick">
 
@@ -40,7 +40,7 @@
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:paddingBottom="10dp"
             android:onClick="onCinemaClick">
 
@@ -53,7 +53,7 @@
 
             <TextView
                 android:id="@+id/cinemas_label"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/cinemas_ico"
                 android:layout_centerVertical="true"
@@ -66,7 +66,7 @@
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:paddingBottom="10dp"
             android:onClick="onMoviesClick">
 
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/movies_label"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/movies_ico"
                 android:layout_centerVertical="true"
@@ -92,7 +92,7 @@
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:paddingBottom="10dp"
             android:onClick="onActorsClick">
 
@@ -105,7 +105,7 @@
 
             <TextView
                 android:id="@+id/actors_label"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/actors_ico"
                 android:layout_centerVertical="true"
@@ -118,7 +118,7 @@
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:paddingBottom="10dp"
             android:onClick="onGenresClick">
 
@@ -131,7 +131,7 @@
 
             <TextView
                 android:id="@+id/genres_label"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/genres_ico"
                 android:layout_centerVertical="true"
