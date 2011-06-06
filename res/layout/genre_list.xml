@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+    style="@style/Background">
     <TextView
         android:id="@+id/movie_caption_in_genre_list"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:textSize="30dp"
-        android:textColor="#ffffff"/>
+        style="@style/ListCaption.Movie"/>
 
     <ListView
         android:id="@+id/genre_list"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
+        style="@style/List.Genres"
         android:layout_below="@id/movie_caption_in_genre_list"/>
 
 </RelativeLayout>

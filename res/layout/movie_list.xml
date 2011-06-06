@@ -21,12 +21,7 @@
             android:id="@+id/cinema_caption_in_movie_list"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/select_cinema_ico"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:textSize="26dp"
-            android:textColor="#FF6A00"/>
+            style="@style/ListCaption.Cinema"/>
 
     </RelativeLayout>
 

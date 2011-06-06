@@ -5,12 +5,7 @@
 
     <TextView
         android:id="@+id/movie_caption_in_cinema_list"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textSize="26dp"
-        android:textColor="#FF6A00"/>
+        style="@style/ListCaption.Movie"/>
 
     <ListView
         android:id="@+id/cinema_list"
