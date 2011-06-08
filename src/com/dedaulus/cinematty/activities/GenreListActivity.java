@@ -65,7 +65,8 @@ public class GenreListActivity extends Activity {
     }
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String caption = ((TextView)view).getText().toString();
+        TextView textView = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
+        String caption = textView.getText().toString();
         int genreId = mApp.getGenres().indexOf(new MovieGenre(caption));
         if (genreId != -1) {
             CurrentState state = mCurrentState.clone();

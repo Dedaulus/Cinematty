@@ -65,7 +65,8 @@ public class ActorListActivity extends Activity {
     }
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        String caption = ((TextView)view).getText().toString();
+        TextView textView = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
+        String caption = textView.getText().toString();
         int actorId = mApp.getActors().indexOf(new MovieActor(caption));
         if (actorId != -1) {
             CurrentState state = mCurrentState.clone();
