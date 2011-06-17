@@ -16,19 +16,30 @@ import java.util.*;
  * Time: 22:50
  */
 public class ScheduleHandler extends DefaultHandler {
-    private static final String CINEMA_TAG          = "theater";
-    private static final String CINEMA_ID_ATTR      = "id";
-    private static final String CINEMA_TITLE_ATTR   = "title";
-    private static final String CINEMA_ADDRESS_ATTR = "address";
-    private static final String CINEMA_METRO_ATTR   = "metro";
-    private static final String CINEMA_PHONE_ATTR   = "phone";
-    private static final String CINEMA_URL_ATTR     = "www";
+    private static final String CINEMA_TAG               = "theater";
+    private static final String CINEMA_ID_ATTR           = "id";
+    private static final String CINEMA_TITLE_ATTR        = "title";
+    private static final String CINEMA_ADDRESS_ATTR      = "address";
+    private static final String CINEMA_LATITUDE_ATTR     = "latitude";
+    private static final String CINEMA_LONGITUDE_ATTR    = "longitude";
+    private static final String CINEMA_INTO_ATTR         = "into";
+    private static final String CINEMA_METRO_ATTR        = "metro";
+    private static final String CINEMA_PHONE_ATTR        = "phone";
+    private static final String CINEMA_URL_ATTR          = "www";
 
-    private static final String MOVIE_TAG = "movie";
+    private static final String MOVIE_TAG                = "movie";
+    private static final String MOVIE_TITLE_TAG          = "title";
+    private static final String MOVIE_PICID_TAG          = "picid";
+    private static final String MOVIE_LENGTH_TAG         = "length";
+    private static final String MOVIE_TYPE_TAG           = "type";
+    private static final String MOVIE_ID_TAG             = "id";
 
-    private static final String SHOWTIME_TAG = "showtime";
+    private static final String SHOWTIME_TAG             = "showtime";
+    private static final String SHOWTIME_THEATER_ID_TAG  = "theater_id";
+    private static final String SHOWTIME_MOVIE_ID_TAG    = "movie_id";
 
-    private static final String PICTURES_FOLDER_TAG = "pictures_folder";
+    private static final String PICTURES_FOLDER_TAG      = "pictures_folder";
+    private static final String PICTURES_FOLDER_NAME_TAG = "name";
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
 
@@ -79,20 +90,27 @@ public class ScheduleHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase(CINEMA_TAG)) {
             Cinema cinema = new Cinema(attributes.getValue(CINEMA_TITLE_ATTR));
             cinema.setAddress(attributes.getValue(CINEMA_ADDRESS_ATTR));
+            cinema.setInto(attributes.getValue(CINEMA_INTO_ATTR));
             cinema.setMetro(attributes.getValue(CINEMA_METRO_ATTR));
             cinema.setPhone(attributes.getValue(CINEMA_PHONE_ATTR));
             cinema.setUrl(attributes.getValue(CINEMA_URL_ATTR));
 
+            String latitude = attributes.getValue(CINEMA_LATITUDE_ATTR);
+            String longitude = attributes.getValue(CINEMA_LONGITUDE_ATTR);
+            if (latitude != null && longitude != null) {
+                cinema.setCoordinate(parseLatitude(latitude), parseLongitude(longitude));
+            }
+
             mCinemaIds.put(attributes.getValue(CINEMA_ID_ATTR), cinema);
         } else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
-            Movie movie = new Movie(attributes.getValue("title"));
+            Movie movie = new Movie(attributes.getValue(MOVIE_TITLE_TAG));
 
-            movie.setPicId(attributes.getValue("picid"));
+            movie.setPicId(attributes.getValue(MOVIE_PICID_TAG));
 
-            movie.setLengthInMinutes(parseLength(attributes.getValue("length")));
+            movie.setLengthInMinutes(parseLength(attributes.getValue(MOVIE_LENGTH_TAG)));
 
             // Get movie genres
-            List<String> genres = parseGenres(attributes.getValue("type"));
+            List<String> genres = parseGenres(attributes.getValue(MOVIE_TYPE_TAG));
             for (String genre : genres) {
                 MovieGenre movieGenre = mGenres.get(genre);
                 if (movieGenre == null) {
@@ -106,13 +124,13 @@ public class ScheduleHandler extends DefaultHandler {
             }
             ///
 
-            mMovieIds.put(attributes.getValue("id"), movie);
+            mMovieIds.put(attributes.getValue(MOVIE_ID_TAG), movie);
             mCurrentMovie = movie;
         } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
-            mCurrentCinema = mCinemaIds.get(attributes.getValue("theater_id"));
-            mCurrentMovie = mMovieIds.get(attributes.getValue("movie_id"));
+            mCurrentCinema = mCinemaIds.get(attributes.getValue(SHOWTIME_THEATER_ID_TAG));
+            mCurrentMovie = mMovieIds.get(attributes.getValue(SHOWTIME_MOVIE_ID_TAG));
         } else if (qName.equalsIgnoreCase(PICTURES_FOLDER_TAG)) {
-            mPictureFolder = attributes.getValue("name");
+            mPictureFolder = attributes.getValue(PICTURES_FOLDER_NAME_TAG);
         }
     }
 
@@ -214,5 +232,13 @@ public class ScheduleHandler extends DefaultHandler {
         }
 
         return list;
+    }
+
+    private double parseLatitude(String latitude) {
+        return Double.parseDouble(latitude);
+    }
+
+    private double parseLongitude(String longitude) {
+        return Double.parseDouble(longitude);
     }
 }
