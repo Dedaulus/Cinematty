@@ -10,8 +10,20 @@ import java.util.*;
  * Time: 21:58
  */
 public class Cinema implements Comparable<Cinema> {
+    public class Coordinate {
+        public Coordinate(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public double latitude;
+        public double longitude;
+    }
+
     private String mCaption;
+    private Coordinate mCoordinate;
     private String mAddress;
+    private String mInto;
     private String mMetro;
     private String mPhone;
     private String mUrl;
@@ -32,6 +44,22 @@ public class Cinema implements Comparable<Cinema> {
 
     public String getAddress() {
         return mAddress;
+    }
+
+    public void setCoordinate(double latitude, double longitude) {
+        mCoordinate = new Coordinate(latitude, longitude);
+    }
+
+    public Coordinate getCoordinate() {
+        return mCoordinate;
+    }
+
+    public void setInto(String into) {
+        mInto = into;
+    }
+
+    public String getInto() {
+        return mInto;
     }
 
     public void setMetro(String metro) {
