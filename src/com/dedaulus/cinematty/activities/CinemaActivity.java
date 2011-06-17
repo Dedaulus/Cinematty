@@ -81,10 +81,17 @@ public class CinemaActivity extends Activity {
             TextView address = (TextView)findViewById(R.id.cinema_address);
             address.setText(mCurrentState.cinema.getAddress());
 
+            TextView into = (TextView)findViewById(R.id.cinema_into);
+            if (mCurrentState.cinema.getInto() != null) {
+                into.setText(mCurrentState.cinema.getInto());
+                into.setVisibility(View.VISIBLE);
+            } else {
+                into.setVisibility(View.GONE);
+            }
+
             TextView metro = (TextView)findViewById(R.id.cinema_metro);
             if (mCurrentState.cinema.getMetro() != null) {
                 metro.setText(getString(R.string.metro_near) + ": " + mCurrentState.cinema.getMetro());
-
                 metro.setVisibility(View.VISIBLE);
             } else {
                 metro.setVisibility(View.GONE);

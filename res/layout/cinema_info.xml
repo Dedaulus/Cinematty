@@ -115,6 +115,13 @@
                         android:textColor="#ffffff"/>
 
                     <TextView
+                        android:id="@+id/cinema_into"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:textSize="16dp"
+                        android:textColor="#c0c0c0"/>
+
+                    <TextView
                         android:id="@+id/cinema_metro"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
