@@ -8,7 +8,7 @@ package com.dedaulus.cinematty.framework;
  * Ported from python code from http://gis-lab.info/qa/great-circles.html
  */
 public class DistanceCalc {
-    private static int radius = 6372795;
+    private static final int radius = 6372795;
 
     public static int getDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
         double lat1 = latitude1 * Math.PI / 180;
