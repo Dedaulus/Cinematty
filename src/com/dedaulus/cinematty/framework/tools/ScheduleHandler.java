@@ -98,7 +98,7 @@ public class ScheduleHandler extends DefaultHandler {
             String latitude = attributes.getValue(CINEMA_LATITUDE_ATTR);
             String longitude = attributes.getValue(CINEMA_LONGITUDE_ATTR);
             if (latitude != null && longitude != null) {
-                cinema.setCoordinate(parseLatitude(latitude), parseLongitude(longitude));
+                cinema.setCoordinate(new Coordinate(parseLatitude(latitude), parseLongitude(longitude)));
             }
 
             mCinemaIds.put(attributes.getValue(CINEMA_ID_ATTR), cinema);

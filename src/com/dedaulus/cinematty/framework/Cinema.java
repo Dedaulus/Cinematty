@@ -1,5 +1,6 @@
 package com.dedaulus.cinematty.framework;
 
+import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
 import java.util.*;
@@ -10,16 +11,6 @@ import java.util.*;
  * Time: 21:58
  */
 public class Cinema implements Comparable<Cinema> {
-    public class Coordinate {
-        public Coordinate(double latitude, double longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        public double latitude;
-        public double longitude;
-    }
-
     private String mCaption;
     private Coordinate mCoordinate;
     private String mAddress;
@@ -46,8 +37,8 @@ public class Cinema implements Comparable<Cinema> {
         return mAddress;
     }
 
-    public void setCoordinate(double latitude, double longitude) {
-        mCoordinate = new Coordinate(latitude, longitude);
+    public void setCoordinate(Coordinate coordinate) {
+        mCoordinate = coordinate;
     }
 
     public Coordinate getCoordinate() {
