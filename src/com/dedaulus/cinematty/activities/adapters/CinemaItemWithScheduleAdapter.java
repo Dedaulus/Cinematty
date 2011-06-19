@@ -1,6 +1,7 @@
 package com.dedaulus.cinematty.activities.adapters;
 
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.Calendar;
@@ -22,15 +24,17 @@ import java.util.List;
  * Date: 31.03.11
  * Time: 23:02
  */
-public class CinemaItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Cinema> {
+public class CinemaItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Cinema>, LocationAdapter {
     private Context mContext;
     private List<Cinema> mCinemas;
     private Movie mCurrentMovie;
+    private Location mCurrentLocation;
 
-    public CinemaItemWithScheduleAdapter(Context context, List<Cinema> cinemas, Movie currentMovie) {
+    public CinemaItemWithScheduleAdapter(Context context, List<Cinema> cinemas, Movie currentMovie, Location location) {
         mContext = context;
         mCinemas = cinemas;
         mCurrentMovie = currentMovie;
+        mCurrentLocation = location;
     }
 
     public int getCount() {
@@ -63,6 +67,18 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_schedule_list);
         text.setText(cinema.getCaption());
 
+        text = (TextView)view.findViewById(R.id.distance);
+        Coordinate coordinate = cinema.getCoordinate();
+        if (coordinate != null && mCurrentLocation != null) {
+            float[] distance = new float[1];
+            Location.distanceBetween(coordinate.latitude, coordinate.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), distance);
+            int m = (int)distance[0];
+            text.setText(DataConverter.metersToDistance(mContext, m));
+            text.setVisibility(View.VISIBLE);
+        } else {
+            text.setVisibility(View.GONE);
+        }
+
         text = (TextView)view.findViewById(R.id.schedule_enum_in_schedule_list);
         List<Calendar> showTimes = cinema.getShowTimes().get(mCurrentMovie);
         if (showTimes != null) {
@@ -86,6 +102,11 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
 
     public void sortBy(Comparator<Cinema> cinemaComparator) {
         Collections.sort(mCinemas, cinemaComparator);
+        notifyDataSetChanged();
+    }
+
+    public void setCurrentLocation(Location location) {
+        mCurrentLocation = location;
         notifyDataSetChanged();
     }
 }

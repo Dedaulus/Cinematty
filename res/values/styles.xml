@@ -3,6 +3,7 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:background">#2B2B2B</item>
+        <!--<item name="android:background">#000033</item>-->
     </style>
 
     <style name="List">
@@ -11,6 +12,7 @@
         <item name="android:divider">@drawable/list_divider</item>
         <item name="android:dividerHeight">1px</item>
         <item name="android:cacheColorHint">#2B2B2B</item>
+        <!--<item name="android:cacheColorHint">#000033</item>-->
     </style>
 
     <style name="List.Cinemas"/>
@@ -63,6 +65,9 @@
     </style>
 
     <style name="ListItem.Data.CinemaAddress"/>
+    <style name="ListItem.Data.CinemaDistance">
+        <item name="android:textColor">#ffffff</item>
+    </style>
     <style name="ListItem.Data.CinemaSchedule">
         <item name="android:singleLine">false</item>
         <item name="android:ellipsize">none</item>

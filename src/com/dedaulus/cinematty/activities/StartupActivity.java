@@ -40,6 +40,7 @@ public class StartupActivity extends Activity
         setContentView(R.layout.main);
 
         mApp = (CinemattyApplication)getApplication();
+        mApp.startListenLocation();
 
         try {
             FileInputStream is = openFileInput(getString(R.string.cities_file));

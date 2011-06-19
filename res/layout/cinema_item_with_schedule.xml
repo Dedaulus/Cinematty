@@ -27,6 +27,10 @@
             style="@style/ListItem.Caption.Cinema"/>
 
         <TextView
+            android:id="@+id/distance"
+            style="@style/ListItem.Data.CinemaDistance"/>
+
+        <TextView
             android:id="@+id/schedule_enum_in_schedule_list"
             style="@style/ListItem.Data.CinemaSchedule"/>
 

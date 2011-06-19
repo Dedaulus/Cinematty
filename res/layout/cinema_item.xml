@@ -26,9 +26,23 @@
             android:id="@+id/cinema_caption_in_cinema_list"
             style="@style/ListItem.Caption.Cinema"/>
 
-        <TextView
-            android:id="@+id/advanced_data_in_cinema_list"
-            style="@style/ListItem.Data.CinemaAddress"/>
+        <RelativeLayout
+            android:id="@+id/cinema_address_panel"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+
+            <TextView
+                android:id="@+id/distance"
+                style="@style/ListItem.Data.CinemaDistance"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:id="@+id/advanced_data_in_cinema_list"
+                style="@style/ListItem.Data.CinemaAddress"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/distance"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

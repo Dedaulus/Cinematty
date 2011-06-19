@@ -2,12 +2,19 @@ package com.dedaulus.cinematty;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -24,6 +31,28 @@ public class CinemattyApplication extends Application {
 
     private City mCurrentCity;
 
+    private boolean mLocationListenStarted = false;
+    private List<LocationClient> mLocationClients;
+    private final LocationListener mLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            updateCurrentLocation(location);
+        }
+
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        public void onProviderEnabled(String s) {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        public void onProviderDisabled(String s) {
+            //To change body of implemented methods use File | Settings | File Templates.
+        }
+    };
+
+    private Location mCurrentLocation;
+
     private Stack<CurrentState> mState = new Stack<CurrentState>();
 
     private PictureRetriever mPictureRetriever = null;
@@ -39,6 +68,7 @@ public class CinemattyApplication extends Application {
         mMovies = new UniqueSortedList<Movie>(new DefaultComparator<Movie>());
         mActors = new UniqueSortedList<MovieActor>(new DefaultComparator<MovieActor>());
         mGenres = new UniqueSortedList<MovieGenre>(new DefaultComparator<MovieGenre>());
+        mLocationClients = new ArrayList<LocationClient>();
     }
 
     public void retrieveData() throws IOException, ParserConfigurationException, SAXException {
@@ -156,5 +186,75 @@ public class CinemattyApplication extends Application {
 
     public void setCurrentCity(City city) {
         mCurrentCity = city;
+    }
+
+    public Location getCurrentLocation() {
+        return mCurrentLocation;
+    }
+
+    public void updateCurrentLocation(Location location) {
+        mCurrentLocation = LocationHelper.selectBetterLocation(location, mCurrentLocation);
+
+        for (LocationClient client : mLocationClients) {
+            client.onLocationChanged(location);
+        }
+    }
+
+    public void addLocationClient(LocationClient client) {
+        if (!mLocationClients.contains(client)) {
+            mLocationClients.add(client);
+        }
+    }
+
+    public void removeLocationClient(LocationClient client) {
+        mLocationClients.remove(client);
+    }
+
+    public void startListenLocation() {
+        if (mLocationListenStarted) return;
+
+        LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
+        Criteria criteria = new Criteria();
+
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        String coarseProvider = locationManager.getBestProvider(criteria, true);
+
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        String fineProvider = locationManager.getBestProvider(criteria, true);
+
+        Location coarseLocation = null;
+        if (coarseProvider != null) {
+            coarseLocation = locationManager.getLastKnownLocation(coarseProvider);
+            locationManager.requestLocationUpdates(coarseProvider, LocationHelper.TIME_LISTEN_TIMEOUT, 10, mLocationListener);
+        }
+
+        Location fineLocation = null;
+        if (fineProvider != null) {
+            fineLocation = locationManager.getLastKnownLocation(fineProvider);
+            locationManager.requestLocationUpdates(fineProvider, LocationHelper.TIME_LISTEN_TIMEOUT, 10, mLocationListener);
+        }
+
+        if (coarseLocation == null && fineLocation == null) {
+            mCurrentLocation = null;
+        } else if (coarseLocation != null && fineLocation == null) {
+            mCurrentLocation = coarseLocation;
+        } else if (fineLocation != null && coarseLocation == null) {
+            mCurrentLocation = fineLocation;
+        } else {
+            mCurrentLocation = LocationHelper.selectBetterLocation(coarseLocation, fineLocation);
+        }
+
+        mLocationListenStarted = true;
+    }
+
+    public void stopListenLocation() {
+        LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        locationManager.removeUpdates(mLocationListener);
+        locationManager.removeUpdates(mLocationListener);
     }
 }

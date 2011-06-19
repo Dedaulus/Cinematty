@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
@@ -12,11 +13,13 @@ import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
+import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.CinemaComparator;
 import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
 import com.dedaulus.cinematty.framework.tools.CurrentState;
+import com.dedaulus.cinematty.framework.tools.LocationClient;
 
 import java.util.ArrayList;
 
@@ -25,7 +28,7 @@ import java.util.ArrayList;
  * Date: 14.03.11
  * Time: 21:27
  */
-public class CinemaListActivity extends Activity {
+public class CinemaListActivity extends Activity implements LocationClient {
     private CinemattyApplication mApp;
     private CurrentState mCurrentState;
     private SortableAdapter<Cinema> mCinemaListAdapter;
@@ -43,7 +46,7 @@ public class CinemaListActivity extends Activity {
         if (mCurrentState.movie == null) {
             movieLabel.setVisibility(View.GONE);
 
-            mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()));
+            mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
             list.setAdapter(mCinemaListAdapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -54,7 +57,7 @@ public class CinemaListActivity extends Activity {
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(mCurrentState.movie.getCaption());
 
-            mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(mCurrentState.movie.getCinemas()), mCurrentState.movie);
+            mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(mCurrentState.movie.getCinemas()), mCurrentState.movie, mApp.getCurrentLocation());
             list.setAdapter(mCinemaListAdapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -67,13 +70,16 @@ public class CinemaListActivity extends Activity {
     @Override
     protected void onResume() {
         mCurrentState = mApp.getCurrentState();
-        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder()));
+
+        mApp.addLocationClient(this);
+        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
 
         super.onResume();
     }
 
     @Override
     protected void onPause() {
+        mApp.removeLocationClient(this);
         mApp.saveFavouriteCinemas();
 
         super.onPause();
@@ -103,6 +109,7 @@ public class CinemaListActivity extends Activity {
             break;
 
         case BY_DISTANCE:
+            menu.findItem(R.id.submenu_sort_by_distance).setChecked(true);
             break;
 
         default:
@@ -119,14 +126,20 @@ public class CinemaListActivity extends Activity {
             return true;
 
         case R.id.submenu_sort_by_caption:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION));
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
             mApp.saveCinemasSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_sort_by_favourite:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE));
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
             mApp.saveCinemasSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_sort_by_distance:
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
+            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
 
@@ -185,5 +198,10 @@ public class CinemaListActivity extends Activity {
                 ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
             }
         }
+    }
+
+    public void onLocationChanged(Location location) {
+        LocationAdapter adapter = (LocationAdapter)mCinemaListAdapter;
+        adapter.setCurrentLocation(location);
     }
 }

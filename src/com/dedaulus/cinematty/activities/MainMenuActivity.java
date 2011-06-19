@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -32,6 +33,15 @@ public class MainMenuActivity extends Activity {
 
         TextView cityLabel = (TextView)findViewById(R.id.city_caption);
         cityLabel.setText(mApp.getCurrentCity().getName());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mApp.stopListenLocation();
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     public void onCityClick(View view) {

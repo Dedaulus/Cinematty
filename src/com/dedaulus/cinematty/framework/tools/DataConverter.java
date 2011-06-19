@@ -160,4 +160,21 @@ public class DataConverter {
 
         return buffer.toString();
     }
+
+    public static String metersToDistance(Context context, int meters) {
+        if (meters > 1000) {
+            int km = meters / 1000;
+            long m = meters - km * 1000;
+            m = Math.round((double)m / 100);
+            if (m % 10 == 0) m /= 10;
+
+            if (m == 0) {
+                return Integer.toString(km) + context.getString(R.string.km);
+            } else {
+                return Integer.toString(km) + "." + Long.toString(m) + context.getString(R.string.km);
+            }
+        } else {
+            return Integer.toString(meters) + context.getString(R.string.m);
+        }
+    }
 }
