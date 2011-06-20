@@ -16,10 +16,9 @@
         android:src="@android:drawable/btn_star_big_off"
         android:onClick="onFavIconClick"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:orientation="vertical"
         android:layout_toRightOf="@id/fav_icon_in_schedule_list">
 
         <TextView
@@ -28,12 +27,18 @@
 
         <TextView
             android:id="@+id/distance"
-            style="@style/ListItem.Data.CinemaDistance"/>
+            style="@style/ListItem.Data.CinemaDistance"
+            android:layout_below="@id/cinema_caption_in_schedule_list"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="4dp"/>
 
         <TextView
             android:id="@+id/schedule_enum_in_schedule_list"
-            style="@style/ListItem.Data.CinemaSchedule"/>
+            style="@style/ListItem.Data.CinemaSchedule"
+            android:layout_below="@id/cinema_caption_in_schedule_list"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/distance"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
