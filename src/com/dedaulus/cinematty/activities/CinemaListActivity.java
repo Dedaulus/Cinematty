@@ -71,6 +71,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     protected void onResume() {
         mCurrentState = mApp.getCurrentState();
 
+        mApp.startListenLocation();
         mApp.addLocationClient(this);
         mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
 
@@ -80,6 +81,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     @Override
     protected void onPause() {
         mApp.removeLocationClient(this);
+        mApp.stopListenLocation();
         mApp.saveFavouriteCinemas();
 
         super.onPause();

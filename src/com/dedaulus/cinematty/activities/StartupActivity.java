@@ -67,6 +67,7 @@ public class StartupActivity extends Activity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // This is need due to frozen internet connection
+            mApp.stopListenLocation();
             android.os.Process.killProcess(android.os.Process.myPid());
         }
 
