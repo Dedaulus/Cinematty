@@ -34,7 +34,8 @@
             <TextView
                 android:id="@+id/distance"
                 style="@style/ListItem.Data.CinemaDistance"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:paddingLeft="2dp"/>
 
             <TextView
                 android:id="@+id/advanced_data_in_cinema_list"

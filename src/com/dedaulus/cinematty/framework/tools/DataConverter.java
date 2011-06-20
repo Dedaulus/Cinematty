@@ -171,11 +171,11 @@ public class DataConverter {
                 ++km;
             }
 
-            if (m == 0) {
-                return Integer.toString(km) + context.getString(R.string.km);
-            } else {
+            //if (m == 0) {
+                //return Integer.toString(km) + context.getString(R.string.km);
+            //} else {
                 return Integer.toString(km) + "." + Long.toString(m) + context.getString(R.string.km);
-            }
+            //}
         } else {
             return Integer.toString(meters) + context.getString(R.string.m);
         }
