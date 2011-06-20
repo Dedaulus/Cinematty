@@ -166,7 +166,10 @@ public class DataConverter {
             int km = meters / 1000;
             long m = meters - km * 1000;
             m = Math.round((double)m / 100);
-            if (m % 10 == 0) m /= 10;
+            if (m == 10) {
+                m = 0;
+                ++km;
+            }
 
             if (m == 0) {
                 return Integer.toString(km) + context.getString(R.string.km);

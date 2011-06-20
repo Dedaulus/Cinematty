@@ -256,5 +256,7 @@ public class CinemattyApplication extends Application {
         LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
         locationManager.removeUpdates(mLocationListener);
         locationManager.removeUpdates(mLocationListener);
+
+        mLocationListenStarted = false;
     }
 }
