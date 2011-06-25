@@ -36,6 +36,13 @@ public class MainMenuActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        mApp.stopListenLocation();
+
+        super.onPause();
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             mApp.stopListenLocation();
