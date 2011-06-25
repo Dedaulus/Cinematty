@@ -61,7 +61,6 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:textSize="20dp"
-                        android:textStyle="bold"
                         android:textColor="#FF6A00"/>
 
                     <TextView
