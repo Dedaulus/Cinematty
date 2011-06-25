@@ -59,6 +59,7 @@ public class CinemattyApplication extends Application {
     private static final String LOCAL_PICTURES_FOLDER = "pictures";
 
     private static final String FAV_CINEMAS_FILE = "cinematty_fav_cinemas";
+    private static final String FAV_ACTORS_FILE = "cinematty_fav_actors";
     private static final String PREFERENCES_FILE = "cinematty_preferences";
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
     private static final String PREF_CURRENT_CITY = "current_city";
@@ -88,6 +89,14 @@ public class CinemattyApplication extends Application {
             int cinemaId = mCinemas.indexOf(new Cinema(caption));
             if (cinemaId != -1) {
                 mCinemas.get(cinemaId).setFavourite(((Long)favs.get(caption)).longValue());
+            }
+        }
+
+        favs = getFavouriteActors();
+        for (String caption : favs.keySet()) {
+            int actorId = mActors.indexOf(new MovieActor(caption));
+            if (actorId != -1) {
+                mActors.get(actorId).setFavourite(((Long)favs.get(caption)).longValue());
             }
         }
     }
@@ -127,6 +136,25 @@ public class CinemattyApplication extends Application {
 
     public void revertCurrentState() {
         mState.pop();
+    }
+
+    public void saveFavouriteActors() {
+        SharedPreferences preferences = getSharedPreferences(FAV_ACTORS_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        for (MovieActor actor : mActors) {
+            if (actor.getFavourite() > 0) {
+                editor.putLong(actor.getActor(), actor.getFavourite());
+            } else {
+                editor.remove(actor.getActor());
+            }
+        }
+
+        editor.commit();
+    }
+
+    private Map<String, ?> getFavouriteActors() {
+        SharedPreferences preferences = getSharedPreferences(FAV_ACTORS_FILE, MODE_PRIVATE);
+        return preferences.getAll();
     }
 
     public void saveFavouriteCinemas() {

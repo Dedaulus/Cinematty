@@ -11,6 +11,7 @@ import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 public class MovieActor implements Comparable<MovieActor> {
     private String mActor;
     private UniqueSortedList<Movie> mMovies;
+    private long mFavValue = 0;
 
     public MovieActor(String actor) {
         mActor = actor;
@@ -27,6 +28,22 @@ public class MovieActor implements Comparable<MovieActor> {
 
     public UniqueSortedList<Movie> getMovies() {
         return mMovies;
+    }
+
+    public void setFavourite(boolean addToFavourite) {
+        if (addToFavourite) {
+            mFavValue = System.currentTimeMillis();
+        } else {
+            mFavValue = 0;
+        }
+    }
+
+    public void setFavourite(long favValue) {
+        mFavValue = favValue;
+    }
+
+    public long getFavourite() {
+        return mFavValue;
     }
 
     @Override

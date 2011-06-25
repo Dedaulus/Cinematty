@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:padding="6dp">
 
+    <ImageView
+        android:id="@+id/fav_icon_in_actor_list"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:paddingRight="6dp"
+        android:src="@android:drawable/btn_star_big_off"
+        android:onClick="onFavIconClick"/>
+
     <TextView
         android:id="@+id/actor_caption_in_actor_list"
-        style="@style/ListItem.Caption.Actor">
+        style="@style/ListItem.Caption.Actor"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/fav_icon_in_actor_list">
     </TextView>
 
-</LinearLayout>
+</RelativeLayout>

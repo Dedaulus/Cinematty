@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ import java.util.List;
  * Date: 02.04.11
  * Time: 4:34
  */
-public class ActorItemAdapter extends BaseAdapter {
+public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<MovieActor> {
     private Context mContext;
     private List<MovieActor> mActors;
 
@@ -43,8 +46,17 @@ public class ActorItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
+        MovieActor actor = mActors.get(position);
+
+        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_actor_list);
+        if (actor.getFavourite() > 0) {
+            image.setImageResource(android.R.drawable.btn_star_big_on);
+        } else {
+            image.setImageResource(android.R.drawable.btn_star_big_off);
+        }
+
         TextView text = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
-        text.setText(mActors.get(position).getActor());
+        text.setText(actor.getActor());
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -59,5 +71,10 @@ public class ActorItemAdapter extends BaseAdapter {
         bindView(i, myView);
 
         return myView;
+    }
+
+    public void sortBy(Comparator<MovieActor> actorComparator) {
+        Collections.sort(mActors, actorComparator);
+        notifyDataSetChanged();
     }
 }
