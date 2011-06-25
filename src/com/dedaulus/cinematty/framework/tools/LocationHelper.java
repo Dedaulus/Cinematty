@@ -30,6 +30,6 @@ public class LocationHelper {
     }
 
     public static boolean isFineLocation(Location location) {
-        return location.getAccuracy() < FINE_DISTANCE;
+        return location.getProvider().equalsIgnoreCase("gps");
     }
 }
