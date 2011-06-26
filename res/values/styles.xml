@@ -79,5 +79,9 @@
     </style>
     <!-- 0094FF -->
     <style name="ListItem.Data.MovieTimeLeft"/>
+    <style name="ListItem.Data.MovieActor">
+        <item name="android:singleLine">false</item>
+        <item name="android:ellipsize">none</item>
+    </style>
 
 </resources>

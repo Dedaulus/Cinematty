@@ -54,8 +54,13 @@
             style="@style/ListItem.Data.MovieGenre"/>
 
         <TextView
+            android:id="@+id/movie_actor_in_movie_list"
+            style="@style/ListItem.Data.MovieActor"
+            android:layout_below="@id/movie_genre_in_movie_list"/>
+
+        <TextView
             android:id="@+id/movie_schedule_in_movie_list"
-            android:layout_below="@id/movie_genre_in_movie_list"
+            android:layout_below="@id/movie_actor_in_movie_list"
             style="@style/ListItem.Data.MovieSchedule"/>
 
         <TextView

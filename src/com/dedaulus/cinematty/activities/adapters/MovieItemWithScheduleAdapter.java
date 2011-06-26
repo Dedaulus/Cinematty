@@ -14,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieGenre;
-import com.dedaulus.cinematty.framework.PictureRetriever;
+import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 import com.dedaulus.cinematty.framework.tools.PictureReceiver;
 import com.dedaulus.cinematty.framework.tools.PictureType;
@@ -124,6 +121,27 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
             genreView.setVisibility(View.VISIBLE);
         } else {
             genreView.setVisibility(View.GONE);
+        }
+
+        TextView actorView = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);
+        if (movie.getActors().size() != 0) {
+            StringBuilder actors = new StringBuilder();
+            for (MovieActor actor : movie.getActors()) {
+                if (actor.getFavourite() != 0) {
+                    actors.append(actor.getActor() + ",");
+                }
+            }
+
+            if (actors.length() != 0) {
+                actors.delete(actors.length() - 1, actors.length());
+                actorView.setText(actors.toString());
+                actorView.setVisibility(View.VISIBLE);
+            } else {
+                actorView.setVisibility(View.GONE);
+            }
+
+        } else {
+            actorView.setVisibility(View.GONE);
         }
 
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_movie_list);

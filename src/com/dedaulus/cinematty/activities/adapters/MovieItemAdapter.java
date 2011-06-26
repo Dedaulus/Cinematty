@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.PictureRetriever;
 import com.dedaulus.cinematty.framework.tools.PictureReceiver;
@@ -116,6 +117,27 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
             text.setText(genres.toString());
 
             text.setVisibility(View.VISIBLE);
+        } else {
+            text.setVisibility(View.GONE);
+        }
+
+        text = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);
+        if (movie.getActors().size() != 0) {
+            StringBuilder actors = new StringBuilder();
+            for (MovieActor actor : movie.getActors()) {
+                if (actor.getFavourite() != 0) {
+                    actors.append(actor.getActor() + ",");
+                }
+            }
+
+            if (actors.length() != 0) {
+                actors.delete(actors.length() - 1, actors.length());
+                text.setText(actors.toString());
+                text.setVisibility(View.VISIBLE);
+            } else {
+                text.setVisibility(View.GONE);
+            }
+
         } else {
             text.setVisibility(View.GONE);
         }
