@@ -128,12 +128,12 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
             StringBuilder actors = new StringBuilder();
             for (MovieActor actor : movie.getActors()) {
                 if (actor.getFavourite() != 0) {
-                    actors.append(actor.getActor() + ",");
+                    actors.append(actor.getActor() + ", ");
                 }
             }
 
             if (actors.length() != 0) {
-                actors.delete(actors.length() - 1, actors.length());
+                actors.delete(actors.length() - 2, actors.length());
                 actorView.setText(actors.toString());
                 actorView.setVisibility(View.VISIBLE);
             } else {

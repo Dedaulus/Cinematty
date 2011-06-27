@@ -6,10 +6,12 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
+import android.util.Pair;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -118,6 +120,33 @@ public class DataConverter {
                     int endPosition = outdateEndIndex >= str.length() ? str.length() : outdateEndIndex + 1;
                     str.setSpan(new StrikethroughSpan(), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     str.setSpan(new ForegroundColorSpan(Color.rgb(192, 192, 192)), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                return str;
+            }
+        }
+
+        return new SpannableString("");
+    }
+
+    public static SpannableString actorsToSpannableString(Collection<MovieActor> actors) {
+        if (actors != null) {
+            StringBuilder actorsStr = new StringBuilder();
+            List<Pair<Integer, Integer>> favActorsPoints = new ArrayList<Pair<Integer, Integer>>(actors.size());
+            for (MovieActor actor : actors) {
+                int start = actorsStr.length();
+                actorsStr.append(actor.getActor() + ", ");
+                if (actor.getFavourite() != 0) {
+                    int end = actorsStr.length() - 2;
+                    favActorsPoints.add(new Pair<Integer, Integer>(start, end));
+                }
+            }
+
+            if (actorsStr.length() != 0) {
+                actorsStr.delete(actorsStr.length() - 2, actorsStr.length());
+                SpannableString str = new SpannableString(actorsStr.toString());
+                for (Pair<Integer, Integer> pt : favActorsPoints) {
+                    str.setSpan(new ForegroundColorSpan(Color.rgb(255, 204, 0)), pt.first, pt.second, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 return str;

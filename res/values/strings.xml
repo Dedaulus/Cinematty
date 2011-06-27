@@ -26,7 +26,7 @@
     <string name="unknown">неизвестно</string>
     <string name="look_for_schedule">Посмотреть сеансы</string>
 
-    <string name="schedule_enum">Сеансы</string>
+    <string name="schedule_enum">Сеансы в кин.</string>
     <string name="no_schedule">сеансов нет</string>
     <string name="schedule_now">прямо сейчас</string>
     <string name="schedule_start_in">через</string>

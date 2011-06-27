@@ -126,12 +126,12 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
             StringBuilder actors = new StringBuilder();
             for (MovieActor actor : movie.getActors()) {
                 if (actor.getFavourite() != 0) {
-                    actors.append(actor.getActor() + ",");
+                    actors.append(actor.getActor() + ", ");
                 }
             }
 
             if (actors.length() != 0) {
-                actors.delete(actors.length() - 1, actors.length());
+                actors.delete(actors.length() - 2, actors.length());
                 text.setText(actors.toString());
                 text.setVisibility(View.VISIBLE);
             } else {
