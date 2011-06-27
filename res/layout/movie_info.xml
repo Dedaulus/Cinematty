@@ -97,9 +97,12 @@
                 android:paddingBottom="4dp">
 
                 <TextView
+                    android:id="@+id/schedule_title"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
                     android:background="@drawable/movie_data_divider"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="#ffffff"
                     android:textSize="16dp"
                     android:textStyle="bold"

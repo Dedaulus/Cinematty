@@ -131,9 +131,11 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     private void setSchedule() {
-        TextView text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-
         if (mCurrentState.cinema != null) {
+            TextView text = (TextView)findViewById(R.id.schedule_title);
+            text.setText(getString(R.string.schedule_enum) + " " + mCurrentState.cinema.getCaption());
+
+            text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
             List<Calendar> showTimes = mCurrentState.cinema.getShowTimes().get(mCurrentState.movie);
             if (showTimes != null) {
                 text.setText(DataConverter.showTimesToSpannableString(showTimes));
@@ -179,7 +181,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     private void setActors() {
         TextView text = (TextView)findViewById(R.id.movie_actors);
         if (mCurrentState.movie.getActors().size() != 0) {
-            text.setText(DataConverter.actorsToString(mCurrentState.movie.getActors()));
+            //text.setText(DataConverter.actorsToString(mCurrentState.movie.getActors()));
+            text.setText(DataConverter.actorsToSpannableString(mCurrentState.movie.getActors()));
 
             findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
         } else {
