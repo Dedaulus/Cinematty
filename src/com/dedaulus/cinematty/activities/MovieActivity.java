@@ -31,7 +31,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     private CinemattyApplication mApp;
     private CurrentState mCurrentState;
     boolean mPictureReady = false;
-    private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +68,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     @Override
     protected void onResume() {
         mCurrentState = mApp.getCurrentState();
+        setActors();
 
         super.onResume();
     }
@@ -100,7 +100,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
                 retriever.addRequest(picId, PictureType.ORIGINAL, this);
                 progressBar.setVisibility(View.VISIBLE);
 
-                mPictureUpdater = new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+                new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
                     @Override
                     protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
                         while (true) {
@@ -216,6 +216,13 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(buffer.toString()));
+        startActivity(intent);
+    }
+
+    public void onActorsClick(View view) {
+        mApp.setCurrentState(mCurrentState.clone());
+
+        Intent intent = new Intent(this, ActorListActivity.class);
         startActivity(intent);
     }
 

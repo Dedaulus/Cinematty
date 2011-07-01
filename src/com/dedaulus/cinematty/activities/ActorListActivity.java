@@ -41,15 +41,19 @@ public class ActorListActivity extends Activity {
 
         if (mCurrentState.movie == null) {
             movieLabel.setVisibility(View.GONE);
-
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
-            list.setAdapter(mActorListAdapter);
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    onActorItemClick(adapterView, view, i, l);
-                }
-            });
+        } else {
+            movieLabel.setText(mCurrentState.movie.getCaption());
+            movieLabel.setVisibility(View.VISIBLE);
+            mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mCurrentState.movie.getActors()));
         }
+
+        list.setAdapter(mActorListAdapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                onActorItemClick(adapterView, view, i, l);
+            }
+        });
     }
 
     @Override
