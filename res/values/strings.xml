@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cinematty</string>
+    <string name="app_name">ГдеКИНО</string>
 
     <string name="loading_schedule">Загружается расписание...</string>
     <string name="loading_cities">Загружается список городов...</string>
     <string name="try_again">Попробовать еще раз</string>
 
     <string name="unknown_error">Произошла непредвиденная ошибка</string>
-    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ к интернет</string>
+    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ в интернет</string>
 
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
@@ -24,7 +24,7 @@
     <string name="hour">ч.</string>
     <string name="minute">мин.</string>
     <string name="unknown">неизвестно</string>
-    <string name="look_for_schedule">Посмотреть сеансы</string>
+    <string name="look_for_schedule">Все сеансы</string>
 
     <string name="schedule_enum">Сеансы в кин.</string>
     <string name="no_schedule">сеансов нет</string>
@@ -33,10 +33,10 @@
 
     <string name="metro_near">Метро</string>
 
-    <string name="sort">Сортировать</string>
-    <string name="sort_by_caption">По названию</string>
-    <string name="sort_by_fav">Сначала любимые</string>
-    <string name="sort_by_distance">Сначала ближайшие</string>
+    <string name="sort">Сортировать по</string>
+    <string name="sort_by_caption">Названию</string>
+    <string name="sort_by_fav">Любимым</string>
+    <string name="sort_by_distance">Ближайшим</string>
 
 
     <string name="km">км</string>
