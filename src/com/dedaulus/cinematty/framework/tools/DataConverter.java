@@ -162,10 +162,10 @@ public class DataConverter {
 
         StringBuffer buffer = new StringBuffer();
         if (minute > 0) {
-            buffer.append(" " + Integer.toString(minute) + " " + context.getString(R.string.minute));
+            buffer.append(" " + Integer.toString(minute) + context.getString(R.string.minute));
         }
         if (hour > 0) {
-            buffer.insert(0, " " + Integer.toString(hour) + " " + context.getString(R.string.hour));
+            buffer.insert(0, " " + Integer.toString(hour) + context.getString(R.string.hour));
         }
 
         buffer.insert(0, context.getString(R.string.schedule_start_in));
