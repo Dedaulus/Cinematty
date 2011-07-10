@@ -8,8 +8,10 @@ import android.location.Location;
  * Time: 18:17
  */
 public class LocationHelper {
-    public static final int TIME_LISTEN_TIMEOUT = 30000;
-    public static final int LISTEN_DISTANCE = 10;
+    public static final int COARSE_TIME_LISTEN_TIMEOUT = 30000;
+    public static final int COARSE_LISTEN_DISTANCE = 10;
+    public static final int FINE_TIME_LISTEN_TIMEOUT = 0;
+    public static final int FINE_LISTEN_DISTANCE = 0;
     public static final int MAX_DISTANCE = 50000;
     public static final int FINE_DISTANCE = 20;
 

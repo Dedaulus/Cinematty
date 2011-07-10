@@ -258,13 +258,13 @@ public class CinemattyApplication extends Application {
         Location coarseLocation = null;
         if (coarseProvider != null) {
             coarseLocation = locationManager.getLastKnownLocation(coarseProvider);
-            locationManager.requestLocationUpdates(coarseProvider, LocationHelper.TIME_LISTEN_TIMEOUT, 10, mLocationListener);
+            locationManager.requestLocationUpdates(coarseProvider, LocationHelper.COARSE_TIME_LISTEN_TIMEOUT, LocationHelper.COARSE_LISTEN_DISTANCE, mLocationListener);
         }
 
         Location fineLocation = null;
         if (fineProvider != null) {
             fineLocation = locationManager.getLastKnownLocation(fineProvider);
-            locationManager.requestLocationUpdates(fineProvider, LocationHelper.TIME_LISTEN_TIMEOUT, 10, mLocationListener);
+            locationManager.requestLocationUpdates(fineProvider, LocationHelper.FINE_TIME_LISTEN_TIMEOUT, LocationHelper.FINE_LISTEN_DISTANCE, mLocationListener);
         }
 
         if (coarseLocation == null && fineLocation == null) {
