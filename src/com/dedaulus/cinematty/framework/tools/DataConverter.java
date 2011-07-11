@@ -179,12 +179,12 @@ public class DataConverter {
             int hours = minutes / 60;
             minutes = minutes - hours * 60;
 
-            buffer.append(Integer.toString(hours)).append("").append(context.getString(R.string.hour));
+            buffer.append(Integer.toString(hours)).append(context.getString(R.string.hour));
             if (minutes != 0) {
-                buffer.append(" ").append(Integer.toString(minutes)).append("").append(context.getString(R.string.minute));
+                buffer.append(" ").append(Integer.toString(minutes)).append(context.getString(R.string.minute));
             }
         } else {
-            buffer.append(Integer.toString(minutes)).append("").append(context.getString(R.string.minute));
+            buffer.append(Integer.toString(minutes)).append(context.getString(R.string.minute));
         }
 
         return buffer.toString();
