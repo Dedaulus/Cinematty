@@ -43,7 +43,8 @@ public class CinemaListActivity extends Activity implements LocationClient {
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
-        if (mCurrentState.movie == null) {
+        switch (mCurrentState.activityType) {
+        case CINEMA_LIST:
             movieLabel.setVisibility(View.GONE);
 
             mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
@@ -53,7 +54,9 @@ public class CinemaListActivity extends Activity implements LocationClient {
                     onCinemaItemClick(adapterView, view, i, l);
                 }
             });
-        } else {
+            break;
+
+        case CINEMA_LIST_W_MOVIE:
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(mCurrentState.movie.getCaption());
 
@@ -64,6 +67,10 @@ public class CinemaListActivity extends Activity implements LocationClient {
                     onScheduleItemClick(adapterView, view, i, l);
                 }
             });
+            break;
+
+        default:
+            throw new RuntimeException("ActivityType error");
         }
     }
 
@@ -157,6 +164,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
         if (cinemaId != -1) {
             CurrentState state = mCurrentState.clone();
             state.cinema = mApp.getCinemas().get(cinemaId);
+            state.activityType = CurrentState.ActivityType.MOVIE_LIST_W_CINEMA;
             mApp.setCurrentState(state);
 
             Intent intent = new Intent(this, MovieListActivity.class);
@@ -171,6 +179,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
         if (cinemaId != -1) {
             CurrentState state = mCurrentState.clone();
             state.cinema = mApp.getCinemas().get(cinemaId);
+            state.activityType = CurrentState.ActivityType.CINEMA_INFO;
             mApp.setCurrentState(state);
 
             Intent intent = new Intent(this, CinemaActivity.class);

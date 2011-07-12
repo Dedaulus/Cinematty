@@ -47,39 +47,45 @@ public class MovieListActivity extends Activity {
         View iconView = findViewById(R.id.select_cinema_ico);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
-        if (mCurrentState.cinema != null) {
+        switch (mCurrentState.activityType) {
+        case MOVIE_LIST:
+            iconView.setVisibility(View.GONE);
+            captionView.setVisibility(View.GONE);
+            mScopeMovies = mApp.getMovies();
+            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            break;
+
+        case MOVIE_LIST_W_CINEMA:
+            iconView.setVisibility(View.VISIBLE);
+            captionView.setVisibility(View.VISIBLE);
             captionLabel.setText(mCurrentState.cinema.getCaption());
             captionView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     onCinemaClick(view);
                 }
             });
-
             mScopeMovies = mCurrentState.cinema.getMovies();
             list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mCurrentState.cinema, mApp.getPictureRetriever()));
+            break;
 
-            captionView.setVisibility(View.VISIBLE);
-            iconView.setVisibility(View.VISIBLE);
-        } else {
+        case MOVIE_LIST_W_ACTOR:
             iconView.setVisibility(View.GONE);
-
-            if (mCurrentState.actor != null) {
-                captionLabel.setText(mCurrentState.actor.getActor());
-                mScopeMovies = mCurrentState.actor.getMovies();
-
-                captionView.setVisibility(View.VISIBLE);
-            } else if (mCurrentState.genre != null) {
-                captionLabel.setText(mCurrentState.genre.getGenre());
-                mScopeMovies = mCurrentState.genre.getMovies();
-
-                captionView.setVisibility(View.VISIBLE);
-            } else {
-                mScopeMovies = mApp.getMovies();
-
-                captionView.setVisibility(View.GONE);
-            }
-
+            captionView.setVisibility(View.VISIBLE);
+            captionLabel.setText(mCurrentState.actor.getActor());
+            mScopeMovies = mCurrentState.actor.getMovies();
             list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            break;
+
+        case MOVIE_LIST_W_GENRE:
+            iconView.setVisibility(View.GONE);
+            captionView.setVisibility(View.VISIBLE);
+            captionLabel.setText(mCurrentState.genre.getGenre());
+            mScopeMovies = mCurrentState.genre.getMovies();
+            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            break;
+
+        default:
+            throw new RuntimeException("ActivityType error");
         }
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,6 +106,7 @@ public class MovieListActivity extends Activity {
 
     private void onCinemaClick(View view) {
         CurrentState state = mCurrentState.clone();
+        state.activityType = CurrentState.ActivityType.CINEMA_INFO;
         mApp.setCurrentState(state);
 
         Intent intent = new Intent(this, CinemaActivity.class);
@@ -113,6 +120,7 @@ public class MovieListActivity extends Activity {
         if (movieId != -1) {
             CurrentState state = mCurrentState.clone();
             state.movie = mScopeMovies.get(movieId);
+            state.activityType = CurrentState.ActivityType.MOVIE_INFO;
             mApp.setCurrentState(state);
 
             Intent intent = new Intent(this, MovieActivity.class);

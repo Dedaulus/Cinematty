@@ -44,11 +44,20 @@ public class CinemaActivity extends Activity {
         mApp = (CinemattyApplication)getApplication();
         mCurrentState = mApp.getCurrentState();
 
-        setFavourite();
-        setCaption();
-        setAddress();
-        setPhone();
-        setUrl();
+        switch (mCurrentState.activityType) {
+        case CINEMA_INFO:
+            setFavourite();
+            setCaption();
+            setAddress();
+            setPhone();
+            setUrl();
+            break;
+
+        default:
+            throw new RuntimeException("ActivityType error");
+        }
+
+
     }
 
     @Override
@@ -176,7 +185,9 @@ public class CinemaActivity extends Activity {
     }
 
     public void onSchedulesClick(View view) {
-        mApp.setCurrentState(mCurrentState.clone());
+        CurrentState state = mCurrentState.clone();
+        state.activityType = CurrentState.ActivityType.MOVIE_LIST_W_CINEMA;
+        mApp.setCurrentState(state);
 
         Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);

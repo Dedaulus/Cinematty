@@ -11,12 +11,29 @@ import com.dedaulus.cinematty.framework.MovieGenre;
  * Time: 22:40
  */
 public class CurrentState implements Cloneable {
+    public enum ActivityType {
+        CINEMA_LIST,
+        CINEMA_LIST_W_MOVIE,
+        MOVIE_LIST,
+        MOVIE_LIST_W_CINEMA,
+        MOVIE_LIST_W_ACTOR,
+        MOVIE_LIST_W_GENRE,
+        ACTOR_LIST,
+        ACTOR_LIST_W_MOVIE,
+        GENRE_LIST,
+        GENRE_LIST_W_MOVIE,
+        CINEMA_INFO,
+        MOVIE_INFO
+    }
+
+    public ActivityType activityType;
     public Cinema cinema;
     public Movie movie;
     public MovieActor actor;
     public MovieGenre genre;
 
-    public CurrentState(Cinema cinema, Movie movie, MovieActor actor, MovieGenre genre) {
+    public CurrentState(ActivityType activityType, Cinema cinema, Movie movie, MovieActor actor, MovieGenre genre) {
+        this.activityType = activityType;
         this.cinema = cinema;
         this.movie = movie;
         this.actor = actor;
@@ -24,6 +41,6 @@ public class CurrentState implements Cloneable {
     }
 
     public CurrentState clone() {
-        return new CurrentState(cinema, movie, actor, genre);
+        return new CurrentState(activityType, cinema, movie, actor, genre);
     }
 }

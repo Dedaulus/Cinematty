@@ -35,16 +35,19 @@ public class GenreListActivity extends Activity {
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_genre_list);
         ListView list = (ListView)findViewById(R.id.genre_list);
 
-        if (mCurrentState.movie == null) {
+        switch (mCurrentState.activityType) {
+        case GENRE_LIST:
             movieLabel.setVisibility(View.GONE);
-
             list.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(mApp.getGenres())));
-
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onGenreItemClick(adapterView, view, i, l);
                 }
             });
+            break;
+
+        default:
+            throw new RuntimeException("ActivityType error");
         }
     }
 
@@ -71,6 +74,7 @@ public class GenreListActivity extends Activity {
         if (genreId != -1) {
             CurrentState state = mCurrentState.clone();
             state.genre = mApp.getGenres().get(genreId);
+            state.activityType = CurrentState.ActivityType.MOVIE_LIST_W_GENRE;
             mApp.setCurrentState(state);
 
             Intent intent = new Intent(this, MovieListActivity.class);

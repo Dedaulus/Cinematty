@@ -29,9 +29,6 @@ public class StartupActivity extends Activity
     private CinemattyApplication mApp;
     private String mErrorString;
 
-    private AsyncTask<String, Void, Void> mGetCitiesTask;
-    private AsyncTask<Void, Void, Void> mGetScheduleTask;
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -137,7 +134,7 @@ public class StartupActivity extends Activity
 
     private void getSchedule(boolean download) {
         if (download) {
-            (mGetScheduleTask = new AsyncTask<Void, Void, Void>() {
+            new AsyncTask<Void, Void, Void>() {
                 private String error;
                 private String message = getString(R.string.unknown_error);
                 private boolean success = false;
@@ -169,7 +166,7 @@ public class StartupActivity extends Activity
                     if (success) getSchedule(false);
                     else setErrorString(error, message);
                 }
-            }).execute();
+            }.execute();
         } else {
             Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
@@ -180,7 +177,7 @@ public class StartupActivity extends Activity
 
     private void getCitiesList(boolean download) {
         if (download) {
-            (mGetCitiesTask = new AsyncTask<String, Void, Void>() {
+            new AsyncTask<String, Void, Void>() {
                 private String error;
                 private String message = getString(R.string.unknown_error);
                 private boolean success = false;
@@ -216,7 +213,7 @@ public class StartupActivity extends Activity
                     if (success) getCitiesList(false);
                     else setErrorString(error, message);
                 }
-            }).execute(getString(R.string.settings_url) + "/" + getString(R.string.cities_file));
+            }.execute(getString(R.string.settings_url) + "/" + getString(R.string.cities_file));
         } else {
             Intent intent = new Intent(this, CityListActivity.class);
             startActivityForResult(intent, GET_CURRENT_CITY);

@@ -39,21 +39,21 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         mApp = (CinemattyApplication)getApplication();
         mCurrentState = mApp.getCurrentState();
 
-        setPicture();
+        switch (mCurrentState.activityType) {
+        case MOVIE_INFO:
+            setPicture();
+            setCaption();
+            setLength();
+            setTrailerLink();
+            setGenre();
+            setActors();
+            setDescription();
+            setSchedule();
+            break;
 
-        setCaption();
-
-        setLength();
-
-        setTrailerLink();
-
-        setGenre();
-
-        setActors();
-
-        setDescription();
-
-        setSchedule();
+        default:
+            throw new RuntimeException("ActivityType error");
+        }
 
         Button btn = (Button)findViewById(R.id.show_schedules_button);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +171,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         TextView text = (TextView)findViewById(R.id.movie_genre);
         if (mCurrentState.movie.getGenres().size() != 0) {
             text.setText(DataConverter.genresToString(mCurrentState.movie.getGenres()));
-
             findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_genre_panel).setVisibility(View.GONE);
@@ -181,9 +180,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     private void setActors() {
         TextView text = (TextView)findViewById(R.id.movie_actors);
         if (mCurrentState.movie.getActors().size() != 0) {
-            //text.setText(DataConverter.actorsToString(mCurrentState.movie.getActors()));
             text.setText(DataConverter.actorsToSpannableString(mCurrentState.movie.getActors()));
-
             findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_actors_panel).setVisibility(View.GONE);
@@ -194,7 +191,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         TextView text = (TextView)findViewById(R.id.movie_description);
         if (mCurrentState.movie.getDescription().length() != 0) {
             text.setText(mCurrentState.movie.getDescription());
-
             findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_description_panel).setVisibility(View.GONE);
@@ -202,7 +198,9 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     private void onSchedulesBtnClick(View view) {
-        mApp.setCurrentState(mCurrentState.clone());
+        CurrentState state = mCurrentState.clone();
+        state.activityType = CurrentState.ActivityType.CINEMA_LIST_W_MOVIE;
+        mApp.setCurrentState(state);
 
         Intent intent = new Intent(this, CinemaListActivity.class);
         startActivity(intent);
@@ -220,7 +218,9 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     public void onActorsClick(View view) {
-        mApp.setCurrentState(mCurrentState.clone());
+        CurrentState state = mCurrentState.clone();
+        state.activityType = CurrentState.ActivityType.ACTOR_LIST_W_MOVIE;
+        mApp.setCurrentState(state);
 
         Intent intent = new Intent(this, ActorListActivity.class);
         startActivity(intent);

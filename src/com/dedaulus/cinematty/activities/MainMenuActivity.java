@@ -60,26 +60,26 @@ public class MainMenuActivity extends Activity {
     }
 
     public void onCinemaClick(View view) {
-        mApp.setCurrentState(new CurrentState(null, null, null, null));
+        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.CINEMA_LIST, null, null, null, null));
         Intent intent = new Intent(this, CinemaListActivity.class);
         startActivity(intent);
     }
 
     public void onMoviesClick(View view) {
-        mApp.setCurrentState(new CurrentState(null, null, null, null));
+        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.MOVIE_LIST, null, null, null, null));
         Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);
     }
 
     public void onActorsClick(View view) {
-        mApp.setCurrentState(new CurrentState(null, null, null, null));
+        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.ACTOR_LIST, null, null, null, null));
         Intent intent = new Intent(this, ActorListActivity.class);
         startActivity(intent);
     }
 
 
     public void onGenresClick(View view) {
-        mApp.setCurrentState(new CurrentState(null, null, null, null));
+        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.GENRE_LIST, null, null, null, null));
         Intent intent = new Intent(this, GenreListActivity.class);
         startActivity(intent);
     }

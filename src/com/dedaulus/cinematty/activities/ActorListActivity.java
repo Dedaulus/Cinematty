@@ -39,13 +39,20 @@ public class ActorListActivity extends Activity {
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
-        if (mCurrentState.movie == null) {
+        switch (mCurrentState.activityType) {
+        case ACTOR_LIST:
             movieLabel.setVisibility(View.GONE);
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
-        } else {
+            break;
+
+        case ACTOR_LIST_W_MOVIE:
             movieLabel.setText(mCurrentState.movie.getCaption());
             movieLabel.setVisibility(View.VISIBLE);
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mCurrentState.movie.getActors()));
+            break;
+
+        default:
+            throw new RuntimeException("ActivityType error");
         }
 
         list.setAdapter(mActorListAdapter);
@@ -93,6 +100,7 @@ public class ActorListActivity extends Activity {
         if (actorId != -1) {
             CurrentState state = mCurrentState.clone();
             state.actor = mApp.getActors().get(actorId);
+            state.activityType = CurrentState.ActivityType.MOVIE_LIST_W_ACTOR;
             mApp.setCurrentState(state);
 
             Intent intent = new Intent(this, MovieListActivity.class);
