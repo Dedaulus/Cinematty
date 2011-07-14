@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.tools.CurrentState;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
+import com.dedaulus.cinematty.framework.tools.Constants;
+
+import java.util.UUID;
 
 /**
  * User: Dedaulus
@@ -60,27 +63,35 @@ public class MainMenuActivity extends Activity {
     }
 
     public void onCinemaClick(View view) {
-        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.CINEMA_LIST, null, null, null, null));
+        String cookie = UUID.randomUUID().toString();
+        mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.CINEMA_LIST, null, null, null, null));
         Intent intent = new Intent(this, CinemaListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 
     public void onMoviesClick(View view) {
-        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.MOVIE_LIST, null, null, null, null));
+        String cookie = UUID.randomUUID().toString();
+        mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.MOVIE_LIST, null, null, null, null));
         Intent intent = new Intent(this, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 
     public void onActorsClick(View view) {
-        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.ACTOR_LIST, null, null, null, null));
+        String cookie = UUID.randomUUID().toString();
+        mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.ACTOR_LIST, null, null, null, null));
         Intent intent = new Intent(this, ActorListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 
 
     public void onGenresClick(View view) {
-        mApp.setCurrentState(new CurrentState(CurrentState.ActivityType.GENRE_LIST, null, null, null, null));
+        String cookie = UUID.randomUUID().toString();
+        mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.GENRE_LIST, null, null, null, null));
         Intent intent = new Intent(this, GenreListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 }

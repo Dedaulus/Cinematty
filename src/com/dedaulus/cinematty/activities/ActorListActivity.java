@@ -3,7 +3,6 @@ package com.dedaulus.cinematty.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,10 +13,12 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.ActorItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.tools.CurrentState;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
+import com.dedaulus.cinematty.framework.tools.Constants;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.UUID;
 
 /**
  * User: Dedaulus
@@ -26,29 +27,32 @@ import java.util.Comparator;
  */
 public class ActorListActivity extends Activity {
     private CinemattyApplication mApp;
-    private CurrentState mCurrentState;
     private SortableAdapter<MovieActor> mActorListAdapter;
+    private ActivityState mState;
+    private String mStateId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actor_list);
 
         mApp = (CinemattyApplication)getApplication();
-        mCurrentState = mApp.getCurrentState();
+        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        mState = mApp.getState(mStateId);
+        if (mState == null) throw new RuntimeException("ActivityState error");
 
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
-        switch (mCurrentState.activityType) {
+        switch (mState.activityType) {
         case ACTOR_LIST:
             movieLabel.setVisibility(View.GONE);
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
             break;
 
         case ACTOR_LIST_W_MOVIE:
-            movieLabel.setText(mCurrentState.movie.getCaption());
+            movieLabel.setText(mState.movie.getCaption());
             movieLabel.setVisibility(View.VISIBLE);
-            mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mCurrentState.movie.getActors()));
+            mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mState.movie.getActors()));
             break;
 
         default:
@@ -65,7 +69,6 @@ public class ActorListActivity extends Activity {
 
     @Override
     protected void onResume() {
-        mCurrentState = mApp.getCurrentState();
         mActorListAdapter.sortBy(new Comparator<MovieActor>() {
             public int compare(MovieActor a1, MovieActor a2) {
                 if (a1.getFavourite() == a2.getFavourite()) {
@@ -85,12 +88,10 @@ public class ActorListActivity extends Activity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            mApp.revertCurrentState();
-        }
+    public void onBackPressed() {
+        mApp.removeState(mStateId);
 
-        return super.onKeyDown(keyCode, event);
+        super.onBackPressed();
     }
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -98,12 +99,14 @@ public class ActorListActivity extends Activity {
         String caption = textView.getText().toString();
         int actorId = mApp.getActors().indexOf(new MovieActor(caption));
         if (actorId != -1) {
-            CurrentState state = mCurrentState.clone();
+            String cookie = UUID.randomUUID().toString();
+            ActivityState state = mState.clone();
             state.actor = mApp.getActors().get(actorId);
-            state.activityType = CurrentState.ActivityType.MOVIE_LIST_W_ACTOR;
-            mApp.setCurrentState(state);
+            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_ACTOR;
+            mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);
+            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             startActivity(intent);
         }
     }

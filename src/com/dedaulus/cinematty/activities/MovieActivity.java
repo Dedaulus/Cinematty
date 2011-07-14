@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * User: Dedaulus
@@ -29,17 +29,20 @@ import java.util.List;
  */
 public class MovieActivity extends Activity implements PictureReceiver, UpdatableByNeed {
     private CinemattyApplication mApp;
-    private CurrentState mCurrentState;
     boolean mPictureReady = false;
+    private ActivityState mState;
+    private String mStateId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_info);
 
         mApp = (CinemattyApplication)getApplication();
-        mCurrentState = mApp.getCurrentState();
+        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        mState = mApp.getState(mStateId);
+        if (mState == null) throw new RuntimeException("ActivityState error");
 
-        switch (mCurrentState.activityType) {
+        switch (mState.activityType) {
         case MOVIE_INFO:
             setPicture();
             setCaption();
@@ -67,19 +70,16 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     @Override
     protected void onResume() {
-        mCurrentState = mApp.getCurrentState();
         setActors();
 
         super.onResume();
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            mApp.revertCurrentState();
-        }
+    public void onBackPressed() {
+        mApp.removeState(mStateId);
 
-        return super.onKeyDown(keyCode, event);
+        super.onBackPressed();
     }
 
     private void setPicture() {
@@ -89,7 +89,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         progressBar.setVisibility(View.GONE);
         imageView.setVisibility(View.GONE);
 
-        String picId = mCurrentState.movie.getPicId();
+        String picId = mState.movie.getPicId();
         if (picId != null) {
             PictureRetriever retriever = mApp.getPictureRetriever();
             Bitmap picture = retriever.getPicture(picId, PictureType.ORIGINAL);
@@ -127,16 +127,16 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     private void setCaption() {
         TextView text = (TextView)findViewById(R.id.movie_caption);
-        text.setText(mCurrentState.movie.getCaption());
+        text.setText(mState.movie.getCaption());
     }
 
     private void setSchedule() {
-        if (mCurrentState.cinema != null) {
+        if (mState.cinema != null) {
             TextView text = (TextView)findViewById(R.id.schedule_title);
-            text.setText(getString(R.string.schedule_enum) + " " + mCurrentState.cinema.getCaption());
+            text.setText(getString(R.string.schedule_enum) + " " + mState.cinema.getCaption());
 
             text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-            List<Calendar> showTimes = mCurrentState.cinema.getShowTimes().get(mCurrentState.movie);
+            List<Calendar> showTimes = mState.cinema.getShowTimes().get(mState.movie);
             if (showTimes != null) {
                 text.setText(DataConverter.showTimesToSpannableString(showTimes));
             }
@@ -149,8 +149,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     private void setLength() {
         TextView text = (TextView)findViewById(R.id.movie_length);
-        if (mCurrentState.movie.getLengthInMinutes() != 0) {
-            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, mCurrentState.movie.getLengthInMinutes()));
+        if (mState.movie.getLengthInMinutes() != 0) {
+            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, mState.movie.getLengthInMinutes()));
 
             text.setVisibility(View.VISIBLE);
         } else {
@@ -169,8 +169,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     private void setGenre() {
         TextView text = (TextView)findViewById(R.id.movie_genre);
-        if (mCurrentState.movie.getGenres().size() != 0) {
-            text.setText(DataConverter.genresToString(mCurrentState.movie.getGenres()));
+        if (mState.movie.getGenres().size() != 0) {
+            text.setText(DataConverter.genresToString(mState.movie.getGenres()));
             findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_genre_panel).setVisibility(View.GONE);
@@ -179,8 +179,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     private void setActors() {
         TextView text = (TextView)findViewById(R.id.movie_actors);
-        if (mCurrentState.movie.getActors().size() != 0) {
-            text.setText(DataConverter.actorsToSpannableString(mCurrentState.movie.getActors()));
+        if (mState.movie.getActors().size() != 0) {
+            text.setText(DataConverter.actorsToSpannableString(mState.movie.getActors()));
             findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_actors_panel).setVisibility(View.GONE);
@@ -189,8 +189,8 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
 
     private void setDescription() {
         TextView text = (TextView)findViewById(R.id.movie_description);
-        if (mCurrentState.movie.getDescription().length() != 0) {
-            text.setText(mCurrentState.movie.getDescription());
+        if (mState.movie.getDescription().length() != 0) {
+            text.setText(mState.movie.getDescription());
             findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_description_panel).setVisibility(View.GONE);
@@ -198,11 +198,13 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     private void onSchedulesBtnClick(View view) {
-        CurrentState state = mCurrentState.clone();
-        state.activityType = CurrentState.ActivityType.CINEMA_LIST_W_MOVIE;
-        mApp.setCurrentState(state);
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = mState.clone();
+        state.activityType = ActivityState.ActivityType.CINEMA_LIST_W_MOVIE;
+        mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, CinemaListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 
@@ -210,7 +212,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         StringBuffer buffer = new StringBuffer();
         buffer.append(getString(R.string.youtube_search_url));
         buffer.append(" \"\"");
-        buffer.insert(buffer.length() - 1, mCurrentState.movie.getCaption());
+        buffer.insert(buffer.length() - 1, mState.movie.getCaption());
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(buffer.toString()));
@@ -218,11 +220,13 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     public void onActorsClick(View view) {
-        CurrentState state = mCurrentState.clone();
-        state.activityType = CurrentState.ActivityType.ACTOR_LIST_W_MOVIE;
-        mApp.setCurrentState(state);
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = mState.clone();
+        state.activityType = ActivityState.ActivityType.ACTOR_LIST_W_MOVIE;
+        mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, ActorListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 

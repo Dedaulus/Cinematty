@@ -14,9 +14,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 /*
  * User: Dedaulus
@@ -53,7 +53,7 @@ public class CinemattyApplication extends Application {
 
     private Location mCurrentLocation;
 
-    private Stack<CurrentState> mState = new Stack<CurrentState>();
+    private HashMap<String, ActivityState> mState = new HashMap<String, ActivityState>();
 
     private PictureRetriever mPictureRetriever = null;
     private static final String LOCAL_PICTURES_FOLDER = "pictures";
@@ -126,16 +126,16 @@ public class CinemattyApplication extends Application {
         return mPictureRetriever;
     }
 
-    public CurrentState getCurrentState() {
-        return mState.peek();
+    public ActivityState getState(String cookie) {
+        return mState.get(cookie);
     }
 
-    public void setCurrentState(CurrentState currentState) {
-        mState.add(currentState);
+    public void setState(String cookie, ActivityState state) {
+        mState.put(cookie, state);
     }
 
-    public void revertCurrentState() {
-        mState.pop();
+    public void removeState(String cookie) {
+        mState.remove(cookie);
     }
 
     public void saveFavouriteActors() {

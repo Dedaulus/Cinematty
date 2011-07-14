@@ -6,5 +6,5 @@ package com.dedaulus.cinematty.framework.tools;
  * Time: 3:41
  */
 public class Constants {
-
+    public static final String ACTIVITY_STATE_ID = "activity_state_id";
 }
