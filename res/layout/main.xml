@@ -1,114 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background">
 
-    <RelativeLayout
-        android:id="@+id/loading_error_panel"
-        android:layout_margin="4dp"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:visibility="invisible"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/error_message"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="16dp"
-            android:textColor="#ffffff"/>
-
-        <TextView
-            android:id="@+id/error_string"
-            android:layout_marginTop="2dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_below="@id/error_message"/>
-
-        <Button
-            android:layout_marginBottom="2dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/try_again"
-            android:onClick="onTryAgainClick"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/loading_schedules"
+    <com.github.ysamlan.horizontalpager.HorizontalPager
+        android:id="@+id/flipper"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
 
-        <RelativeLayout
-            android:id="@+id/loading_schedule_panel"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true">
+        <include android:id="@+id/categories" layout="@layout/categories"/>
+        <!--<include android:id="@+id/whatsnew" layout="@layout/whatsnew"/>-->
+        <include android:id="@+id/cinemas" layout="@layout/cinema_list"/>
+        <include android:id="@+id/movies" layout="@layout/movie_list"/>
+        <include android:id="@+id/actors" layout="@layout/actor_list"/>
+        <include android:id="@+id/genres" layout="@layout/genre_list"/>
 
-            <ProgressBar
-                 android:id="@+id/loading_schedules_progress"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerVertical="true"
-                 style="@android:style/Widget.ProgressBar.Small"/>
+    </com.github.ysamlan.horizontalpager.HorizontalPager>
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/loading_schedules_progress"
-                android:layout_marginLeft="6dp"
-                android:textColor="#ffffff"
-                android:text="@string/loading_schedule"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/current_city"
-            android:paddingBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@id/loading_schedule_panel"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="#FF6A00"
-            android:textSize="26dp"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/loading_cities"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-
-        <RelativeLayout
-            android:id="@+id/loading_cities_panel"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                 android:id="@+id/loading_cities_progress"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerVertical="true"
-                 style="@android:style/Widget.ProgressBar.Small"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/loading_cities_progress"
-                android:layout_marginLeft="6dp"
-                android:textColor="#ffffff"
-                android:text="@string/loading_cities"/>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

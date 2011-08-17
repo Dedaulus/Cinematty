@@ -19,7 +19,7 @@
         <activity android:name=".activities.ActorListActivity" android:label="Актёры"/>
         <activity android:name=".activities.GenreListActivity" android:label="Жанры"/>
         <activity android:name=".activities.CinemaActivity" android:label="Кинотеатр"/>
-        <activity android:name=".activities.MainMenuActivity" android:label="ГдеКИНО"/>
+        <activity android:name=".activities.MainActivity" android:label="ГдеКИНО"/>
         <activity android:name=".activities.CityListActivity" android:label="Города"/>
     </application>
 

@@ -5,7 +5,8 @@
 
     <TextView
         android:id="@+id/movie_caption_in_cinema_list"
-        style="@style/ListCaption.Movie"/>
+        style="@style/ListCaption.Movie"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/cinema_list"

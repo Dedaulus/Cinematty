@@ -13,7 +13,7 @@
         android:clickable="true"
         android:paddingRight="6dp"
         android:src="@android:drawable/btn_star_big_off"
-        android:onClick="onFavIconClick"/>
+        android:onClick="onActorFavIconClick"/>
 
     <TextView
         android:id="@+id/actor_caption_in_actor_list"

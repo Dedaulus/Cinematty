@@ -4,9 +4,10 @@
     style="@style/Background">
 
     <RelativeLayout
-            android:id="@+id/cinema_panel_in_movie_list"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent">
+        android:id="@+id/cinema_panel_in_movie_list"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/select_cinema_ico"

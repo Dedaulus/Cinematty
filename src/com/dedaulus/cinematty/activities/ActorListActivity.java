@@ -111,7 +111,7 @@ public class ActorListActivity extends Activity {
         }
     }
 
-    public void onFavIconClick(View view) {
+    public void onActorFavIconClick(View view) {
         View parent = (View)view.getParent();
         TextView caption = (TextView)parent.findViewById(R.id.actor_caption_in_actor_list);
 

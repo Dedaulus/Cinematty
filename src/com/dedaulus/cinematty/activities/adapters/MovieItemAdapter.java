@@ -19,6 +19,8 @@ import com.dedaulus.cinematty.framework.tools.PictureReceiver;
 import com.dedaulus.cinematty.framework.tools.PictureType;
 import com.dedaulus.cinematty.framework.tools.UpdatableByNeed;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ import java.util.List;
  * Date: 14.03.11
  * Time: 23:40
  */
-public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, UpdatableByNeed {
+public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, PictureReceiver, UpdatableByNeed {
     private Context mContext;
     private List<Movie> mMovies;
     private PictureRetriever mPictureRetriever;
@@ -155,6 +157,11 @@ public class MovieItemAdapter extends BaseAdapter implements PictureReceiver, Up
         bindView(i, myView);
 
         return myView;
+    }
+
+    public void sortBy(Comparator<Movie> movieComparator) {
+        Collections.sort(mMovies, movieComparator);
+        notifyDataSetChanged();
     }
 
     public void onPictureReceive(String picId, int pictureType, boolean success) {

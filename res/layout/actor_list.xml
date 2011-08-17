@@ -2,9 +2,11 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background">
+
     <TextView
         android:id="@+id/movie_caption_in_actor_list"
-        style="@style/ListCaption.Movie"/>
+        style="@style/ListCaption.Movie"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/actor_list"

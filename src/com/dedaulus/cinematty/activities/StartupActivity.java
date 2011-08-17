@@ -34,7 +34,7 @@ public class StartupActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.splash_screen);
 
         mApp = (CinemattyApplication)getApplication();
         mApp.startListenLocation();
@@ -168,7 +168,7 @@ public class StartupActivity extends Activity
                 }
             }.execute();
         } else {
-            Intent intent = new Intent(this, MainMenuActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
             finish();
