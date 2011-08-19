@@ -51,11 +51,13 @@ public class StartupActivity extends Activity
 
             mApp.setCurrentCity(city);
             getSchedule(true);
-
-        } catch (FileNotFoundException e) {
+        } catch (SAXException e) {
             findViewById(R.id.loading_cities).setVisibility(View.VISIBLE);
             findViewById(R.id.loading_schedules).setVisibility(View.GONE);
-
+            getCitiesList(true);
+        } catch (IOException e) {
+            findViewById(R.id.loading_cities).setVisibility(View.VISIBLE);
+            findViewById(R.id.loading_schedules).setVisibility(View.GONE);
             getCitiesList(true);
         }
     }
@@ -108,7 +110,7 @@ public class StartupActivity extends Activity
         }
     }
 
-    private City getCurrentCity() {
+    private City getCurrentCity() throws IOException, SAXException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
@@ -125,11 +127,15 @@ public class StartupActivity extends Activity
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
+        } catch (SAXException e) {
+            throw e;
+        } catch (IOException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        throw new RuntimeException();
+        throw new IOException("City not found");
     }
 
     private void getSchedule(boolean download) {
