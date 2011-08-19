@@ -38,10 +38,11 @@ public class MainActivity extends Activity implements LocationClient {
     private SortableAdapter<MovieActor> mActorListAdapter;
 
     private static final int CATEGORIES_SCREEN = 0;
-    private static final int CINEMAS_SCREEN    = 1;
-    private static final int MOVIES_SCREEN     = 2;
-    private static final int ACTORS_SCREEN     = 3;
-    private static final int GENRES_SCREEN     = 4;
+    private static final int WHATS_NEW_SCREEN  = 1;
+    private static final int CINEMAS_SCREEN    = 2;
+    private static final int MOVIES_SCREEN     = 3;
+    private static final int ACTORS_SCREEN     = 4;
+    private static final int GENRES_SCREEN     = 5;
 
     /** Called when the activity is first created. */
     @Override
@@ -49,6 +50,9 @@ public class MainActivity extends Activity implements LocationClient {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
+        pager.setCurrentScreen(WHATS_NEW_SCREEN, false);
 
         mApp = (CinemattyApplication)getApplication();
 

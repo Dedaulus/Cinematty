@@ -9,7 +9,7 @@
         android:layout_width="fill_parent">
 
         <include android:id="@+id/categories" layout="@layout/categories"/>
-        <!--<include android:id="@+id/whatsnew" layout="@layout/whatsnew"/>-->
+        <include android:id="@+id/whats_new" layout="@layout/whats_new"/>
         <include android:id="@+id/cinemas" layout="@layout/cinema_list"/>
         <include android:id="@+id/movies" layout="@layout/movie_list"/>
         <include android:id="@+id/actors" layout="@layout/actor_list"/>
