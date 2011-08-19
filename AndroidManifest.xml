@@ -4,23 +4,58 @@
       android:versionCode="1"
       android:versionName="1.0">
     <application android:name="CinemattyApplication" android:label="Cinematty" android:icon="@drawable/icon">
+
         <activity
             android:name=".activities.StartupActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CinemaListActivity" android:label="Кинотеатры"/>
-        <activity android:name=".activities.MovieListActivity" android:label="Фильмы"/>
-        <activity android:name=".activities.MovieActivity" android:label="Фильм"/>
-        <activity android:name=".activities.ActorListActivity" android:label="Актёры"/>
-        <activity android:name=".activities.GenreListActivity" android:label="Жанры"/>
-        <activity android:name=".activities.CinemaActivity" android:label="Кинотеатр"/>
-        <activity android:name=".activities.MainActivity" android:label="ГдеКИНО"/>
-        <activity android:name=".activities.CityListActivity" android:label="Города"/>
+
+        <activity
+            android:name=".activities.CinemaListActivity"
+            android:label="Кинотеатры"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.MovieListActivity"
+            android:label="Фильмы"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.MovieActivity"
+            android:label="Фильм"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.ActorListActivity"
+            android:label="Актёры"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.GenreListActivity"
+            android:label="Жанры"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.CinemaActivity"
+            android:label="Кинотеатр"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="ГдеКИНО"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.CityListActivity"
+            android:label="Города"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
