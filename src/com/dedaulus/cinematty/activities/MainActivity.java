@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,10 +19,7 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
-import com.dedaulus.cinematty.framework.tools.ActivityState;
-import com.dedaulus.cinematty.framework.tools.CinemaComparator;
-import com.dedaulus.cinematty.framework.tools.Constants;
-import com.dedaulus.cinematty.framework.tools.LocationClient;
+import com.dedaulus.cinematty.framework.tools.*;
 import com.github.ysamlan.horizontalpager.HorizontalPager;
 
 import java.util.ArrayList;
@@ -135,6 +135,90 @@ public class MainActivity extends Activity implements LocationClient {
         mApp.stopListenLocation();
 
         super.onBackPressed();
+    }
+
+    private boolean createCinemasScreenMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.cinema_list_menu, menu);
+
+        switch (mApp.getCinemaSortOrder()) {
+        case BY_CAPTION:
+            menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
+            break;
+
+        case BY_FAVOURITE:
+            menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
+            break;
+
+        case BY_DISTANCE:
+            menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
+            break;
+
+        default:
+            break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
+        switch (pager.getCurrentScreen()) {
+        case CATEGORIES_SCREEN:
+            break;
+
+        case WHATS_NEW_SCREEN:
+            break;
+
+        case CINEMAS_SCREEN:
+            return createCinemasScreenMenu(menu);
+
+        case MOVIES_SCREEN:
+            break;
+
+        case ACTORS_SCREEN:
+            break;
+
+        case GENRES_SCREEN:
+            break;
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_cinema_sort:
+            return true;
+
+        case R.id.submenu_cinema_sort_by_caption:
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
+            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_CAPTION);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_cinema_sort_by_favourite:
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
+            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_cinema_sort_by_distance:
+            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
+            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_DISTANCE);
+            item.setChecked(true);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onLocationChanged(Location location) {

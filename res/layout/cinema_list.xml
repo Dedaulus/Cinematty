@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Background">
+    style="@style/Background.Caption">
 
-    <TextView
-        android:id="@+id/movie_caption_in_cinema_list"
-        style="@style/ListCaption.Movie"
-        android:visibility="gone"/>
+    <RelativeLayout
+        android:id="@+id/cinema_list_title"
+        style="@style/ActivityTitleBar">
 
-    <ListView
-        android:id="@+id/cinema_list"
-        android:layout_below="@id/movie_caption_in_cinema_list"
-        style="@style/List.Cinemas"/>
+        <TextView
+            style="@style/ActivityTitleText"
+            android:text="@string/cinemas_caption"/>
+
+        <ImageView
+            android:id="@+id/cinema_list_title_arrow_left"
+            style="@style/ActivityTitleBarArrow.Left"/>
+
+        <ImageView
+            android:id="@+id/cinema_list_title_arrow_right"
+            style="@style/ActivityTitleBarArrow.Right"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/Background"
+        android:layout_below="@id/cinema_list_title">
+
+        <TextView
+            android:id="@+id/movie_caption_in_cinema_list"
+            style="@style/ListCaption.Movie"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/cinema_list"
+            style="@style/List.Cinemas"
+            android:layout_below="@id/movie_caption_in_cinema_list"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

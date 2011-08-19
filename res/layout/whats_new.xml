@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Background">
+    style="@style/Background.Caption">
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Постеры..."/>
+    <RelativeLayout
+        android:id="@+id/whats_new_list_title"
+        style="@style/ActivityTitleBar">
 
+        <TextView
+            style="@style/ActivityTitleText"
+            android:text="@string/whats_new_caption"/>
+
+        <ImageView
+            android:id="@+id/whats_new_list_title_arrow_left"
+            style="@style/ActivityTitleBarArrow.Left"/>
+
+        <ImageView
+            android:id="@+id/whats_new_list_title_arrow_right"
+            style="@style/ActivityTitleBarArrow.Right"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/Background"
+        android:layout_below="@id/whats_new_list_title">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Постеры..."/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

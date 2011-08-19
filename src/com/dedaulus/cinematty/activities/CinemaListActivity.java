@@ -110,15 +110,15 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
         switch (mApp.getCinemaSortOrder()) {
         case BY_CAPTION:
-            menu.findItem(R.id.submenu_sort_by_caption).setChecked(true);
+            menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
             break;
 
         case BY_FAVOURITE:
-            menu.findItem(R.id.submenu_sort_by_favourite).setChecked(true);
+            menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
             break;
 
         case BY_DISTANCE:
-            menu.findItem(R.id.submenu_sort_by_distance).setChecked(true);
+            menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
             break;
 
         default:
@@ -131,22 +131,22 @@ public class CinemaListActivity extends Activity implements LocationClient {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_cinema_list_sort:
+        case R.id.menu_cinema_sort:
             return true;
 
-        case R.id.submenu_sort_by_caption:
+        case R.id.submenu_cinema_sort_by_caption:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
             mApp.saveCinemasSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
-        case R.id.submenu_sort_by_favourite:
+        case R.id.submenu_cinema_sort_by_favourite:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
             mApp.saveCinemasSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
 
-        case R.id.submenu_sort_by_distance:
+        case R.id.submenu_cinema_sort_by_distance:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
             mApp.saveCinemasSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);

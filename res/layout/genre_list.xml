@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Background">
+    style="@style/Background.Caption">
 
-    <TextView
-        android:id="@+id/movie_caption_in_genre_list"
-        style="@style/ListCaption.Movie"
-        android:visibility="gone"/>
+    <RelativeLayout
+        android:id="@+id/genre_list_title"
+        style="@style/ActivityTitleBar">
 
-    <ListView
-        android:id="@+id/genre_list"
-        style="@style/List.Genres"
-        android:layout_below="@id/movie_caption_in_genre_list"/>
+        <TextView
+            style="@style/ActivityTitleText"
+            android:text="@string/genres_caption"/>
+
+        <ImageView
+            android:id="@+id/genre_list_title_arrow_left"
+            style="@style/ActivityTitleBarArrow.Left"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/Background"
+        android:layout_below="@id/genre_list_title">
+
+        <TextView
+            android:id="@+id/movie_caption_in_genre_list"
+            style="@style/ListCaption.Movie"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/genre_list"
+            style="@style/List.Genres"
+            android:layout_below="@id/movie_caption_in_genre_list"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

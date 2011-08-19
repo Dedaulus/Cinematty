@@ -9,6 +9,8 @@
     <string name="unknown_error">Произошла непредвиденная ошибка</string>
     <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ в интернет</string>
 
+    <string name="categories_caption">Категории</string>
+    <string name="whats_new_caption">Новинки</string>
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
     <string name="actors_caption">Актёры</string>
