@@ -10,7 +10,7 @@
         android:layout_alignParentBottom="true"
         android:paddingTop="6dp"
         android:paddingBottom="2dp"
-        android:background="@drawable/movie_data_divider">
+        android:background="#000000">
 
         <Button
             android:id="@+id/show_schedules_button"
@@ -121,7 +121,7 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="16dp"
-                    android:textColor="#FF4E00"/>
+                    android:textColor="#FF6A00"/>
 
             </LinearLayout>
 

@@ -146,7 +146,7 @@ public class DataConverter {
                 actorsStr.delete(actorsStr.length() - 2, actorsStr.length());
                 SpannableString str = new SpannableString(actorsStr.toString());
                 for (Pair<Integer, Integer> pt : favActorsPoints) {
-                    str.setSpan(new ForegroundColorSpan(Color.rgb(255, 204, 0)), pt.first, pt.second, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    str.setSpan(new ForegroundColorSpan(Color.rgb(255, 0, 0)), pt.first, pt.second, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 return str;

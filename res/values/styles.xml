@@ -126,7 +126,7 @@
     <style name="ListItem.Data.MovieActor">
         <item name="android:singleLine">false</item>
         <item name="android:ellipsize">none</item>
-        <item name="android:textColor">#FFCC00</item>
+        <item name="android:textColor">#FF0000</item>
     </style>
 
 </resources>

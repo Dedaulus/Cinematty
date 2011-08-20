@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Background">
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:background="#000000">
 
-    <RelativeLayout
-        android:id="@+id/advanced_cinema_panel"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/show_schedules_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/look_for_schedule"
-            android:onClick="onSchedulesClick">
-        </Button>
-
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:layout_above="@id/advanced_cinema_panel">
+        android:layout_width="fill_parent">
 
         <LinearLayout
             android:layout_height="fill_parent"
@@ -42,10 +26,11 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingRight="6dp"
-                    android:src="@drawable/ic_fav_cinema_on"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="10dp"
+                    android:src="@android:drawable/btn_star_big_off"
                     android:clickable="true"
-                    android:onClick="onFavIconClick"/>
+                    android:onClick="onCinemaFavIconClick"/>
 
                 <LinearLayout
                     android:id="@+id/cinema_caption_panel"
@@ -53,7 +38,7 @@
                     android:layout_width="fill_parent"
                     android:layout_centerVertical="true"
                     android:orientation="vertical"
-                    android:onClick="onUrlClick"
+                    android:onClick="onCinemaUrlClick"
                     android:layout_toRightOf="@id/fav_icon_in_cinema_info">
 
                     <TextView
@@ -76,28 +61,21 @@
 
             </RelativeLayout>
 
-            <View
-                android:id="@+id/address_divider"
-                android:layout_height="3px"
-                android:layout_width="fill_parent"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/cinema_data_divider"/>
-
             <RelativeLayout
                 android:id="@+id/cinema_address_panel"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_margin="6dp"
-                android:onClick="onAddressClick">
+                android:onClick="onCinemaAddressClick">
 
                 <ImageView
                     android:id="@+id/map_ico"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingRight="6dp"
-                    android:src="@drawable/ic_place"/>
+                    android:paddingLeft="2dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_place_small"/>
 
                 <LinearLayout
                     android:layout_height="wrap_content"
@@ -111,48 +89,41 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:textSize="18dp"
-                        android:textColor="#ffffff"/>
+                        android:textColor="#FFFFFF"/>
 
                     <TextView
                         android:id="@+id/cinema_into"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="16dp"
-                        android:textColor="#c0c0c0"/>
+                        android:textSize="14dp"
+                        android:textColor="#C0C0C0"/>
 
                     <TextView
                         android:id="@+id/cinema_metro"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="16dp"
-                        android:textColor="#c0c0c0"/>
+                        android:textSize="14dp"
+                        android:textColor="#C0C0C0"/>
 
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <View
-                android:id="@+id/phone_divider"
-                android:layout_height="3px"
-                android:layout_width="fill_parent"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/cinema_data_divider"/>
 
             <RelativeLayout
                 android:id="@+id/cinema_phone_panel"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_margin="6dp"
-                android:onClick="onPhoneClick">
+                android:onClick="onCinemaPhoneClick">
 
                 <ImageView
                     android:id="@+id/call_ico"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingRight="6dp"
-                    android:src="@drawable/ic_call"/>
+                    android:paddingLeft="2dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_call_small"/>
 
                 <TextView
                     android:id="@+id/cinema_phone"
@@ -161,12 +132,12 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/call_ico"
                     android:textSize="20dp"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#FFFFFF"/>
 
             </RelativeLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>
