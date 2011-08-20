@@ -107,6 +107,8 @@ public class MainActivity extends Activity implements LocationClient {
 
         mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
 
+        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
+
         mActorListAdapter.sortBy(new Comparator<MovieActor>() {
             public int compare(MovieActor a1, MovieActor a2) {
                 if (a1.getFavourite() == a2.getFavourite()) {
@@ -137,7 +139,8 @@ public class MainActivity extends Activity implements LocationClient {
         super.onBackPressed();
     }
 
-    private boolean createCinemasScreenMenu(Menu menu) {
+    private boolean createCinemaListScreenMenu(Menu menu) {
+        menu.clear();
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.cinema_list_menu, menu);
 
@@ -161,6 +164,27 @@ public class MainActivity extends Activity implements LocationClient {
         return true;
     }
 
+    private boolean createMovieListScreenMenu(Menu menu) {
+        menu.clear();
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movie_list_menu, menu);
+
+        switch (mApp.getMovieSortOrder()) {
+        case BY_CAPTION:
+            menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
+            break;
+
+        case BY_POPULAR:
+            menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
+            break;
+
+        default:
+            break;
+        }
+
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return super.onCreateOptionsMenu(menu);
@@ -171,22 +195,22 @@ public class MainActivity extends Activity implements LocationClient {
         HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
         switch (pager.getCurrentScreen()) {
         case CATEGORIES_SCREEN:
-            break;
+            return false;
 
         case WHATS_NEW_SCREEN:
-            break;
+            return false;
 
         case CINEMAS_SCREEN:
-            return createCinemasScreenMenu(menu);
+            return createCinemaListScreenMenu(menu);
 
         case MOVIES_SCREEN:
-            break;
+            return createMovieListScreenMenu(menu);
 
         case ACTORS_SCREEN:
-            break;
+            return false;
 
         case GENRES_SCREEN:
-            break;
+            return false;
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -200,19 +224,34 @@ public class MainActivity extends Activity implements LocationClient {
 
         case R.id.submenu_cinema_sort_by_caption:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_CAPTION);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_favourite:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_distance:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_DISTANCE);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+            item.setChecked(true);
+            return true;
+
+        case R.id.menu_movie_sort:
+            return true;
+
+        case R.id.submenu_movie_sort_by_caption:
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
+            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_movie_sort_by_popular:
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR));
+            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;
 

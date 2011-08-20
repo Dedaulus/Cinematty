@@ -62,6 +62,7 @@ public class CinemattyApplication extends Application {
     private static final String FAV_ACTORS_FILE = "cinematty_fav_actors";
     private static final String PREFERENCES_FILE = "cinematty_preferences";
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
+    private static final String PREF_MOVIE_SORT_ORDER = "movie_sort_order";
     private static final String PREF_CURRENT_CITY = "current_city";
 
     {
@@ -176,7 +177,7 @@ public class CinemattyApplication extends Application {
         return preferences.getAll();
     }
 
-    public void saveCinemasSortOrder(CinemaSortOrder sortOrder) {
+    public void saveCinemaSortOrder(CinemaSortOrder sortOrder) {
         SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(PREF_CINEMA_SORT_ORDER, sortOrder.ordinal());
@@ -193,6 +194,25 @@ public class CinemattyApplication extends Application {
         }
 
         return CinemaSortOrder.BY_CAPTION;
+    }
+
+    public void saveMovieSortOrder(MovieSortOrder sortOrder) {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREF_MOVIE_SORT_ORDER, sortOrder.ordinal());
+
+        editor.commit();
+    }
+
+    public MovieSortOrder getMovieSortOrder() {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        int order = preferences.getInt(PREF_MOVIE_SORT_ORDER, CinemaSortOrder.BY_CAPTION.ordinal());
+
+        for (MovieSortOrder sortOrder : MovieSortOrder.values()) {
+            if (sortOrder.ordinal() == order) return sortOrder;
+        }
+
+        return MovieSortOrder.BY_CAPTION;
     }
 
     public void saveCurrentCityId(int id) {

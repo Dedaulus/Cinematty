@@ -37,15 +37,6 @@
             android:layout_width="fill_parent"
             android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/select_cinema_ico"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="6dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="@drawable/circle_arrow"/>
-
             <TextView
                 android:id="@+id/cinema_caption_in_movie_list"
                 android:layout_alignParentLeft="true"

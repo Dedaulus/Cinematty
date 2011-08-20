@@ -52,7 +52,7 @@ public final class R {
         public static final int cinema_address_panel=0x7f070018;
         public static final int cinema_caption=0x7f070016;
         public static final int cinema_caption_in_cinema_list=0x7f070021;
-        public static final int cinema_caption_in_movie_list=0x7f07005a;
+        public static final int cinema_caption_in_movie_list=0x7f070059;
         public static final int cinema_caption_in_schedule_list=0x7f070025;
         public static final int cinema_caption_panel=0x7f070015;
         public static final int cinema_into=0x7f07001b;
@@ -98,6 +98,7 @@ public final class R {
         public static final int loading_schedules_progress=0x7f070061;
         public static final int map_ico=0x7f070019;
         public static final int menu_cinema_sort=0x7f070069;
+        public static final int menu_movie_sort=0x7f07006d;
         public static final int movie_actor_in_movie_list=0x7f070051;
         public static final int movie_actors=0x7f070049;
         public static final int movie_actors_panel=0x7f070048;
@@ -131,12 +132,14 @@ public final class R {
         public static final int schedule_enum_for_one_cinema=0x7f070045;
         public static final int schedule_enum_in_schedule_list=0x7f070026;
         public static final int schedule_title=0x7f070044;
-        public static final int select_cinema_ico=0x7f070059;
+        public static final int select_cinema_ico=0x7f07005a;
         public static final int select_city_ico=0x7f07000a;
         public static final int show_schedules_button=0x7f07003d;
         public static final int submenu_cinema_sort_by_caption=0x7f07006a;
         public static final int submenu_cinema_sort_by_distance=0x7f07006c;
         public static final int submenu_cinema_sort_by_favourite=0x7f07006b;
+        public static final int submenu_movie_sort_by_caption=0x7f07006e;
+        public static final int submenu_movie_sort_by_popular=0x7f07006f;
         public static final int time_left_in_movie_list=0x7f070053;
         public static final int whats_new=0x7f070037;
         public static final int whats_new_list_title=0x7f070066;
@@ -165,6 +168,7 @@ public final class R {
     }
     public static final class menu {
         public static final int cinema_list_menu=0x7f060000;
+        public static final int movie_list_menu=0x7f060001;
     }
     public static final class string {
         public static final int actors=0x7f040011;
@@ -172,17 +176,17 @@ public final class R {
         public static final int app_name=0x7f040000;
         public static final int categories_caption=0x7f040006;
         public static final int cinemas_caption=0x7f040008;
-        public static final int cities_file=0x7f040023;
+        public static final int cities_file=0x7f040024;
         public static final int connect_error=0x7f040005;
         public static final int genre=0x7f040010;
         public static final int genres_caption=0x7f04000b;
         public static final int hour=0x7f040013;
-        public static final int inf=0x7f040022;
-        public static final int km=0x7f040020;
+        public static final int inf=0x7f040023;
+        public static final int km=0x7f040021;
         public static final int loading_cities=0x7f040002;
         public static final int loading_schedule=0x7f040001;
         public static final int look_for_schedule=0x7f040016;
-        public static final int m=0x7f040021;
+        public static final int m=0x7f040022;
         public static final int metro_near=0x7f04001b;
         public static final int minute=0x7f040014;
         public static final int movie_description=0x7f040012;
@@ -193,18 +197,19 @@ public final class R {
         public static final int schedule_enum=0x7f040017;
         public static final int schedule_now=0x7f040019;
         public static final int schedule_start_in=0x7f04001a;
-        public static final int settings_url=0x7f040024;
+        public static final int settings_url=0x7f040025;
         public static final int sort=0x7f04001c;
         public static final int sort_by_caption=0x7f04001d;
         public static final int sort_by_distance=0x7f04001f;
         public static final int sort_by_fav=0x7f04001e;
+        public static final int sort_by_popular=0x7f040020;
         public static final int try_again=0x7f040003;
         public static final int unknown=0x7f040015;
         public static final int unknown_error=0x7f040004;
         public static final int wait_dialog_caption=0x7f04000c;
         public static final int wait_dialog_text=0x7f04000d;
         public static final int whats_new_caption=0x7f040007;
-        public static final int youtube_search_url=0x7f040025;
+        public static final int youtube_search_url=0x7f040026;
     }
     public static final class style {
         public static final int ActivityTitleBar=0x7f050002;

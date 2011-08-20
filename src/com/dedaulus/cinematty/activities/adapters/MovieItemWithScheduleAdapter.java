@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MovieItemWithScheduleAdapter extends BaseAdapter implements PictureReceiver, UpdatableByNeed {
+public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, PictureReceiver, UpdatableByNeed {
     private Context mContext;
     private List<Movie> mMovies;
     private Cinema mCinema;
@@ -236,6 +236,11 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Picture
             if (id == showTimes.size()) return null;
             else return showTimes.get(id);
         }
+    }
+
+    public void sortBy(Comparator<Movie> movieComparator) {
+        Collections.sort(mMovies, movieComparator);
+        notifyDataSetChanged();
     }
 
     public void onPictureReceive(String picId, int pictureType, boolean success) {

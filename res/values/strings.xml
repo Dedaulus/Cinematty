@@ -39,6 +39,7 @@
     <string name="sort_by_caption">Названию</string>
     <string name="sort_by_fav">Любимым</string>
     <string name="sort_by_distance">Ближайшим</string>
+    <string name="sort_by_popular">Популярности</string>
 
 
     <string name="km">км</string>

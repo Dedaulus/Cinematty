@@ -6,8 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,10 +15,9 @@ import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
+import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.tools.ActivityState;
-import com.dedaulus.cinematty.framework.tools.Constants;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
+import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -30,9 +28,10 @@ import java.util.UUID;
  * Time: 23:37
  */
 public class MovieListActivity extends Activity {
-    CinemattyApplication mApp;
-    UniqueSortedList<Movie> mScopeMovies;
-    ActivityState mState;
+    private CinemattyApplication mApp;
+    private SortableAdapter<Movie> mMovieListAdapter;
+    private UniqueSortedList<Movie> mScopeMovies;
+    private ActivityState mState;
     private String mStateId;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -50,28 +49,18 @@ public class MovieListActivity extends Activity {
 
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
-        View iconView = findViewById(R.id.select_cinema_ico);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
         switch (mState.activityType) {
         case MOVIE_LIST:
-            iconView.setVisibility(View.GONE);
             captionView.setVisibility(View.GONE);
             mScopeMovies = mApp.getMovies();
-            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever());
+            list.setAdapter(mMovieListAdapter);
             break;
 
         case MOVIE_LIST_W_CINEMA:
-            /*
-            iconView.setVisibility(View.VISIBLE);
-            captionView.setVisibility(View.VISIBLE);
-            captionLabel.setText(mState.cinema.getCaption());
-            captionView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    onCinemaClick(view);
-                }
-            });
-            */
+            captionView.setVisibility(View.GONE);
             LayoutInflater layoutInflater = LayoutInflater.from(this);
             View view = layoutInflater.inflate(R.layout.cinema_info, null, false);
             setCinemaHeader(view);
@@ -79,23 +68,24 @@ public class MovieListActivity extends Activity {
             list.addHeaderView(view, null, false);
 
             mScopeMovies = mState.cinema.getMovies();
-            list.setAdapter(new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mState.cinema, mApp.getPictureRetriever()));
+            mMovieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mState.cinema, mApp.getPictureRetriever());
+            list.setAdapter(mMovieListAdapter);
             break;
 
         case MOVIE_LIST_W_ACTOR:
-            iconView.setVisibility(View.GONE);
             captionView.setVisibility(View.VISIBLE);
             captionLabel.setText(mState.actor.getActor());
             mScopeMovies = mState.actor.getMovies();
-            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever());
+            list.setAdapter(mMovieListAdapter);
             break;
 
         case MOVIE_LIST_W_GENRE:
-            iconView.setVisibility(View.GONE);
             captionView.setVisibility(View.VISIBLE);
             captionLabel.setText(mState.genre.getGenre());
             mScopeMovies = mState.genre.getMovies();
-            list.setAdapter(new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever()));
+            mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever());
+            list.setAdapter(mMovieListAdapter);
             break;
 
         default:
@@ -110,10 +100,61 @@ public class MovieListActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
+
+        super.onResume();
+    }
+
+    @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
 
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movie_list_menu, menu);
+
+        switch (mApp.getMovieSortOrder()) {
+        case BY_CAPTION:
+            menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
+            break;
+
+        case BY_POPULAR:
+            menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
+            break;
+
+        default:
+            break;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_movie_sort:
+            return true;
+
+        case R.id.submenu_movie_sort_by_caption:
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
+            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_movie_sort_by_popular:
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR));
+            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+            item.setChecked(true);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void onCinemaClick(View view) {

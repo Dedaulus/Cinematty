@@ -140,19 +140,19 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
         case R.id.submenu_cinema_sort_by_caption:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_CAPTION);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_favourite:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_distance:
             mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
-            mApp.saveCinemasSortOrder(CinemaSortOrder.BY_DISTANCE);
+            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
 
@@ -186,10 +186,10 @@ public class CinemaListActivity extends Activity implements LocationClient {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.cinema = mApp.getCinemas().get(cinemaId);
-            state.activityType = ActivityState.ActivityType.CINEMA_INFO;
+            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_CINEMA;
             mApp.setState(cookie, state);
 
-            Intent intent = new Intent(this, CinemaActivity.class);
+            Intent intent = new Intent(this, MovieListActivity.class);
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             startActivity(intent);
         }
