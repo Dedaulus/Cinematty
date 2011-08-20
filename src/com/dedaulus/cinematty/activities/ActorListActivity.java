@@ -132,4 +132,8 @@ public class ActorListActivity extends Activity {
             }
         }
     }
+
+    public void onHomeButtonClick(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

@@ -219,6 +219,10 @@ public class CinemaListActivity extends Activity implements LocationClient {
         }
     }
 
+    public void onHomeButtonClick(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
     public void onLocationChanged(Location location) {
         LocationAdapter adapter = (LocationAdapter)mCinemaListAdapter;
         adapter.setCurrentLocation(location);

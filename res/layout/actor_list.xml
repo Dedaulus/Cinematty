@@ -14,7 +14,8 @@
         <ImageView
             android:id="@+id/actor_list_title_home"
             style="@style/ActivityTitleBarHome"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:onClick="onHomeButtonClick"/>
 
         <ImageView
             android:id="@+id/actor_list_title_arrow_left"

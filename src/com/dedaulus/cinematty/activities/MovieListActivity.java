@@ -130,4 +130,8 @@ public class MovieListActivity extends Activity {
             startActivity(intent);
         }
     }
+
+    public void onHomeButtonClick(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

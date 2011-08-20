@@ -49,7 +49,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="ГдеКИНО"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".activities.CityListActivity"
