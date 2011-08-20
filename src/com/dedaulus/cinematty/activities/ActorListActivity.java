@@ -35,6 +35,10 @@ public class ActorListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actor_list);
 
+        findViewById(R.id.actor_list_title_arrow_left).setVisibility(View.GONE);
+        findViewById(R.id.actor_list_title_arrow_right).setVisibility(View.GONE);
+        findViewById(R.id.actor_list_title_home).setVisibility(View.VISIBLE);
+
         mApp = (CinemattyApplication)getApplication();
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);

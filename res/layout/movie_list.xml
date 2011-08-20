@@ -12,6 +12,11 @@
             android:text="@string/movies_caption"/>
 
         <ImageView
+            android:id="@+id/movie_list_title_home"
+            style="@style/ActivityTitleBarHome"
+            android:visibility="gone"/>
+
+        <ImageView
             android:id="@+id/movie_list_title_arrow_left"
             style="@style/ActivityTitleBarArrow.Left"/>
 

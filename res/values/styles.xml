@@ -33,6 +33,14 @@
         <item name="android:src">@drawable/ic_arrow_right</item>
     </style>
 
+    <style name="ActivityTitleBarHome">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:src">@drawable/ic_home</item>
+    </style>
+
     <style name="ActivityTitleText">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -65,7 +73,7 @@
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">26dp</item>
-        <item name="android:textColor">#FF6A00</item>
+        <item name="android:textColor">#FF4E00</item>
     </style>
 
     <style name="ListCaption.Movie"/>
@@ -107,11 +115,11 @@
     <style name="ListItem.Data.CinemaSchedule">
         <item name="android:singleLine">false</item>
         <item name="android:ellipsize">none</item>
-        <item name="android:textColor">#FF6A00</item>
+        <item name="android:textColor">#FF4E00</item>
     </style>
     <style name="ListItem.Data.MovieGenre"/>
     <style name="ListItem.Data.MovieSchedule">
-        <item name="android:textColor">#FF6A00</item>
+        <item name="android:textColor">#FF4E00</item>
     </style>
     <!-- 0094FF -->
     <style name="ListItem.Data.MovieTimeLeft"/>

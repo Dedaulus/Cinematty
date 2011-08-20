@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="16dp"
-            android:textColor="#ffffff"/>
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/error_string"
@@ -54,7 +54,7 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
-                 style="@android:style/Widget.ProgressBar.Small"/>
+                 style="@android:style/Widget.ProgressBar.Small.Inverse"/>
 
             <TextView
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/loading_schedules_progress"
                 android:layout_marginLeft="6dp"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:text="@string/loading_schedule"/>
 
         </RelativeLayout>
@@ -74,7 +74,7 @@
             android:layout_above="@id/loading_schedule_panel"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textColor="#FF6A00"
+            android:textColor="#FF4E00"
             android:textSize="26dp"/>
 
     </RelativeLayout>
@@ -104,7 +104,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/loading_cities_progress"
                 android:layout_marginLeft="6dp"
-                android:textColor="#ffffff"
+                android:textColor="#000000"
                 android:text="@string/loading_cities"/>
 
         </RelativeLayout>
