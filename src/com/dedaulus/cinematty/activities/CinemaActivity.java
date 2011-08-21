@@ -67,9 +67,9 @@ public class CinemaActivity extends Activity {
         ImageView imageView = (ImageView)findViewById(R.id.fav_icon_in_cinema_info);
 
         if (mState.cinema.getFavourite() > 0) {
-            imageView.setImageResource(R.drawable.ic_fav_cinema_on);
+            imageView.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
-            imageView.setImageResource(R.drawable.ic_fav_cinema_off);
+            imageView.setImageResource(android.R.drawable.btn_star_big_off);
         }
     }
 
@@ -167,10 +167,10 @@ public class CinemaActivity extends Activity {
     public void onFavIconClick(View view) {
         if (mState.cinema.getFavourite() > 0) {
             mState.cinema.setFavourite(false);
-            ((ImageView)view).setImageResource(R.drawable.ic_fav_cinema_off);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
         } else {
             mState.cinema.setFavourite(true);
-            ((ImageView)view).setImageResource(R.drawable.ic_fav_cinema_on);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
         }
     }
 
