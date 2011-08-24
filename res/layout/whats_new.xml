@@ -21,16 +21,20 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <GridView
+        android:id="@+id/whats_new_grid"
         style="@style/Background"
-        android:layout_below="@id/whats_new_list_title">
+        android:numColumns="1"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing="2dp"
+        android:gravity="center"
+        android:layout_below="@id/whats_new_list_title"/>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Постеры..."/>
-
-    </RelativeLayout>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="!!!!!!!!"
+        android:layout_below="@id/whats_new_list_title"/>
 
 </RelativeLayout>

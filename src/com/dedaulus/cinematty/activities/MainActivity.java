@@ -2,16 +2,11 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
@@ -59,6 +54,15 @@ public class MainActivity extends Activity implements LocationClient {
         // Categories
         TextView cityLabel = (TextView)findViewById(R.id.city_caption);
         cityLabel.setText(mApp.getCurrentCity().getName());
+
+        // What's new
+        GridView whatsNewGrid = (GridView)findViewById(R.id.whats_new_grid);
+        if (getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE) {
+            whatsNewGrid.setNumColumns(2);
+        } else {
+            whatsNewGrid.setNumColumns(1);
+        }
+        whatsNewGrid.setAdapter(new PosterItemAdapter(this));
 
         // Cinemas
         ListView cinemaList = (ListView)findViewById(R.id.cinema_list);
@@ -417,5 +421,20 @@ public class MainActivity extends Activity implements LocationClient {
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             startActivity(intent);
         }
+    }
+
+    public int getScreenOrientation() {
+        Display getOrient = getWindowManager().getDefaultDisplay();
+        int orientation = Configuration.ORIENTATION_UNDEFINED;
+        if (getOrient.getWidth()==getOrient.getHeight()) {
+            orientation = Configuration.ORIENTATION_SQUARE;
+        } else {
+            if (getOrient.getWidth() < getOrient.getHeight()) {
+                orientation = Configuration.ORIENTATION_PORTRAIT;
+            } else {
+                 orientation = Configuration.ORIENTATION_LANDSCAPE;
+            }
+        }
+        return orientation;
     }
 }

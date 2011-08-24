@@ -13,21 +13,22 @@ public final class R {
     public static final class drawable {
         public static final int checked=0x7f020000;
         public static final int cinema_data_divider=0x7f020001;
-        public static final int ic_actors=0x7f020002;
-        public static final int ic_arrow_left=0x7f020003;
-        public static final int ic_arrow_right=0x7f020004;
-        public static final int ic_blank_movie=0x7f020005;
-        public static final int ic_call_small=0x7f020006;
-        public static final int ic_genres=0x7f020007;
-        public static final int ic_home=0x7f020008;
-        public static final int ic_loading=0x7f020009;
-        public static final int ic_movies=0x7f02000a;
-        public static final int ic_place=0x7f02000b;
-        public static final int ic_place_small=0x7f02000c;
-        public static final int icon=0x7f02000d;
-        public static final int list_divider=0x7f02000e;
-        public static final int movie_data_divider=0x7f02000f;
-        public static final int picture_border=0x7f020010;
+        public static final int hitman=0x7f020002;
+        public static final int ic_actors=0x7f020003;
+        public static final int ic_arrow_left=0x7f020004;
+        public static final int ic_arrow_right=0x7f020005;
+        public static final int ic_blank_movie=0x7f020006;
+        public static final int ic_call_small=0x7f020007;
+        public static final int ic_genres=0x7f020008;
+        public static final int ic_home=0x7f020009;
+        public static final int ic_loading=0x7f02000a;
+        public static final int ic_movies=0x7f02000b;
+        public static final int ic_place=0x7f02000c;
+        public static final int ic_place_small=0x7f02000d;
+        public static final int icon=0x7f02000e;
+        public static final int list_divider=0x7f02000f;
+        public static final int movie_data_divider=0x7f020010;
+        public static final int picture_border=0x7f020011;
     }
     public static final class id {
         public static final int actor_caption_in_actor_list=0x7f070001;
@@ -94,8 +95,8 @@ public final class R {
         public static final int loading_schedules=0x7f07005f;
         public static final int loading_schedules_progress=0x7f070061;
         public static final int map_ico=0x7f070019;
-        public static final int menu_cinema_sort=0x7f070069;
-        public static final int menu_movie_sort=0x7f07006d;
+        public static final int menu_cinema_sort=0x7f07006a;
+        public static final int menu_movie_sort=0x7f07006e;
         public static final int movie_actor_in_movie_list=0x7f070051;
         public static final int movie_actors=0x7f070049;
         public static final int movie_actors_panel=0x7f070048;
@@ -132,13 +133,14 @@ public final class R {
         public static final int select_cinema_ico=0x7f07005a;
         public static final int select_city_ico=0x7f07000b;
         public static final int show_schedules_button=0x7f07003d;
-        public static final int submenu_cinema_sort_by_caption=0x7f07006a;
-        public static final int submenu_cinema_sort_by_distance=0x7f07006c;
-        public static final int submenu_cinema_sort_by_favourite=0x7f07006b;
-        public static final int submenu_movie_sort_by_caption=0x7f07006e;
-        public static final int submenu_movie_sort_by_popular=0x7f07006f;
+        public static final int submenu_cinema_sort_by_caption=0x7f07006b;
+        public static final int submenu_cinema_sort_by_distance=0x7f07006d;
+        public static final int submenu_cinema_sort_by_favourite=0x7f07006c;
+        public static final int submenu_movie_sort_by_caption=0x7f07006f;
+        public static final int submenu_movie_sort_by_popular=0x7f070070;
         public static final int time_left_in_movie_list=0x7f070053;
         public static final int whats_new=0x7f070037;
+        public static final int whats_new_grid=0x7f070069;
         public static final int whats_new_list_title=0x7f070066;
         public static final int whats_new_list_title_arrow_left=0x7f070067;
         public static final int whats_new_list_title_arrow_right=0x7f070068;
@@ -160,8 +162,9 @@ public final class R {
         public static final int movie_item=0x7f03000d;
         public static final int movie_item_w_schedule=0x7f03000e;
         public static final int movie_list=0x7f03000f;
-        public static final int splash_screen=0x7f030010;
-        public static final int whats_new=0x7f030011;
+        public static final int poster_item=0x7f030010;
+        public static final int splash_screen=0x7f030011;
+        public static final int whats_new=0x7f030012;
     }
     public static final class menu {
         public static final int cinema_list_menu=0x7f060000;

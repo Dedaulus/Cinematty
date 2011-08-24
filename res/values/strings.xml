@@ -26,7 +26,7 @@
     <string name="hour">ч.</string>
     <string name="minute">мин.</string>
     <string name="unknown">неизвестно</string>
-    <string name="look_for_schedule">Все сеансы</string>
+    <string name="look_for_schedule">Посмотреть все сеансы</string>
 
     <string name="schedule_enum">Сеансы в кин.</string>
     <string name="no_schedule">сеансов нет</string>
