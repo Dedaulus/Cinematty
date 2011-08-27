@@ -231,24 +231,26 @@ public final class R {
         public static final int List_Genres=0x7f05000d;
         public static final int List_Movies=0x7f05000a;
         public static final int ListCaption=0x7f05000e;
-        public static final int ListCaption_Cinema=0x7f050010;
-        public static final int ListCaption_Movie=0x7f05000f;
-        public static final int ListItem=0x7f050011;
-        public static final int ListItem_Caption=0x7f050012;
-        public static final int ListItem_Caption_Actor=0x7f050015;
-        public static final int ListItem_Caption_Cinema=0x7f050013;
-        public static final int ListItem_Caption_City=0x7f050017;
-        public static final int ListItem_Caption_Genre=0x7f050016;
-        public static final int ListItem_Caption_Movie=0x7f050014;
-        public static final int ListItem_Data=0x7f050018;
-        public static final int ListItem_Data_CinemaAddress=0x7f050019;
-        public static final int ListItem_Data_CinemaDistance=0x7f05001a;
-        public static final int ListItem_Data_CinemaSchedule=0x7f05001b;
-        public static final int ListItem_Data_MovieActor=0x7f05001f;
-        public static final int ListItem_Data_MovieGenre=0x7f05001c;
-        public static final int ListItem_Data_MovieSchedule=0x7f05001d;
+        public static final int ListCaption_Actor=0x7f050011;
+        public static final int ListCaption_Cinema=0x7f05000f;
+        public static final int ListCaption_Genre=0x7f050012;
+        public static final int ListCaption_Movie=0x7f050010;
+        public static final int ListItem=0x7f050013;
+        public static final int ListItem_Caption=0x7f050014;
+        public static final int ListItem_Caption_Actor=0x7f050017;
+        public static final int ListItem_Caption_Cinema=0x7f050015;
+        public static final int ListItem_Caption_City=0x7f050019;
+        public static final int ListItem_Caption_Genre=0x7f050018;
+        public static final int ListItem_Caption_Movie=0x7f050016;
+        public static final int ListItem_Data=0x7f05001a;
+        public static final int ListItem_Data_CinemaAddress=0x7f05001b;
+        public static final int ListItem_Data_CinemaDistance=0x7f05001c;
+        public static final int ListItem_Data_CinemaSchedule=0x7f05001d;
+        public static final int ListItem_Data_MovieActor=0x7f050021;
+        public static final int ListItem_Data_MovieGenre=0x7f05001e;
+        public static final int ListItem_Data_MovieSchedule=0x7f05001f;
         /**  0094FF 
          */
-        public static final int ListItem_Data_MovieTimeLeft=0x7f05001e;
+        public static final int ListItem_Data_MovieTimeLeft=0x7f050020;
     }
 }
