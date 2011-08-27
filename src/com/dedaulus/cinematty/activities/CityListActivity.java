@@ -15,7 +15,6 @@ import com.dedaulus.cinematty.framework.tools.CityHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -37,23 +36,15 @@ public class CityListActivity extends Activity {
         try {
             SAXParser parser = factory.newSAXParser();
             CityHandler handler = new CityHandler();
-            try {
-                parser.parse(openFileInput(getString(R.string.cities_file)), handler);
-
-                mCities = handler.getCityList();
-
-                ListView list = (ListView)findViewById(R.id.city_list);
-
-                list.setAdapter(new CityItemAdapter(this, mCities, mApp.getCurrentCityId()));
-
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        onCityItemClick(adapterView, view, i, l);
-                    }
-                });
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            parser.parse(getResources().openRawResource(R.raw.cities), handler);
+            mCities = handler.getCityList();
+            ListView list = (ListView)findViewById(R.id.city_list);
+            list.setAdapter(new CityItemAdapter(this, mCities, mApp.getCurrentCityId()));
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    onCityItemClick(adapterView, view, i, l);
+                }
+            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

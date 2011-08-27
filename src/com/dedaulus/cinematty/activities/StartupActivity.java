@@ -16,8 +16,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 public class StartupActivity extends Activity
@@ -27,7 +28,6 @@ public class StartupActivity extends Activity
     private static final int GET_SCHEDULE_TIMEOUT = 10000;
 
     private CinemattyApplication mApp;
-    private String mErrorString;
 
     /** Called when the activity is first created. */
     @Override
@@ -39,26 +39,14 @@ public class StartupActivity extends Activity
         mApp = (CinemattyApplication)getApplication();
         mApp.startListenLocation();
 
-        try {
-            FileInputStream is = openFileInput(getString(R.string.cities_file));
-
-            findViewById(R.id.loading_cities).setVisibility(View.GONE);
-            findViewById(R.id.loading_schedules).setVisibility(View.VISIBLE);
-
-            City city = getCurrentCity();
+        City city = getCurrentCity();
+        if (city != null) {
             TextView textView = (TextView)findViewById(R.id.current_city);
             textView.setText(city.getName());
-
             mApp.setCurrentCity(city);
             getSchedule(true);
-        } catch (SAXException e) {
-            findViewById(R.id.loading_cities).setVisibility(View.VISIBLE);
-            findViewById(R.id.loading_schedules).setVisibility(View.GONE);
-            getCitiesList(true);
-        } catch (IOException e) {
-            findViewById(R.id.loading_cities).setVisibility(View.VISIBLE);
-            findViewById(R.id.loading_schedules).setVisibility(View.GONE);
-            getCitiesList(true);
+        } else {
+            getCitiesList();
         }
     }
 
@@ -74,8 +62,6 @@ public class StartupActivity extends Activity
     }
 
     public void onTryAgainClick(View view) {
-        deleteFile(getString(R.string.cities_file));
-
         Intent intent = getIntent();
         overridePendingTransition(0, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -93,7 +79,6 @@ public class StartupActivity extends Activity
         textView.setText(errorMessage);
 
         findViewById(R.id.loading_schedule_panel).setVisibility(View.INVISIBLE);
-        findViewById(R.id.loading_cities_panel).setVisibility(View.INVISIBLE);
         findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
     }
 
@@ -110,32 +95,22 @@ public class StartupActivity extends Activity
         }
     }
 
-    private City getCurrentCity() throws IOException, SAXException {
+    private City getCurrentCity() {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
             CityHandler handler = new CityHandler();
-            try {
-                parser.parse(openFileInput(getString(R.string.cities_file)), handler);
-
-                int id = mApp.getCurrentCityId();
-                List<City> cities = handler.getCityList();
-                for (City city : cities) {
-                    if (city.getId() == id) return city;
-                }
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+            parser.parse(getResources().openRawResource(R.raw.cities), handler);
+            int id = mApp.getCurrentCityId();
+            List<City> cities = handler.getCityList();
+            for (City city : cities) {
+                if (city.getId() == id) return city;
             }
-        } catch (SAXException e) {
-            throw e;
-        } catch (IOException e) {
-            throw e;
+
+            return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        throw new IOException("City not found");
     }
 
     private void getSchedule(boolean download) {
@@ -181,66 +156,9 @@ public class StartupActivity extends Activity
         }
     }
 
-    private void getCitiesList(boolean download) {
-        if (download) {
-            new AsyncTask<String, Void, Void>() {
-                private String error;
-                private String message = getString(R.string.unknown_error);
-                private boolean success = false;
-
-                @Override
-                protected Void doInBackground(String... url) {
-                    try {
-                        URL citiesUrl = new URL(url[0]);
-                        URLConnection connection = citiesUrl.openConnection();
-                        connection.setConnectTimeout(GET_CITIES_TIMEOUT);
-
-                        InputStream is = connection.getInputStream();
-                        dumpStream(is);
-
-                        success = true;
-                    } catch (UnknownHostException e) {
-                        error = e.toString();
-                        message = getString(R.string.connect_error);
-                    } catch (SocketException e) {
-                        error = e.toString();
-                        message = getString(R.string.connect_error);
-                    } catch (MalformedURLException e) {
-                        error = e.toString();
-                    } catch (IOException e) {
-                        error = e.toString();
-                    }
-
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void nothing) {
-                    if (success) getCitiesList(false);
-                    else setErrorString(error, message);
-                }
-            }.execute(getString(R.string.settings_url) + "/" + getString(R.string.cities_file));
-        } else {
-            Intent intent = new Intent(this, CityListActivity.class);
-            startActivityForResult(intent, GET_CURRENT_CITY);
-
-            finish();
-        }
-    }
-
-    private void dumpStream(InputStream is) throws IOException {
-        InputStream input = new BufferedInputStream(is);
-        FileOutputStream output = openFileOutput(getString(R.string.cities_file), MODE_PRIVATE);
-
-        byte data[] = new byte[1024];
-
-        int count = 0;
-        while ((count = input.read(data)) != -1) {
-            output.write(data, 0, count);
-        }
-
-        output.flush();
-        output.close();
-        input.close();
+    private void getCitiesList() {
+        Intent intent = new Intent(this, CityListActivity.class);
+        startActivityForResult(intent, GET_CURRENT_CITY);
+        finish();
     }
 }

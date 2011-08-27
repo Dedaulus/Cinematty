@@ -272,9 +272,7 @@ public class MainActivity extends Activity implements LocationClient {
     // Categories handlers
 
     public void onCityClick(View view) {
-        deleteFile(getString(R.string.cities_file));
-
-        Intent intent = new Intent(this, StartupActivity.class);
+        Intent intent = new Intent(this, CityListActivity.class);
         startActivity(intent);
         finish();
     }
