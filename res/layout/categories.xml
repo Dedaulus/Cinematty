@@ -17,35 +17,38 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/space"
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="#FFFFFF"
+        android:layout_below="@id/category_list_title"/>
+
+    <RelativeLayout
+        android:id="@+id/select_city_panel"
+        style="@style/ActivityTitleBar"
+        android:layout_alignParentTop="false"
+        android:layout_below="@id/space"
+        android:onClick="onCityClick">
+
+        <TextView
+            android:id="@+id/city_caption"
+            style="@style/ActivityTitleText"/>
+
+        <ImageView
+            style="@style/ActivityTitleBarArrow.Right"/>
+
+    </RelativeLayout>
+
     <RelativeLayout
         style="@style/Background"
-        android:padding="6dp"
-        android:layout_below="@id/category_list_title">
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentTop="true"
-            android:onClick="onCityClick">
-
-            <TextView
-                android:id="@+id/city_caption"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_toLeftOf="@+id/select_city_ico"
-                android:paddingRight="6dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textColor="#FF6A00"
-                android:textSize="26dp"/>
-
-        </RelativeLayout>
+        android:layout_below="@id/select_city_panel">
 
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
+            android:padding="6dp"
             android:orientation="vertical">
 
             <RelativeLayout
