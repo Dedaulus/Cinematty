@@ -80,7 +80,7 @@ public class CinemattyApplication extends Application {
 
         String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
         if (mPictureRetriever == null) {
-            mPictureRetriever = new PictureRetriever(this, remotePictureFolder, LOCAL_PICTURES_FOLDER);
+            mPictureRetriever = new HttpPictureRetriever(this, remotePictureFolder, LOCAL_PICTURES_FOLDER);
         } else {
             mPictureRetriever.setRemotePictureFolder(remotePictureFolder);
         }
