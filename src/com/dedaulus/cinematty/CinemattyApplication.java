@@ -28,6 +28,7 @@ public class CinemattyApplication extends Application {
     private UniqueSortedList<Movie> mMovies;
     private UniqueSortedList<MovieActor> mActors;
     private UniqueSortedList<MovieGenre> mGenres;
+    private List<MoviePoster> mPosters;
 
     private City mCurrentCity;
 
@@ -70,13 +71,14 @@ public class CinemattyApplication extends Application {
         mMovies = new UniqueSortedList<Movie>(new DefaultComparator<Movie>());
         mActors = new UniqueSortedList<MovieActor>(new DefaultComparator<MovieActor>());
         mGenres = new UniqueSortedList<MovieGenre>(new DefaultComparator<MovieGenre>());
+        mPosters = new ArrayList<MoviePoster>();
         mLocationClients = new ArrayList<LocationClient>();
     }
 
     public void retrieveData() throws IOException, ParserConfigurationException, SAXException {
         ScheduleReceiver receiver = new ScheduleReceiver(this, mCurrentCity.getFileName());
         StringBuffer pictureFolder = new StringBuffer();
-        receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder);
+        receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder, mPosters);
 
         String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
         if (mPictureRetriever == null) {
@@ -121,6 +123,10 @@ public class CinemattyApplication extends Application {
 
     public UniqueSortedList<MovieGenre> getGenres() {
         return mGenres;
+    }
+
+    public List<MoviePoster> getPosters() {
+        return mPosters;
     }
 
     public PictureRetriever getPictureRetriever() {

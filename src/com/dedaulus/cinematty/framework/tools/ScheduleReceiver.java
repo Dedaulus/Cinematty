@@ -2,10 +2,7 @@ package com.dedaulus.cinematty.framework.tools;
 
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +12,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * User: Dedaulus
@@ -36,14 +34,15 @@ public class ScheduleReceiver {
                             UniqueSortedList<Movie> movies,
                             UniqueSortedList<MovieActor> actors,
                             UniqueSortedList<MovieGenre> genres,
-                            StringBuffer pictureFolder) throws IOException, ParserConfigurationException, SAXException {
+                            StringBuffer pictureFolder,
+                            List<MoviePoster> posters) throws IOException, ParserConfigurationException, SAXException {
         InputStream is = getActualXmlStream();
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         ScheduleHandler handler = new ScheduleHandler();
         parser.parse(is, handler);
-        handler.getSchedule(cinemas, movies, actors, genres, pictureFolder);
+        handler.getSchedule(cinemas, movies, actors, genres, pictureFolder, posters);
     }
 
     private InputStream getActualXmlStream() throws IOException, ParserConfigurationException, SAXException {

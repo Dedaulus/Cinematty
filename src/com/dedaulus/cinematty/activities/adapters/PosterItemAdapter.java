@@ -2,13 +2,17 @@ package com.dedaulus.cinematty.activities.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.framework.MoviePoster;
+import com.dedaulus.cinematty.framework.PictureRetriever;
+
+import java.util.List;
 
 /**
  * User: Dedaulus
@@ -17,18 +21,22 @@ import com.dedaulus.cinematty.R;
  */
 public class PosterItemAdapter extends BaseAdapter {
     private Context mContext;
+    private List<MoviePoster> mPosters;
+    private PictureRetriever mPictureRetriever;
     private static final int EXTRA_SPACE = 8;
 
-    public PosterItemAdapter(Context c) {
+    public PosterItemAdapter(Context c, List<MoviePoster> posters, PictureRetriever pictureRetriever) {
         mContext = c;
+        mPosters = posters;
+        mPictureRetriever = pictureRetriever;
     }
 
     public int getCount() {
-        return 5;
+        return mPosters.size();
     }
 
     public Object getItem(int position) {
-        return null;
+        return mPosters.get(position);
     }
 
     public long getItemId(int position) {
@@ -37,35 +45,33 @@ public class PosterItemAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            //LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            //imageView = (ImageView)layoutInflater.inflate(R.layout.poster_item, null, false);
+        final ImageView imageView;
+        if (convertView == null) {
             imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setAdjustViewBounds(false);
 
             Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
-            int height = display.getHeight();
+            int height = width / 3;
 
-            int picWidth;
-            int picHeight;
-
-            if (height > width) {
-                picWidth = width - EXTRA_SPACE;
-                picHeight = picWidth / 2 - EXTRA_SPACE / 2;
-            } else {
-                picWidth = width / 2 - EXTRA_SPACE;
-                picHeight = picWidth / 2 - EXTRA_SPACE / 2;
-            }
-            //imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(picWidth, picHeight));
-            //imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setLayoutParams(new GridView.LayoutParams(width, height));
         } else {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(R.drawable.hitman);
+        final MoviePoster poster = mPosters.get(position);
+        new Thread(new Runnable() {
+            public void run() {
+                final Bitmap bitmap = mPictureRetriever.downloadPicture(poster.getPosterPath());
+                imageView.post(new Runnable() {
+                    public void run() {
+                        imageView.setImageBitmap(bitmap);
+                    }
+                });
+            }
+        }).start();
+
         return imageView;
     }
 }

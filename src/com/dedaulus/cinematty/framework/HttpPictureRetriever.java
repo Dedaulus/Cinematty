@@ -97,9 +97,12 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
     public Bitmap downloadPicture(String remotePicturePath) {
         String pictureName = remotePicturePath.substring(remotePicturePath.lastIndexOf("/") + 1, remotePicturePath.lastIndexOf("."));
+        Bitmap picture = loadPicture(pictureName, PictureType.ORIGINAL);
+        if (picture != null) return picture;
+
         File to = getLocalPicturePath(pictureName, PictureType.ORIGINAL);
         if (downloadPicture(remotePicturePath, to)) {
-            Bitmap picture = loadPicture(pictureName, PictureType.ORIGINAL);
+            picture = loadPicture(pictureName, PictureType.ORIGINAL);
             synchronized (mReadyPictures) {
                 mReadyPictures.add(new PictureWrapper(pictureName, PictureType.ORIGINAL, null));
             }

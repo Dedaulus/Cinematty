@@ -10,10 +10,7 @@ import android.widget.*;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
 import com.github.ysamlan.horizontalpager.HorizontalPager;
 
@@ -32,6 +29,8 @@ public class MainActivity extends Activity implements LocationClient {
     private SortableAdapter<Movie> mMovieListAdapter;
     private SortableAdapter<MovieActor> mActorListAdapter;
 
+    private static final String CURRENT_SCREEN = "current_screen";
+
     private static final int CATEGORIES_SCREEN = 0;
     private static final int WHATS_NEW_SCREEN  = 1;
     private static final int CINEMAS_SCREEN    = 2;
@@ -47,7 +46,12 @@ public class MainActivity extends Activity implements LocationClient {
         setContentView(R.layout.main);
 
         HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(WHATS_NEW_SCREEN, false);
+        if (savedInstanceState != null) {
+            int currentScreen = savedInstanceState.getInt(CURRENT_SCREEN, WHATS_NEW_SCREEN);
+            pager.setCurrentScreen(currentScreen, false);
+        } else {
+            pager.setCurrentScreen(WHATS_NEW_SCREEN, false);
+        }
 
         mApp = (CinemattyApplication)getApplication();
 
@@ -57,12 +61,12 @@ public class MainActivity extends Activity implements LocationClient {
 
         // What's new
         GridView whatsNewGrid = (GridView)findViewById(R.id.whats_new_grid);
-        if (getScreenOrientation() == Configuration.ORIENTATION_LANDSCAPE) {
-            whatsNewGrid.setNumColumns(2);
-        } else {
-            whatsNewGrid.setNumColumns(1);
-        }
-        whatsNewGrid.setAdapter(new PosterItemAdapter(this));
+        whatsNewGrid.setAdapter(new PosterItemAdapter(this, mApp.getPosters(), mApp.getPictureRetriever()));
+        whatsNewGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                onPosterItemClick(adapterView, view, i, l);
+            }
+        });
 
         // Cinemas
         ListView cinemaList = (ListView)findViewById(R.id.cinema_list);
@@ -122,6 +126,15 @@ public class MainActivity extends Activity implements LocationClient {
         });
 
         super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
+        int currentScreen = pager.getCurrentScreen();
+        outState.putInt(CURRENT_SCREEN, currentScreen);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -315,6 +328,20 @@ public class MainActivity extends Activity implements LocationClient {
         //Intent intent = new Intent(this, GenreListActivity.class);
         //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         //startActivity(intent);
+    }
+
+    // What's new handlers
+
+    private void onPosterItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        PosterItemAdapter adapter = (PosterItemAdapter)adapterView.getAdapter();
+        MoviePoster poster = (MoviePoster)adapter.getItem(i);
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_INFO, null, poster.getMovie(), null, null);
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 
     // Cinemas handlers
