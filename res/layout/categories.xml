@@ -17,18 +17,11 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/space"
-        android:layout_height="1dp"
-        android:layout_width="fill_parent"
-        android:background="#FFFFFF"
-        android:layout_below="@id/category_list_title"/>
-
     <RelativeLayout
         android:id="@+id/select_city_panel"
         style="@style/ActivityTitleBar"
         android:layout_alignParentTop="false"
-        android:layout_below="@id/space"
+        android:layout_alignParentBottom="true"
         android:onClick="onCityClick">
 
         <TextView
@@ -42,120 +35,98 @@
 
     <RelativeLayout
         style="@style/Background"
-        android:layout_below="@id/select_city_panel">
+        android:layout_below="@id/category_list_title"
+        android:layout_above="@id/select_city_panel">
 
-        <LinearLayout
+        <ScrollView
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="6dp"
-            android:orientation="vertical">
+            android:layout_width="fill_parent"
+            android:layout_centerVertical="true">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingBottom="10dp"
-                android:onClick="onCinemaClick">
+                android:layout_width="fill_parent"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/cinemas_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_place"/>
+                <RelativeLayout
+                    style="@style/CategoryItemPanel"
+                    android:layout_marginTop="6dp"
+                    android:onClick="onWhatsNewClick">
 
-                <TextView
-                    android:id="@+id/cinemas_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/cinemas_ico"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="6dp"
-                    android:text="@string/cinemas_caption"
-                    android:textSize="36dp"
-                    android:textColor="#000000"/>
+                    <ImageView
+                        android:id="@+id/whats_new_ico"
+                        style="@style/CategoryItem.Image.WhatsNew"/>
 
-            </RelativeLayout>
+                    <TextView
+                        style="@style/CategoryItem.Caption.WhatsNew"
+                        android:layout_toRightOf="@id/whats_new_ico"/>
 
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingBottom="10dp"
-                android:onClick="onMoviesClick">
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/movies_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_movies"/>
+                <RelativeLayout
+                    style="@style/CategoryItemPanel"
+                    android:layout_marginTop="6dp"
+                    android:onClick="onCinemaClick">
 
-                <TextView
-                    android:id="@+id/movies_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/movies_ico"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="6dp"
-                    android:text="@string/movies_caption"
-                    android:textSize="36dp"
-                    android:textColor="#000000"/>
+                    <ImageView
+                        android:id="@+id/cinemas_ico"
+                        style="@style/CategoryItem.Image.Cinemas"/>
 
-            </RelativeLayout>
+                    <TextView
+                        style="@style/CategoryItem.Caption.Cinemas"
+                        android:layout_toRightOf="@id/cinemas_ico"/>
 
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingBottom="10dp"
-                android:onClick="onActorsClick">
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/actors_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_actors"/>
+                <RelativeLayout
+                    style="@style/CategoryItemPanel"
+                    android:layout_marginTop="6dp"
+                    android:onClick="onMoviesClick">
 
-                <TextView
-                    android:id="@+id/actors_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/actors_ico"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="6dp"
-                    android:text="@string/actors_caption"
-                    android:textSize="36dp"
-                    android:textColor="#000000"/>
+                    <ImageView
+                        android:id="@+id/movies_ico"
+                        style="@style/CategoryItem.Image.Movies"/>
 
-            </RelativeLayout>
+                    <TextView
+                        style="@style/CategoryItem.Caption.Movies"
+                        android:layout_toRightOf="@id/movies_ico"/>
 
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingBottom="10dp"
-                android:onClick="onGenresClick">
+                </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/genres_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_genres"/>
+                <RelativeLayout
+                    style="@style/CategoryItemPanel"
+                    android:layout_marginTop="6dp"
+                    android:onClick="onActorsClick">
 
-                <TextView
-                    android:id="@+id/genres_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/genres_ico"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="6dp"
-                    android:text="@string/genres_caption"
-                    android:textSize="36dp"
-                    android:textColor="#000000"/>
+                    <ImageView
+                        android:id="@+id/actors_ico"
+                        style="@style/CategoryItem.Image.Actors"/>
 
-            </RelativeLayout>
+                    <TextView
+                        style="@style/CategoryItem.Caption.Actors"
+                        android:layout_toRightOf="@id/actors_ico"/>
 
-        </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    style="@style/CategoryItemPanel"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:onClick="onGenresClick">
+
+                    <ImageView
+                        android:id="@+id/genres_ico"
+                        style="@style/CategoryItem.Image.Genres"/>
+
+                    <TextView
+                        style="@style/CategoryItem.Caption.Genres"
+                        android:layout_toRightOf="@id/genres_ico"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 

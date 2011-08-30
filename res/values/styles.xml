@@ -52,6 +52,72 @@
         <item name="android:textSize">20dp</item>
     </style>
 
+    <style name="CategoryItemPanel">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:background">#000000</item>
+    </style>
+
+    <style name="CategoryItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="CategoryItem.Caption">
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="CategoryItem.Caption.WhatsNew">
+        <item name="android:text">@string/whats_new_caption</item>
+    </style>
+
+    <style name="CategoryItem.Caption.Cinemas">
+        <item name="android:text">@string/cinemas_caption</item>
+    </style>
+
+    <style name="CategoryItem.Caption.Movies">
+        <item name="android:text">@string/movies_caption</item>
+    </style>
+
+    <style name="CategoryItem.Caption.Actors">
+        <item name="android:text">@string/actors_caption</item>
+    </style>
+
+    <style name="CategoryItem.Caption.Genres">
+        <item name="android:text">@string/genres_caption</item>
+    </style>
+
+    <style name="CategoryItem.Image">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">6dp</item>
+    </style>
+
+    <style name="CategoryItem.Image.WhatsNew">
+        <item name="android:src">@drawable/ic_whats_new</item>
+    </style>
+
+    <style name="CategoryItem.Image.Cinemas">
+        <item name="android:src">@drawable/ic_place</item>
+    </style>
+
+    <style name="CategoryItem.Image.Movies">
+        <item name="android:src">@drawable/ic_movies</item>
+    </style>
+
+    <style name="CategoryItem.Image.Actors">
+        <item name="android:src">@drawable/ic_actors</item>
+    </style>
+
+    <style name="CategoryItem.Image.Genres">
+        <item name="android:src">@drawable/ic_genres</item>
+    </style>
+
+
     <style name="List">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">fill_parent</item>

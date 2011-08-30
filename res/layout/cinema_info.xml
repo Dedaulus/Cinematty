@@ -75,7 +75,7 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="2dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/ic_place_small"/>
+                    android:src="@drawable/ic_place"/>
 
                 <LinearLayout
                     android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="2dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/ic_call_small"/>
+                    android:src="@drawable/ic_call"/>
 
                 <TextView
                     android:id="@+id/cinema_phone"
