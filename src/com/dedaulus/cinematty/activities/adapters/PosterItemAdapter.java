@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PictureRetriever;
 
@@ -48,7 +49,7 @@ public class PosterItemAdapter extends BaseAdapter {
         final ImageView imageView;
         if (convertView == null) {
             imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setAdjustViewBounds(false);
 
             Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
@@ -59,6 +60,8 @@ public class PosterItemAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+
+        imageView.setImageResource(R.drawable.img_loading);
 
         final MoviePoster poster = mPosters.get(position);
         new Thread(new Runnable() {
