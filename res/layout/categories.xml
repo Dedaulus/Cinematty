@@ -29,7 +29,9 @@
             style="@style/ActivityTitleText"/>
 
         <ImageView
-            style="@style/ActivityTitleBarArrow.Right"/>
+            android:id="@+id/category_list_title_arrow_right"
+            style="@style/ActivityTitleBarArrow.Right"
+            android:onClick="onCityClick"/>
 
     </RelativeLayout>
 
@@ -66,7 +68,7 @@
                 <RelativeLayout
                     style="@style/CategoryItemPanel"
                     android:layout_marginTop="6dp"
-                    android:onClick="onCinemaClick">
+                    android:onClick="onCinemasClick">
 
                     <ImageView
                         android:id="@+id/cinemas_ico"

@@ -17,12 +17,12 @@ public final class R {
         public static final int ic_arrow_left=0x7f020003;
         public static final int ic_arrow_right=0x7f020004;
         public static final int ic_blank_movie=0x7f020005;
-        public static final int ic_call=0x7f020006;
+        public static final int ic_call_white=0x7f020006;
         public static final int ic_genres=0x7f020007;
         public static final int ic_home=0x7f020008;
-        public static final int ic_loading=0x7f020009;
-        public static final int ic_movies=0x7f02000a;
-        public static final int ic_place=0x7f02000b;
+        public static final int ic_movies=0x7f020009;
+        public static final int ic_place=0x7f02000a;
+        public static final int ic_place_white=0x7f02000b;
         public static final int ic_whats_new=0x7f02000c;
         public static final int icon=0x7f02000d;
         public static final int img_loading=0x7f02000e;

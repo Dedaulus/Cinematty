@@ -300,7 +300,19 @@ public class MainActivity extends Activity implements LocationClient {
         //startActivity(intent);
     }
 
-    public void onCinemaClick(View view) {
+    public void onLeftArrowClick(View view) {
+        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
+        int currentScreen = pager.getCurrentScreen();
+        pager.setCurrentScreen(currentScreen - 1, true);
+    }
+
+    public void onRightArrowClick(View view) {
+        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
+        int currentScreen = pager.getCurrentScreen();
+        pager.setCurrentScreen(currentScreen + 1, true);
+    }
+
+    public void onCinemasClick(View view) {
         HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
         pager.setCurrentScreen(CINEMAS_SCREEN, true);
         //String cookie = UUID.randomUUID().toString();
