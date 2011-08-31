@@ -95,6 +95,29 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         }
     }
 
+    public synchronized void addRequest(String picId, int pictureType, PictureReceiver receiver) {
+        synchronized (mTaskQueue) {
+            mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(picId, pictureType), receiver));
+            notify();
+        }
+    }
+
+    public Bitmap downloadPicture(String picId, int pictureType) {
+        Bitmap picture = loadPicture(picId, pictureType);
+        if (picture != null) return picture;
+
+        String from = getRemotePicturePath(picId, pictureType);
+        File to = getLocalPicturePath(picId, pictureType);
+        if (downloadPicture(from, to)) {
+            picture = loadPicture(picId, pictureType);
+            synchronized (mReadyPictures) {
+                mReadyPictures.add(new PictureWrapper(picId, pictureType, null));
+            }
+            return picture;
+
+        } else return null;
+    }
+
     public Bitmap downloadPicture(String remotePicturePath) {
         String pictureName = remotePicturePath.substring(remotePicturePath.lastIndexOf("/") + 1, remotePicturePath.lastIndexOf("."));
         Bitmap picture = loadPicture(pictureName, PictureType.ORIGINAL);
@@ -109,13 +132,6 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             return picture;
 
         } else return null;
-    }
-
-    public synchronized void addRequest(String picId, int pictureType, PictureReceiver receiver) {
-        synchronized (mTaskQueue) {
-            mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(picId, pictureType), receiver));
-            notify();
-        }
     }
 
     private void restoreState() {
