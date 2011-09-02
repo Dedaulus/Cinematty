@@ -10,4 +10,5 @@ public class PictureType {
     public static final int LIST_SMALL = 1;
     public static final int LIST_MEDIUM = 2;
     public static final int LIST_BIG = 3;
+    public static final int ORIGINAL_WITH_URL = 4;
 }

@@ -11,6 +11,7 @@ import com.dedaulus.cinematty.framework.tools.PictureReceiver;
 public interface PictureRetriever {
     void setRemotePictureFolder(String remotePictureFolder);
     void addRequest(String picId, int pictureType, PictureReceiver receiver);
+    void addRequest(String remotePicturePath, PictureReceiver receiver);
     Bitmap downloadPicture(String picId, int pictureType);
     Bitmap downloadPicture(String remotePicturePath);
     boolean hasPicture(String picId, int pictureType);

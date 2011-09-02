@@ -78,6 +78,10 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public Bitmap getPicture(String picId, int pictureType) {
+        if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+            picId = getPicIdFromFullPath(picId);
+        }
+
         synchronized (mReadyPictures) {
             int id = mReadyPictures.indexOf(new PictureWrapper(picId, pictureType, null));
             if (id == -1) return null;
@@ -102,6 +106,13 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         }
     }
 
+    public void addRequest(String remotePicturePath, PictureReceiver receiver) {
+        synchronized (mTaskQueue) {
+            mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(remotePicturePath, PictureType.ORIGINAL_WITH_URL), receiver));
+            notify();
+        }
+    }
+
     public Bitmap downloadPicture(String picId, int pictureType) {
         Bitmap picture = loadPicture(picId, pictureType);
         if (picture != null) return picture;
@@ -119,15 +130,15 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public Bitmap downloadPicture(String remotePicturePath) {
-        String pictureName = remotePicturePath.substring(remotePicturePath.lastIndexOf("/") + 1, remotePicturePath.lastIndexOf("."));
-        Bitmap picture = loadPicture(pictureName, PictureType.ORIGINAL);
+        String picId = getPicIdFromFullPath(remotePicturePath);
+        Bitmap picture = loadPicture(picId, PictureType.ORIGINAL);
         if (picture != null) return picture;
 
-        File to = getLocalPicturePath(pictureName, PictureType.ORIGINAL);
+        File to = getLocalPicturePath(picId, PictureType.ORIGINAL);
         if (downloadPicture(remotePicturePath, to)) {
-            picture = loadPicture(pictureName, PictureType.ORIGINAL);
+            picture = loadPicture(picId, PictureType.ORIGINAL);
             synchronized (mReadyPictures) {
-                mReadyPictures.add(new PictureWrapper(pictureName, PictureType.ORIGINAL, null));
+                mReadyPictures.add(new PictureWrapper(picId, PictureType.ORIGINAL_WITH_URL, picture));
             }
             return picture;
 
@@ -180,6 +191,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             postfix = "h";
             break;
         case PictureType.ORIGINAL:
+        case PictureType.ORIGINAL_WITH_URL:
         default:
             postfix = "";
             break;
@@ -189,16 +201,23 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     private String getRemotePicturePath(String picId, int pictureType) {
-        String name = "pic_" + pictureTypeToPostfix(pictureType) + ".jpg";
+        if (pictureType != PictureType.ORIGINAL_WITH_URL) {
+            String name = "pic_" + pictureTypeToPostfix(pictureType) + ".jpg";
 
-        synchronized (mRemotePictureFolder) {
-            StringBuffer buffer = new StringBuffer(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
-            return (buffer.append(mRemotePictureFolder).append("/").append(picId).append("/").append(name)).toString();
+            synchronized (mRemotePictureFolder) {
+                StringBuffer buffer = new StringBuffer(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
+                return (buffer.append(mRemotePictureFolder).append("/").append(picId).append("/").append(name)).toString();
+            }
+        } else {
+            return picId;
         }
     }
 
     private File getLocalPicturePath(String picId, int pictureType) {
         File path = mContext.getCacheDir();
+        if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+            picId = getPicIdFromFullPath(picId);
+        }
         return new File(path, "pic_" + picId + "_" + pictureTypeToPostfix(pictureType) + ".jpg");
     }
 
@@ -265,21 +284,34 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
                 if (downloadPicture(from, to)) {
                     Bitmap picture = null;
-                    if (pictureType == PictureType.LIST_BIG
+                    if (pictureType == PictureType.ORIGINAL_WITH_URL
+                            || pictureType == PictureType.LIST_BIG
                             || pictureType == PictureType.LIST_MEDIUM
                             || pictureType == PictureType.LIST_SMALL) {
                         picture = loadPicture(picId, pictureType);
+                    }
+
+                    if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+                        picId = getPicIdFromFullPath(picId);
                     }
 
                     synchronized (mReadyPictures) {
                         mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
                     }
 
-                    receiver.onPictureReceive(picId, pictureType, true);
+                    if (receiver != null) {
+                        receiver.onPictureReceive(picId, pictureType, true);
+                    }
                 } else {
-                    receiver.onPictureReceive(picId, pictureType, false);
+                    if (receiver != null) {
+                        receiver.onPictureReceive(picId, pictureType, false);
+                    }
                 }
             }
         }
+    }
+
+    private String getPicIdFromFullPath(String fullPath) {
+        return fullPath.substring(fullPath.lastIndexOf("/") + 1, fullPath.lastIndexOf("."));
     }
 }
