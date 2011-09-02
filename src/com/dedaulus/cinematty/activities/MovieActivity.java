@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -97,9 +96,9 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
                 imageView.setImageBitmap(picture);
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                retriever.addRequest(picId, PictureType.ORIGINAL, this);
                 progressBar.setVisibility(View.VISIBLE);
-
+                retriever.addRequest(picId, PictureType.ORIGINAL, this);
+                /*
                 new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
                     @Override
                     protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
@@ -121,6 +120,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
                         values[0].update();
                     }
                 }.execute(this);
+                */
             }
         }
     }
@@ -231,7 +231,12 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     public void onPictureReceive(String picId, int pictureType, boolean success) {
-        mPictureReady = success;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                setPicture();
+            }
+        });
+        //mPictureReady = success;
     }
 
     public boolean isUpdateNeeded() {

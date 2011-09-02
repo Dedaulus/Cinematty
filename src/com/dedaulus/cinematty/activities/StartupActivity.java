@@ -2,7 +2,6 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -44,7 +43,7 @@ public class StartupActivity extends Activity
             TextView textView = (TextView)findViewById(R.id.current_city);
             textView.setText(city.getName());
             mApp.setCurrentCity(city);
-            getSchedule(true);
+            getSchedule();
         } else {
             getCitiesList();
         }
@@ -113,6 +112,45 @@ public class StartupActivity extends Activity
         }
     }
 
+    private void getSchedule() {
+        final Activity activity = this;
+        new Thread(new Runnable() {
+            private String error;
+            private String message = getString(R.string.unknown_error);
+            private boolean success = false;
+            public void run() {
+                try {
+                    mApp.retrieveData();
+                    success = true;
+                } catch (UnknownHostException e) {
+                    error = e.toString();
+                    message = getString(R.string.connect_error);
+                } catch (SocketException e) {
+                    error = e.toString();
+                    message = getString(R.string.connect_error);
+                } catch (IOException e) {
+                    error = e.toString();
+                } catch (ParserConfigurationException e) {
+                    error = e.toString();
+                } catch (SAXException e) {
+                    error = e.toString();
+                }
+
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        if (success) {
+                            Intent intent = new Intent(activity, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            setErrorString(error, message);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+    /*
     private void getSchedule(boolean download) {
         if (download) {
             new AsyncTask<Void, Void, Void>() {
@@ -155,7 +193,7 @@ public class StartupActivity extends Activity
             finish();
         }
     }
-
+    */
     private void getCitiesList() {
         Intent intent = new Intent(this, CityListActivity.class);
         startActivityForResult(intent, GET_CURRENT_CITY);
