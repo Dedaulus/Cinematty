@@ -30,7 +30,7 @@ public class GenreItemAdapter extends BaseAdapter {
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mGenres.size() ? mGenres.get(i) : null;
+        return mGenres.get(i);
     }
 
     public long getItemId(int i) {

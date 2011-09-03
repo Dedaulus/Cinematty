@@ -42,7 +42,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mCinemas.size() ? mCinemas.get(i) : null;
+        return mCinemas.get(i);
     }
 
     public long getItemId(int i) {

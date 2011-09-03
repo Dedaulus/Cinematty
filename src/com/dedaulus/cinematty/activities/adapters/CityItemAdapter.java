@@ -32,7 +32,7 @@ public class CityItemAdapter extends BaseAdapter {
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mCities.size() ? mCities.get(i) : null;
+        return mCities.get(i);
     }
 
     public long getItemId(int i) {

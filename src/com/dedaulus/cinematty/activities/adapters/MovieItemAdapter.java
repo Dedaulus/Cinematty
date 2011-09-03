@@ -34,14 +34,12 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
     private PictureRetriever mPictureRetriever;
     private boolean mPicturesUpdated = false;
 
-    private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
-
     public MovieItemAdapter(Context context, List<Movie> movies, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mPictureRetriever = pictureRetriever;
 
-        mPictureUpdater = new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
             @Override
             protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
                 while (true) {
@@ -68,7 +66,7 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mMovies.size() ? mMovies.get(i) : null;
+        return mMovies.get(i);
     }
 
     public long getItemId(int i) {

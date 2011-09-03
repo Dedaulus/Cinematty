@@ -32,15 +32,13 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     private PictureRetriever mPictureRetriever;
     private boolean mPicturesUpdated = false;
 
-    private AsyncTask<UpdatableByNeed, UpdatableByNeed, Void> mPictureUpdater;
-
     public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mCinema = cinema;
         mPictureRetriever = pictureRetriever;
 
-        mPictureUpdater = new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
+        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
             @Override
             protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
                 while (true) {
@@ -67,7 +65,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mMovies.size() ? mMovies.get(i) : null;
+        return mMovies.get(i);
     }
 
     public long getItemId(int i) {

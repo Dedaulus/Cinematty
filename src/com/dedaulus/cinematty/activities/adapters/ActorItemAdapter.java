@@ -33,7 +33,7 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
     }
 
     public Object getItem(int i) {
-        return i >= 0 && i < mActors.size() ? mActors.get(i) : null;
+        return mActors.get(i);
     }
 
     public long getItemId(int i) {

@@ -106,7 +106,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         }
     }
 
-    public void addRequest(String remotePicturePath, PictureReceiver receiver) {
+    public synchronized void addRequest(String remotePicturePath, PictureReceiver receiver) {
         synchronized (mTaskQueue) {
             mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(remotePicturePath, PictureType.ORIGINAL_WITH_URL), receiver));
             notify();

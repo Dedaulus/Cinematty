@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PictureRetriever;
+import com.dedaulus.cinematty.framework.tools.PictureReceiver;
+import com.dedaulus.cinematty.framework.tools.PictureType;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
  * Date: 22.08.11
  * Time: 3:46
  */
-public class PosterItemAdapter extends BaseAdapter {
+public class PosterItemAdapter extends BaseAdapter implements PictureReceiver {
     private Context mContext;
     private List<MoviePoster> mPosters;
     private PictureRetriever mPictureRetriever;
@@ -61,20 +63,24 @@ public class PosterItemAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(R.drawable.img_loading);
-
-        final MoviePoster poster = mPosters.get(position);
-        new Thread(new Runnable() {
-            public void run() {
-                final Bitmap bitmap = mPictureRetriever.downloadPicture(poster.getPosterPath());
-                imageView.post(new Runnable() {
-                    public void run() {
-                        imageView.setImageBitmap(bitmap);
-                    }
-                });
-            }
-        }).start();
+        MoviePoster poster = mPosters.get(position);
+        Bitmap bitmap = mPictureRetriever.getPicture(poster.getPosterPath(), PictureType.ORIGINAL_WITH_URL);
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+        } else {
+            mPictureRetriever.addRequest(poster.getPosterPath(), this);
+            imageView.setImageResource(R.drawable.img_loading);
+        }
 
         return imageView;
+    }
+
+    public void onPictureReceive(String picId, int pictureType, boolean success) {
+        Activity activity = (Activity)mContext;
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 }
