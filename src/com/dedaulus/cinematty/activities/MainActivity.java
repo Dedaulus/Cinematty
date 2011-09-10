@@ -1,42 +1,35 @@
 package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.location.Location;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
-import com.dedaulus.cinematty.framework.*;
-import com.dedaulus.cinematty.framework.tools.*;
-import com.github.ysamlan.horizontalpager.HorizontalPager;
+import com.dedaulus.cinematty.framework.tools.Constants;
+import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * User: Dedaulus
  * Date: 28.05.11
  * Time: 2:15
  */
-public class MainActivity extends Activity implements LocationClient {
+public class MainActivity extends Activity implements ViewPager.OnPageChangeListener {
     private CinemattyApplication mApp;
-    private SortableAdapter<Cinema> mCinemaListAdapter;
-    private SortableAdapter<Movie> mMovieListAdapter;
-    private SortableAdapter<MovieActor> mActorListAdapter;
+    private ViewPager mSlider;
+    private SliderAdapter mAdapter;
+    private List<SliderPage> mPages;
+    private HashMap<Integer, Integer> mSlideIds;
+    private Integer mCurrentPage = new Integer(0);
 
     private static final String CURRENT_SCREEN = "current_screen";
-
-    private static final int CATEGORIES_SCREEN = 0;
-    private static final int WHATS_NEW_SCREEN  = 1;
-    private static final int CINEMAS_SCREEN    = 2;
-    private static final int MOVIES_SCREEN     = 3;
-    private static final int ACTORS_SCREEN     = 4;
-    private static final int GENRES_SCREEN     = 5;
+    private static final int SLIDERS_COUNT    = 6;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,161 +38,78 @@ public class MainActivity extends Activity implements LocationClient {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        if (savedInstanceState != null) {
-            int currentScreen = savedInstanceState.getInt(CURRENT_SCREEN, WHATS_NEW_SCREEN);
-            pager.setCurrentScreen(currentScreen, false);
-        } else {
-            pager.setCurrentScreen(WHATS_NEW_SCREEN, false);
-        }
-
         mApp = (CinemattyApplication)getApplication();
 
-        // Categories
-        TextView cityLabel = (TextView)findViewById(R.id.city_caption);
-        cityLabel.setText(mApp.getCurrentCity().getName());
+        mSlider = (ViewPager)findViewById(R.id.slider);
 
-        // What's new
-        GridView whatsNewGrid = (GridView)findViewById(R.id.whats_new_grid);
-        whatsNewGrid.setAdapter(new PosterItemAdapter(this, mApp.getPosters(), mApp.getPictureRetriever()));
-        whatsNewGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onPosterItemClick(adapterView, view, i, l);
-            }
-        });
+        mSlideIds = new HashMap<Integer, Integer>();
+        mSlideIds.put(Constants.CATEGORIES_SLIDE, Constants.CATEGORIES_SLIDE);
+        mSlideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
+        mSlideIds.put(Constants.CINEMAS_SLIDE, Constants.CINEMAS_SLIDE);
+        mSlideIds.put(Constants.MOVIES_SLIDE, Constants.MOVIES_SLIDE);
+        mSlideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
+        mSlideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
 
-        // Cinemas
-        ListView cinemaList = (ListView)findViewById(R.id.cinema_list);
-        mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
-        cinemaList.setAdapter(mCinemaListAdapter);
-        cinemaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onCinemaItemClick(adapterView, view, i, l);
-            }
-        });
+        mCurrentPage = mSlideIds.get(Constants.WHATS_NEW_SLIDE);
 
-        // Movies
-        ListView movieList = (ListView)findViewById(R.id.movie_list);
-        mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mApp.getMovies()), mApp.getPictureRetriever());
-        movieList.setAdapter(mMovieListAdapter);
-        movieList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onMovieItemClick(view);
-            }
-        });
+        mPages = new ArrayList<SliderPage>(SLIDERS_COUNT);
+        mPages.add(new CategoriesPage(this, mApp, mSlider, mSlideIds));
+        mPages.add(new WhatsNewPage(this, mApp));
+        mPages.add(new CinemasPage(this, mApp));
+        mPages.add(new MoviesPage(this, mApp));
+        mPages.add(new ActorsPage(this, mApp));
+        mPages.add(new GenresPage(this, mApp));
 
-        // Actors
-        ListView actorList = (ListView)findViewById(R.id.actor_list);
-        mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
-        actorList.setAdapter(mActorListAdapter);
-        actorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onActorItemClick(adapterView, view, i, l);
-            }
-        });
+        mAdapter = new SliderAdapter(mPages);
+        mSlider.setAdapter(mAdapter);
+        mSlider.setCurrentItem(mSlideIds.get(Constants.WHATS_NEW_SLIDE));
 
-        // Genres
-        ListView genreList = (ListView)findViewById(R.id.genre_list);
-        genreList.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(mApp.getGenres())));
-        genreList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onGenreItemClick(adapterView, view, i, l);
-            }
-        });
+        TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(mSlider, mSlideIds.get(Constants.WHATS_NEW_SLIDE));
+
+        PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
+        pageChangeListenerProxy.addListener(indicator);
+        pageChangeListenerProxy.addListener(this);
+        mSlider.setOnPageChangeListener(pageChangeListenerProxy);
     }
 
     @Override
     protected void onResume() {
-        mApp.startListenLocation();
-        mApp.addLocationClient(this);
-
-        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
-
-        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
-
-        mActorListAdapter.sortBy(new Comparator<MovieActor>() {
-            public int compare(MovieActor a1, MovieActor a2) {
-                if (a1.getFavourite() == a2.getFavourite()) {
-                    return a1.getActor().compareTo(a2.getActor());
-                } else return a1.getFavourite() < a2.getFavourite() ? 1 : -1;
-            }
-        });
+        int current = getCurrentPage();
+        int prev = current - 1;
+        int next = current + 1;
+        mPages.get(current).onResume();
+        if (prev >= 0) {
+            mPages.get(prev).onResume();
+        }
+        if (next < mPages.size()) {
+            mPages.get(next).onResume();
+        }
 
         super.onResume();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        int currentScreen = pager.getCurrentScreen();
-        outState.putInt(CURRENT_SCREEN, currentScreen);
-
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onPause() {
-        mApp.removeLocationClient(this);
+        int current = getCurrentPage();
+        int prev = current - 1;
+        int next = current + 1;
+        mPages.get(current).onPause();
+        if (prev >= 0) {
+            mPages.get(prev).onPause();
+        }
+        if (next < mPages.size()) {
+            mPages.get(next).onPause();
+        }
+
         mApp.stopListenLocation();
-
-        mApp.saveFavouriteCinemas();
-
-        mApp.saveFavouriteActors();
-
         super.onPause();
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onStop() {
         mApp.stopListenLocation();
-
-        super.onBackPressed();
-    }
-
-    private boolean createCinemaListScreenMenu(Menu menu) {
-        menu.clear();
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.cinema_list_menu, menu);
-
-        switch (mApp.getCinemaSortOrder()) {
-        case BY_CAPTION:
-            menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
-            break;
-
-        case BY_FAVOURITE:
-            menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
-            break;
-
-        case BY_DISTANCE:
-            menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
-            break;
-
-        default:
-            break;
-        }
-
-        return true;
-    }
-
-    private boolean createMovieListScreenMenu(Menu menu) {
-        menu.clear();
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.movie_list_menu, menu);
-
-        switch (mApp.getMovieSortOrder()) {
-        case BY_CAPTION:
-            menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
-            break;
-
-        case BY_POPULAR:
-            menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
-            break;
-
-        default:
-            break;
-        }
-
-        return true;
+        super.onStop();
     }
 
     @Override
@@ -209,279 +119,28 @@ public class MainActivity extends Activity implements LocationClient {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        switch (pager.getCurrentScreen()) {
-        case CATEGORIES_SCREEN:
-            return false;
-
-        case WHATS_NEW_SCREEN:
-            return false;
-
-        case CINEMAS_SCREEN:
-            return createCinemaListScreenMenu(menu);
-
-        case MOVIES_SCREEN:
-            return createMovieListScreenMenu(menu);
-
-        case ACTORS_SCREEN:
-            return false;
-
-        case GENRES_SCREEN:
-            return false;
-        }
-
-        return super.onPrepareOptionsMenu(menu);
+        menu.clear();
+        return mPages.get(getCurrentPage()).onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.menu_cinema_sort:
-            return true;
+        return mPages.get(getCurrentPage()).onOptionsItemSelected(item);
+    }
 
-        case R.id.submenu_cinema_sort_by_caption:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
+    public void onPageScrolled(int i, float v, int i1) {}
 
-        case R.id.submenu_cinema_sort_by_favourite:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
-            item.setChecked(true);
-            return true;
-
-        case R.id.submenu_cinema_sort_by_distance:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
-            item.setChecked(true);
-            return true;
-
-        case R.id.menu_movie_sort:
-            return true;
-
-        case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
-
-        case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
-            item.setChecked(true);
-            return true;
-
-        default:
-            return super.onOptionsItemSelected(item);
+    public void onPageSelected(int i) {
+        synchronized (mCurrentPage) {
+            mCurrentPage = i;
         }
     }
 
-    public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)mCinemaListAdapter;
-        adapter.setCurrentLocation(location);
-    }
+    public void onPageScrollStateChanged(int i) {}
 
-    // Categories handlers
-
-    public void onCityClick(View view) {
-        Intent intent = new Intent(this, CityListActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void onWhatsNewClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(WHATS_NEW_SCREEN, true);
-        //String cookie = UUID.randomUUID().toString();
-        //mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.CINEMA_LIST, null, null, null, null));
-        //Intent intent = new Intent(this, CinemaListActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //startActivity(intent);
-    }
-
-    public void onLeftArrowClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        int currentScreen = pager.getCurrentScreen();
-        pager.setCurrentScreen(currentScreen - 1, true);
-    }
-
-    public void onRightArrowClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        int currentScreen = pager.getCurrentScreen();
-        pager.setCurrentScreen(currentScreen + 1, true);
-    }
-
-    public void onCinemasClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(CINEMAS_SCREEN, true);
-        //String cookie = UUID.randomUUID().toString();
-        //mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.CINEMA_LIST, null, null, null, null));
-        //Intent intent = new Intent(this, CinemaListActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //startActivity(intent);
-    }
-
-    public void onMoviesClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(MOVIES_SCREEN, true);
-        //String cookie = UUID.randomUUID().toString();
-        //mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.MOVIE_LIST, null, null, null, null));
-        //Intent intent = new Intent(this, MovieListActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //startActivity(intent);
-    }
-
-    public void onActorsClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(ACTORS_SCREEN, true);
-        //String cookie = UUID.randomUUID().toString();
-        //mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.ACTOR_LIST, null, null, null, null));
-        //Intent intent = new Intent(this, ActorListActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //startActivity(intent);
-    }
-
-    public void onGenresClick(View view) {
-        HorizontalPager pager = (HorizontalPager)findViewById(R.id.flipper);
-        pager.setCurrentScreen(GENRES_SCREEN, true);
-        //String cookie = UUID.randomUUID().toString();
-        //mApp.setState(cookie, new ActivityState(ActivityState.ActivityType.GENRE_LIST, null, null, null, null));
-        //Intent intent = new Intent(this, GenreListActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //startActivity(intent);
-    }
-
-    // What's new handlers
-
-    private void onPosterItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PosterItemAdapter adapter = (PosterItemAdapter)adapterView.getAdapter();
-        MoviePoster poster = (MoviePoster)adapter.getItem(i);
-        String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_INFO, null, poster.getMovie(), null, null);
-        mApp.setState(cookie, state);
-
-        Intent intent = new Intent(this, MovieActivity.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        startActivity(intent);
-    }
-
-    // Cinemas handlers
-
-    private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        String caption = textView.getText().toString();
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
-        if (cinemaId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_LIST_W_CINEMA, mApp.getCinemas().get(cinemaId), null, null, null);
-            mApp.setState(cookie, state);
-
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
+    public int getCurrentPage() {
+        synchronized (mCurrentPage) {
+            return mCurrentPage.intValue();
         }
-    }
-
-    public void onCinemaFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption.getText().toString()));
-        if (cinemaId != -1) {
-            Cinema cinema = mApp.getCinemas().get(cinemaId);
-
-            if (cinema.getFavourite() > 0) {
-                cinema.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                cinema.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
-        }
-    }
-
-    // Movies handlers
-
-    private void onMovieItemClick(View view) {
-        TextView textView = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        String caption = textView.getText().toString();
-        int movieId = mApp.getMovies().indexOf(new Movie(caption));
-        if (movieId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_INFO, null, mApp.getMovies().get(movieId), null, null);
-            mApp.setState(cookie, state);
-
-            Intent intent = new Intent(this, MovieActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
-    }
-
-    // Actors handlers
-
-    private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
-        String caption = textView.getText().toString();
-        int actorId = mApp.getActors().indexOf(new MovieActor(caption));
-        if (actorId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_LIST_W_ACTOR, null, null, mApp.getActors().get(actorId), null);
-            mApp.setState(cookie, state);
-
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
-    }
-
-    public void onActorFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption = (TextView)parent.findViewById(R.id.actor_caption_in_actor_list);
-
-        int actorId = mApp.getActors().indexOf(new MovieActor(caption.getText().toString()));
-        if (actorId != -1) {
-            MovieActor actor = mApp.getActors().get(actorId);
-
-            if (actor.getFavourite() > 0) {
-                actor.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                actor.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
-        }
-    }
-
-    // Genres handlers
-
-    private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
-        String caption = textView.getText().toString();
-        int genreId = mApp.getGenres().indexOf(new MovieGenre(caption));
-        if (genreId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_LIST_W_GENRE, null, null, null, mApp.getGenres().get(genreId));
-            mApp.setState(cookie, state);
-
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
-    }
-
-    public int getScreenOrientation() {
-        Display getOrient = getWindowManager().getDefaultDisplay();
-        int orientation = Configuration.ORIENTATION_UNDEFINED;
-        if (getOrient.getWidth()==getOrient.getHeight()) {
-            orientation = Configuration.ORIENTATION_SQUARE;
-        } else {
-            if (getOrient.getWidth() < getOrient.getHeight()) {
-                orientation = Configuration.ORIENTATION_PORTRAIT;
-            } else {
-                 orientation = Configuration.ORIENTATION_LANDSCAPE;
-            }
-        }
-        return orientation;
     }
 }

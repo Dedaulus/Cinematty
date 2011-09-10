@@ -38,9 +38,7 @@ public class MovieListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
 
-        findViewById(R.id.movie_list_title_arrow_left).setVisibility(View.GONE);
-        findViewById(R.id.movie_list_title_arrow_right).setVisibility(View.GONE);
-        findViewById(R.id.movie_list_title_home).setVisibility(View.VISIBLE);
+        findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
 
         mApp = (CinemattyApplication)getApplication();
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);

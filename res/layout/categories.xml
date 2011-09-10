@@ -4,40 +4,22 @@
     style="@style/Background.Caption">
 
     <RelativeLayout
-        android:id="@+id/category_list_title"
-        style="@style/ActivityTitleBar">
-
-        <TextView
-            style="@style/ActivityTitleText"
-            android:text="@string/categories_caption"/>
-
-        <ImageView
-            android:id="@+id/category_list_title_arrow_right"
-            style="@style/ActivityTitleBarArrow.Right"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/select_city_panel"
         style="@style/ActivityTitleBar"
         android:layout_alignParentTop="false"
-        android:layout_alignParentBottom="true"
-        android:onClick="onCityClick">
+        android:layout_alignParentBottom="true">
 
         <TextView
             android:id="@+id/city_caption"
             style="@style/ActivityTitleText"/>
 
         <ImageView
-            android:id="@+id/category_list_title_arrow_right"
-            style="@style/ActivityTitleBarArrow.Right"
-            android:onClick="onCityClick"/>
+            style="@style/ActivityTitleBarArrow.Right"/>
 
     </RelativeLayout>
 
     <RelativeLayout
         style="@style/Background"
-        android:layout_below="@id/category_list_title"
         android:layout_above="@id/select_city_panel">
 
         <ScrollView
@@ -51,9 +33,9 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/whats_new_panel"
                     style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp"
-                    android:onClick="onWhatsNewClick">
+                    android:layout_marginTop="6dp">
 
                     <ImageView
                         android:id="@+id/whats_new_ico"
@@ -66,9 +48,9 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/cinemas_panel"
                     style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp"
-                    android:onClick="onCinemasClick">
+                    android:layout_marginTop="6dp">
 
                     <ImageView
                         android:id="@+id/cinemas_ico"
@@ -81,9 +63,9 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/movies_panel"
                     style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp"
-                    android:onClick="onMoviesClick">
+                    android:layout_marginTop="6dp">
 
                     <ImageView
                         android:id="@+id/movies_ico"
@@ -96,9 +78,9 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/actors_panel"
                     style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp"
-                    android:onClick="onActorsClick">
+                    android:layout_marginTop="6dp">
 
                     <ImageView
                         android:id="@+id/actors_ico"
@@ -111,10 +93,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/genres_panel"
                     style="@style/CategoryItemPanel"
                     android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:onClick="onGenresClick">
+                    android:layout_marginBottom="6dp">
 
                     <ImageView
                         android:id="@+id/genres_ico"

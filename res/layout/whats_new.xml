@@ -3,24 +3,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Background.Caption">
 
-    <RelativeLayout
-        android:id="@+id/whats_new_list_title"
-        style="@style/ActivityTitleBar">
-
-        <TextView
-            style="@style/ActivityTitleText"
-            android:text="@string/whats_new_caption"/>
-
-        <ImageView
-            android:id="@+id/whats_new_list_title_arrow_left"
-            style="@style/ActivityTitleBarArrow.Left"/>
-
-        <ImageView
-            android:id="@+id/whats_new_list_title_arrow_right"
-            style="@style/ActivityTitleBarArrow.Right"/>
-
-    </RelativeLayout>
-
     <GridView
         android:id="@+id/whats_new_grid"
         android:layout_height="fill_parent"
@@ -28,7 +10,6 @@
         android:numColumns="1"
         android:stretchMode="columnWidth"
         android:verticalSpacing="4dp"
-        android:gravity="center"
-        android:layout_below="@id/whats_new_list_title"/>
+        android:gravity="center"/>
 
 </RelativeLayout>

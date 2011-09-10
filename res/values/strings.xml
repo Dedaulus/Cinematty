@@ -13,6 +13,7 @@
     <string name="whats_new_caption">Новинки</string>
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
+    <string name="movie_caption">Фильм</string>
     <string name="actors_caption">Актёры</string>
     <string name="genres_caption">Жанры</string>
     <string name="wait_dialog_caption">Синхронизация</string>
@@ -26,7 +27,7 @@
     <string name="hour">ч.</string>
     <string name="minute">мин.</string>
     <string name="unknown">неизвестно</string>
-    <string name="look_for_schedule">Посмотреть все сеансы</string>
+    <string name="look_for_schedule">Все сеансы</string>
 
     <string name="schedule_enum">Сеансы в кин.</string>
     <string name="no_schedule">сеансов нет</string>
@@ -35,11 +36,11 @@
 
     <string name="metro_near">Метро</string>
 
-    <string name="sort">Сортировать по</string>
-    <string name="sort_by_caption">Названию</string>
-    <string name="sort_by_fav">Любимым</string>
-    <string name="sort_by_distance">Ближайшим</string>
-    <string name="sort_by_popular">Популярности</string>
+    <string name="sort">Сортировать</string>
+    <string name="sort_by_caption">По названию</string>
+    <string name="sort_by_fav">По любимым</string>
+    <string name="sort_by_distance">По ближайшим</string>
+    <string name="sort_by_popular">По популярности</string>
 
 
     <string name="km">км</string>

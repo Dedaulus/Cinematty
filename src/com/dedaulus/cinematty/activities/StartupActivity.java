@@ -40,8 +40,8 @@ public class StartupActivity extends Activity
 
         City city = getCurrentCity();
         if (city != null) {
-            TextView textView = (TextView)findViewById(R.id.current_city);
-            textView.setText(city.getName());
+            //TextView textView = (TextView)findViewById(R.id.current_city);
+            //textView.setText(city.getName());
             mApp.setCurrentCity(city);
             getSchedule();
         } else {

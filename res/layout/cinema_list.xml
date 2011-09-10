@@ -5,7 +5,8 @@
 
     <RelativeLayout
         android:id="@+id/cinema_list_title"
-        style="@style/ActivityTitleBar">
+        style="@style/ActivityTitleBar"
+        android:visibility="gone">
 
         <TextView
             style="@style/ActivityTitleText"
@@ -14,16 +15,7 @@
         <ImageView
             android:id="@+id/cinema_list_title_home"
             style="@style/ActivityTitleBarHome"
-            android:visibility="gone"
             android:onClick="onHomeButtonClick"/>
-
-        <ImageView
-            android:id="@+id/cinema_list_title_arrow_left"
-            style="@style/ActivityTitleBarArrow.Left"/>
-
-        <ImageView
-            android:id="@+id/cinema_list_title_arrow_right"
-            style="@style/ActivityTitleBarArrow.Right"/>
 
     </RelativeLayout>
 

@@ -7,4 +7,11 @@ package com.dedaulus.cinematty.framework.tools;
  */
 public class Constants {
     public static final String ACTIVITY_STATE_ID = "activity_state_id";
+
+    public static final int CATEGORIES_SLIDE = 0;
+    public static final int WHATS_NEW_SLIDE  = 1;
+    public static final int CINEMAS_SLIDE    = 2;
+    public static final int MOVIES_SLIDE     = 3;
+    public static final int ACTORS_SLIDE     = 4;
+    public static final int GENRES_SLIDE     = 5;
 }

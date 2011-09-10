@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.UUID;
  * Date: 16.03.11
  * Time: 22:28
  */
-public class MovieActivity extends Activity implements PictureReceiver, UpdatableByNeed {
+public class MovieActivity extends Activity implements PictureReceiver {
     private CinemattyApplication mApp;
     boolean mPictureReady = false;
     private ActivityState mState;
@@ -56,15 +55,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         default:
             throw new RuntimeException("ActivityType error");
         }
-
-        Button btn = (Button)findViewById(R.id.show_schedules_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onSchedulesBtnClick(view);
-            }
-        });
-
-        btn.setText(getString(R.string.look_for_schedule));
     }
 
     @Override
@@ -98,29 +88,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
             } else {
                 progressBar.setVisibility(View.VISIBLE);
                 retriever.addRequest(picId, PictureType.ORIGINAL, this);
-                /*
-                new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
-                    @Override
-                    protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
-                        while (true) {
-                            if (updatableByNeeds[0].isUpdateNeeded()) {
-                                publishProgress(updatableByNeeds[0]);
-                                return null;
-                            }
-
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                            }
-                        }
-                    }
-
-                    @Override
-                    protected void onProgressUpdate(UpdatableByNeed... values) {
-                        values[0].update();
-                    }
-                }.execute(this);
-                */
             }
         }
     }
@@ -151,7 +118,6 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         TextView text = (TextView)findViewById(R.id.movie_length);
         if (mState.movie.getLengthInMinutes() != 0) {
             text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, mState.movie.getLengthInMinutes()));
-
             text.setVisibility(View.VISIBLE);
         } else {
             text.setVisibility(View.GONE);
@@ -197,7 +163,7 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
         }
     }
 
-    private void onSchedulesBtnClick(View view) {
+    public void onSchedulesClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
         state.activityType = ActivityState.ActivityType.CINEMA_LIST_W_MOVIE;
@@ -231,20 +197,16 @@ public class MovieActivity extends Activity implements PictureReceiver, Updatabl
     }
 
     public void onPictureReceive(String picId, int pictureType, boolean success) {
-        runOnUiThread(new Runnable() {
-            public void run() {
-                setPicture();
-            }
-        });
-        //mPictureReady = success;
+        if (success) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    setPicture();
+                }
+            });
+        }
     }
 
-    public boolean isUpdateNeeded() {
-        return mPictureReady;
-    }
-
-    public void update() {
-        mPictureReady = false;
-        setPicture();
+    public void onHomeButtonClick(View view) {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

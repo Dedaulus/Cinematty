@@ -4,22 +4,7 @@
     style="@style/Background.Caption">
 
     <RelativeLayout
-        android:id="@+id/genre_list_title"
-        style="@style/ActivityTitleBar">
-
-        <TextView
-            style="@style/ActivityTitleText"
-            android:text="@string/genres_caption"/>
-
-        <ImageView
-            android:id="@+id/genre_list_title_arrow_left"
-            style="@style/ActivityTitleBarArrow.Left"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        style="@style/Background"
-        android:layout_below="@id/genre_list_title">
+        style="@style/Background">
 
         <TextView
             android:id="@+id/movie_caption_in_genre_list"

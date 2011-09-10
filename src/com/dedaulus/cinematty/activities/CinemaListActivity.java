@@ -39,9 +39,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_list);
 
-        findViewById(R.id.cinema_list_title_arrow_left).setVisibility(View.GONE);
-        findViewById(R.id.cinema_list_title_arrow_right).setVisibility(View.GONE);
-        findViewById(R.id.cinema_list_title_home).setVisibility(View.VISIBLE);
+        findViewById(R.id.cinema_list_title).setVisibility(View.VISIBLE);
 
         mApp = (CinemattyApplication)getApplication();
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
@@ -87,7 +85,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
         mApp.startListenLocation();
         mApp.addLocationClient(this);
         mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
-
         super.onResume();
     }
 
@@ -96,7 +93,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
         mApp.removeLocationClient(this);
         mApp.stopListenLocation();
         mApp.saveFavouriteCinemas();
-
         super.onPause();
     }
 

@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Background">
+    style="@style/Background.Caption">
+
+    <RelativeLayout
+        android:id="@+id/movie_title"
+        style="@style/ActivityTitleBar">
+
+        <TextView
+            style="@style/ActivityTitleText"
+            android:text="@string/movie_caption"/>
+
+        <ImageView
+            android:id="@+id/movie_title_home"
+            style="@style/ActivityTitleBarHome"
+            android:onClick="onHomeButtonClick"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/advanced_movie_panel"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        style="@style/ActivityTitleBar"
+        android:layout_alignParentTop="false"
         android:layout_alignParentBottom="true"
-        android:paddingTop="8dp"
-        android:paddingBottom="2dp"
-        android:background="#000000">
+        android:onClick="onSchedulesClick">
 
-        <Button
-            android:id="@+id/show_schedules_button"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+        <TextView
+            style="@style/ActivityTitleText"
             android:text="@string/look_for_schedule"/>
+
+        <ImageView
+            style="@style/ActivityTitleBarArrow.Right"/>
 
     </RelativeLayout>
 
     <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
+        style="@style/Background"
+        android:layout_below="@id/movie_title"
         android:layout_above="@id/advanced_movie_panel">
 
         <LinearLayout
@@ -63,7 +74,7 @@
                     android:maxWidth="100dp"/>
 
                 <LinearLayout
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:orientation="vertical"
                     android:onClick="onUrlClick">

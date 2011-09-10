@@ -278,7 +278,7 @@ public class ScheduleHandler extends DefaultHandler {
         //mDate.set(Calendar.YEAR, list.get(0));
         date.set(Calendar.MONTH, list.get(1) - 1);
         date.set(Calendar.DAY_OF_MONTH, list.get(2));
-        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.HOUR_OF_DAY, 6);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
         date.add(Calendar.DAY_OF_MONTH, liveDays);
