@@ -186,7 +186,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onPictureClick(View view) {
-        String url = getString(R.string.image_search_url) + " " + mState.movie.getCaption();
+        String url = getString(R.string.image_search_url) + " " + mState.movie.getCaption() + "#i=1";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url.toString()));
         startActivity(intent);
