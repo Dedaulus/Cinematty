@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities.adapters;
 
 import android.content.Context;
 import android.location.Location;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,10 +80,23 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             text.setVisibility(View.GONE);
         }
 
-        text = (TextView)view.findViewById(R.id.schedule_enum_in_schedule_list);
+        TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_schedule_list);
+        TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_schedule_list);
+
         List<Calendar> showTimes = cinema.getShowTimes().get(mCurrentMovie);
         if (showTimes != null) {
-            text.setText(DataConverter.showTimesToSpannableString(showTimes));
+            String showTimesStr = DataConverter.showTimesToString(showTimes);
+            if (showTimesStr.length() != 0) {
+                scheduleView.setText(showTimesStr);
+                scheduleView.setVisibility(View.VISIBLE);
+            } else {
+                scheduleView.setVisibility(View.GONE);
+            }
+            SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
+            timeLeftView.setText(timeLeftString);
+        } else {
+            scheduleView.setVisibility(View.GONE);
+            timeLeftView.setText(mContext.getString(R.string.no_schedule));
         }
     }
 
