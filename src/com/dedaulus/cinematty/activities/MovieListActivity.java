@@ -15,6 +15,7 @@ import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
+import com.dedaulus.cinematty.activities.adapters.OnStop;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.tools.*;
@@ -100,8 +101,13 @@ public class MovieListActivity extends Activity {
     @Override
     protected void onResume() {
         mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
-
         super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        ((OnStop)mMovieListAdapter).onStop();
+        super.onStop();
     }
 
     @Override

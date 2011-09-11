@@ -94,6 +94,10 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     protected void onStop() {
+        for (SliderPage page : mAdapter.getCreatedPages()) {
+            page.onStop();
+        }
+
         mApp.stopListenLocation();
         super.onStop();
     }

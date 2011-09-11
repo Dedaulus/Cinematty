@@ -1,8 +1,8 @@
 package com.dedaulus.cinematty.activities.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +15,9 @@ import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.PictureRetriever;
-import com.dedaulus.cinematty.framework.tools.PictureReceiver;
+import com.dedaulus.cinematty.framework.tools.MoviePictureReceiver;
+import com.dedaulus.cinematty.framework.tools.OnPictureReceiveAction;
 import com.dedaulus.cinematty.framework.tools.PictureType;
-import com.dedaulus.cinematty.framework.tools.UpdatableByNeed;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,37 +28,17 @@ import java.util.List;
  * Date: 14.03.11
  * Time: 23:40
  */
-public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, PictureReceiver, UpdatableByNeed {
+public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, OnStop {
     private Context mContext;
     private List<Movie> mMovies;
     private PictureRetriever mPictureRetriever;
-    private boolean mPicturesUpdated = false;
+    private MoviePictureReceiver mPictureReceiver;
 
     public MovieItemAdapter(Context context, List<Movie> movies, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mPictureRetriever = pictureRetriever;
-
-        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
-            @Override
-            protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
-                while (true) {
-                    if (updatableByNeeds[0].isUpdateNeeded()) {
-                        publishProgress(updatableByNeeds[0]);
-                    }
-
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            }
-
-            @Override
-            protected void onProgressUpdate(UpdatableByNeed... values) {
-                values[0].update();
-            }
-        }.execute(this);
+        mPictureReceiver = new MoviePictureReceiver(this, (Activity)mContext);
     }
 
     public int getCount() {
@@ -95,7 +75,7 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
                 imageView.setBackgroundResource(R.drawable.picture_border);
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, this);
+                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, mPictureReceiver);
                 progressBar.setVisibility(View.VISIBLE);
             }
         } else {
@@ -162,16 +142,11 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         notifyDataSetChanged();
     }
 
-    public void onPictureReceive(String picId, int pictureType, boolean success) {
-        mPicturesUpdated = success;
-    }
-
-    public boolean isUpdateNeeded() {
-        return mPicturesUpdated;
-    }
-
-    public void update() {
+    public void OnPictureReceive(String picId, int pictureType, boolean success) {
         notifyDataSetChanged();
-        mPicturesUpdated = false;
+    }
+
+    public void onStop() {
+        mPictureReceiver.stop();
     }
 }

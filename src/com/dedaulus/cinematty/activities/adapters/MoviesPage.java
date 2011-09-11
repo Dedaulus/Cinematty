@@ -54,7 +54,9 @@ public class MoviesPage implements SliderPage {
 
     public void onPause() {}
 
-    public void onStop() {}
+    public void onStop() {
+        ((OnStop)mMovieListAdapter).onStop();
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = ((Activity)mContext).getMenuInflater();

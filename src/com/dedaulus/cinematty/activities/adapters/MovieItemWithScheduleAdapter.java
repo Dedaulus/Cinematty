@@ -1,11 +1,9 @@
 package com.dedaulus.cinematty.activities.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,48 +14,28 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
-import com.dedaulus.cinematty.framework.tools.PictureReceiver;
+import com.dedaulus.cinematty.framework.tools.MoviePictureReceiver;
+import com.dedaulus.cinematty.framework.tools.OnPictureReceiveAction;
 import com.dedaulus.cinematty.framework.tools.PictureType;
-import com.dedaulus.cinematty.framework.tools.UpdatableByNeed;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, PictureReceiver, UpdatableByNeed {
+public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, OnStop {
     private Context mContext;
     private List<Movie> mMovies;
     private Cinema mCinema;
     private PictureRetriever mPictureRetriever;
-    private boolean mPicturesUpdated = false;
+    private MoviePictureReceiver mPictureReceiver;
 
     public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mCinema = cinema;
         mPictureRetriever = pictureRetriever;
-
-        new AsyncTask<UpdatableByNeed, UpdatableByNeed, Void>() {
-            @Override
-            protected Void doInBackground(UpdatableByNeed... updatableByNeeds) {
-                while (true) {
-                    if (updatableByNeeds[0].isUpdateNeeded()) {
-                        publishProgress(updatableByNeeds[0]);
-                    }
-
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-            }
-
-            @Override
-            protected void onProgressUpdate(UpdatableByNeed... values) {
-                values[0].update();
-            }
-        }.execute(this);
+        mPictureReceiver = new MoviePictureReceiver(this, (Activity)mContext);
     }
 
     public int getCount() {
@@ -94,7 +72,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
                 imageView.setBackgroundResource(R.drawable.picture_border);
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, this);
+                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, mPictureReceiver);
                 progressBar.setVisibility(View.VISIBLE);
             }
         } else {
@@ -112,10 +90,8 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             for (MovieGenre genre : movie.getGenres()) {
                 genres.append(genre.getGenre() + "/");
             }
-
             genres.delete(genres.length() - 1, genres.length());
             genreView.setText(genres.toString());
-
             genreView.setVisibility(View.VISIBLE);
         } else {
             genreView.setVisibility(View.GONE);
@@ -137,7 +113,6 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             } else {
                 actorView.setVisibility(View.GONE);
             }
-
         } else {
             actorView.setVisibility(View.GONE);
         }
@@ -154,38 +129,12 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             } else {
                 scheduleView.setVisibility(View.GONE);
             }
-
-            SpannableString timeLeftString = null;
-            if (showTimes.size() != 0) {
-                Calendar now = Calendar.getInstance();
-                Calendar closestTime = getClosestTime(showTimes, now);
-                if (closestTime == null) {
-                    timeLeftString = new SpannableString(mContext.getString(R.string.no_schedule) + " ");
-                    timeLeftString.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC), 0, mContext.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                } else if (closestTime.equals(now)) {
-                    timeLeftString = new SpannableString(mContext.getString(R.string.schedule_now));
-                    timeLeftString.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC), 0, mContext.getString(R.string.schedule_now).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                } else {
-                    Calendar leftTime = (Calendar)closestTime.clone();
-                    leftTime.add(Calendar.HOUR_OF_DAY, -now.get(Calendar.HOUR_OF_DAY));
-                    leftTime.add(Calendar.MINUTE, -now.get(Calendar.MINUTE));
-
-                    String str = DataConverter.timeToTimeLeft(mContext, leftTime);
-                    timeLeftString = new SpannableString(str.toString());
-                    timeLeftString.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
-            } else {
-                timeLeftString = new SpannableString(mContext.getString(R.string.no_schedule) + " ");
-                timeLeftString.setSpan(new StyleSpan(android.graphics.Typeface.ITALIC), 0, mContext.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
+            SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
             timeLeftView.setText(timeLeftString);
-
         } else {
             scheduleView.setVisibility(View.GONE);
             timeLeftView.setText(mContext.getString(R.string.no_schedule));
         }
-
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -202,55 +151,16 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         return myView;
     }
 
-    private Calendar getClosestTime(List<Calendar> showTimes, Calendar time) {
-        int id = Collections.binarySearch(showTimes, time, new Comparator<Calendar>() {
-            public int compare(Calendar o1, Calendar o2) {
-                int day1 = o1.get(Calendar.DAY_OF_YEAR);
-                int day2 = o2.get(Calendar.DAY_OF_YEAR);
-
-                if (day1 < day2) return -1;
-                else if (day1 > day2) return 1;
-                else {
-                    int hour1 = o1.get(Calendar.HOUR_OF_DAY);
-                    int hour2 = o2.get(Calendar.HOUR_OF_DAY);
-
-                    if (hour1 < hour2) return -1;
-                    else if (hour1 > hour2) return 1;
-                    else {
-                        int minute1 = o1.get(Calendar.MINUTE);
-                        int minute2 = o2.get(Calendar.MINUTE);
-
-                        if (minute1 < minute2) return -1;
-                        else if (minute1 > minute2) return 1;
-                        else return 0;
-                    }
-                }
-            }
-        });
-
-        if (id >= 0) return time;
-        else {
-            id = -(id + 1);
-            if (id == showTimes.size()) return null;
-            else return showTimes.get(id);
-        }
-    }
-
     public void sortBy(Comparator<Movie> movieComparator) {
         Collections.sort(mMovies, movieComparator);
         notifyDataSetChanged();
     }
 
-    public void onPictureReceive(String picId, int pictureType, boolean success) {
-        mPicturesUpdated = success;
-    }
-
-    public boolean isUpdateNeeded() {
-        return mPicturesUpdated;
-    }
-
-    public void update() {
+    public void OnPictureReceive(String picId, int pictureType, boolean success) {
         notifyDataSetChanged();
-        mPicturesUpdated = false;
+    }
+
+    public void onStop() {
+        mPictureReceiver.stop();
     }
 }
