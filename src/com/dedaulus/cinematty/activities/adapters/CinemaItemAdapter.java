@@ -92,8 +92,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView = null;
-
+        View myView;
         if (view != null) {
             myView = view;
         } else {

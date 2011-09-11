@@ -27,7 +27,6 @@ import java.util.UUID;
  */
 public class MovieActivity extends Activity implements PictureReceiver {
     private CinemattyApplication mApp;
-    boolean mPictureReady = false;
     private ActivityState mState;
     private String mStateId;
 
@@ -175,7 +174,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onUrlClick(View view) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(getString(R.string.youtube_search_url));
         buffer.append(" \"\"");
         buffer.insert(buffer.length() - 1, mState.movie.getCaption());
@@ -186,7 +185,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onPictureClick(View view) {
-        String url = getString(R.string.image_search_url) + " " + mState.movie.getCaption() + "#i=1";
+        StringBuilder url = new StringBuilder();
+        url.append(getString(R.string.image_search_url)).append(" ").append(mState.movie.getCaption()).append("#i=1");
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url.toString()));
         startActivity(intent);

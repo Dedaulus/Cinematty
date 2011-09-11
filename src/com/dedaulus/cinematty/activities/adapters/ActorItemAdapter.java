@@ -60,7 +60,7 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView = null;
+        View myView;
 
         if (view != null) {
             myView = view;

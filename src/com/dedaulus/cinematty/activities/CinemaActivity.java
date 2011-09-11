@@ -122,7 +122,7 @@ public class CinemaActivity extends Activity {
     private void setUrl() {
         TextView url = (TextView)findViewById(R.id.cinema_url);
         if (mState.cinema.getUrl() != null) {
-            StringBuffer buf = new StringBuffer(mState.cinema.getUrl());
+            StringBuilder buf = new StringBuilder(mState.cinema.getUrl());
 
             if (mState.cinema.getUrl().startsWith("http://")) {
                 buf.delete(0, "http://".length());

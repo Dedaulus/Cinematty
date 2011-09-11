@@ -88,7 +88,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         if (movie.getGenres().size() != 0) {
             StringBuilder genres = new StringBuilder();
             for (MovieGenre genre : movie.getGenres()) {
-                genres.append(genre.getGenre() + "/");
+                genres.append(genre.getGenre()).append("/");
             }
             genres.delete(genres.length() - 1, genres.length());
             genreView.setText(genres.toString());
@@ -102,7 +102,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             StringBuilder actors = new StringBuilder();
             for (MovieActor actor : movie.getActors()) {
                 if (actor.getFavourite() != 0) {
-                    actors.append(actor.getActor() + ", ");
+                    actors.append(actor.getActor()).append(", ");
                 }
             }
 
@@ -138,8 +138,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView = null;
-
+        View myView;
         if (view != null) {
             myView = view;
         } else {

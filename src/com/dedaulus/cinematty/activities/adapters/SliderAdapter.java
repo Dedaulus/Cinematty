@@ -57,7 +57,7 @@ public class SliderAdapter extends PagerAdapter implements TitleProvider {
 
     @Override
     public boolean isViewFromObject(View view, Object o) {
-        return view == ((View)o);
+        return view == o;
     }
 
     @Override

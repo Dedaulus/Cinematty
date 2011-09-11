@@ -193,8 +193,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
     public void onCinemaFavIconClick(View view) {
         View parent = (View)view.getParent();
-        TextView caption = null;
-
+        TextView caption;
         if (mState.movie != null) {
             caption = (TextView)parent.findViewById(R.id.cinema_caption_in_schedule_list);
         } else {

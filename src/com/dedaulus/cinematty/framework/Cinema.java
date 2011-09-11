@@ -71,7 +71,7 @@ public class Cinema implements Comparable<Cinema> {
 
     public String getPlainPhone() {
         if (mPhone != null) {
-            StringBuffer plain = new StringBuffer(mPhone.length());
+            StringBuilder plain = new StringBuilder(mPhone.length());
             for (char c : mPhone.toCharArray()) {
                 if (c != '(' && c!= ')' && c != ' ') {
                     plain.append(c);
@@ -140,9 +140,7 @@ public class Cinema implements Comparable<Cinema> {
 
         Cinema cinema = (Cinema) o;
 
-        if (!mCaption.equals(cinema.mCaption)) return false;
-
-        return true;
+        return mCaption.equals(cinema.mCaption);
     }
 
     @Override

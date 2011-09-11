@@ -10,5 +10,5 @@ import java.util.Comparator;
  * Time: 18:47
  */
 public interface SortableAdapter<T> extends ListAdapter {
-    public void sortBy(Comparator<T> comparator);
+    void sortBy(Comparator<T> comparator);
 }

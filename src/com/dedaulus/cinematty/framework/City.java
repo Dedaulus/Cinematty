@@ -35,9 +35,7 @@ public class City implements Comparable<City> {
 
         City city = (City) o;
 
-        if (mId != city.mId) return false;
-
-        return true;
+        return mId == city.mId;
     }
 
     @Override

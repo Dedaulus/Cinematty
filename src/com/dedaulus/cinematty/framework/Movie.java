@@ -87,9 +87,7 @@ public class Movie implements Comparable<Movie> {
 
         Movie movie = (Movie) o;
 
-        if (!mCaption.equals(movie.mCaption)) return false;
-
-        return true;
+        return mCaption.equals(movie.mCaption);
     }
 
     @Override

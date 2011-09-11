@@ -36,9 +36,7 @@ public class MovieGenre implements Comparable<MovieGenre> {
 
         MovieGenre that = (MovieGenre) o;
 
-        if (!mGenre.equals(that.mGenre)) return false;
-
-        return true;
+        return mGenre.equals(that.mGenre);
     }
 
     @Override

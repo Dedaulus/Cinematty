@@ -26,7 +26,6 @@ public class PosterItemAdapter extends BaseAdapter implements PictureReceiver {
     private Context mContext;
     private List<MoviePoster> mPosters;
     private PictureRetriever mPictureRetriever;
-    private static final int EXTRA_SPACE = 8;
 
     public PosterItemAdapter(Context c, List<MoviePoster> posters, PictureRetriever pictureRetriever) {
         mContext = c;

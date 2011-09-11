@@ -12,8 +12,6 @@ public class LocationHelper {
     public static final int COARSE_LISTEN_DISTANCE = 10;
     public static final int FINE_TIME_LISTEN_TIMEOUT = 0;
     public static final int FINE_LISTEN_DISTANCE = 0;
-    public static final int MAX_DISTANCE = 50000;
-    public static final int FINE_DISTANCE = 20;
 
     private static final int FINE_LOCATION_TIME_ADVANTAGE = 300000;
 

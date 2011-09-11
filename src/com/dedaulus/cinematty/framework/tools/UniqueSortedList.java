@@ -62,7 +62,7 @@ public class UniqueSortedList<T> extends AbstractList<T> {
 
     @Override
     public boolean contains(Object o) {
-        return indexOf(o) == -1 ? false : true;
+        return indexOf(o) != -1;
     }
 
     @Override

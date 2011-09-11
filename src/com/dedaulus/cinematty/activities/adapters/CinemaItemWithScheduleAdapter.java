@@ -101,8 +101,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView = null;
-
+        View myView;
         if (view != null) {
             myView = view;
         } else {

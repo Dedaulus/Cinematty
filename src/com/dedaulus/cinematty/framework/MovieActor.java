@@ -53,9 +53,7 @@ public class MovieActor implements Comparable<MovieActor> {
 
         MovieActor that = (MovieActor) o;
 
-        if (!mActor.equals(that.mActor)) return false;
-
-        return true;
+        return mActor.equals(that.mActor);
     }
 
     @Override

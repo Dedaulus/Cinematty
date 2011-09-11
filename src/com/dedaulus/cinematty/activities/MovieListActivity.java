@@ -261,7 +261,7 @@ public class MovieListActivity extends Activity {
     private void setCinemaUrl(View view) {
         TextView url = (TextView)view.findViewById(R.id.cinema_url);
         if (mState.cinema.getUrl() != null) {
-            StringBuffer buf = new StringBuffer(mState.cinema.getUrl());
+            StringBuilder buf = new StringBuilder(mState.cinema.getUrl());
 
             if (mState.cinema.getUrl().startsWith("http://")) {
                 buf.delete(0, "http://".length());

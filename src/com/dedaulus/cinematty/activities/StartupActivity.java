@@ -23,9 +23,6 @@ import java.util.List;
 public class StartupActivity extends Activity
 {
     private static final int GET_CURRENT_CITY = RESULT_FIRST_USER + 1;
-    private static final int GET_CITIES_TIMEOUT = 5000;
-    private static final int GET_SCHEDULE_TIMEOUT = 10000;
-
     private CinemattyApplication mApp;
 
     /** Called when the activity is first created. */
@@ -150,50 +147,7 @@ public class StartupActivity extends Activity
             }
         }).start();
     }
-    /*
-    private void getSchedule(boolean download) {
-        if (download) {
-            new AsyncTask<Void, Void, Void>() {
-                private String error;
-                private String message = getString(R.string.unknown_error);
-                private boolean success = false;
 
-                @Override
-                protected Void doInBackground(Void... nothing) {
-                    try {
-                        mApp.retrieveData();
-                        success = true;
-                    } catch (UnknownHostException e) {
-                        error = e.toString();
-                        message = getString(R.string.connect_error);
-                    } catch (SocketException e) {
-                        error = e.toString();
-                        message = getString(R.string.connect_error);
-                    } catch (IOException e) {
-                        error = e.toString();
-                    } catch (ParserConfigurationException e) {
-                        error = e.toString();
-                    } catch (SAXException e) {
-                        error = e.toString();
-                    }
-
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void nothing) {
-                    if (success) getSchedule(false);
-                    else setErrorString(error, message);
-                }
-            }.execute();
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
-            finish();
-        }
-    }
-    */
     private void getCitiesList() {
         Intent intent = new Intent(this, CityListActivity.class);
         startActivityForResult(intent, GET_CURRENT_CITY);

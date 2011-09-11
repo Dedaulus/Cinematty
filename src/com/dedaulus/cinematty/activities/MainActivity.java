@@ -22,14 +22,11 @@ import java.util.List;
  */
 public class MainActivity extends Activity implements ViewPager.OnPageChangeListener {
     private CinemattyApplication mApp;
-    private ViewPager mSlider;
     private SliderAdapter mAdapter;
     private List<SliderPage> mPages;
-    private HashMap<Integer, Integer> mSlideIds;
-    private Integer mCurrentPage = new Integer(0);
+    private Integer mCurrentPage = 0;
 
-    private static final String CURRENT_SCREEN = "current_screen";
-    private static final int SLIDERS_COUNT    = 6;
+    private static final int SLIDERS_COUNT = 6;
 
     /** Called when the activity is first created. */
     @Override
@@ -40,20 +37,20 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
         mApp = (CinemattyApplication)getApplication();
 
-        mSlider = (ViewPager)findViewById(R.id.slider);
+        ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
-        mSlideIds = new HashMap<Integer, Integer>();
-        mSlideIds.put(Constants.CATEGORIES_SLIDE, Constants.CATEGORIES_SLIDE);
-        mSlideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
-        mSlideIds.put(Constants.CINEMAS_SLIDE, Constants.CINEMAS_SLIDE);
-        mSlideIds.put(Constants.MOVIES_SLIDE, Constants.MOVIES_SLIDE);
-        mSlideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
-        mSlideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
+        HashMap<Integer, Integer> slideIds = new HashMap<Integer, Integer>();
+        slideIds.put(Constants.CATEGORIES_SLIDE, Constants.CATEGORIES_SLIDE);
+        slideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
+        slideIds.put(Constants.CINEMAS_SLIDE, Constants.CINEMAS_SLIDE);
+        slideIds.put(Constants.MOVIES_SLIDE, Constants.MOVIES_SLIDE);
+        slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
+        slideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
 
-        mCurrentPage = mSlideIds.get(Constants.WHATS_NEW_SLIDE);
+        mCurrentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
 
         mPages = new ArrayList<SliderPage>(SLIDERS_COUNT);
-        mPages.add(new CategoriesPage(this, mApp, mSlider, mSlideIds));
+        mPages.add(new CategoriesPage(this, mApp, slider, slideIds));
         mPages.add(new WhatsNewPage(this, mApp));
         mPages.add(new CinemasPage(this, mApp));
         mPages.add(new MoviesPage(this, mApp));
@@ -61,16 +58,16 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         mPages.add(new GenresPage(this, mApp));
 
         mAdapter = new SliderAdapter(mPages);
-        mSlider.setAdapter(mAdapter);
-        mSlider.setCurrentItem(mSlideIds.get(Constants.WHATS_NEW_SLIDE));
+        slider.setAdapter(mAdapter);
+        slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
 
         TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-        indicator.setViewPager(mSlider, mSlideIds.get(Constants.WHATS_NEW_SLIDE));
+        indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
 
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
         pageChangeListenerProxy.addListener(indicator);
         pageChangeListenerProxy.addListener(this);
-        mSlider.setOnPageChangeListener(pageChangeListenerProxy);
+        slider.setOnPageChangeListener(pageChangeListenerProxy);
     }
 
     @Override
@@ -120,17 +117,13 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     public void onPageScrolled(int i, float v, int i1) {}
 
-    public void onPageSelected(int i) {
-        synchronized (mCurrentPage) {
-            mCurrentPage = i;
-        }
+    public synchronized void onPageSelected(int i) {
+        mCurrentPage = i;
     }
 
     public void onPageScrollStateChanged(int i) {}
 
-    public int getCurrentPage() {
-        synchronized (mCurrentPage) {
-            return mCurrentPage.intValue();
-        }
+    public synchronized int getCurrentPage() {
+        return mCurrentPage;
     }
 }

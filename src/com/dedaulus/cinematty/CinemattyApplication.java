@@ -39,17 +39,11 @@ public class CinemattyApplication extends Application {
             updateCurrentLocation(location);
         }
 
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
+        public void onStatusChanged(String s, int i, Bundle bundle) {}
 
-        public void onProviderEnabled(String s) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
+        public void onProviderEnabled(String s) {}
 
-        public void onProviderDisabled(String s) {
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
+        public void onProviderDisabled(String s) {}
     };
 
     private Location mCurrentLocation;
@@ -91,7 +85,7 @@ public class CinemattyApplication extends Application {
         for (String caption : favs.keySet()) {
             int cinemaId = mCinemas.indexOf(new Cinema(caption));
             if (cinemaId != -1) {
-                mCinemas.get(cinemaId).setFavourite(((Long)favs.get(caption)).longValue());
+                mCinemas.get(cinemaId).setFavourite((Long)favs.get(caption));
             }
         }
 
@@ -99,14 +93,9 @@ public class CinemattyApplication extends Application {
         for (String caption : favs.keySet()) {
             int actorId = mActors.indexOf(new MovieActor(caption));
             if (actorId != -1) {
-                mActors.get(actorId).setFavourite(((Long)favs.get(caption)).longValue());
+                mActors.get(actorId).setFavourite((Long)favs.get(caption));
             }
         }
-    }
-
-    public boolean isUpToDate() {
-        //return mCinemas.size() != 0;
-        return false;
     }
 
     public UniqueSortedList<Cinema> getCinemas() {
@@ -231,7 +220,7 @@ public class CinemattyApplication extends Application {
 
     public int getCurrentCityId() {
         SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
-        return preferences.getInt(PREF_CURRENT_CITY, 1);
+        return preferences.getInt(PREF_CURRENT_CITY, -1);
     }
 
     public City getCurrentCity() {

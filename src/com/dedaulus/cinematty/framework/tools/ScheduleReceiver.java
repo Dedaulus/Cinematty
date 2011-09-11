@@ -74,7 +74,7 @@ public class ScheduleReceiver {
         File file = new File(mCacheDir, mXmlFile);
         if (!file.exists()) return null;
 
-        InputStream is = null;
+        InputStream is;
         try {
             is = new FileInputStream(file);
         } catch (FileNotFoundException e) {
@@ -90,7 +90,7 @@ public class ScheduleReceiver {
 
         byte data[] = new byte[1024];
 
-        int count = 0;
+        int count;
         while ((count = input.read(data)) != -1) {
             output.write(data, 0, count);
         }
