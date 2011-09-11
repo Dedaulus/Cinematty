@@ -50,4 +50,5 @@
     <string name="cities_file">cities.xml</string>
     <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
+    <string name="image_search_url">http://www.google.com/m/search?site=images&amp;q=кадры из фильма</string>
 </resources>

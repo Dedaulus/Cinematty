@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        style="@android:style/Widget.ProgressBar.Inverse"/>
+                        style="@android:style/Widget.ProgressBar.Small.Inverse"/>
 
                 </RelativeLayout>
 
@@ -71,7 +71,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="6dp"
                     android:adjustViewBounds="true"
-                    android:maxWidth="100dp"/>
+                    android:maxWidth="100dp"
+                    android:onClick="onPictureClick"/>
 
                 <LinearLayout
                     android:layout_height="wrap_content"

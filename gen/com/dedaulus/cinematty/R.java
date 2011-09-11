@@ -397,6 +397,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int genre=0x7f0b0011;
         public static final int genres_caption=0x7f0b000c;
         public static final int hour=0x7f0b0014;
+        public static final int image_search_url=0x7f0b0028;
         public static final int inf=0x7f0b0024;
         public static final int km=0x7f0b0022;
         public static final int loading_cities=0x7f0b0002;

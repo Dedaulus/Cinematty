@@ -185,6 +185,13 @@ public class MovieActivity extends Activity implements PictureReceiver {
         startActivity(intent);
     }
 
+    public void onPictureClick(View view) {
+        String url = getString(R.string.image_search_url) + " " + mState.movie.getCaption();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url.toString()));
+        startActivity(intent);
+    }
+
     public void onActorsClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
