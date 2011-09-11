@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, OnStop {
+public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, StoppableAndResumable {
     private Context mContext;
     private List<Movie> mMovies;
     private Cinema mCinema;
@@ -162,5 +162,9 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
 
     public void onStop() {
         mPictureReceiver.stop();
+    }
+
+    public void onResume() {
+        mPictureReceiver.start();
     }
 }

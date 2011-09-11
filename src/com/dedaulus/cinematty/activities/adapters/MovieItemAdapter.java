@@ -28,7 +28,7 @@ import java.util.List;
  * Date: 14.03.11
  * Time: 23:40
  */
-public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, OnStop {
+public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, StoppableAndResumable {
     private Context mContext;
     private List<Movie> mMovies;
     private PictureRetriever mPictureRetriever;
@@ -148,5 +148,9 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
 
     public void onStop() {
         mPictureReceiver.stop();
+    }
+
+    public void onResume() {
+        mPictureReceiver.start();
     }
 }

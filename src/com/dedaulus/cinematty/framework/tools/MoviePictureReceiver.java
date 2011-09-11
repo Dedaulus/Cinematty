@@ -11,11 +11,22 @@ public class MoviePictureReceiver implements PictureReceiver {
     private OnPictureReceiveAction mAction;
     private Activity mActivity;
     private Boolean mPictureReceived = false;
+    private Boolean mStarted = false;
     private Boolean mStopped = false;
 
     public MoviePictureReceiver(OnPictureReceiveAction action, Activity activity) {
         mAction = action;
         mActivity = activity;
+    }
+
+    public void start() {
+        synchronized (mStarted) {
+            if (mStarted) return;
+        }
+
+        synchronized (mStopped) {
+            mStopped = false;
+        }
 
         new Thread(new Runnable() {
             public void run() {
@@ -26,12 +37,12 @@ public class MoviePictureReceiver implements PictureReceiver {
 
                     synchronized (mPictureReceived) {
                         if (mPictureReceived) {
+                            mPictureReceived = false;
                             mActivity.runOnUiThread(new Runnable() {
                                 public void run() {
                                     mAction.OnPictureReceive(null, 0, true);
                                 }
                             });
-                            mPictureReceived = false;
                         }
                     }
 
@@ -41,11 +52,19 @@ public class MoviePictureReceiver implements PictureReceiver {
                 }
             }
         }).start();
+
+        synchronized (mStarted) {
+            mStarted = true;
+        }
     }
 
     public void stop() {
         synchronized (mStopped) {
             mStopped = true;
+        }
+
+        synchronized (mStarted) {
+            mStarted = false;
         }
     }
 

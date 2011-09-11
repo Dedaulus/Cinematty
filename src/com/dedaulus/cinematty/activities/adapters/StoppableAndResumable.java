@@ -5,6 +5,7 @@ package com.dedaulus.cinematty.activities.adapters;
  * Date: 11.09.11
  * Time: 19:04
  */
-public interface OnStop {
+public interface StoppableAndResumable {
     void onStop();
+    void onResume();
 }

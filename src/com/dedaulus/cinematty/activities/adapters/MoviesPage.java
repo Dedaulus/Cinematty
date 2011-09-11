@@ -48,6 +48,7 @@ public class MoviesPage implements SliderPage {
 
     public void onResume() {
         if (mBinded) {
+            ((StoppableAndResumable)mMovieListAdapter).onResume();
             mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
         }
     }
@@ -55,7 +56,7 @@ public class MoviesPage implements SliderPage {
     public void onPause() {}
 
     public void onStop() {
-        ((OnStop)mMovieListAdapter).onStop();
+        ((StoppableAndResumable)mMovieListAdapter).onStop();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
