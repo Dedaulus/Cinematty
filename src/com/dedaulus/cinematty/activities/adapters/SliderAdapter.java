@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import com.jakewharton.android.viewpagerindicator.TitleProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,9 +16,14 @@ import java.util.List;
  */
 public class SliderAdapter extends PagerAdapter implements TitleProvider {
     private List<SliderPage> mPages;
+    private List<SliderPage> mCreatedPages = new ArrayList<SliderPage>();
 
     public SliderAdapter(List<SliderPage> pages) {
         mPages = pages;
+    }
+
+    public List<SliderPage> getCreatedPages() {
+        return mCreatedPages;
     }
 
     @Override
@@ -26,28 +32,28 @@ public class SliderAdapter extends PagerAdapter implements TitleProvider {
     }
 
     @Override
-    public void startUpdate(View view) {
-        int i = 0;
-    }
+    public void startUpdate(View view) {}
 
     @Override
     public Object instantiateItem(View collection, int position) {
-        View page = mPages.get(position).getView();
-        ((ViewPager)collection).addView(page);
-        return page;
+        SliderPage page = mPages.get(position);
+        View view = page.getView();
+        ((ViewPager)collection).addView(view);
+        mCreatedPages.add(page);
+        return view;
     }
 
     @Override
     public void destroyItem(View collection, int position, Object view) {
         SliderPage page = mPages.get(position);
         page.onPause();
-        ((ViewPager)collection).removeView((View)view);
+        page.onStop();
+        ((ViewPager)collection).removeView((View) view);
+        mCreatedPages.remove(page);
     }
 
     @Override
-    public void finishUpdate(View view) {
-        int i = 0;
-    }
+    public void finishUpdate(View view) {}
 
     @Override
     public boolean isViewFromObject(View view, Object o) {
@@ -56,13 +62,11 @@ public class SliderAdapter extends PagerAdapter implements TitleProvider {
 
     @Override
     public Parcelable saveState() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
-    public void restoreState(Parcelable parcelable, ClassLoader classLoader) {
-        int i = 0;
-    }
+    public void restoreState(Parcelable parcelable, ClassLoader classLoader) {}
 
     public String getTitle(int pos) {
         return mPages.get(pos).getTitle();

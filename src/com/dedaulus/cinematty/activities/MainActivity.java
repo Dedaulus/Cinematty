@@ -75,15 +75,8 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     protected void onResume() {
-        int current = getCurrentPage();
-        int prev = current - 1;
-        int next = current + 1;
-        mPages.get(current).onResume();
-        if (prev >= 0) {
-            mPages.get(prev).onResume();
-        }
-        if (next < mPages.size()) {
-            mPages.get(next).onResume();
+        for (SliderPage page : mAdapter.getCreatedPages()) {
+            page.onResume();
         }
 
         super.onResume();
@@ -91,15 +84,8 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     protected void onPause() {
-        int current = getCurrentPage();
-        int prev = current - 1;
-        int next = current + 1;
-        mPages.get(current).onPause();
-        if (prev >= 0) {
-            mPages.get(prev).onPause();
-        }
-        if (next < mPages.size()) {
-            mPages.get(next).onPause();
+        for (SliderPage page : mAdapter.getCreatedPages()) {
+            page.onPause();
         }
 
         mApp.stopListenLocation();
