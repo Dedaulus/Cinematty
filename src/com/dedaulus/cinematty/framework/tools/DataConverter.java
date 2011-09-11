@@ -2,19 +2,18 @@ package com.dedaulus.cinematty.framework.tools;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
 import android.util.Pair;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class DataConverter {
     public static String genresToString(Collection<MovieGenre> genres) {
@@ -129,6 +128,34 @@ public class DataConverter {
         return new SpannableString("");
     }
 
+    public static SpannableString showTimesToClosestTimeString(Context context, List<Calendar> showTimes) {
+        SpannableString timeLeftString = null;
+        if (showTimes.size() != 0) {
+            Calendar now = Calendar.getInstance();
+            Calendar closestTime = getClosestTime(showTimes, now);
+            if (closestTime == null) {
+                timeLeftString = new SpannableString(context.getString(R.string.no_schedule) + " ");
+                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else if (closestTime.equals(now)) {
+                timeLeftString = new SpannableString(context.getString(R.string.schedule_now));
+                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.schedule_now).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else {
+                Calendar leftTime = (Calendar)closestTime.clone();
+                leftTime.add(Calendar.HOUR_OF_DAY, -now.get(Calendar.HOUR_OF_DAY));
+                leftTime.add(Calendar.MINUTE, -now.get(Calendar.MINUTE));
+
+                String str = DataConverter.timeToTimeLeft(context, leftTime);
+                timeLeftString = new SpannableString(str.toString());
+                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        } else {
+            timeLeftString = new SpannableString(context.getString(R.string.no_schedule) + " ");
+            timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        return timeLeftString;
+    }
+
     public static SpannableString actorsToSpannableString(Collection<MovieActor> actors) {
         if (actors != null) {
             StringBuilder actorsStr = new StringBuilder();
@@ -207,6 +234,40 @@ public class DataConverter {
             //}
         } else {
             return Integer.toString(meters) + context.getString(R.string.m);
+        }
+    }
+
+    private static Calendar getClosestTime(List<Calendar> showTimes, Calendar time) {
+        int id = Collections.binarySearch(showTimes, time, new Comparator<Calendar>() {
+            public int compare(Calendar o1, Calendar o2) {
+                int day1 = o1.get(Calendar.DAY_OF_YEAR);
+                int day2 = o2.get(Calendar.DAY_OF_YEAR);
+
+                if (day1 < day2) return -1;
+                else if (day1 > day2) return 1;
+                else {
+                    int hour1 = o1.get(Calendar.HOUR_OF_DAY);
+                    int hour2 = o2.get(Calendar.HOUR_OF_DAY);
+
+                    if (hour1 < hour2) return -1;
+                    else if (hour1 > hour2) return 1;
+                    else {
+                        int minute1 = o1.get(Calendar.MINUTE);
+                        int minute2 = o2.get(Calendar.MINUTE);
+
+                        if (minute1 < minute2) return -1;
+                        else if (minute1 > minute2) return 1;
+                        else return 0;
+                    }
+                }
+            }
+        });
+
+        if (id >= 0) return time;
+        else {
+            id = -(id + 1);
+            if (id == showTimes.size()) return null;
+            else return showTimes.get(id);
         }
     }
 }
