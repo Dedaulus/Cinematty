@@ -48,7 +48,11 @@ public class MoviePictureReceiver implements PictureReceiver {
 
                     try {
                         Thread.sleep(2000);
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                        synchronized (mStarted) {
+                            mStarted = false;
+                        }
+                    }
                 }
             }
         }).start();
