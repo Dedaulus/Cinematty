@@ -36,6 +36,7 @@
             android:id="@+id/movie_schedule_in_schedule_list"
             style="@style/ListItem.Data.CinemaSchedule"
             android:layout_below="@id/cinema_caption_in_schedule_list"
+            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/distance"/>
 
         <TextView
