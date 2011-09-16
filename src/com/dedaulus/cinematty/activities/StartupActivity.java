@@ -9,16 +9,12 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.City;
-import com.dedaulus.cinematty.framework.tools.CityHandler;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.List;
 
 public class StartupActivity extends Activity
 {
@@ -35,7 +31,7 @@ public class StartupActivity extends Activity
         mApp = (CinemattyApplication)getApplication();
         mApp.startListenLocation();
 
-        City city = getCurrentCity();
+        City city = mApp.getCurrentCity();
         if (city != null) {
             //TextView textView = (TextView)findViewById(R.id.current_city);
             //textView.setText(city.getName());
@@ -49,8 +45,8 @@ public class StartupActivity extends Activity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // This is need due to frozen internet connection
             mApp.stopListenLocation();
+            // This is need due to frozen internet connection
             android.os.Process.killProcess(android.os.Process.myPid());
         }
 
@@ -91,24 +87,6 @@ public class StartupActivity extends Activity
         }
     }
 
-    private City getCurrentCity() {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        try {
-            SAXParser parser = factory.newSAXParser();
-            CityHandler handler = new CityHandler();
-            parser.parse(getResources().openRawResource(R.raw.cities), handler);
-            int id = mApp.getCurrentCityId();
-            List<City> cities = handler.getCityList();
-            for (City city : cities) {
-                if (city.getId() == id) return city;
-            }
-
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void getSchedule() {
         final Activity activity = this;
         new Thread(new Runnable() {
@@ -117,7 +95,7 @@ public class StartupActivity extends Activity
             private boolean success = false;
             public void run() {
                 try {
-                    mApp.retrieveData();
+                    mApp.retrieveData(false);
                     success = true;
                 } catch (UnknownHostException e) {
                     error = e.toString();

@@ -247,12 +247,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_place_white=0x7f02000b;
         public static final int ic_whats_new=0x7f02000c;
         public static final int icon=0x7f02000d;
-        public static final int img_loading=0x7f02000e;
-        public static final int indicator_next_arrow=0x7f02000f;
-        public static final int indicator_prev_arrow=0x7f020010;
-        public static final int list_divider=0x7f020011;
-        public static final int movie_data_divider=0x7f020012;
-        public static final int picture_border=0x7f020013;
+        public static final int icon_=0x7f02000e;
+        public static final int img_loading=0x7f02000f;
+        public static final int indicator_next_arrow=0x7f020010;
+        public static final int indicator_prev_arrow=0x7f020011;
+        public static final int list_divider=0x7f020012;
+        public static final int movie_data_divider=0x7f020013;
+        public static final int picture_border=0x7f020014;
     }
     public static final class id {
         public static final int actor_caption_in_actor_list=0x7f050004;

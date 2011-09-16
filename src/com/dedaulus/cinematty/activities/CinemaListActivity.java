@@ -39,18 +39,28 @@ public class CinemaListActivity extends Activity implements LocationClient {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_list);
 
-        findViewById(R.id.cinema_list_title).setVisibility(View.VISIBLE);
-
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
 
+        findViewById(R.id.cinema_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
         switch (mState.activityType) {
-        case CINEMA_LIST:
+        case ActivityState.CINEMA_LIST:
             movieLabel.setVisibility(View.GONE);
 
             mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
@@ -62,7 +72,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
             });
             break;
 
-        case CINEMA_LIST_W_MOVIE:
+        case ActivityState.CINEMA_LIST_W_MOVIE:
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(mState.movie.getCaption());
 
@@ -94,6 +104,12 @@ public class CinemaListActivity extends Activity implements LocationClient {
         mApp.stopListenLocation();
         mApp.saveFavouriteCinemas();
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
     }
 
     @Override
@@ -165,7 +181,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.cinema = mApp.getCinemas().get(cinemaId);
-            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_CINEMA;
+            state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);
@@ -182,7 +198,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.cinema = mApp.getCinemas().get(cinemaId);
-            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_CINEMA;
+            state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);

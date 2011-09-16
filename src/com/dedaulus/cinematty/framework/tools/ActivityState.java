@@ -11,28 +11,26 @@ import com.dedaulus.cinematty.framework.MovieGenre;
  * Time: 22:40
  */
 public class ActivityState implements Cloneable {
-    public enum ActivityType {
-        CINEMA_LIST,
-        CINEMA_LIST_W_MOVIE,
-        MOVIE_LIST,
-        MOVIE_LIST_W_CINEMA,
-        MOVIE_LIST_W_ACTOR,
-        MOVIE_LIST_W_GENRE,
-        ACTOR_LIST,
-        ACTOR_LIST_W_MOVIE,
-        GENRE_LIST,
-        GENRE_LIST_W_MOVIE,
-        CINEMA_INFO,
-        MOVIE_INFO
-    }
+    public static final int CINEMA_LIST         = 1;
+    public static final int CINEMA_LIST_W_MOVIE = 2;
+    public static final int MOVIE_LIST          = 3;
+    public static final int MOVIE_LIST_W_CINEMA = 4;
+    public static final int MOVIE_LIST_W_ACTOR  = 5;
+    public static final int MOVIE_LIST_W_GENRE  = 6;
+    public static final int ACTOR_LIST          = 7;
+    public static final int ACTOR_LIST_W_MOVIE  = 8;
+    public static final int GENRE_LIST          = 9;
+    public static final int GENRE_LIST_W_MOVIE  = 10;
+    public static final int CINEMA_INFO         = 11;
+    public static final int MOVIE_INFO          = 12;
 
-    public ActivityType activityType;
+    public int activityType;
     public Cinema cinema;
     public Movie movie;
     public MovieActor actor;
     public MovieGenre genre;
 
-    public ActivityState(ActivityType activityType, Cinema cinema, Movie movie, MovieActor actor, MovieGenre genre) {
+    public ActivityState(int activityType, Cinema cinema, Movie movie, MovieActor actor, MovieGenre genre) {
         this.activityType = activityType;
         this.cinema = cinema;
         this.movie = movie;

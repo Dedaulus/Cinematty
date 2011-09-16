@@ -31,12 +31,23 @@ public class CinemaActivity extends Activity {
         setContentView(R.layout.cinema_info);
 
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
 
         switch (mState.activityType) {
-        case CINEMA_INFO:
+        case ActivityState.CINEMA_INFO:
             setFavourite();
             setCaption();
             setAddress();
@@ -52,14 +63,18 @@ public class CinemaActivity extends Activity {
     @Override
     protected void onPause() {
         mApp.saveFavouriteCinemas();
-
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
     }
 
     @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
-
         super.onBackPressed();
     }
 
@@ -177,7 +192,7 @@ public class CinemaActivity extends Activity {
     public void onSchedulesClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
-        state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_CINEMA;
+        state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
         mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieListActivity.class);

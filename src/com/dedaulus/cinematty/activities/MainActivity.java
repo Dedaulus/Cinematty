@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 
@@ -25,6 +26,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     private SliderAdapter mAdapter;
     private List<SliderPage> mPages;
     private Integer mCurrentPage = 0;
+    private static final String FAKE_STATE_ID = "fake_state";
 
     private static final int SLIDERS_COUNT = 6;
 
@@ -36,6 +38,18 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         setContentView(R.layout.main);
 
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
+        mApp.setState(FAKE_STATE_ID, new ActivityState(0, null, null, null, null));
 
         ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
@@ -96,7 +110,14 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         }
 
         mApp.stopListenLocation();
+        mApp.dumpData();
         super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        mApp.removeState(FAKE_STATE_ID);
+        super.onBackPressed();
     }
 
     @Override

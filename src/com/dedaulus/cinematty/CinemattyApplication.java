@@ -1,22 +1,23 @@
 package com.dedaulus.cinematty;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.dedaulus.cinematty.activities.StartupActivity;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.*;
+import java.util.*;
 
 /*
  * User: Dedaulus
@@ -30,7 +31,7 @@ public class CinemattyApplication extends Application {
     private UniqueSortedList<MovieGenre> mGenres;
     private List<MoviePoster> mPosters;
 
-    private City mCurrentCity;
+    private City mCurrentCity = null;
 
     private boolean mLocationListenStarted = false;
     private List<LocationClient> mLocationClients;
@@ -59,6 +60,9 @@ public class CinemattyApplication extends Application {
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
     private static final String PREF_MOVIE_SORT_ORDER = "movie_sort_order";
     private static final String PREF_CURRENT_CITY = "current_city";
+    private static final String DUMP_FILE = "dump_state.xml";
+
+    private boolean mIsDataActual = false;
 
     {
         mCinemas = new UniqueSortedList<Cinema>(new DefaultComparator<Cinema>());
@@ -69,10 +73,66 @@ public class CinemattyApplication extends Application {
         mLocationClients = new ArrayList<LocationClient>();
     }
 
-    public void retrieveData() throws IOException, ParserConfigurationException, SAXException {
+    public boolean isDataActual() {
+        return mIsDataActual;
+    }
+
+    public void dumpData() {
+        StringBuilder xml = new StringBuilder();
+        Calendar date = Calendar.getInstance();
+        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data date=\"");
+
+        String year = Integer.toString(date.get(Calendar.YEAR));
+        String month = Integer.toString(date.get(Calendar.MONTH));
+        String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+        String hour = Integer.toString(date.get(Calendar.HOUR_OF_DAY));
+        String min = Integer.toString(date.get(Calendar.MINUTE));
+        String sec = Integer.toString(date.get(Calendar.SECOND));
+        xml.append(year).append(".").append(month).append(".").append(day).append(".").append(hour).append(".").append(min).append(".").append(sec);
+        xml.append("\">");
+
+        for (String cookie : mState.keySet()) {
+            xml.append("<state cookie=\"").append(cookie).append("\"");
+            ActivityState state = mState.get(cookie);
+            String cinema = state.cinema != null ? state.cinema.getCaption() : null;
+            String movie = state.movie != null ? state.movie.getCaption() : null;
+            String actor = state.actor != null ? state.actor.getActor() : null;
+            String genre = state.genre != null ? state.genre.getGenre() : null;
+
+            xml.append(" type=\"").append(state.activityType).append("\"");
+            if (cinema != null) xml.append(" cinema=\"").append(cinema).append("\"");
+            if (movie != null) xml.append(" movie=\"").append(movie).append("\"");
+            if (actor != null) xml.append(" actor=\"").append(actor).append("\"");
+            if (genre != null) xml.append(" genre=\"").append(genre).append("\"");
+            xml.append(" />");
+        }
+        xml.append("</data>");
+
+        try {
+            Writer output = new BufferedWriter(new FileWriter(new File(getCacheDir(), DUMP_FILE)));
+            output.write(xml.toString());
+            output.close();
+        } catch (IOException e){
+            return;
+        }
+    }
+
+    private boolean restoreData() {
+        StateReceiver receiver = new StateReceiver(this, DUMP_FILE);
+        mState = receiver.getState();
+        return mState != null;
+    }
+
+    public void restart() {
+        Intent intent = new Intent(this, StartupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public boolean retrieveData(boolean useLocalOnly) throws IOException, ParserConfigurationException, SAXException {
         ScheduleReceiver receiver = new ScheduleReceiver(this, mCurrentCity.getFileName());
         StringBuffer pictureFolder = new StringBuffer();
-        receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder, mPosters);
+        if (!receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder, mPosters, useLocalOnly)) return false;
 
         String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
         if (mPictureRetriever == null) {
@@ -96,6 +156,14 @@ public class CinemattyApplication extends Application {
                 mActors.get(actorId).setFavourite((Long)favs.get(caption));
             }
         }
+
+        if (useLocalOnly) {
+            mIsDataActual = restoreData();
+        } else {
+            mIsDataActual = true;
+        }
+
+        return mIsDataActual;
     }
 
     public UniqueSortedList<Cinema> getCinemas() {
@@ -224,7 +292,26 @@ public class CinemattyApplication extends Application {
     }
 
     public City getCurrentCity() {
-        return mCurrentCity;
+        if (mCurrentCity != null) return mCurrentCity;
+        else {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            try {
+                SAXParser parser = factory.newSAXParser();
+                CityHandler handler = new CityHandler();
+                parser.parse(getResources().openRawResource(R.raw.cities), handler);
+                int id = getCurrentCityId();
+                List<City> cities = handler.getCityList();
+                for (City city : cities) {
+                    if (city.getId() == id) {
+                        mCurrentCity = city;
+                        return mCurrentCity;
+                    }
+                }
+                return null;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void setCurrentCity(City city) {

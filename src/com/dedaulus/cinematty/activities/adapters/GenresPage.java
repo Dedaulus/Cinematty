@@ -76,7 +76,7 @@ public class GenresPage implements SliderPage {
         int genreId = mApp.getGenres().indexOf(new MovieGenre(caption));
         if (genreId != -1) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_LIST_W_GENRE, null, null, null, mApp.getGenres().get(genreId));
+            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_GENRE, null, null, null, mApp.getGenres().get(genreId));
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(mContext, MovieListActivity.class);

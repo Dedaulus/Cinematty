@@ -122,7 +122,7 @@ public class MoviesPage implements SliderPage {
         int movieId = mApp.getMovies().indexOf(new Movie(caption));
         if (movieId != -1) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_INFO, null, mApp.getMovies().get(movieId), null, null);
+            ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, mApp.getMovies().get(movieId), null, null);
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(mContext, MovieActivity.class);

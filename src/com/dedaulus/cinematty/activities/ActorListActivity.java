@@ -35,23 +35,33 @@ public class ActorListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actor_list);
 
-        findViewById(R.id.actor_list_title).setVisibility(View.VISIBLE);
-
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
 
+        findViewById(R.id.actor_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
         switch (mState.activityType) {
-        case ACTOR_LIST:
+        case ActivityState.ACTOR_LIST:
             movieLabel.setVisibility(View.GONE);
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
             break;
 
-        case ACTOR_LIST_W_MOVIE:
+        case ActivityState.ACTOR_LIST_W_MOVIE:
             movieLabel.setText(mState.movie.getCaption());
             movieLabel.setVisibility(View.VISIBLE);
             mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mState.movie.getActors()));
@@ -90,6 +100,12 @@ public class ActorListActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
+    }
+
+    @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
 
@@ -104,7 +120,7 @@ public class ActorListActivity extends Activity {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.actor = mApp.getActors().get(actorId);
-            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_ACTOR;
+            state.activityType = ActivityState.MOVIE_LIST_W_ACTOR;
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);

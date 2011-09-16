@@ -30,19 +30,22 @@ public class ScheduleReceiver {
         mCacheDir = app.getCacheDir();
     }
 
-    public void getSchedule(UniqueSortedList<Cinema> cinemas,
+    public boolean getSchedule(UniqueSortedList<Cinema> cinemas,
                             UniqueSortedList<Movie> movies,
                             UniqueSortedList<MovieActor> actors,
                             UniqueSortedList<MovieGenre> genres,
                             StringBuffer pictureFolder,
-                            List<MoviePoster> posters) throws IOException, ParserConfigurationException, SAXException {
-        InputStream is = getActualXmlStream();
+                            List<MoviePoster> posters,
+                            boolean useLocalOnly) throws IOException, ParserConfigurationException, SAXException {
+        InputStream is = useLocalOnly ? getFileStream() : getActualXmlStream();
+        if (is == null) return false;
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         ScheduleHandler handler = new ScheduleHandler();
         parser.parse(is, handler);
         handler.getSchedule(cinemas, movies, actors, genres, pictureFolder, posters);
+        return true;
     }
 
     private InputStream getActualXmlStream() throws IOException, ParserConfigurationException, SAXException {

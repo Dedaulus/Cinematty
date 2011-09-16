@@ -72,7 +72,7 @@ public class WhatsNewPage implements SliderPage {
         PosterItemAdapter adapter = (PosterItemAdapter)adapterView.getAdapter();
         MoviePoster poster = (MoviePoster)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_INFO, null, poster.getMovie(), null, null);
+        ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, poster.getMovie(), null, null);
         mApp.setState(cookie, state);
 
         Intent intent = new Intent(mContext, MovieActivity.class);

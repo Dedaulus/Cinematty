@@ -95,7 +95,7 @@ public class ActorsPage implements SliderPage {
         int actorId = mApp.getActors().indexOf(new MovieActor(caption));
         if (actorId != -1) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.ActivityType.MOVIE_LIST_W_ACTOR, null, null, mApp.getActors().get(actorId), null);
+            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, mApp.getActors().get(actorId), null);
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(mContext, MovieListActivity.class);

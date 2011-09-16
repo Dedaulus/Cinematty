@@ -35,12 +35,23 @@ public class MovieActivity extends Activity implements PictureReceiver {
         setContentView(R.layout.movie_info);
 
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
 
         switch (mState.activityType) {
-        case MOVIE_INFO:
+        case ActivityState.MOVIE_INFO:
             setPicture();
             setCaption();
             setLength();
@@ -59,14 +70,18 @@ public class MovieActivity extends Activity implements PictureReceiver {
     @Override
     protected void onResume() {
         setActors();
-
         super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
     }
 
     @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
-
         super.onBackPressed();
     }
 
@@ -165,7 +180,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     public void onSchedulesClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
-        state.activityType = ActivityState.ActivityType.CINEMA_LIST_W_MOVIE;
+        state.activityType = ActivityState.CINEMA_LIST_W_MOVIE;
         mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, CinemaListActivity.class);
@@ -195,7 +210,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     public void onActorsClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
-        state.activityType = ActivityState.ActivityType.ACTOR_LIST_W_MOVIE;
+        state.activityType = ActivityState.ACTOR_LIST_W_MOVIE;
         mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, ActorListActivity.class);

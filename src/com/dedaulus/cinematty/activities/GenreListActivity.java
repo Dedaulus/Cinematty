@@ -32,6 +32,17 @@ public class GenreListActivity extends Activity {
         setContentView(R.layout.genre_list);
 
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
@@ -40,7 +51,7 @@ public class GenreListActivity extends Activity {
         ListView list = (ListView)findViewById(R.id.genre_list);
 
         switch (mState.activityType) {
-        case GENRE_LIST:
+        case ActivityState.GENRE_LIST:
             movieLabel.setVisibility(View.GONE);
             list.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(mApp.getGenres())));
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,6 +64,12 @@ public class GenreListActivity extends Activity {
         default:
             throw new RuntimeException("ActivityType error");
         }
+    }
+
+    @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
     }
 
     @Override
@@ -70,7 +87,7 @@ public class GenreListActivity extends Activity {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.genre = mApp.getGenres().get(genreId);
-            state.activityType = ActivityState.ActivityType.MOVIE_LIST_W_GENRE;
+            state.activityType = ActivityState.MOVIE_LIST_W_GENRE;
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);

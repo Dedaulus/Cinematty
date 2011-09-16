@@ -31,6 +31,16 @@ public class CityListActivity extends Activity {
         setContentView(R.layout.city_list);
 
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
@@ -57,6 +67,12 @@ public class CityListActivity extends Activity {
         list.smoothScrollToPosition(id);
 
         super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        mApp.dumpData();
+        super.onStop();
     }
 
     private void onCityItemClick(AdapterView<?> adapterView, View view, int i, long l) {

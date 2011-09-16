@@ -39,26 +39,36 @@ public class MovieListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
 
-        findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
-
         mApp = (CinemattyApplication)getApplication();
+        if (!mApp.isDataActual()) {
+            boolean b = false;
+            try {
+                b = mApp.retrieveData(true);
+            } catch (Exception e) {}
+            if (!b) {
+                mApp.restart();
+                finish();
+            }
+        }
+
         mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         mState = mApp.getState(mStateId);
         if (mState == null) throw new RuntimeException("ActivityState error");
 
+        findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
         switch (mState.activityType) {
-        case MOVIE_LIST:
+        case ActivityState.MOVIE_LIST:
             captionView.setVisibility(View.GONE);
             mScopeMovies = mApp.getMovies();
             mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever());
             list.setAdapter(mMovieListAdapter);
             break;
 
-        case MOVIE_LIST_W_CINEMA:
+        case ActivityState.MOVIE_LIST_W_CINEMA:
             captionView.setVisibility(View.GONE);
             LayoutInflater layoutInflater = LayoutInflater.from(this);
             View view = layoutInflater.inflate(R.layout.cinema_info, null, false);
@@ -71,7 +81,7 @@ public class MovieListActivity extends Activity {
             list.setAdapter(mMovieListAdapter);
             break;
 
-        case MOVIE_LIST_W_ACTOR:
+        case ActivityState.MOVIE_LIST_W_ACTOR:
             captionView.setVisibility(View.VISIBLE);
             captionLabel.setText(mState.actor.getActor());
             mScopeMovies = mState.actor.getMovies();
@@ -79,7 +89,7 @@ public class MovieListActivity extends Activity {
             list.setAdapter(mMovieListAdapter);
             break;
 
-        case MOVIE_LIST_W_GENRE:
+        case ActivityState.MOVIE_LIST_W_GENRE:
             captionView.setVisibility(View.VISIBLE);
             captionLabel.setText(mState.genre.getGenre());
             mScopeMovies = mState.genre.getMovies();
@@ -108,13 +118,13 @@ public class MovieListActivity extends Activity {
     @Override
     protected void onStop() {
         ((StoppableAndResumable)mMovieListAdapter).onStop();
+        mApp.dumpData();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
-
         super.onBackPressed();
     }
 
@@ -165,7 +175,7 @@ public class MovieListActivity extends Activity {
     private void onCinemaClick(View view) {
         String cookie = UUID.randomUUID().toString();
         ActivityState state = mState.clone();
-        state.activityType = ActivityState.ActivityType.CINEMA_INFO;
+        state.activityType = ActivityState.CINEMA_INFO;
         mApp.setState(cookie, state);
 
         Intent intent = new Intent(this, CinemaActivity.class);
@@ -181,7 +191,7 @@ public class MovieListActivity extends Activity {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.movie = mScopeMovies.get(movieId);
-            state.activityType = ActivityState.ActivityType.MOVIE_INFO;
+            state.activityType = ActivityState.MOVIE_INFO;
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieActivity.class);
