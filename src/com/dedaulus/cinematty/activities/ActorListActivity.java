@@ -44,6 +44,7 @@ public class ActorListActivity extends Activity {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 

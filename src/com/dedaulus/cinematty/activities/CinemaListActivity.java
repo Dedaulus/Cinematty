@@ -48,6 +48,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 

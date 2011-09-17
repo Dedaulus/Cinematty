@@ -124,13 +124,14 @@ public class CinemattyApplication extends Application {
     }
 
     public void restart() {
+        mState.clear();
         Intent intent = new Intent(this, StartupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public boolean retrieveData(boolean useLocalOnly) throws IOException, ParserConfigurationException, SAXException {
-        ScheduleReceiver receiver = new ScheduleReceiver(this, mCurrentCity.getFileName());
+        ScheduleReceiver receiver = new ScheduleReceiver(this, getCurrentCity().getFileName());
         StringBuffer pictureFolder = new StringBuffer();
         if (!receiver.getSchedule(mCinemas, mMovies, mActors, mGenres, pictureFolder, mPosters, useLocalOnly)) return false;
 

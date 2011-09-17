@@ -48,6 +48,7 @@ public class MovieListActivity extends Activity {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 
@@ -191,7 +192,11 @@ public class MovieListActivity extends Activity {
             String cookie = UUID.randomUUID().toString();
             ActivityState state = mState.clone();
             state.movie = mScopeMovies.get(movieId);
-            state.activityType = ActivityState.MOVIE_INFO;
+            if (state.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
+                state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
+            } else {
+                state.activityType = ActivityState.MOVIE_INFO;
+            }
             mApp.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieActivity.class);

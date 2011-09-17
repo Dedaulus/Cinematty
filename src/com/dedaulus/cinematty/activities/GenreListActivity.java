@@ -40,6 +40,7 @@ public class GenreListActivity extends Activity {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 

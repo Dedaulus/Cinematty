@@ -43,6 +43,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 
@@ -51,6 +52,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
         if (mState == null) throw new RuntimeException("ActivityState error");
 
         switch (mState.activityType) {
+        case ActivityState.MOVIE_INFO_W_SCHED:
         case ActivityState.MOVIE_INFO:
             setPicture();
             setCaption();
@@ -112,7 +114,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     private void setSchedule() {
-        if (mState.cinema != null) {
+        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
             TextView text = (TextView)findViewById(R.id.schedule_title);
             text.setText(getString(R.string.schedule_enum) + " " + mState.cinema.getCaption());
 

@@ -39,6 +39,7 @@ public class CinemaActivity extends Activity {
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 

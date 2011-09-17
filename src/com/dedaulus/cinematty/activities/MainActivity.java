@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
             if (!b) {
                 mApp.restart();
                 finish();
+                return;
             }
         }
 
