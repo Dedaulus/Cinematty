@@ -31,16 +31,6 @@ public class CityListActivity extends Activity {
         setContentView(R.layout.city_list);
 
         mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-            }
-        }
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
@@ -71,7 +61,6 @@ public class CityListActivity extends Activity {
 
     @Override
     protected void onStop() {
-        mApp.dumpData();
         super.onStop();
     }
 
@@ -81,6 +70,7 @@ public class CityListActivity extends Activity {
         for (City city : mCities) {
             if (city.getName().equals(caption)) {
                 mApp.saveCurrentCityId(city.getId());
+                mApp.setCurrentCity(city);
 
                 Intent intent = new Intent(this, StartupActivity.class);
                 startActivity(intent);
