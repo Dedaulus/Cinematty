@@ -17,11 +17,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.PictureRetriever;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -175,7 +177,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
             text.setText(getString(R.string.schedule_enum) + " " + mState.cinema.getCaption());
 
             text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-            List<Calendar> showTimes = mState.cinema.getShowTimes(mApp.getCurrentDay()).get(mState.movie);
+            Map<Movie, List<Calendar>> map = mState.cinema.getShowTimes(mApp.getCurrentDay());
+            List<Calendar> showTimes = map != null ? map.get(mState.movie) : null;
             text.setText(DataConverter.showTimesToSpannableString(this, showTimes));
 
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
