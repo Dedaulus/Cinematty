@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.City;
+import com.dedaulus.cinematty.framework.tools.Constants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,6 +30,7 @@ public class StartupActivity extends Activity
         setContentView(R.layout.splash_screen);
 
         mApp = (CinemattyApplication)getApplication();
+        mApp.setCurrentDay(Constants.TODAY_SCHEDULE);
         mApp.startListenLocation();
 
         City city = mApp.getCurrentCity();

@@ -27,13 +27,15 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     private Context mContext;
     private List<Movie> mMovies;
     private Cinema mCinema;
+    private int mCurrentDay;
     private PictureRetriever mPictureRetriever;
     private MoviePictureReceiver mPictureReceiver;
 
-    public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, PictureRetriever pictureRetriever) {
+    public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, int day, PictureRetriever pictureRetriever) {
         mContext = context;
         mMovies = movies;
         mCinema = cinema;
+        mCurrentDay = day;
         mPictureRetriever = pictureRetriever;
         mPictureReceiver = new MoviePictureReceiver(this, (Activity)mContext);
     }
@@ -120,7 +122,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_movie_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_movie_list);
 
-        List<Calendar> showTimes = mCinema.getShowTimes().get(movie);
+        List<Calendar> showTimes = mCinema.getShowTimes(mCurrentDay).get(movie);
         if (showTimes != null) {
             String showTimesStr = DataConverter.showTimesToString(showTimes);
             if (showTimesStr.length() != 0) {

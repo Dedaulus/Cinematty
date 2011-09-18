@@ -34,6 +34,7 @@ public class MovieListActivity extends Activity {
     private UniqueSortedList<Movie> mScopeMovies;
     private ActivityState mState;
     private String mStateId;
+    private int mCurrentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +78,15 @@ public class MovieListActivity extends Activity {
 
             list.addHeaderView(view, null, false);
 
-            mScopeMovies = mState.cinema.getMovies();
-            mMovieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mState.cinema, mApp.getPictureRetriever());
-            list.setAdapter(mMovieListAdapter);
+            setCurrentDay(mApp.getCurrentDay());
+
+            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
+            textView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    registerForContextMenu(view);
+                    view.showContextMenu();
+                }
+            });
             break;
 
         case ActivityState.MOVIE_LIST_W_ACTOR:
@@ -109,10 +116,31 @@ public class MovieListActivity extends Activity {
         });
     }
 
+    private void changeTitleBar() {
+        findViewById(R.id.movie_list_title_day).setVisibility(View.VISIBLE);
+        TextView text = (TextView)findViewById(R.id.titlebar_caption);
+        switch (mApp.getCurrentDay()) {
+        case Constants.TODAY_SCHEDULE:
+            text.setText(R.string.today);
+            break;
+        case Constants.TOMORROW_SCHEDULE:
+            text.setText(R.string.tomorrow);
+            break;
+        }
+    }
+
     @Override
     protected void onResume() {
         ((StoppableAndResumable)mMovieListAdapter).onResume();
-        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
+        if (mState.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
+            if (mCurrentDay != mApp.getCurrentDay()) {
+                setCurrentDay(mApp.getCurrentDay());
+            }
+            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), mApp.getCurrentDay()));
+        } else {
+            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+        }
+
         super.onResume();
     }
 
@@ -157,19 +185,47 @@ public class MovieListActivity extends Activity {
             return true;
 
         case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR));
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;
 
         default:
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.select_day_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.submenu_select_day_today:
+            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+                setCurrentDay(Constants.TODAY_SCHEDULE);
+                mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+            }
+            return true;
+        case R.id.submenu_select_day_tomorrow:
+            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+            }
+            return true;
+        default:
+            return super.onContextItemSelected(item);
         }
     }
 
@@ -207,6 +263,34 @@ public class MovieListActivity extends Activity {
 
     public void onHomeButtonClick(View view) {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void onDayButtonClick(View view) {
+        registerForContextMenu(view);
+        view.showContextMenu();
+    }
+
+    private void setCurrentDay(int day) {
+        mApp.setCurrentDay(day);
+        mCurrentDay = day;
+
+        changeTitleBar();
+
+        mScopeMovies = mState.cinema.getMovies(mApp.getCurrentDay());
+        if (mScopeMovies == null) {
+            mScopeMovies = new UniqueSortedList<Movie>(null);
+            findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.no_schedule).setVisibility(View.GONE);
+        }
+
+        StoppableAndResumable sar = (StoppableAndResumable)mMovieListAdapter;
+        if (sar != null) sar.onStop();
+        mMovieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mState.cinema, mApp.getCurrentDay(), mApp.getPictureRetriever());
+        sar = (StoppableAndResumable)mMovieListAdapter;
+        sar.onResume();
+        ListView list = (ListView)findViewById(R.id.movie_list);
+        list.setAdapter(mMovieListAdapter);
     }
 
     private void setCinemaHeader(View view) {

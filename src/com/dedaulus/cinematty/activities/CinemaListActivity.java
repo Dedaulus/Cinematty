@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,6 +19,7 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,6 +32,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     private SortableAdapter<Cinema> mCinemaListAdapter;
     private ActivityState mState;
     private String mStateId;
+    private int mCurrentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +76,16 @@ public class CinemaListActivity extends Activity implements LocationClient {
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(mState.movie.getCaption());
 
-            mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(mState.movie.getCinemas()), mState.movie, mApp.getCurrentLocation());
-            list.setAdapter(mCinemaListAdapter);
+            setCurrentDay(mApp.getCurrentDay());
+
+            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
+            textView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    registerForContextMenu(view);
+                    view.showContextMenu();
+                }
+            });
+
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onScheduleItemClick(adapterView, view, i, l);
@@ -91,10 +98,26 @@ public class CinemaListActivity extends Activity implements LocationClient {
         }
     }
 
+    private void changeTitleBar() {
+        findViewById(R.id.cinema_list_title_day).setVisibility(View.VISIBLE);
+        TextView text = (TextView)findViewById(R.id.titlebar_caption);
+        switch (mApp.getCurrentDay()) {
+        case Constants.TODAY_SCHEDULE:
+            text.setText(R.string.today);
+            break;
+        case Constants.TOMORROW_SCHEDULE:
+            text.setText(R.string.tomorrow);
+            break;
+        }
+    }
+
     @Override
     protected void onResume() {
         mApp.startListenLocation();
         mApp.addLocationClient(this);
+        if (mState.activityType == ActivityState.CINEMA_LIST_W_MOVIE && mCurrentDay != mApp.getCurrentDay()) {
+            setCurrentDay(mApp.getCurrentDay());
+        }
         mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
         super.onResume();
     }
@@ -116,7 +139,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
     @Override
     public void onBackPressed() {
         mApp.removeState(mStateId);
-
         super.onBackPressed();
     }
 
@@ -171,6 +193,34 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
         default:
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.select_day_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.submenu_select_day_today:
+            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+                setCurrentDay(Constants.TODAY_SCHEDULE);
+                mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+            }
+            return true;
+        case R.id.submenu_select_day_tomorrow:
+            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+            }
+            return true;
+        default:
+            return super.onContextItemSelected(item);
         }
     }
 
@@ -233,6 +283,29 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
     public void onHomeButtonClick(View view) {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void onDayButtonClick(View view) {
+        registerForContextMenu(view);
+        view.showContextMenu();
+    }
+
+    private void setCurrentDay(int day) {
+        mApp.setCurrentDay(day);
+        mCurrentDay = day;
+
+        changeTitleBar();
+
+        List<Cinema> cinemaList = mState.movie.getCinemas(mApp.getCurrentDay());
+        if (cinemaList == null) {
+            cinemaList = new ArrayList<Cinema>();
+            findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.no_schedule).setVisibility(View.GONE);
+        }
+        mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(cinemaList), mState.movie, mApp.getCurrentDay(), mApp.getCurrentLocation());
+        ListView list = (ListView)findViewById(R.id.cinema_list);
+        list.setAdapter(mCinemaListAdapter);
     }
 
     public void onLocationChanged(Location location) {

@@ -43,6 +43,14 @@
         <item name="android:src">@drawable/ic_home</item>
     </style>
 
+    <style name="ActivityTitleBarDay">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:src">@drawable/ic_day</item>
+    </style>
+
     <style name="ActivityTitleText">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

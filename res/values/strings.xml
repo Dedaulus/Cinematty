@@ -34,6 +34,10 @@
     <string name="schedule_now">прямо сейчас</string>
     <string name="schedule_start_in">через</string>
 
+    <string name="date">Дата</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+
     <string name="metro_near">Метро</string>
 
     <string name="sort">Сортировать</string>
@@ -41,7 +45,6 @@
     <string name="sort_by_fav">По любимым</string>
     <string name="sort_by_distance">По ближайшим</string>
     <string name="sort_by_popular">По популярности</string>
-
 
     <string name="km">км</string>
     <string name="m">м</string>

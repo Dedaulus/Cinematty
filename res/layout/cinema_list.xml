@@ -9,6 +9,7 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/titlebar_caption"
             style="@style/ActivityTitleText"
             android:text="@string/cinemas_caption"/>
 
@@ -16,6 +17,12 @@
             android:id="@+id/cinema_list_title_home"
             style="@style/ActivityTitleBarHome"
             android:onClick="onHomeButtonClick"/>
+
+        <ImageView
+            android:id="@+id/cinema_list_title_day"
+            style="@style/ActivityTitleBarDay"
+            android:visibility="gone"
+            android:onClick="onDayButtonClick"/>
 
     </RelativeLayout>
 
@@ -32,6 +39,16 @@
             android:id="@+id/cinema_list"
             style="@style/List.Cinemas"
             android:layout_below="@id/movie_caption_in_cinema_list"/>
+
+        <TextView
+            android:id="@+id/no_schedule"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_schedule"
+            android:textColor="#404040"
+            android:textSize="20dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

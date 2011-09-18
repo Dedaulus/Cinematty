@@ -3,9 +3,7 @@ package com.dedaulus.cinematty.framework;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -19,11 +17,10 @@ public class Movie implements Comparable<Movie> {
     private int mLengthInMinutes;
     private List<MovieGenre> mGenres = new ArrayList<MovieGenre>();
     private List<MovieActor> mActors = new ArrayList<MovieActor>();
-    private UniqueSortedList<Cinema> mCinemas;
+    private Map<Integer, UniqueSortedList<Cinema>> mCinemas = new HashMap<Integer, UniqueSortedList<Cinema>>();
 
     public Movie(String caption) {
         mCaption = caption;
-        mCinemas = new UniqueSortedList<Cinema>(new DefaultComparator<Cinema>());
     }
 
     public String getCaption() {
@@ -72,12 +69,16 @@ public class Movie implements Comparable<Movie> {
         return mGenres;
     }
 
-    public void addCinema(Cinema cinema) {
-        mCinemas.add(cinema);
+    public void addCinema(Cinema cinema, int day) {
+        if (mCinemas.get(day) == null) {
+            mCinemas.put(day, new UniqueSortedList<Cinema>(new DefaultComparator<Cinema>()));
+        }
+
+        mCinemas.get(day).add(cinema);
     }
 
-    public UniqueSortedList<Cinema> getCinemas() {
-        return mCinemas;
+    public UniqueSortedList<Cinema> getCinemas(int day) {
+        return mCinemas.get(day);
     }
 
     @Override

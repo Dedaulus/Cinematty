@@ -49,7 +49,7 @@ public class MoviesPage implements SliderPage {
     public void onResume() {
         if (mBinded) {
             ((StoppableAndResumable)mMovieListAdapter).onResume();
-            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder()));
+            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), mApp.getCurrentDay()));
         }
     }
 
@@ -85,13 +85,13 @@ public class MoviesPage implements SliderPage {
             return true;
 
         case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR));
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;

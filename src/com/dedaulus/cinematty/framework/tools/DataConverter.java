@@ -74,7 +74,7 @@ public class DataConverter {
         return "";
     }
 
-    public static SpannableString showTimesToSpannableString(List<Calendar> showTimes) {
+    public static SpannableString showTimesToSpannableString(Context context, List<Calendar> showTimes) {
         if (showTimes != null) {
             boolean allOutdateFound = false;
             int outdateEndIndex = 0;
@@ -125,7 +125,10 @@ public class DataConverter {
             }
         }
 
-        return new SpannableString("");
+        SpannableString str = new SpannableString(context.getString(R.string.no_schedule));
+        str.setSpan(new ForegroundColorSpan(Color.rgb(28, 28, 28)), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return str;
     }
 
     public static SpannableString showTimesToClosestTimeString(Context context, List<Calendar> showTimes) {

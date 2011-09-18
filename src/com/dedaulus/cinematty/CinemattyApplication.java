@@ -31,6 +31,8 @@ public class CinemattyApplication extends Application {
     private UniqueSortedList<MovieGenre> mGenres;
     private List<MoviePoster> mPosters;
 
+    private int mCurrentDay = Constants.TODAY_SCHEDULE;
+
     private City mCurrentCity = null;
 
     private boolean mLocationListenStarted = false;
@@ -112,9 +114,7 @@ public class CinemattyApplication extends Application {
             Writer output = new BufferedWriter(new FileWriter(new File(getCacheDir(), DUMP_FILE)));
             output.write(xml.toString());
             output.close();
-        } catch (IOException e){
-            return;
-        }
+        } catch (IOException e){}
     }
 
     private boolean restoreData() {
@@ -165,6 +165,14 @@ public class CinemattyApplication extends Application {
         }
 
         return mIsDataActual;
+    }
+
+    public int getCurrentDay() {
+        return mCurrentDay;
+    }
+
+    public void setCurrentDay(int day) {
+        mCurrentDay = day;
     }
 
     public UniqueSortedList<Cinema> getCinemas() {

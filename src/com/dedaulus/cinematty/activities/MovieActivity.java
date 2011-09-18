@@ -7,7 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     private CinemattyApplication mApp;
     private ActivityState mState;
     private String mStateId;
+    private int mCurrentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,15 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
         switch (mState.activityType) {
         case ActivityState.MOVIE_INFO_W_SCHED:
+            mCurrentDay = mApp.getCurrentDay();
+            changeTitleBar();
+            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
+            textView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    registerForContextMenu(view);
+                    view.showContextMenu();
+                }
+            });
         case ActivityState.MOVIE_INFO:
             setPicture();
             setCaption();
@@ -69,8 +83,24 @@ public class MovieActivity extends Activity implements PictureReceiver {
         }
     }
 
+    private void changeTitleBar() {
+        findViewById(R.id.movie_title_day).setVisibility(View.VISIBLE);
+        TextView text = (TextView)findViewById(R.id.titlebar_caption);
+        switch (mApp.getCurrentDay()) {
+        case Constants.TODAY_SCHEDULE:
+            text.setText(R.string.today);
+            break;
+        case Constants.TOMORROW_SCHEDULE:
+            text.setText(R.string.tomorrow);
+            break;
+        }
+    }
+
     @Override
     protected void onResume() {
+        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED && mCurrentDay != mApp.getCurrentDay()) {
+            setCurrentDay(mApp.getCurrentDay());
+        }
         setActors();
         super.onResume();
     }
@@ -85,6 +115,32 @@ public class MovieActivity extends Activity implements PictureReceiver {
     public void onBackPressed() {
         mApp.removeState(mStateId);
         super.onBackPressed();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.select_day_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.submenu_select_day_today:
+            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+                setCurrentDay(Constants.TODAY_SCHEDULE);
+            }
+            return true;
+        case R.id.submenu_select_day_tomorrow:
+            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+            }
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+        }
     }
 
     private void setPicture() {
@@ -119,10 +175,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
             text.setText(getString(R.string.schedule_enum) + " " + mState.cinema.getCaption());
 
             text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-            List<Calendar> showTimes = mState.cinema.getShowTimes().get(mState.movie);
-            if (showTimes != null) {
-                text.setText(DataConverter.showTimesToSpannableString(showTimes));
-            }
+            List<Calendar> showTimes = mState.cinema.getShowTimes(mApp.getCurrentDay()).get(mState.movie);
+            text.setText(DataConverter.showTimesToSpannableString(this, showTimes));
 
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
         } else {
@@ -232,5 +286,17 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     public void onHomeButtonClick(View view) {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void onDayButtonClick(View view) {
+        registerForContextMenu(view);
+        view.showContextMenu();
+    }
+
+    private void setCurrentDay(int day) {
+        mApp.setCurrentDay(day);
+        mCurrentDay = day;
+        changeTitleBar();
+        setSchedule();
     }
 }

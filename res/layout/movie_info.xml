@@ -8,6 +8,7 @@
         style="@style/ActivityTitleBar">
 
         <TextView
+            android:id="@+id/titlebar_caption"
             style="@style/ActivityTitleText"
             android:text="@string/movie_caption"/>
 
@@ -15,6 +16,12 @@
             android:id="@+id/movie_title_home"
             style="@style/ActivityTitleBarHome"
             android:onClick="onHomeButtonClick"/>
+
+        <ImageView
+            android:id="@+id/movie_title_day"
+            style="@style/ActivityTitleBarDay"
+            android:visibility="gone"
+            android:onClick="onDayButtonClick"/>
 
     </RelativeLayout>
 

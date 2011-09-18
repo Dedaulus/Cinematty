@@ -18,7 +18,7 @@ public class Cinema implements Comparable<Cinema> {
     private String mMetro;
     private String mPhone;
     private String mUrl;
-    private Map<Movie, List<Calendar>> mShowTimes = new HashMap<Movie, List<Calendar>>();
+    private Map<Integer, Map<Movie, List<Calendar>>> mShowTimes = new HashMap<Integer, Map<Movie, List<Calendar>>>();
     private long mFavValue = 0;
 
     public Cinema(String caption) {
@@ -100,21 +100,28 @@ public class Cinema implements Comparable<Cinema> {
         return mUrl;
     }
 
-    public void addShowTime(Movie movie, List<Calendar> times) {
-        mShowTimes.put(movie, times);
-        movie.addCinema(this);
+    public void addShowTime(Movie movie, List<Calendar> times, int day) {
+        if (mShowTimes.get(day) == null) {
+            mShowTimes.put(day, new HashMap<Movie, List<Calendar>>());
+        }
+
+        mShowTimes.get(day).put(movie, times);
+        movie.addCinema(this, day);
     }
 
-    public Map<Movie, List<Calendar>> getShowTimes() {
-        return mShowTimes;
+    public Map<Movie, List<Calendar>> getShowTimes(int day) {
+        return mShowTimes.get(day);
     }
 
-    public UniqueSortedList<Movie> getMovies() {
-        return new UniqueSortedList<Movie>(mShowTimes.keySet(), new Comparator<Movie>() {
-            public int compare(Movie o1, Movie o2) {
-                return o1.compareTo(o2);
-            }
-        });
+    public UniqueSortedList<Movie> getMovies(int day) {
+        Map<Movie, List<Calendar>> movies = mShowTimes.get(day);
+        if (movies != null) {
+            return new UniqueSortedList<Movie>(movies.keySet(), new Comparator<Movie>() {
+                public int compare(Movie o1, Movie o2) {
+                    return o1.compareTo(o2);
+                }
+            });
+        } else return null;
     }
 
     public void setFavourite(boolean addToFavourite) {

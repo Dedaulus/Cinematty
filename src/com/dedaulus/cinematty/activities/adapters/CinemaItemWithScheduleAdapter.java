@@ -29,12 +29,14 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private Context mContext;
     private List<Cinema> mCinemas;
     private Movie mCurrentMovie;
+    private int mCurrentDay;
     private Location mCurrentLocation;
 
-    public CinemaItemWithScheduleAdapter(Context context, List<Cinema> cinemas, Movie currentMovie, Location location) {
+    public CinemaItemWithScheduleAdapter(Context context, List<Cinema> cinemas, Movie currentMovie, int day, Location location) {
         mContext = context;
         mCinemas = cinemas;
         mCurrentMovie = currentMovie;
+        mCurrentDay = day;
         mCurrentLocation = location;
     }
 
@@ -83,7 +85,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_schedule_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_schedule_list);
 
-        List<Calendar> showTimes = cinema.getShowTimes().get(mCurrentMovie);
+        List<Calendar> showTimes = cinema.getShowTimes(mCurrentDay).get(mCurrentMovie);
         if (showTimes != null) {
             String showTimesStr = DataConverter.showTimesToString(showTimes);
             if (showTimesStr.length() != 0) {

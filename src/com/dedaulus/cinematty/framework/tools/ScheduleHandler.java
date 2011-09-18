@@ -34,6 +34,7 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String SHOWTIME_TAG              = "showtime";
     private static final String SHOWTIME_THEATER_ID_ATTR  = "theater_id";
     private static final String SHOWTIME_MOVIE_ID_ATTR    = "movie_id";
+    private static final String SHOWTIME_DAY_ATTR         = "day";
 
     private static final String PICTURES_FOLDER_TAG       = "pictures_folder";
     private static final String PICTURES_FOLDER_NAME_ATTR = "name";
@@ -60,6 +61,7 @@ public class ScheduleHandler extends DefaultHandler {
     private StringBuilder mBuffer;
     private Cinema mCurrentCinema;
     private Movie mCurrentMovie;
+    private int mCurrentDay;
 
     public void getSchedule(UniqueSortedList<Cinema> cinemas,
                             UniqueSortedList<Movie> movies,
@@ -141,6 +143,7 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
             mCurrentCinema = mCinemaIds.get(attributes.getValue(SHOWTIME_THEATER_ID_ATTR));
             mCurrentMovie = mMovieIds.get(attributes.getValue(SHOWTIME_MOVIE_ID_ATTR));
+            mCurrentDay = Integer.parseInt(attributes.getValue(SHOWTIME_DAY_ATTR));
         } else if (qName.equalsIgnoreCase(PICTURES_FOLDER_TAG)) {
             mPictureFolder = attributes.getValue(PICTURES_FOLDER_NAME_ATTR);
         } else if (qName.equalsIgnoreCase(POSTERS_TAG)) {
@@ -177,7 +180,7 @@ public class ScheduleHandler extends DefaultHandler {
             mCurrentMovie.setDescription(mBuffer.toString());
         }
         else if (qName.equalsIgnoreCase(SHOWTIME_TAG) && mBuffer.length() > 0) {
-            mCurrentCinema.addShowTime(mCurrentMovie, parseTimes(mBuffer.toString()));
+            mCurrentCinema.addShowTime(mCurrentMovie, parseTimes(mBuffer.toString(), mCurrentDay), mCurrentDay);
         }
 
         mBuffer.setLength(0);
@@ -224,7 +227,7 @@ public class ScheduleHandler extends DefaultHandler {
         } else return Integer.parseInt(time);
     }
 
-    private List<Calendar> parseTimes(String times) {
+    private List<Calendar> parseTimes(String times, int day) {
         List<Calendar> list = new UniqueSortedList<Calendar>(new DefaultComparator<Calendar>());
         StringTokenizer st = new StringTokenizer(times, ";");
 
@@ -241,12 +244,16 @@ public class ScheduleHandler extends DefaultHandler {
                 now.set(Calendar.HOUR_OF_DAY, hours);
                 now.set(Calendar.MINUTE, minutes);
 
-                if (hourNow < LAST_SHOWTIME_HOUR) {
-                    now.add(Calendar.DAY_OF_MONTH, -1);
-                }
+                if (day == 0) {
+                    if (hourNow < LAST_SHOWTIME_HOUR) {
+                        now.add(Calendar.DAY_OF_MONTH, -1);
+                    }
 
-                if (hours < LAST_SHOWTIME_HOUR) { /* holly fuck!*/
-                    now.add(Calendar.DAY_OF_MONTH, 1);
+                    if (hours < LAST_SHOWTIME_HOUR) { /* holly fuck!*/
+                        now.add(Calendar.DAY_OF_MONTH, 1);
+                    }
+                } else {
+                    now.add(Calendar.DAY_OF_MONTH, day);
                 }
 
                 list.add(now);
