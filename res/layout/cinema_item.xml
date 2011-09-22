@@ -10,16 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
-        android:clickable="true"
         android:paddingRight="6dp"
+        android:clickable="true"
         android:src="@android:drawable/btn_star_big_off"
         android:onClick="onCinemaFavIconClick"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/fav_icon_in_cinema_list">
 
         <TextView
@@ -29,7 +27,8 @@
         <RelativeLayout
             android:id="@+id/cinema_address_panel"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_below="@id/cinema_caption_in_cinema_list">
 
             <TextView
                 android:id="@+id/distance"
@@ -38,13 +37,13 @@
                 android:paddingLeft="2dp"/>
 
             <TextView
-                android:id="@+id/advanced_data_in_cinema_list"
+                android:id="@+id/cinema_address_in_cinema_list"
                 style="@style/ListItem.Data.CinemaAddress"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/distance"/>
 
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

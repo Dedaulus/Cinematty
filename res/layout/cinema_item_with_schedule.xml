@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:padding="6dp">
 
     <ImageView
-        android:id="@+id/fav_icon_in_schedule_list"
+        android:id="@+id/fav_icon_in_cinema_list"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
@@ -19,29 +18,40 @@
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:layout_toRightOf="@id/fav_icon_in_schedule_list">
+        android:layout_toRightOf="@id/fav_icon_in_cinema_list">
 
         <TextView
-            android:id="@+id/cinema_caption_in_schedule_list"
+            android:id="@+id/cinema_caption_in_cinema_list"
             style="@style/ListItem.Caption.Cinema"/>
 
-        <TextView
-            android:id="@+id/distance"
-            style="@style/ListItem.Data.CinemaDistance"
-            android:layout_below="@id/cinema_caption_in_schedule_list"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="4dp"/>
+        <RelativeLayout
+            android:id="@+id/cinema_address_panel"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/cinema_caption_in_cinema_list">
+
+            <TextView
+                android:id="@+id/distance"
+                style="@style/ListItem.Data.CinemaDistance"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="4dp"/>
+
+            <TextView
+                android:id="@+id/cinema_address_in_cinema_list"
+                style="@style/ListItem.Data.CinemaAddress"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/distance"/>
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/movie_schedule_in_schedule_list"
+            android:id="@+id/movie_schedule_in_cinema_list"
             style="@style/ListItem.Data.CinemaSchedule"
-            android:layout_below="@id/cinema_caption_in_schedule_list"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/distance"/>
+            android:layout_below="@id/cinema_address_panel"/>
 
         <TextView
-            android:id="@+id/time_left_in_schedule_list"
-            android:layout_below="@id/movie_schedule_in_schedule_list"
+            android:id="@+id/time_left_in_cinema_list"
+            android:layout_below="@id/movie_schedule_in_cinema_list"
             style="@style/ListItem.Data.MovieTimeLeft"/>
 
     </RelativeLayout>

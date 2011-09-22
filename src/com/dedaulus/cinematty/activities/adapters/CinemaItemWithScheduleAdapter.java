@@ -60,30 +60,38 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private void bindView(int position, View view) {
         Cinema cinema = mCinemas.get(position);
 
-        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_schedule_list);
+        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
             image.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
             image.setImageResource(android.R.drawable.btn_star_big_off);
         }
 
-        TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_schedule_list);
+        TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
         text.setText(cinema.getCaption());
 
-        text = (TextView)view.findViewById(R.id.distance);
-        Coordinate coordinate = cinema.getCoordinate();
-        if (coordinate != null && mCurrentLocation != null) {
-            float[] distance = new float[1];
-            Location.distanceBetween(coordinate.latitude, coordinate.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), distance);
-            int m = (int)distance[0];
-            text.setText(DataConverter.metersToDistance(mContext, m));
-            text.setVisibility(View.VISIBLE);
+        View addressPanel = view.findViewById(R.id.cinema_address_panel);
+        String address = cinema.getAddress();
+        if (address != null) {
+            text = (TextView)addressPanel.findViewById(R.id.cinema_address_in_cinema_list);
+            text.setText(address);
+
+            text = (TextView)addressPanel.findViewById(R.id.distance);
+            Coordinate coordinate = cinema.getCoordinate();
+            if (coordinate != null && mCurrentLocation != null) {
+                float[] distance = new float[1];
+                Location.distanceBetween(coordinate.latitude, coordinate.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), distance);
+                int m = (int)distance[0];
+                text.setText(DataConverter.metersToDistance(mContext, m));
+            }
+
+            addressPanel.setVisibility(View.VISIBLE);
         } else {
-            text.setVisibility(View.GONE);
+            addressPanel.setVisibility(View.GONE);
         }
 
-        TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_schedule_list);
-        TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_schedule_list);
+        TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_cinema_list);
+        TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_cinema_list);
 
         List<Calendar> showTimes = cinema.getShowTimes(mCurrentDay).get(mCurrentMovie);
         if (showTimes != null) {

@@ -72,11 +72,10 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         View addressPanel = view.findViewById(R.id.cinema_address_panel);
         String address = cinema.getAddress();
         if (address != null) {
-            text = (TextView)addressPanel.findViewById(R.id.advanced_data_in_cinema_list);
+            text = (TextView)addressPanel.findViewById(R.id.cinema_address_in_cinema_list);
             text.setText(address);
 
             text = (TextView)addressPanel.findViewById(R.id.distance);
-
             Coordinate coordinate = cinema.getCoordinate();
             if (coordinate != null && mCurrentLocation != null) {
                 float[] distance = new float[1];
