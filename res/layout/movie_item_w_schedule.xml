@@ -9,7 +9,8 @@
     <LinearLayout
         android:id="@+id/movie_list_icon_panel"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true">
 
         <RelativeLayout
             android:id="@+id/movie_list_icon_loading"
@@ -42,7 +43,8 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_toRightOf="@+id/movie_list_icon_panel">
+        android:layout_toRightOf="@+id/movie_list_icon_panel"
+        android:layout_centerVertical="true">
 
         <TextView
             android:id="@+id/movie_caption_in_movie_list"
