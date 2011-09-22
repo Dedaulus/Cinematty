@@ -117,8 +117,13 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(FAKE_STATE_ID);
-        super.onBackPressed();
+        if (getCurrentPage() == Constants.WHATS_NEW_SLIDE) {
+            mApp.removeState(FAKE_STATE_ID);
+            super.onBackPressed();
+        } else {
+            ViewPager slider = (ViewPager)findViewById(R.id.slider);
+            slider.setCurrentItem(Constants.WHATS_NEW_SLIDE);
+        }
     }
 
     @Override
