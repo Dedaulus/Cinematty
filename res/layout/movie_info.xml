@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:textSize="20dp"
-                        android:textColor="#FF4E00"/>
+                        android:textColor="##FF0000"/>
 
                     <TextView
                         android:id="@+id/movie_length"
