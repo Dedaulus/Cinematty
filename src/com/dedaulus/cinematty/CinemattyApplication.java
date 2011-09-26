@@ -51,7 +51,7 @@ public class CinemattyApplication extends Application {
 
     private Location mCurrentLocation;
 
-    private HashMap<String, ActivityState> mState = new HashMap<String, ActivityState>();
+    private HashMap<String, ActivityState> mState;
 
     private PictureRetriever mPictureRetriever = null;
     private static final String LOCAL_PICTURES_FOLDER = "pictures";
@@ -161,6 +161,7 @@ public class CinemattyApplication extends Application {
         if (useLocalOnly) {
             mIsDataActual = restoreData();
         } else {
+            mState = new HashMap<String, ActivityState>();
             mIsDataActual = true;
         }
 
