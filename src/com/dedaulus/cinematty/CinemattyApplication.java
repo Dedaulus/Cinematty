@@ -124,7 +124,7 @@ public class CinemattyApplication extends Application {
     }
 
     public void restart() {
-        mState.clear();
+        if (mState != null) mState.clear();
         Intent intent = new Intent(this, StartupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
