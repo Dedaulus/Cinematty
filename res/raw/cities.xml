@@ -9,9 +9,9 @@
 		<city id="6" name="Калининград" file="kalinigrad_schedule.xml"/>
 		<city id="7" name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>		
 		<city id="8" name="Новосибирск" file="novosibirsk_schedule.xml"/>
-		<city id="9" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>
+		<!--<city id="9" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>-->
 		<city id="10" name="Самара" file="samara_schedule.xml"/>
-		<city id="11" name="Уфа" file="ufa_schedule.xml"/>		
+		<!--<city id="11" name="Уфа" file="ufa_schedule.xml"/>-->
 		<city id="12" name="Челябинск" file="chelyabinsk_schedule.xml"/>
 		
 	</cities>
