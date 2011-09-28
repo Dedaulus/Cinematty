@@ -282,29 +282,32 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
                 String from = getRemotePicturePath(picId, pictureType);
                 File to = getLocalPicturePath(picId, pictureType);
 
-                if (downloadPicture(from, to)) {
-                    Bitmap picture = null;
-                    if (pictureType == PictureType.ORIGINAL_WITH_URL
-                            || pictureType == PictureType.LIST_BIG
-                            || pictureType == PictureType.LIST_MEDIUM
-                            || pictureType == PictureType.LIST_SMALL) {
-                        picture = loadPicture(picId, pictureType);
-                    }
-
-                    if (pictureType == PictureType.ORIGINAL_WITH_URL) {
-                        picId = getPicIdFromFullPath(picId);
-                    }
-
-                    synchronized (mReadyPictures) {
-                        mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
-                    }
-
+                if (hasPicture(picId, pictureType)) {
                     if (receiver != null) {
                         receiver.onPictureReceive(picId, pictureType, true);
                     }
                 } else {
+                    boolean downloaded = downloadPicture(from, to);
+                    if (downloaded) {
+                        Bitmap picture = null;
+                        if (pictureType == PictureType.ORIGINAL_WITH_URL
+                                || pictureType == PictureType.LIST_BIG
+                                || pictureType == PictureType.LIST_MEDIUM
+                                || pictureType == PictureType.LIST_SMALL) {
+                            picture = loadPicture(picId, pictureType);
+                        }
+
+                        if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+                            picId = getPicIdFromFullPath(picId);
+                        }
+
+                        synchronized (mReadyPictures) {
+                            mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
+                        }
+                    }
+
                     if (receiver != null) {
-                        receiver.onPictureReceive(picId, pictureType, false);
+                        receiver.onPictureReceive(picId, pictureType, downloaded);
                     }
                 }
             }
