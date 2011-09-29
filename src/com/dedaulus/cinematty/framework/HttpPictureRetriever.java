@@ -73,7 +73,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
     public boolean hasPicture(String picId, int pictureType) {
         synchronized (mReadyPictures) {
-            return mReadyPictures.contains(new Pair<String, Integer>(picId, pictureType));
+            return mReadyPictures.contains(new PictureWrapper(picId, pictureType, null));
         }
     }
 
