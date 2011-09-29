@@ -72,6 +72,10 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public boolean hasPicture(String picId, int pictureType) {
+        if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+            picId = getPicIdFromFullPath(picId);
+        }
+
         synchronized (mReadyPictures) {
             return mReadyPictures.contains(new PictureWrapper(picId, pictureType, null));
         }
@@ -276,8 +280,13 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
                 }
             } else {
                 String picId = task.first.first;
+                String internalPicId = picId;
                 int pictureType = task.first.second;
                 PictureReceiver receiver = task.second;
+
+                if (pictureType == PictureType.ORIGINAL_WITH_URL) {
+                    internalPicId = getPicIdFromFullPath(picId);
+                }
 
                 String from = getRemotePicturePath(picId, pictureType);
                 File to = getLocalPicturePath(picId, pictureType);
@@ -297,12 +306,8 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
                             picture = loadPicture(picId, pictureType);
                         }
 
-                        if (pictureType == PictureType.ORIGINAL_WITH_URL) {
-                            picId = getPicIdFromFullPath(picId);
-                        }
-
                         synchronized (mReadyPictures) {
-                            mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
+                            mReadyPictures.add(new PictureWrapper(internalPicId, pictureType, picture));
                         }
                     }
 
