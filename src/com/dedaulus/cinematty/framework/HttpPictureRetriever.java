@@ -135,12 +135,12 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
     public Bitmap downloadPicture(String remotePicturePath) {
         String picId = getPicIdFromFullPath(remotePicturePath);
-        Bitmap picture = loadPicture(picId, PictureType.ORIGINAL);
+        Bitmap picture = loadPicture(picId, PictureType.ORIGINAL_WITH_URL);
         if (picture != null) return picture;
 
-        File to = getLocalPicturePath(picId, PictureType.ORIGINAL);
+        File to = getLocalPicturePath(picId, PictureType.ORIGINAL_WITH_URL);
         if (downloadPicture(remotePicturePath, to)) {
-            picture = loadPicture(picId, PictureType.ORIGINAL);
+            picture = loadPicture(picId, PictureType.ORIGINAL_WITH_URL);
             synchronized (mReadyPictures) {
                 mReadyPictures.add(new PictureWrapper(picId, PictureType.ORIGINAL_WITH_URL, picture));
             }
@@ -167,8 +167,9 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             Bitmap picture = null;
             if (pictureType == PictureType.LIST_BIG
                     || pictureType == PictureType.LIST_MEDIUM
-                    || pictureType == PictureType.LIST_SMALL) {
-                picture = loadPicture(picId, pictureType);
+                    || pictureType == PictureType.LIST_SMALL
+                    || pictureType == PictureType.ORIGINAL_WITH_URL) {
+                picture = loadPicture(name);
             }
 
             mReadyPictures.add(new PictureWrapper(picId, pictureType, picture));
@@ -176,9 +177,10 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     private int postfixToPictureType(String postfix) {
-        if (postfix.compareTo("h") == 0)      return PictureType.LIST_BIG;
-        else if (postfix.compareTo("m") == 0) return PictureType.LIST_MEDIUM;
-        else if (postfix.compareTo("l") == 0) return PictureType.LIST_SMALL;
+        if (postfix.compareTo("h") == 0)        return PictureType.LIST_BIG;
+        else if (postfix.compareTo("m") == 0)   return PictureType.LIST_MEDIUM;
+        else if (postfix.compareTo("s") == 0)   return PictureType.LIST_SMALL;
+        else if (postfix.compareTo("owu") == 0) return PictureType.ORIGINAL_WITH_URL;
         else return PictureType.ORIGINAL;
     }
 
@@ -194,8 +196,10 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         case PictureType.LIST_BIG:
             postfix = "h";
             break;
-        case PictureType.ORIGINAL:
         case PictureType.ORIGINAL_WITH_URL:
+            postfix = "owu";
+            break;
+        case PictureType.ORIGINAL:
         default:
             postfix = "";
             break;
@@ -263,6 +267,15 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         }
     }
 
+    private Bitmap loadPicture(String fileName) {
+        try {
+            InputStream is = new FileInputStream(new File(mContext.getCacheDir(), fileName));
+            return BitmapFactory.decodeStream(is);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+
     public void run() {
         while (true) {
             Pair<Pair<String, Integer>, PictureReceiver> task = null;
@@ -320,6 +333,9 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     private String getPicIdFromFullPath(String fullPath) {
-        return fullPath.substring(fullPath.lastIndexOf("/") + 1, fullPath.lastIndexOf("."));
+        int slashPos = fullPath.lastIndexOf("/");
+        if (slashPos == -1) return fullPath;
+
+        return fullPath.substring(slashPos + 1, fullPath.lastIndexOf("."));
     }
 }
