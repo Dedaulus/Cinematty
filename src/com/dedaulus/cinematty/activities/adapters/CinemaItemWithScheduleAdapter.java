@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
@@ -93,6 +94,8 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_cinema_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_cinema_list);
 
+        boolean isShowTimeLeft = mCurrentDay == Constants.TODAY_SCHEDULE;
+
         List<Calendar> showTimes = cinema.getShowTimes(mCurrentDay).get(mCurrentMovie);
         if (showTimes != null) {
             String showTimesStr = DataConverter.showTimesToString(showTimes);
@@ -102,11 +105,15 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             } else {
                 scheduleView.setVisibility(View.GONE);
             }
-            SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
-            timeLeftView.setText(timeLeftString);
+            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
+                timeLeftView.setText(timeLeftString);
+            } else {
+                timeLeftView.setVisibility(View.GONE);
+            }
         } else {
             scheduleView.setVisibility(View.GONE);
-            timeLeftView.setText(mContext.getString(R.string.no_schedule));
+            timeLeftView.setVisibility(View.GONE);
         }
     }
 

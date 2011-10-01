@@ -13,10 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.*;
-import com.dedaulus.cinematty.framework.tools.DataConverter;
-import com.dedaulus.cinematty.framework.tools.MoviePictureReceiver;
-import com.dedaulus.cinematty.framework.tools.OnPictureReceiveAction;
-import com.dedaulus.cinematty.framework.tools.PictureType;
+import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -131,11 +128,15 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             } else {
                 scheduleView.setVisibility(View.GONE);
             }
-            SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
-            timeLeftView.setText(timeLeftString);
+            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
+                timeLeftView.setText(timeLeftString);
+            } else {
+                timeLeftView.setVisibility(View.GONE);
+            }
         } else {
             scheduleView.setVisibility(View.GONE);
-            timeLeftView.setText(mContext.getString(R.string.no_schedule));
+            timeLeftView.setVisibility(View.GONE);
         }
     }
 
