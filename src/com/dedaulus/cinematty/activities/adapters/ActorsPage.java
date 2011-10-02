@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -83,6 +82,7 @@ public class ActorsPage implements SliderPage {
                 onActorItemClick(adapterView, view, i, l);
             }
         });
+
         mBinded = true;
         onResume();
 
@@ -101,24 +101,6 @@ public class ActorsPage implements SliderPage {
             Intent intent = new Intent(mContext, MovieListActivity.class);
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             mContext.startActivity(intent);
-        }
-    }
-
-    public void onActorFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption = (TextView)parent.findViewById(R.id.actor_caption_in_actor_list);
-
-        int actorId = mApp.getActors().indexOf(new MovieActor(caption.getText().toString()));
-        if (actorId != -1) {
-            MovieActor actor = mApp.getActors().get(actorId);
-
-            if (actor.getFavourite() > 0) {
-                actor.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                actor.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
         }
     }
 }
