@@ -49,6 +49,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="NewQuickAction3D" exported="" />
   </component>
 </module>
 

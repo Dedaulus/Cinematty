@@ -50,8 +50,15 @@
     <string name="m">м</string>
     <string name="inf">∞</string>
 
+    <string name="google">Google</string>
+    <string name="yandex">Яндекс</string>
+    <string name="wiki">Википедия</string>
+
     <string name="cities_file">cities.xml</string>
     <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
     <string name="image_search_url">http://www.google.com/m/search?site=images&amp;q=кадры из фильма</string>
+    <string name="google_search_url">http://www.google.com/m/search?&amp;q=</string>
+    <string name="wiki_search_url">http://ru.m.wikipedia.org/w/index.php?title=Служебная%3ASearch&amp;search=</string>
+    <string name="yandex_search_url">http://yandex.ru/touchsearch?text=</string>
 </resources>
