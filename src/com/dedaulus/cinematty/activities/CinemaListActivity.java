@@ -143,10 +143,23 @@ public class CinemaListActivity extends Activity implements LocationClient {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.cinema_list_menu, menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
 
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.home_menu, menu);
+
+        if (mState.activityType == ActivityState.CINEMA_LIST_W_MOVIE) {
+            inflater.inflate(R.menu.select_day_menu, menu);
+            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
+            } else {
+                menu.findItem(R.id.menu_day).setTitle(R.string.today);
+            }
+        }
+
+        inflater.inflate(R.menu.cinema_sort_menu, menu);
         switch (mApp.getCinemaSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
@@ -164,12 +177,23 @@ public class CinemaListActivity extends Activity implements LocationClient {
             break;
         }
 
+        inflater.inflate(R.menu.about_menu, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case R.id.menu_home:
+            mApp.goHome(this);
+            return true;
+
+        case R.id.menu_day:
+            setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+            return true;
+
         case R.id.menu_cinema_sort:
             return true;
 
@@ -200,7 +224,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_menu, menu);
+        inflater.inflate(R.menu.select_day_submenu, menu);
     }
 
     @Override
@@ -282,7 +306,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     }
 
     public void onHomeButtonClick(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+        mApp.goHome(this);
     }
 
     public void onDayButtonClick(View view) {

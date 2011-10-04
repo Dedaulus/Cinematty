@@ -46,6 +46,11 @@
     <string name="sort_by_distance">По ближайшим</string>
     <string name="sort_by_popular">По популярности</string>
 
+    <string name="menu_about">О программе</string>
+    <string name="menu_home">Домой</string>
+    <string name="menu_call">Бронировать</string>
+    <string name="menu_show_map">На карте</string>
+
     <string name="km">км</string>
     <string name="m">м</string>
     <string name="inf">∞</string>

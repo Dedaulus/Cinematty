@@ -62,7 +62,7 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = ((Activity)mContext).getMenuInflater();
-        inflater.inflate(R.menu.cinema_list_menu, menu);
+        inflater.inflate(R.menu.cinema_sort_menu, menu);
 
         switch (mApp.getCinemaSortOrder()) {
         case BY_CAPTION:

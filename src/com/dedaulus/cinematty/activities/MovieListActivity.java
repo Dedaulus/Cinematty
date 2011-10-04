@@ -158,10 +158,31 @@ public class MovieListActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.movie_list_menu, menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
 
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.home_menu, menu);
+
+        if (mState.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
+            if (mState.cinema.getPhone() != null) {
+                inflater.inflate(R.menu.call_menu, menu);
+            }
+
+            if (mState.cinema.getAddress() != null) {
+                inflater.inflate(R.menu.show_map_menu, menu);
+            }
+
+            inflater.inflate(R.menu.select_day_menu, menu);
+            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
+            } else {
+                menu.findItem(R.id.menu_day).setTitle(R.string.today);
+            }
+        }
+
+        inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (mApp.getMovieSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
@@ -175,12 +196,32 @@ public class MovieListActivity extends Activity {
             break;
         }
 
+        inflater.inflate(R.menu.about_menu, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case R.id.menu_home:
+            mApp.goHome(this);
+            return true;
+
+        case R.id.menu_call:
+            onCinemaPhoneClick(null);
+            return true;
+
+        case R.id.menu_show_map:
+            onCinemaAddressClick(null);
+            return true;
+
+        case R.id.menu_day:
+            int day = mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
+            setCurrentDay(day);
+            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), day));
+            return true;
+
         case R.id.menu_movie_sort:
             return true;
 
@@ -205,7 +246,7 @@ public class MovieListActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_menu, menu);
+        inflater.inflate(R.menu.select_day_submenu, menu);
     }
 
     @Override
@@ -227,17 +268,6 @@ public class MovieListActivity extends Activity {
         default:
             return super.onContextItemSelected(item);
         }
-    }
-
-    private void onCinemaClick(View view) {
-        String cookie = UUID.randomUUID().toString();
-        ActivityState state = mState.clone();
-        state.activityType = ActivityState.CINEMA_INFO;
-        mApp.setState(cookie, state);
-
-        Intent intent = new Intent(this, CinemaActivity.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        startActivity(intent);
     }
 
     private void onMovieItemClick(View view) {
@@ -262,7 +292,7 @@ public class MovieListActivity extends Activity {
     }
 
     public void onHomeButtonClick(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+        mApp.goHome(this);
     }
 
     public void onDayButtonClick(View view) {

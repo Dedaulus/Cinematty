@@ -3,11 +3,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/submenu_select_day_today"
-        android:title="@string/today"/>
-
-    <item
-        android:id="@+id/submenu_select_day_tomorrow"
-        android:title="@string/tomorrow"/>
+        android:id="@+id/menu_day"
+        android:title="@string/today"
+        android:icon="@drawable/ic_menu_today"/>
 
 </menu>

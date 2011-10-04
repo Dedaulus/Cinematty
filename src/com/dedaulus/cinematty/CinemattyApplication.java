@@ -1,6 +1,7 @@
 package com.dedaulus.cinematty;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
@@ -8,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.dedaulus.cinematty.activities.MainActivity;
 import com.dedaulus.cinematty.activities.StartupActivity;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
@@ -398,5 +400,13 @@ public class CinemattyApplication extends Application {
         locationManager.removeUpdates(mLocationListener);
 
         mLocationListenStarted = false;
+    }
+
+    public void goHome(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
+
+    public void showAbout() {
+
     }
 }

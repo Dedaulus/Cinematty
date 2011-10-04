@@ -61,7 +61,7 @@ public class MoviesPage implements SliderPage {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = ((Activity)mContext).getMenuInflater();
-        inflater.inflate(R.menu.movie_list_menu, menu);
+        inflater.inflate(R.menu.movie_sort_menu, menu);
 
         switch (mApp.getMovieSortOrder()) {
         case BY_CAPTION:

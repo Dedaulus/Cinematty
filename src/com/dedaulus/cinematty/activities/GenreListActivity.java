@@ -3,6 +3,9 @@ package com.dedaulus.cinematty.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -78,6 +81,29 @@ public class GenreListActivity extends Activity {
         mApp.removeState(mStateId);
 
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.home_menu, menu);
+
+        inflater.inflate(R.menu.about_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_home:
+            mApp.goHome(this);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
@@ -134,7 +135,13 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        return mPages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+
+        mPages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.about_menu, menu);
+
+        return true;
     }
 
     @Override

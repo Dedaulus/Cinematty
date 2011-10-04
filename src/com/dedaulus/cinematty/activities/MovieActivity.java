@@ -7,10 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -120,10 +117,58 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.home_menu, menu);
+
+        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
+            if (mState.cinema.getPhone() != null) {
+                inflater.inflate(R.menu.call_menu, menu);
+            }
+
+            inflater.inflate(R.menu.select_day_menu, menu);
+            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
+            } else {
+                menu.findItem(R.id.menu_day).setTitle(R.string.today);
+            }
+        }
+
+        inflater.inflate(R.menu.about_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_home:
+            mApp.goHome(this);
+            return true;
+
+        case R.id.menu_call:
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:+7" + mState.cinema.getPlainPhone()));
+            startActivity(intent);
+            return true;
+
+        case R.id.menu_day:
+            setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            return true;
+
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_menu, menu);
+        inflater.inflate(R.menu.select_day_submenu, menu);
     }
 
     @Override
@@ -288,7 +333,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onHomeButtonClick(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+        mApp.goHome(this);
     }
 
     public void onDayButtonClick(View view) {
