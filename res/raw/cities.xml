@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 	<cities>
-		<city id="1" name="Москва" file="moscow_schedule.xml"/>
-		<city id="2" name="Санкт-Петербург" file="spb_schedule.xml"/>
-		<city id="3" name="Волгоград" file="volgograd_schedule.xml"/>
-		<city id="4" name="Екатеринбург" file="ekaterinburg_schedule.xml"/>
-		<city id="5" name="Казань" file="kazan_schedule.xml"/>
-		<city id="6" name="Калининград" file="kalinigrad_schedule.xml"/>
-		<city id="7" name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>		
-		<city id="8" name="Новосибирск" file="novosibirsk_schedule.xml"/>
-		<!--<city id="9" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>-->
-		<city id="10" name="Самара" file="samara_schedule.xml"/>
-		<!--<city id="11" name="Уфа" file="ufa_schedule.xml"/>-->
-		<city id="12" name="Челябинск" file="chelyabinsk_schedule.xml"/>
+		<city id="1"  name="Москва" file="moscow_schedule.xml"/>
+		<city id="2"  name="Санкт-Петербург" file="spb_schedule.xml"/>
+		<city id="3"  name="Волгоград" file="volgograd_schedule.xml"/>
+        <city id="4"  name="Воронеж" file="voronej_schedule.xml"/>
+		<city id="5"  name="Екатеринбург" file="ekaterinburg_schedule.xml"/>
+		<city id="6"  name="Казань" file="kazan_schedule.xml"/>
+		<city id="7"  name="Калининград" file="kalinigrad_schedule.xml"/>
+        <city id="8"  name="Липецк" file="lipeck_schedule.xml"/>
+		<city id="9"  name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>
+		<city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
+        <city id="11" name="Пермь" file="perm_schedule.xml"/>
+        <city id="12" name="Петрозаводск" file="petrozavodsk_schedule.xml"/>
+		<!--<city id="13" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>-->
+		<city id="13" name="Самара" file="samara_schedule.xml"/>
+        <city id="14" name="Тула" file="tula_schedule.xml"/>
+		<!--<city id="15" name="Уфа" file="ufa_schedule.xml"/>-->
+		<city id="15" name="Челябинск" file="chelyabinsk_schedule.xml"/>
 		
 	</cities>
 </data>
