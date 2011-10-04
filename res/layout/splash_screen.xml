@@ -39,15 +39,25 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/loading_schedules"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
+        android:id="@+id/loading_schedule_panel"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true">
 
-        <RelativeLayout
-            android:id="@+id/loading_schedule_panel"
+        <ImageView
+            android:id="@+id/splash_icon"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_centerInParent="true">
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/splash"/>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/splash_icon">
 
             <ProgressBar
                  android:id="@+id/loading_schedules_progress"
@@ -67,16 +77,6 @@
                 android:text="@string/loading_schedule"/>
 
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/current_city"
-            android:paddingBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@id/loading_schedule_panel"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="#FF4E00"
-            android:textSize="26dp"/>
 
     </RelativeLayout>
 
