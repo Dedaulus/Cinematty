@@ -285,6 +285,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int movie_data_divider=0x7f02001f;
         public static final int picture_border=0x7f020020;
         public static final int popup=0x7f020021;
+        public static final int splash=0x7f020022;
     }
     public static final class id {
         public static final int actor_caption_in_actor_list=0x7f060007;
@@ -320,7 +321,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int city_caption_in_city_list=0x7f060031;
         public static final int city_checked_icon=0x7f060032;
         public static final int city_list=0x7f060033;
-        public static final int current_city=0x7f060064;
         public static final int distance=0x7f060026;
         public static final int error_message=0x7f06005f;
         public static final int error_string=0x7f060060;
@@ -334,17 +334,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int indicator=0x7f060037;
         public static final int iv_icon=0x7f060003;
         public static final int loading_error_panel=0x7f06005e;
-        public static final int loading_schedule_panel=0x7f060062;
-        public static final int loading_schedules=0x7f060061;
+        public static final int loading_schedule_panel=0x7f060061;
         public static final int loading_schedules_progress=0x7f060063;
         public static final int map_ico=0x7f06001d;
-        public static final int menu_about=0x7f060066;
-        public static final int menu_call=0x7f060067;
-        public static final int menu_cinema_sort=0x7f060068;
-        public static final int menu_day=0x7f060070;
-        public static final int menu_home=0x7f06006c;
-        public static final int menu_movie_sort=0x7f06006d;
-        public static final int menu_show_map=0x7f060073;
+        public static final int menu_about=0x7f060065;
+        public static final int menu_call=0x7f060066;
+        public static final int menu_cinema_sort=0x7f060067;
+        public static final int menu_day=0x7f06006f;
+        public static final int menu_home=0x7f06006b;
+        public static final int menu_movie_sort=0x7f06006c;
+        public static final int menu_show_map=0x7f060072;
         public static final int more_icon_in_actor_list=0x7f060006;
         public static final int movie_actor_in_movie_list=0x7f060050;
         public static final int movie_actors=0x7f060048;
@@ -386,13 +385,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int select_cinema_ico=0x7f060058;
         public static final int select_city_panel=0x7f06000c;
         public static final int slider=0x7f060038;
-        public static final int submenu_cinema_sort_by_caption=0x7f060069;
-        public static final int submenu_cinema_sort_by_distance=0x7f06006b;
-        public static final int submenu_cinema_sort_by_favourite=0x7f06006a;
-        public static final int submenu_movie_sort_by_caption=0x7f06006e;
-        public static final int submenu_movie_sort_by_popular=0x7f06006f;
-        public static final int submenu_select_day_today=0x7f060071;
-        public static final int submenu_select_day_tomorrow=0x7f060072;
+        public static final int splash_icon=0x7f060062;
+        public static final int submenu_cinema_sort_by_caption=0x7f060068;
+        public static final int submenu_cinema_sort_by_distance=0x7f06006a;
+        public static final int submenu_cinema_sort_by_favourite=0x7f060069;
+        public static final int submenu_movie_sort_by_caption=0x7f06006d;
+        public static final int submenu_movie_sort_by_popular=0x7f06006e;
+        public static final int submenu_select_day_today=0x7f060070;
+        public static final int submenu_select_day_tomorrow=0x7f060071;
         public static final int time_left_in_cinema_list=0x7f060029;
         public static final int time_left_in_movie_list=0x7f060052;
         public static final int titlebar_caption=0x7f06002b;
@@ -400,7 +400,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int triangle=0x7f060001;
         public static final int tv_title=0x7f060004;
         public static final int underline=0x7f060002;
-        public static final int whats_new_grid=0x7f060065;
+        public static final int whats_new_grid=0x7f060064;
         public static final int whats_new_ico=0x7f06000f;
         public static final int whats_new_panel=0x7f06000e;
     }
