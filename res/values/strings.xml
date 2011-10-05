@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ГдеКИНО</string>
+    <string name="app_version">0.99.5</string>
+    <string name="copyright">© 2011, Dedaulus, Donytar, Mamont</string>
+    <string name="email">dedaulus@gmail.com</string>
+    <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
+    <string name="icons_url">yankoa.deviantart.com</string>
 
     <string name="loading_schedule">Загружается расписание...</string>
     <string name="loading_cities">Загружается список городов...</string>
@@ -16,6 +21,7 @@
     <string name="movie_caption">Фильм</string>
     <string name="actors_caption">Актёры</string>
     <string name="genres_caption">Жанры</string>
+    <string name="about_caption">О программе</string>
     <string name="wait_dialog_caption">Синхронизация</string>
     <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
 

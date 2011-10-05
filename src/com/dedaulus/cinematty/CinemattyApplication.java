@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.dedaulus.cinematty.activities.AboutActivity;
 import com.dedaulus.cinematty.activities.MainActivity;
 import com.dedaulus.cinematty.activities.StartupActivity;
 import com.dedaulus.cinematty.framework.*;
@@ -406,7 +407,7 @@ public class CinemattyApplication extends Application {
         context.startActivity(new Intent(context, MainActivity.class));
     }
 
-    public void showAbout() {
-
+    public void showAbout(Context context) {
+        context.startActivity(new Intent(context, AboutActivity.class));
     }
 }

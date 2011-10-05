@@ -146,7 +146,14 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mPages.get(getCurrentPage()).onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+        case R.id.menu_about:
+            mApp.showAbout(this);
+            return true;
+
+        default:
+            return mPages.get(getCurrentPage()).onOptionsItemSelected(item);
+        }
     }
 
     public void onPageScrolled(int i, float v, int i1) {}

@@ -215,6 +215,10 @@ public class CinemaListActivity extends Activity implements LocationClient {
             item.setChecked(true);
             return true;
 
+        case R.id.menu_about:
+            mApp.showAbout(this);
+            return true;
+
         default:
             return super.onOptionsItemSelected(item);
         }

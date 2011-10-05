@@ -3,12 +3,15 @@
       package="com.dedaulus.cinematty"
       android:installLocation="auto"
       android:versionCode="6"
-      android:versionName="0.99.5">
-    <application android:name="CinemattyApplication" android:label="@string/app_name" android:icon="@drawable/icon">
+      android:versionName="@string/app_version">
+
+    <application
+        android:name="CinemattyApplication"
+        android:label="@string/app_name"
+        android:icon="@drawable/icon">
 
         <activity
             android:name=".activities.StartupActivity"
-            android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -19,38 +22,35 @@
 
         <activity
             android:name=".activities.CinemaListActivity"
-            android:label="Кинотеатры"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.MovieListActivity"
-            android:label="Фильмы"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.MovieActivity"
-            android:label="Фильм"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.ActorListActivity"
-            android:label="Актёры"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.GenreListActivity"
-            android:label="Жанры"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.MainActivity"
-            android:label="ГдеКИНО"
             android:theme="@android:style/Theme.NoTitleBar"
             android:launchMode="singleTask"/>
 
         <activity
             android:name=".activities.CityListActivity"
-            android:label="Города"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.AboutActivity"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
     </application>

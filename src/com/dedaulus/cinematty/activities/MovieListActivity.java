@@ -166,12 +166,12 @@ public class MovieListActivity extends Activity {
         inflater.inflate(R.menu.home_menu, menu);
 
         if (mState.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
-            if (mState.cinema.getPhone() != null) {
-                inflater.inflate(R.menu.call_menu, menu);
-            }
-
             if (mState.cinema.getAddress() != null) {
                 inflater.inflate(R.menu.show_map_menu, menu);
+            }
+
+            if (mState.cinema.getPhone() != null) {
+                inflater.inflate(R.menu.call_menu, menu);
             }
 
             inflater.inflate(R.menu.select_day_menu, menu);
@@ -235,6 +235,10 @@ public class MovieListActivity extends Activity {
             mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
+            return true;
+
+        case R.id.menu_about:
+            mApp.showAbout(this);
             return true;
 
         default:

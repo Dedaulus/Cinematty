@@ -159,6 +159,10 @@ public class MovieActivity extends Activity implements PictureReceiver {
             setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
             return true;
 
+        case R.id.menu_about:
+            mApp.showAbout(this);
+            return true;
+
         default:
             return super.onOptionsItemSelected(item);
         }

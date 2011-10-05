@@ -101,6 +101,10 @@ public class GenreListActivity extends Activity {
             mApp.goHome(this);
             return true;
 
+        case R.id.menu_about:
+            mApp.showAbout(this);
+            return true;
+
         default:
             return super.onOptionsItemSelected(item);
         }
