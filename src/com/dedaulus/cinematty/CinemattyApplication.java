@@ -1,5 +1,6 @@
 package com.dedaulus.cinematty;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -57,15 +58,18 @@ public class CinemattyApplication extends Application {
     private HashMap<String, ActivityState> mState;
 
     private PictureRetriever mPictureRetriever = null;
-    private static final String LOCAL_PICTURES_FOLDER = "pictures";
+    private static final String LOCAL_PICTURES_FOLDER  = "pictures";
 
-    private static final String FAV_CINEMAS_FILE = "cinematty_fav_cinemas";
-    private static final String FAV_ACTORS_FILE = "cinematty_fav_actors";
-    private static final String PREFERENCES_FILE = "cinematty_preferences";
+    private static final String FAV_CINEMAS_FILE       = "cinematty_fav_cinemas";
+    private static final String FAV_ACTORS_FILE        = "cinematty_fav_actors";
+
+    private static final String PREFERENCES_FILE       = "cinematty_preferences";
     private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
-    private static final String PREF_MOVIE_SORT_ORDER = "movie_sort_order";
-    private static final String PREF_CURRENT_CITY = "current_city";
-    private static final String DUMP_FILE = "dump_state.xml";
+    private static final String PREF_MOVIE_SORT_ORDER  = "movie_sort_order";
+    private static final String PREF_CURRENT_CITY      = "current_city";
+    private static final String PREF_CURRENT_VERSION   = "current_version";
+
+    private static final String DUMP_FILE              = "dump_state.xml";
 
     private boolean mIsDataActual = false;
 
@@ -409,5 +413,30 @@ public class CinemattyApplication extends Application {
 
     public void showAbout(Context context) {
         context.startActivity(new Intent(context, AboutActivity.class));
+    }
+
+    public void showWhatsNewIfNeeded(Context context) {
+        SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+        int lastVersion = preferences.getInt(PREF_CURRENT_VERSION, -1);
+        int currentVersion = Integer.parseInt(getString(R.string.app_version_code));
+
+        if (lastVersion == -1) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(PREF_CURRENT_VERSION, currentVersion);
+            editor.commit();
+        } else if (lastVersion < currentVersion) {
+            String text = getString(R.string.new_version).replaceAll(";", "\n");
+            if (text.length() != 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.new_version_caption);
+                builder.setMessage(text);
+                builder.create();
+                builder.show();
+            }
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(PREF_CURRENT_VERSION, currentVersion);
+            editor.commit();
+        }
     }
 }

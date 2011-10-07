@@ -84,6 +84,8 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         pageChangeListenerProxy.addListener(indicator);
         pageChangeListenerProxy.addListener(this);
         slider.setOnPageChangeListener(pageChangeListenerProxy);
+
+        mApp.showWhatsNewIfNeeded(this);
     }
 
     @Override
