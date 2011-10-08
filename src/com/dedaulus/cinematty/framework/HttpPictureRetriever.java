@@ -48,17 +48,16 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
     private static final int APROX_PICS_COUNT = 80; // This is a nearly count of moscow movies at once
 
-    Context mContext;
-    String mRemotePictureFolder;
-    String mLocalPictureFolder;
+    private Context mContext;
+    private String mRemotePictureFolder;
+    private String mLocalPictureFolder;
 
-    Queue<Pair<Pair<String, Integer>, PictureReceiver>> mTaskQueue = new LinkedList<Pair<Pair<String, Integer>, PictureReceiver>>();
-    List<PictureWrapper> mReadyPictures = new UniqueSortedList<PictureWrapper>(APROX_PICS_COUNT, new DefaultComparator<PictureWrapper>());
+    private Queue<Pair<Pair<String, Integer>, PictureReceiver>> mTaskQueue = new LinkedList<Pair<Pair<String, Integer>, PictureReceiver>>();
+    private List<PictureWrapper> mReadyPictures = new UniqueSortedList<PictureWrapper>(APROX_PICS_COUNT, new DefaultComparator<PictureWrapper>());
 
-    public HttpPictureRetriever(Context context, String remotePictureFolder, String localPictureFolder) {
+    public HttpPictureRetriever(Context context, String remotePictureFolder) {
         mContext = context;
         mRemotePictureFolder = remotePictureFolder;
-        mLocalPictureFolder = localPictureFolder;
 
         restoreState();
 

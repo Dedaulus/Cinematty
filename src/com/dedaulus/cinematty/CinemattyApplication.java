@@ -58,7 +58,6 @@ public class CinemattyApplication extends Application {
     private HashMap<String, ActivityState> mState;
 
     private PictureRetriever mPictureRetriever = null;
-    private static final String LOCAL_PICTURES_FOLDER  = "pictures";
 
     private static final String FAV_CINEMAS_FILE       = "cinematty_fav_cinemas";
     private static final String FAV_ACTORS_FILE        = "cinematty_fav_actors";
@@ -144,7 +143,7 @@ public class CinemattyApplication extends Application {
 
         String remotePictureFolder = getString(R.string.settings_url) + "/" + pictureFolder.toString();
         if (mPictureRetriever == null) {
-            mPictureRetriever = new HttpPictureRetriever(this, remotePictureFolder, LOCAL_PICTURES_FOLDER);
+            mPictureRetriever = new HttpPictureRetriever(this, remotePictureFolder);
         } else {
             mPictureRetriever.setRemotePictureFolder(remotePictureFolder);
         }
