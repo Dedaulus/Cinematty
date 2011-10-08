@@ -143,20 +143,19 @@ public class ActorListActivity extends Activity {
     }
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
-        String caption = textView.getText().toString();
-        int actorId = mApp.getActors().indexOf(new MovieActor(caption));
-        if (actorId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = mState.clone();
-            state.actor = mApp.getActors().get(actorId);
-            state.activityType = ActivityState.MOVIE_LIST_W_ACTOR;
-            mApp.setState(cookie, state);
+        ActorItemAdapter adapter = (ActorItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        MovieActor actor = (MovieActor)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
+        ActivityState state = mState.clone();
+        state.actor = actor;
+        state.activityType = ActivityState.MOVIE_LIST_W_ACTOR;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 
     public void onHomeButtonClick(View view) {

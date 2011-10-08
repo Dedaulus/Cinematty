@@ -7,10 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
@@ -109,11 +106,19 @@ public class MovieListActivity extends Activity {
             throw new RuntimeException("ActivityType error");
         }
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onMovieItemClick(view);
-            }
-        });
+        if (mState.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    onScheduleItemClick(adapterView, view, i, l);
+                }
+            });
+        } else {
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    onMovieItemClick(adapterView, view, i, l);
+                }
+            });
+        }
     }
 
     private void changeTitleBar() {
@@ -274,25 +279,37 @@ public class MovieListActivity extends Activity {
         }
     }
 
-    private void onMovieItemClick(View view) {
-        TextView textView = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        String caption = textView.getText().toString();
-        int movieId = mScopeMovies.indexOf(new Movie(caption));
-        if (movieId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = mState.clone();
-            state.movie = mScopeMovies.get(movieId);
-            if (state.activityType == ActivityState.MOVIE_LIST_W_CINEMA) {
-                state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
-            } else {
-                state.activityType = ActivityState.MOVIE_INFO;
-            }
-            mApp.setState(cookie, state);
+    private void onScheduleItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter)adapterView.getAdapter();
+        MovieItemWithScheduleAdapter adapter = (MovieItemWithScheduleAdapter)headerAdapter.getWrappedAdapter();
+        ListView list = (ListView)view.getParent();
+        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(this, MovieActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
+        ActivityState state = mState.clone();
+        state.movie = movie;
+        state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
+    }
+
+    private void onMovieItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        MovieItemAdapter adapter = (MovieItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
+
+        ActivityState state = mState.clone();
+        state.movie = movie;
+        state.activityType = ActivityState.MOVIE_INFO;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 
     public void onHomeButtonClick(View view) {

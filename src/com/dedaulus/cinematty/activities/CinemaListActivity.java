@@ -253,37 +253,35 @@ public class CinemaListActivity extends Activity implements LocationClient {
     }
 
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        String caption = textView.getText().toString();
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
-        if (cinemaId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = mState.clone();
-            state.cinema = mApp.getCinemas().get(cinemaId);
-            state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
-            mApp.setState(cookie, state);
+        CinemaItemAdapter adapter = (CinemaItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
+        ActivityState state = mState.clone();
+        state.cinema = cinema;
+        state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 
     private void onScheduleItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        String caption = textView.getText().toString();
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
-        if (cinemaId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = mState.clone();
-            state.cinema = mApp.getCinemas().get(cinemaId);
-            state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
-            mApp.setState(cookie, state);
+        CinemaItemWithScheduleAdapter adapter = (CinemaItemWithScheduleAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
+        ActivityState state = mState.clone();
+        state.cinema = cinema;
+        state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 
     public void onCinemaFavIconClick(View view) {

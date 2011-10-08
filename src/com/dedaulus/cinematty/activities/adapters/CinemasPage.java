@@ -7,7 +7,6 @@ import android.location.Location;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
@@ -128,18 +127,17 @@ public class CinemasPage implements SliderPage, LocationClient {
     }
 
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        String caption = textView.getText().toString();
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption));
-        if (cinemaId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, mApp.getCinemas().get(cinemaId), null, null, null);
-            mApp.setState(cookie, state);
+        CinemaItemAdapter adapter = (CinemaItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(mContext, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            mContext.startActivity(intent);
-        }
+        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(mContext, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        mContext.startActivity(intent);
     }
 
     public void onLocationChanged(Location location) {

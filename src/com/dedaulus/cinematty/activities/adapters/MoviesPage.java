@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieActivity;
@@ -107,7 +106,7 @@ public class MoviesPage implements SliderPage {
         list.setAdapter(mMovieListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onMovieItemClick(view);
+                onMovieItemClick(adapterView, view, i, l);
             }
         });
         mBinded = true;
@@ -116,18 +115,16 @@ public class MoviesPage implements SliderPage {
         return view;
     }
 
-    private void onMovieItemClick(View view) {
-        TextView textView = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        String caption = textView.getText().toString();
-        int movieId = mApp.getMovies().indexOf(new Movie(caption));
-        if (movieId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, mApp.getMovies().get(movieId), null, null);
-            mApp.setState(cookie, state);
+    private void onMovieItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        MovieItemAdapter adapter = (MovieItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, movie, null, null);
+        mApp.setState(cookie, state);
 
-            Intent intent = new Intent(mContext, MovieActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            mContext.startActivity(intent);
-        }
+        Intent intent = new Intent(mContext, MovieActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        mContext.startActivity(intent);
     }
 }

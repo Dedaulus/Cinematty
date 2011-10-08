@@ -111,19 +111,18 @@ public class GenreListActivity extends Activity {
     }
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
-        String caption = textView.getText().toString();
-        int genreId = mApp.getGenres().indexOf(new MovieGenre(caption));
-        if (genreId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = mState.clone();
-            state.genre = mApp.getGenres().get(genreId);
-            state.activityType = ActivityState.MOVIE_LIST_W_GENRE;
-            mApp.setState(cookie, state);
+        GenreItemAdapter adapter = (GenreItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(this, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            startActivity(intent);
-        }
+        ActivityState state = mState.clone();
+        state.genre = genre;
+        state.activityType = ActivityState.MOVIE_LIST_W_GENRE;
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(this, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 }

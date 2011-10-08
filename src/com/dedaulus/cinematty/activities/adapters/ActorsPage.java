@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
@@ -90,17 +89,16 @@ public class ActorsPage implements SliderPage {
     }
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
-        String caption = textView.getText().toString();
-        int actorId = mApp.getActors().indexOf(new MovieActor(caption));
-        if (actorId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, mApp.getActors().get(actorId), null);
-            mApp.setState(cookie, state);
+        ActorItemAdapter adapter = (ActorItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        MovieActor actor = (MovieActor)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
 
-            Intent intent = new Intent(mContext, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            mContext.startActivity(intent);
-        }
+        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, actor, null);
+        mApp.setState(cookie, state);
+
+        Intent intent = new Intent(mContext, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        mContext.startActivity(intent);
     }
 }

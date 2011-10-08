@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
@@ -71,17 +70,15 @@ public class GenresPage implements SliderPage {
     }
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
-        String caption = textView.getText().toString();
-        int genreId = mApp.getGenres().indexOf(new MovieGenre(caption));
-        if (genreId != -1) {
-            String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_GENRE, null, null, null, mApp.getGenres().get(genreId));
-            mApp.setState(cookie, state);
+        GenreItemAdapter adapter = (GenreItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_GENRE, null, null, null, genre);
+        mApp.setState(cookie, state);
 
-            Intent intent = new Intent(mContext, MovieListActivity.class);
-            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-            mContext.startActivity(intent);
-        }
+        Intent intent = new Intent(mContext, MovieListActivity.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        mContext.startActivity(intent);
     }
 }
