@@ -15,7 +15,7 @@
     <string name="loading_cities">Загружается список городов...</string>
     <string name="try_again">Попробовать еще раз</string>
 
-    <string name="unknown_error">Произошла непредвиденная ошибка</string>
+    <string name="unknown_error">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки!</string>
     <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ в интернет</string>
 
     <string name="categories_caption">Категории</string>
