@@ -153,8 +153,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     private void restoreState() {
         String[] fileNames = mContext.getCacheDir().list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
-                if (name.startsWith("pic_")) return true;
-                return false;
+                return name.startsWith("pic_");
             }
         });
 
@@ -186,7 +185,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     private String pictureTypeToPostfix(int pictureType) {
-        String postfix = null;
+        String postfix;
         switch (pictureType) {
         case PictureType.LIST_SMALL:
             postfix = "s";
@@ -214,8 +213,8 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             String name = "pic_" + pictureTypeToPostfix(pictureType) + ".jpg";
 
             synchronized (mRemotePictureFolderMutex) {
-                StringBuffer buffer = new StringBuffer(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
-                return (buffer.append(mRemotePictureFolder).append("/").append(picId).append("/").append(name)).toString();
+                StringBuilder builder = new StringBuilder(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
+                return (builder.append(mRemotePictureFolder).append("/").append(picId).append("/").append(name)).toString();
             }
         } else {
             return picId;
@@ -241,7 +240,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
             byte data[] = new byte[1024];
 
-            int count = 0;
+            int count;
             while ((count = input.read(data)) != -1) {
                 output.write(data, 0, count);
             }
@@ -278,8 +277,9 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public void run() {
+        //noinspection InfiniteLoopStatement
         while (true) {
-            Pair<Pair<String, Integer>, PictureReceiver> task = null;
+            Pair<Pair<String, Integer>, PictureReceiver> task;
             synchronized (mTaskQueueMutex) {
                 task = mTaskQueue.poll();
             }
@@ -289,9 +289,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
                     synchronized (this) {
                         wait();
                     }
-                } catch (InterruptedException e) {
-                    // TODO: shit, but what to do?
-                }
+                } catch (InterruptedException e) {}
             } else {
                 String picId = task.first.first;
                 String internalPicId = picId;

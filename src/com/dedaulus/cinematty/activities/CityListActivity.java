@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.CityItemAdapter;
@@ -59,23 +58,16 @@ public class CityListActivity extends Activity {
         super.onResume();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     private void onCityItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView textView = (TextView)view.findViewById(R.id.city_caption_in_city_list);
-        String caption = textView.getText().toString();
-        for (City city : mCities) {
-            if (city.getName().equals(caption)) {
-                mApp.saveCurrentCityId(city.getId());
-                mApp.setCurrentCity(city);
+        CityItemAdapter adapter = (CityItemAdapter)adapterView.getAdapter();
+        ListView list = (ListView)view.getParent();
+        City city = (City)adapter.getItem(i - list.getHeaderViewsCount());
 
-                Intent intent = new Intent(this, StartupActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
+        mApp.saveCurrentCityId(city.getId());
+        mApp.setCurrentCity(city);
+
+        Intent intent = new Intent(this, StartupActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

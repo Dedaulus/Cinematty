@@ -233,7 +233,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
         case R.id.submenu_select_day_today:
             if (mCurrentDay != Constants.TODAY_SCHEDULE) {

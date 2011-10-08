@@ -130,11 +130,6 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 

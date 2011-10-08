@@ -94,8 +94,6 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_cinema_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_cinema_list);
 
-        boolean isShowTimeLeft = mCurrentDay == Constants.TODAY_SCHEDULE;
-
         List<Calendar> showTimes = cinema.getShowTimes(mCurrentDay).get(mCurrentMovie);
         if (showTimes != null) {
             String showTimesStr = DataConverter.showTimesToString(showTimes);
