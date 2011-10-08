@@ -50,10 +50,12 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
 
     private Context mContext;
     private String mRemotePictureFolder;
-    private String mLocalPictureFolder;
-
     private Queue<Pair<Pair<String, Integer>, PictureReceiver>> mTaskQueue = new LinkedList<Pair<Pair<String, Integer>, PictureReceiver>>();
     private List<PictureWrapper> mReadyPictures = new UniqueSortedList<PictureWrapper>(APROX_PICS_COUNT, new DefaultComparator<PictureWrapper>());
+
+    private final Object mRemotePictureFolderMutex = new Object();
+    private final Object mTaskQueueMutex = new Object();
+    private final Object mReadyPicturesMutex = new Object();
 
     public HttpPictureRetriever(Context context, String remotePictureFolder) {
         mContext = context;
@@ -65,7 +67,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public void setRemotePictureFolder(String remotePictureFolder) {
-        synchronized (mRemotePictureFolder) {
+        synchronized (mRemotePictureFolderMutex) {
             mRemotePictureFolder = remotePictureFolder;
         }
     }
@@ -75,7 +77,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             picId = getPicIdFromFullPath(picId);
         }
 
-        synchronized (mReadyPictures) {
+        synchronized (mReadyPicturesMutex) {
             return mReadyPictures.contains(new PictureWrapper(picId, pictureType, null));
         }
     }
@@ -85,7 +87,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
             picId = getPicIdFromFullPath(picId);
         }
 
-        synchronized (mReadyPictures) {
+        synchronized (mReadyPicturesMutex) {
             int id = mReadyPictures.indexOf(new PictureWrapper(picId, pictureType, null));
             if (id == -1) return null;
 
@@ -103,14 +105,14 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     }
 
     public synchronized void addRequest(String picId, int pictureType, PictureReceiver receiver) {
-        synchronized (mTaskQueue) {
+        synchronized (mTaskQueueMutex) {
             mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(picId, pictureType), receiver));
             notify();
         }
     }
 
     public synchronized void addRequest(String remotePicturePath, PictureReceiver receiver) {
-        synchronized (mTaskQueue) {
+        synchronized (mTaskQueueMutex) {
             mTaskQueue.add(new Pair<Pair<String, Integer>, PictureReceiver>(new Pair<String, Integer>(remotePicturePath, PictureType.ORIGINAL_WITH_URL), receiver));
             notify();
         }
@@ -124,7 +126,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         File to = getLocalPicturePath(picId, pictureType);
         if (downloadPicture(from, to)) {
             picture = loadPicture(picId, pictureType);
-            synchronized (mReadyPictures) {
+            synchronized (mReadyPicturesMutex) {
                 mReadyPictures.add(new PictureWrapper(picId, pictureType, null));
             }
             return picture;
@@ -140,7 +142,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         File to = getLocalPicturePath(picId, PictureType.ORIGINAL_WITH_URL);
         if (downloadPicture(remotePicturePath, to)) {
             picture = loadPicture(picId, PictureType.ORIGINAL_WITH_URL);
-            synchronized (mReadyPictures) {
+            synchronized (mReadyPicturesMutex) {
                 mReadyPictures.add(new PictureWrapper(picId, PictureType.ORIGINAL_WITH_URL, picture));
             }
             return picture;
@@ -211,7 +213,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         if (pictureType != PictureType.ORIGINAL_WITH_URL) {
             String name = "pic_" + pictureTypeToPostfix(pictureType) + ".jpg";
 
-            synchronized (mRemotePictureFolder) {
+            synchronized (mRemotePictureFolderMutex) {
                 StringBuffer buffer = new StringBuffer(mRemotePictureFolder.length() + 1 + picId.length() + 1 + name.length());
                 return (buffer.append(mRemotePictureFolder).append("/").append(picId).append("/").append(name)).toString();
             }
@@ -278,7 +280,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
     public void run() {
         while (true) {
             Pair<Pair<String, Integer>, PictureReceiver> task = null;
-            synchronized (mTaskQueue) {
+            synchronized (mTaskQueueMutex) {
                 task = mTaskQueue.poll();
             }
 
@@ -318,7 +320,7 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
                             picture = loadPicture(picId, pictureType);
                         }
 
-                        synchronized (mReadyPictures) {
+                        synchronized (mReadyPicturesMutex) {
                             mReadyPictures.add(new PictureWrapper(internalPicId, pictureType, picture));
                         }
                     }

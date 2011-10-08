@@ -11,8 +11,10 @@ public class MoviePictureReceiver implements PictureReceiver {
     private OnPictureReceiveAction mAction;
     private Activity mActivity;
     private Boolean mPictureReceived = false;
-    private Boolean mStarted = false;
-    private Boolean mStopped = false;
+    private Boolean mStopped = true;
+
+    private final Object mPictureReceivedMutex = new Object();
+    private final Object mStoppedMutex = new Object();
 
     public MoviePictureReceiver(OnPictureReceiveAction action, Activity activity) {
         mAction = action;
@@ -20,22 +22,19 @@ public class MoviePictureReceiver implements PictureReceiver {
     }
 
     public void start() {
-        synchronized (mStarted) {
-            if (mStarted) return;
-        }
-
-        synchronized (mStopped) {
+        synchronized (mStoppedMutex) {
+            if (!mStopped) return;
             mStopped = false;
         }
 
         new Thread(new Runnable() {
             public void run() {
                 while (true) {
-                    synchronized (mStopped) {
+                    synchronized (mStoppedMutex) {
                         if (mStopped) break;
                     }
 
-                    synchronized (mPictureReceived) {
+                    synchronized (mPictureReceivedMutex) {
                         if (mPictureReceived) {
                             mPictureReceived = false;
                             mActivity.runOnUiThread(new Runnable() {
@@ -48,32 +47,20 @@ public class MoviePictureReceiver implements PictureReceiver {
 
                     try {
                         Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        synchronized (mStarted) {
-                            mStarted = false;
-                        }
-                    }
+                    } catch (InterruptedException e) {}
                 }
             }
         }).start();
-
-        synchronized (mStarted) {
-            mStarted = true;
-        }
     }
 
     public void stop() {
-        synchronized (mStopped) {
+        synchronized (mStoppedMutex) {
             mStopped = true;
-        }
-
-        synchronized (mStarted) {
-            mStarted = false;
         }
     }
 
     public void onPictureReceive(String picId, int pictureType, boolean success) {
-        synchronized (mPictureReceived) {
+        synchronized (mPictureReceivedMutex) {
             mPictureReceived = true;
         }
     }
