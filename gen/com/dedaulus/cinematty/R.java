@@ -272,20 +272,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_menu_sort_by_size=0x7f020012;
         public static final int ic_menu_today=0x7f020013;
         public static final int ic_more=0x7f020014;
-        public static final int ic_more_google=0x7f020015;
-        public static final int ic_more_wiki=0x7f020016;
-        public static final int ic_more_yandex=0x7f020017;
-        public static final int ic_movies=0x7f020018;
-        public static final int ic_place=0x7f020019;
-        public static final int ic_place_white=0x7f02001a;
-        public static final int ic_whats_new=0x7f02001b;
-        public static final int icon=0x7f02001c;
-        public static final int img_loading=0x7f02001d;
-        public static final int list_divider=0x7f02001e;
-        public static final int movie_data_divider=0x7f02001f;
-        public static final int picture_border=0x7f020020;
-        public static final int popup=0x7f020021;
-        public static final int splash=0x7f020022;
+        public static final int ic_more_=0x7f020015;
+        public static final int ic_more_google=0x7f020016;
+        public static final int ic_more_wiki=0x7f020017;
+        public static final int ic_more_yandex=0x7f020018;
+        public static final int ic_movies=0x7f020019;
+        public static final int ic_place=0x7f02001a;
+        public static final int ic_place_white=0x7f02001b;
+        public static final int ic_whats_new=0x7f02001c;
+        public static final int icon=0x7f02001d;
+        public static final int img_loading=0x7f02001e;
+        public static final int list_divider=0x7f02001f;
+        public static final int movie_data_divider=0x7f020020;
+        public static final int picture_border=0x7f020021;
+        public static final int popup=0x7f020022;
+        public static final int splash=0x7f020023;
     }
     public static final class id {
         public static final int about_title=0x7f060003;
