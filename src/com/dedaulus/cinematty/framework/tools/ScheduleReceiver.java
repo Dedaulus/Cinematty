@@ -23,6 +23,7 @@ public class ScheduleReceiver {
     private URL mXmlUrl;
     private String mXmlFile;
     private File mCacheDir;
+    private static final int VALID_HOURS_FOR_JUST_DOWNLOADED = 12;
 
     public ScheduleReceiver(CinemattyApplication app, String fileName) throws MalformedURLException {
         mXmlUrl = new URL(app.getString(R.string.settings_url) + "/" + fileName);
@@ -52,7 +53,7 @@ public class ScheduleReceiver {
         InputStream is = getFileStream();
         if (is == null) {
             is = dumpStream(mXmlUrl.openConnection().getInputStream());
-            if (isActualXmlStream(is)) {
+            if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
                 return getFileStream();
             } else {
                 return null;
@@ -61,19 +62,19 @@ public class ScheduleReceiver {
 
         boolean isActual = false;
         try {
-            isActual = isActualXmlStream(is);
+            isActual = isActualXmlStream(is, 0);
         } catch (Exception e) {}
         if (isActual) return getFileStream();
 
         is = dumpStream(mXmlUrl.openConnection().getInputStream());
-        if (isActualXmlStream(is)) {
+        if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
             return getFileStream();
         } else {
             return null;
         }
     }
 
-    private boolean isActualXmlStream(InputStream is) throws IOException, ParserConfigurationException, SAXException {
+    private boolean isActualXmlStream(InputStream is, int hours) throws IOException, ParserConfigurationException, SAXException {
         if (is == null) return false;
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -82,6 +83,7 @@ public class ScheduleReceiver {
         parser.parse(is, handler);
 
         Calendar got = handler.getActualDate();
+        got.add(Calendar.HOUR_OF_DAY, hours);
         Calendar now = Calendar.getInstance();
         return now.before(got);
     }
