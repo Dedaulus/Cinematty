@@ -186,7 +186,7 @@
 
     <style name="ListItem.Data.CinemaAddress"/>
     <style name="ListItem.Data.CinemaDistance">
-        <item name="android:textColor">#686FD5</item>
+        <item name="android:textColor">#004A7F</item>
     </style>
     <style name="ListItem.Data.CinemaSchedule">
         <item name="android:singleLine">false</item>
