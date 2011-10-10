@@ -68,12 +68,16 @@ public class StartupActivity extends Activity
         startActivity(intent);
     }
 
-    private void setErrorString(String errorString, String errorMessage) {
-        TextView textView = (TextView)findViewById(R.id.error_string);
-        textView.setText(errorString);
+    private void setErrorString(String error, String message) {
+        if (error != null) {
+            TextView textView = (TextView)findViewById(R.id.error_string);
+            textView.setText(error);
+        }
 
-        textView = (TextView)findViewById(R.id.error_message);
-        textView.setText(errorMessage);
+        if (message != null) {
+            TextView textView = (TextView)findViewById(R.id.error_message);
+            textView.setText(message);
+        }
 
         findViewById(R.id.loading_schedule_panel).setVisibility(View.INVISIBLE);
         findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
@@ -100,8 +104,7 @@ public class StartupActivity extends Activity
             private boolean success = false;
             public void run() {
                 try {
-                    mApp.retrieveData(false);
-                    success = true;
+                    success = mApp.retrieveData(false);
                 } catch (UnknownHostException e) {
                     error = e.toString();
                     message = getString(R.string.connect_error);

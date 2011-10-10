@@ -49,28 +49,41 @@ public class ScheduleReceiver {
     }
 
     private InputStream getActualXmlStream() throws IOException, ParserConfigurationException, SAXException {
-            InputStream is = getFileStream();
-            if (is == null) {
-                return dumpStream(mXmlUrl.openConnection().getInputStream());
-            }
-
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            ScheduleDateHandler handler = new ScheduleDateHandler();
-            try {
-                parser.parse(is, handler);
-            } catch (SAXException e) {
-                return dumpStream(mXmlUrl.openConnection().getInputStream());
-            }
-
-            Calendar got = handler.getActualDate();
-            Calendar now = Calendar.getInstance();
-
-            if (now.before(got)) {
+        InputStream is = getFileStream();
+        if (is == null) {
+            is = dumpStream(mXmlUrl.openConnection().getInputStream());
+            if (isActualXmlStream(is)) {
                 return getFileStream();
             } else {
-                return dumpStream(mXmlUrl.openConnection().getInputStream());
+                return null;
             }
+        }
+
+        boolean isActual = false;
+        try {
+            isActual = isActualXmlStream(is);
+        } catch (Exception e) {}
+        if (isActual) return getFileStream();
+
+        is = dumpStream(mXmlUrl.openConnection().getInputStream());
+        if (isActualXmlStream(is)) {
+            return getFileStream();
+        } else {
+            return null;
+        }
+    }
+
+    private boolean isActualXmlStream(InputStream is) throws IOException, ParserConfigurationException, SAXException {
+        if (is == null) return false;
+
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser parser = factory.newSAXParser();
+        ScheduleDateHandler handler = new ScheduleDateHandler();
+        parser.parse(is, handler);
+
+        Calendar got = handler.getActualDate();
+        Calendar now = Calendar.getInstance();
+        return now.before(got);
     }
 
     private InputStream getFileStream() {
