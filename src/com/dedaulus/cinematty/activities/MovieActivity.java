@@ -291,7 +291,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
         state.activityType = ActivityState.CINEMA_LIST_W_MOVIE;
         mApp.setState(cookie, state);
 
-        Intent intent = new Intent(this, CinemaListActivity.class);
+        Intent intent = new Intent(this, CinemaWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }

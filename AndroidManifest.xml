@@ -21,11 +21,20 @@
         </activity>
 
         <activity
-            android:name=".activities.CinemaListActivity"
+            android:name=".activities.MainActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:launchMode="singleTask"/>
+
+        <activity
+            android:name=".activities.CinemaWithScheduleListActivity"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
             android:name=".activities.MovieListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".activities.MovieWithScheduleListActivity"
             android:theme="@android:style/Theme.NoTitleBar"/>
 
         <activity
@@ -39,11 +48,6 @@
         <activity
             android:name=".activities.GenreListActivity"
             android:theme="@android:style/Theme.NoTitleBar"/>
-
-        <activity
-            android:name=".activities.MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:launchMode="singleTask"/>
 
         <activity
             android:name=".activities.CityListActivity"

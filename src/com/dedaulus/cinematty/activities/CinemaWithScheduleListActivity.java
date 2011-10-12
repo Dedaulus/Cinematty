@@ -25,7 +25,7 @@ import java.util.UUID;
  * Date: 14.03.11
  * Time: 21:27
  */
-public class CinemaListActivity extends Activity implements LocationClient {
+public class CinemaWithScheduleListActivity extends Activity implements LocationClient {
     private CinemattyApplication mApp;
     private SortableAdapter<Cinema> mCinemaListAdapter;
     private ActivityState mState;
@@ -246,7 +246,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
         state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
         mApp.setState(cookie, state);
 
-        Intent intent = new Intent(this, MovieListActivity.class);
+        Intent intent = new Intent(this, MovieWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }

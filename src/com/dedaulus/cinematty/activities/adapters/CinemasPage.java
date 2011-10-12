@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.activities.MovieListActivity;
+import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
@@ -135,7 +135,7 @@ public class CinemasPage implements SliderPage, LocationClient {
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
         mApp.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieListActivity.class);
+        Intent intent = new Intent(mContext, MovieWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         mContext.startActivity(intent);
     }
