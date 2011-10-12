@@ -6,12 +6,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
@@ -60,18 +58,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
         switch (mState.activityType) {
-        case ActivityState.CINEMA_LIST:
-            movieLabel.setVisibility(View.GONE);
-
-            mCinemaListAdapter = new CinemaItemAdapter(this, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
-            list.setAdapter(mCinemaListAdapter);
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    onCinemaItemClick(adapterView, view, i, l);
-                }
-            });
-            break;
-
         case ActivityState.CINEMA_LIST_W_MOVIE:
             movieLabel.setVisibility(View.VISIBLE);
             movieLabel.setText(mState.movie.getCaption());
@@ -115,7 +101,7 @@ public class CinemaListActivity extends Activity implements LocationClient {
     protected void onResume() {
         mApp.startListenLocation();
         mApp.addLocationClient(this);
-        if (mState.activityType == ActivityState.CINEMA_LIST_W_MOVIE && mCurrentDay != mApp.getCurrentDay()) {
+        if (mCurrentDay != mApp.getCurrentDay()) {
             setCurrentDay(mApp.getCurrentDay());
         }
         mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
@@ -150,13 +136,11 @@ public class CinemaListActivity extends Activity implements LocationClient {
 
         inflater.inflate(R.menu.home_menu, menu);
 
-        if (mState.activityType == ActivityState.CINEMA_LIST_W_MOVIE) {
-            inflater.inflate(R.menu.select_day_menu, menu);
-            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
-                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
-            } else {
-                menu.findItem(R.id.menu_day).setTitle(R.string.today);
-            }
+        inflater.inflate(R.menu.select_day_menu, menu);
+        if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+            menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
+        } else {
+            menu.findItem(R.id.menu_day).setTitle(R.string.today);
         }
 
         inflater.inflate(R.menu.cinema_sort_menu, menu);
@@ -251,22 +235,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
         }
     }
 
-    private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        CinemaItemAdapter adapter = (CinemaItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
-        String cookie = UUID.randomUUID().toString();
-
-        ActivityState state = mState.clone();
-        state.cinema = cinema;
-        state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
-        mApp.setState(cookie, state);
-
-        Intent intent = new Intent(this, MovieListActivity.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        startActivity(intent);
-    }
-
     private void onScheduleItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CinemaItemWithScheduleAdapter adapter = (CinemaItemWithScheduleAdapter)adapterView.getAdapter();
         ListView list = (ListView)view.getParent();
@@ -281,29 +249,6 @@ public class CinemaListActivity extends Activity implements LocationClient {
         Intent intent = new Intent(this, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
-    }
-
-    public void onCinemaFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption;
-        if (mState.movie != null) {
-            caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-        } else {
-            caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-        }
-
-        int cinemaId = mApp.getCinemas().indexOf(new Cinema(caption.getText().toString()));
-        if (cinemaId != -1) {
-            Cinema cinema = mApp.getCinemas().get(cinemaId);
-
-            if (cinema.getFavourite() > 0) {
-                cinema.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                cinema.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
-        }
     }
 
     public void onHomeButtonClick(View view) {

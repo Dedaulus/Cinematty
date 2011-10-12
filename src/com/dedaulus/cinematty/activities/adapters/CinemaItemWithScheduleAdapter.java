@@ -68,6 +68,12 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             image.setImageResource(android.R.drawable.btn_star_big_off);
         }
 
+        image.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onCinemaFavIconClick(view);
+            }
+        });
+
         TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
         text.setText(cinema.getCaption());
 
@@ -136,5 +142,23 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     public void setCurrentLocation(Location location) {
         mCurrentLocation = location;
         notifyDataSetChanged();
+    }
+
+    private void onCinemaFavIconClick(View view) {
+        View parent = (View)view.getParent();
+        TextView caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
+
+        int cinemaId = mCinemas.indexOf(new Cinema(caption.getText().toString()));
+        if (cinemaId != -1) {
+            Cinema cinema = mCinemas.get(cinemaId);
+
+            if (cinema.getFavourite() > 0) {
+                cinema.setFavourite(false);
+                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+            } else {
+                cinema.setFavourite(true);
+                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
+            }
+        }
     }
 }
