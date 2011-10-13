@@ -15,6 +15,7 @@ import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.PictureRetriever;
+import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.MoviePictureReceiver;
 import com.dedaulus.cinematty.framework.tools.OnPictureReceiveAction;
 import com.dedaulus.cinematty.framework.tools.PictureType;
@@ -120,6 +121,13 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
 
         } else {
             text.setVisibility(View.GONE);
+        }
+
+        View movieOnlyTomorrow = view.findViewById(R.id.movie_only_tomorrow_in_movie_list);
+        if (movie.getCinemas(Constants.TODAY_SCHEDULE) == null) {
+            movieOnlyTomorrow.setVisibility(View.VISIBLE);
+        } else {
+            movieOnlyTomorrow.setVisibility(View.GONE);
         }
     }
 

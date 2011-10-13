@@ -204,5 +204,6 @@
         <item name="android:ellipsize">none</item>
         <item name="android:textColor">#FF0000</item>
     </style>
+    <style name="ListItem.Data.MovieOnlyTomorrow"/>
 
 </resources>
