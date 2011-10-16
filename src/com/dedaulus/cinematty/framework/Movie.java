@@ -15,6 +15,7 @@ public class Movie implements Comparable<Movie> {
     private String mPicId = null;
     private String mDescription = "";
     private int mLengthInMinutes;
+    private float mImdb = -1;
     private List<MovieGenre> mGenres = new ArrayList<MovieGenre>();
     private List<MovieActor> mActors = new ArrayList<MovieActor>();
     private Map<Integer, UniqueSortedList<Cinema>> mCinemas = new HashMap<Integer, UniqueSortedList<Cinema>>();
@@ -49,6 +50,14 @@ public class Movie implements Comparable<Movie> {
 
     public int getLengthInMinutes() {
         return mLengthInMinutes;
+    }
+
+    public void setImdb(float imdb) {
+        mImdb = imdb;
+    }
+
+    public float getImdb() {
+        return mImdb;
     }
 
     public void addActor(MovieActor actor) {

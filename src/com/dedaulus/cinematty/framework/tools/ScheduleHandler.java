@@ -25,11 +25,12 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String CINEMA_URL_ATTR           = "www";
 
     private static final String MOVIE_TAG                 = "movie";
+    private static final String MOVIE_ID_ATTR             = "id";
     private static final String MOVIE_TITLE_ATTR          = "title";
     private static final String MOVIE_PICID_ATTR          = "picid";
     private static final String MOVIE_LENGTH_ATTR         = "length";
     private static final String MOVIE_TYPE_ATTR           = "type";
-    private static final String MOVIE_ID_ATTR             = "id";
+    private static final String MOVIE_IMDB_ATTR           = "imdb";
 
     private static final String SHOWTIME_TAG              = "showtime";
     private static final String SHOWTIME_THEATER_ID_ATTR  = "theater_id";
@@ -137,6 +138,11 @@ public class ScheduleHandler extends DefaultHandler {
                 }
             }
             ///
+
+            String imdb = attributes.getValue(MOVIE_IMDB_ATTR);
+            if (imdb != null) {
+                movie.setImdb(Float.parseFloat(imdb));
+            }
 
             mMovieIds.put(attributes.getValue(MOVIE_ID_ATTR), movie);
             mCurrentMovie = movie;

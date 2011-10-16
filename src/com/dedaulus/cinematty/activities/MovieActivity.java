@@ -69,6 +69,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
         case ActivityState.MOVIE_INFO:
             setPicture();
             setCaption();
+            setImdb();
             setLength();
             setTrailerLink();
             setGenre();
@@ -233,6 +234,18 @@ public class MovieActivity extends Activity implements PictureReceiver {
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.GONE);
+        }
+    }
+
+    private void setImdb() {
+        float imdb = mState.movie.getImdb();
+        if (imdb > 0) {
+            String imdbString = String.format(" %.1f", imdb);
+            TextView imdbView = (TextView)findViewById(R.id.imdb);
+            imdbView.setText(imdbString);
+            findViewById(R.id.rating).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.rating).setVisibility(View.GONE);
         }
     }
 

@@ -71,6 +71,10 @@ public class MoviesPage implements SliderPage {
             menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
             break;
 
+        case BY_RATING:
+            menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+            break;
+
         default:
             break;
         }
@@ -92,6 +96,12 @@ public class MoviesPage implements SliderPage {
         case R.id.submenu_movie_sort_by_popular:
             mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
             mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+            item.setChecked(true);
+            return true;
+
+        case R.id.submenu_movie_sort_by_rating:
+            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, mApp.getCurrentDay()));
+            mApp.saveMovieSortOrder(MovieSortOrder.BY_RATING);
             item.setChecked(true);
             return true;
 

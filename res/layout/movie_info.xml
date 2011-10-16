@@ -98,8 +98,26 @@
                         android:id="@+id/movie_length"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="16dp"
-                        android:textColor="#404040"/>
+                        android:textColor="#404040"
+                        android:textSize="16dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/rating"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/ListItem.Data.MovieRating"
+                            android:text="@string/imdb"
+                            android:textSize="16dp"/>
+
+                        <TextView
+                            android:id="@+id/imdb"
+                            style="@style/ListItem.Data.MovieRatingValue"
+                            android:textSize="16dp"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/movie_trailer_url"

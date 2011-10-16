@@ -32,6 +32,13 @@ public class MovieComparator implements Comparator<Movie> {
             int size2 = l2 != null ? l2.size() : 0;
             if (size1 == size2) return 0;
             return (size1 < size2) ? 1 : -1;
+
+        case BY_RATING:
+            float imdb1 = o1.getImdb();
+            float imdb2 = o2.getImdb();
+            if (imdb1 == imdb2) return 0;
+            return imdb1 < imdb2 ? 1 : -1;
+
         default:
             throw new RuntimeException("Sort order not implemented!");
         }
