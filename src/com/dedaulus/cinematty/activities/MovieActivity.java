@@ -1,6 +1,7 @@
 package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -138,6 +139,12 @@ public class MovieActivity extends Activity implements PictureReceiver {
             }
         }
 
+        if (mState.movie.getActors() != null) {
+            inflater.inflate(R.menu.show_actors_menu, menu);
+        }
+
+        inflater.inflate(R.menu.share_menu, menu);
+
         inflater.inflate(R.menu.about_menu, menu);
 
         return true;
@@ -158,6 +165,14 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
         case R.id.menu_day:
             setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            return true;
+
+        case R.id.menu_show_actors:
+            onActorsClick(null);
+            return true;
+
+        case R.id.menu_share:
+            onShareButtonClick(null);
             return true;
 
         case R.id.menu_about:
@@ -356,6 +371,50 @@ public class MovieActivity extends Activity implements PictureReceiver {
     public void onDayButtonClick(View view) {
         registerForContextMenu(view);
         view.showContextMenu();
+    }
+
+    public void onShareButtonClick(View view) {
+        final StringBuilder url = new StringBuilder(getString(R.string.shared_url));
+        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
+            Calendar now = Calendar.getInstance();
+
+            int hours = now.get(Calendar.HOUR_OF_DAY);
+            if (hours < Constants.LAST_SHOWTIME_HOUR) {
+                now.add(Calendar.DAY_OF_MONTH, -1);
+            }
+
+            int year = now.get(Calendar.YEAR);
+            int month = now.get(Calendar.MONTH) + 1;
+            int day = now.get(Calendar.DAY_OF_MONTH);
+
+            url.append("_").append(year).append(".").append(month).append(".").append(day).append("_");
+            url.append(mState.cinema.getId()).append("_").append(mCurrentDay).append("_").append(mState.movie.getId()).append(".html");
+
+        } else {
+            url.append(mState.movie.getId()).append(".html");
+        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(getString(R.string.generate_link));
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
+        new Thread(new Runnable() {
+            public void run() {
+                final String shortUrl = DataConverter.longUrlToShort(url.toString());
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        progressDialog.cancel();
+                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, shortUrl);
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mState.movie.getCaption());
+                        startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_link)));
+                    }
+                });
+            }
+        }).start();
     }
 
     private void setCurrentDay(int day) {

@@ -18,8 +18,15 @@
             android:onClick="onHomeButtonClick"/>
 
         <ImageView
+            android:id="@+id/movie_title_share"
+            style="@style/ActivityTitleBarShare"
+            android:onClick="onShareButtonClick"/>
+
+        <ImageView
             android:id="@+id/movie_title_day"
             style="@style/ActivityTitleBarDay"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@id/movie_title_share"
             android:visibility="gone"
             android:onClick="onDayButtonClick"/>
 

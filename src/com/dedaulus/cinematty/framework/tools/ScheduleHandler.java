@@ -50,8 +50,6 @@ public class ScheduleHandler extends DefaultHandler {
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
 
-    private static final int LAST_SHOWTIME_HOUR = 6;
-
     private HashMap<String, Cinema> mCinemaIds;
     private HashMap<String, Movie> mMovieIds;
     private HashMap<String, MovieActor> mActors;
@@ -104,6 +102,7 @@ public class ScheduleHandler extends DefaultHandler {
 
         if (qName.equalsIgnoreCase(CINEMA_TAG)) {
             Cinema cinema = new Cinema(attributes.getValue(CINEMA_TITLE_ATTR));
+            cinema.setId(attributes.getValue(CINEMA_ID_ATTR));
             cinema.setAddress(attributes.getValue(CINEMA_ADDRESS_ATTR));
             cinema.setInto(attributes.getValue(CINEMA_INTO_ATTR));
             cinema.setMetro(attributes.getValue(CINEMA_METRO_ATTR));
@@ -116,14 +115,12 @@ public class ScheduleHandler extends DefaultHandler {
                 cinema.setCoordinate(new Coordinate(parseLatitude(latitude), parseLongitude(longitude)));
             }
 
-            mCinemaIds.put(attributes.getValue(CINEMA_ID_ATTR), cinema);
+            mCinemaIds.put(cinema.getId(), cinema);
         } else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
             Movie movie = new Movie(attributes.getValue(MOVIE_TITLE_ATTR));
-
+            movie.setId(attributes.getValue(MOVIE_ID_ATTR));
             movie.setPicId(attributes.getValue(MOVIE_PICID_ATTR));
-
             movie.setLengthInMinutes(parseLength(attributes.getValue(MOVIE_LENGTH_ATTR)));
-
             // Get movie genres
             List<String> genres = parseGenres(attributes.getValue(MOVIE_TYPE_ATTR));
             for (String genre : genres) {
@@ -144,7 +141,7 @@ public class ScheduleHandler extends DefaultHandler {
                 movie.setImdb(Float.parseFloat(imdb));
             }
 
-            mMovieIds.put(attributes.getValue(MOVIE_ID_ATTR), movie);
+            mMovieIds.put(movie.getId(), movie);
             mCurrentMovie = movie;
         } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
             mCurrentCinema = mCinemaIds.get(attributes.getValue(SHOWTIME_THEATER_ID_ATTR));
@@ -251,11 +248,11 @@ public class ScheduleHandler extends DefaultHandler {
                 now.set(Calendar.MINUTE, minutes);
 
                 if (day == 0) {
-                    if (hourNow < LAST_SHOWTIME_HOUR) {
+                    if (hourNow < Constants.LAST_SHOWTIME_HOUR) {
                         now.add(Calendar.DAY_OF_MONTH, -1);
                     }
 
-                    if (hours < LAST_SHOWTIME_HOUR) { /* holly fuck!*/
+                    if (hours < Constants.LAST_SHOWTIME_HOUR) { /* holly fuck!*/
                         now.add(Calendar.DAY_OF_MONTH, 1);
                     }
                 } else {

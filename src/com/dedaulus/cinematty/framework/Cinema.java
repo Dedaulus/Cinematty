@@ -11,6 +11,7 @@ import java.util.*;
  * Time: 21:58
  */
 public class Cinema implements Comparable<Cinema> {
+    private String mId;
     private String mCaption;
     private Coordinate mCoordinate;
     private String mAddress;
@@ -27,6 +28,14 @@ public class Cinema implements Comparable<Cinema> {
 
     public String getCaption() {
         return mCaption;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public void setAddress(String address) {

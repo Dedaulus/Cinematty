@@ -11,6 +11,7 @@ import java.util.*;
  * Time: 21:58
  */
 public class Movie implements Comparable<Movie> {
+    private String mId;
     private String mCaption;
     private String mPicId = null;
     private String mDescription = "";
@@ -26,6 +27,14 @@ public class Movie implements Comparable<Movie> {
 
     public String getCaption() {
         return mCaption;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
+
+    public String getId() {
+        return mId;
     }
 
     public void setPicId(String picId) {

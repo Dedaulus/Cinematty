@@ -64,6 +64,10 @@
     <string name="menu_home">Домой</string>
     <string name="menu_call">Бронировать</string>
     <string name="menu_show_map">На карте</string>
+    <string name="menu_share">Отправить</string>
+
+    <string name="send_link">Отправить ссылку</string>
+    <string name="generate_link">Генерация ссылки</string>
 
     <string name="km">км</string>
     <string name="m">м</string>
@@ -75,6 +79,7 @@
 
     <string name="cities_file">cities.xml</string>
     <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
+    <string name="shared_url">http://dedaulus.narod.ru/cinematty/shared/</string>
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
     <string name="image_search_url">http://www.google.com/m/search?site=images&amp;q=кадры из фильма</string>
     <string name="google_search_url">http://www.google.com/m/search?&amp;q=</string>

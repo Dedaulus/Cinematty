@@ -17,4 +17,6 @@ public class Constants {
 
     public static final int TODAY_SCHEDULE    = 0;
     public static final int TOMORROW_SCHEDULE = 1;
+
+    public static final int LAST_SHOWTIME_HOUR = 6;
 }
