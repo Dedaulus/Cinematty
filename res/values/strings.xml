@@ -64,10 +64,10 @@
     <string name="menu_home">Домой</string>
     <string name="menu_call">Бронировать</string>
     <string name="menu_show_map">На карте</string>
-    <string name="menu_share">Отправить</string>
+    <string name="menu_share">Поделиться</string>
 
     <string name="send_link">Отправить ссылку</string>
-    <string name="generate_link">Генерация ссылки</string>
+    <string name="generate_link">Генерация ссылки...</string>
 
     <string name="km">км</string>
     <string name="m">м</string>
