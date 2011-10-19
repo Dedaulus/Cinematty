@@ -3,7 +3,7 @@
     <string name="app_name">ГдеКИНО</string>
     <string name="app_version">1.0.0</string>
     <string name="app_version_code">10</string>
-    <string name="copyright">© 2011, Dedaulus, Donytar, Mamont</string>
+    <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
     <string name="email">dedaulus@gmail.com</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
@@ -15,8 +15,8 @@
     <string name="loading_cities">Загружается список городов...</string>
     <string name="try_again">Попробовать еще раз</string>
 
-    <string name="unknown_error">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки!</string>
-    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что у Вас есть доступ в интернет</string>
+    <string name="unknown_error">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки</string>
+    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что ваш телефон имеет доступ в интернет</string>
 
     <string name="categories_caption">Категории</string>
     <string name="whats_new_caption">Новинки</string>
