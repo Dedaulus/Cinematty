@@ -387,7 +387,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
             int month = now.get(Calendar.MONTH) + 1;
             int day = now.get(Calendar.DAY_OF_MONTH);
 
-            url.append("_").append(year).append(".").append(month).append(".").append(day).append("_");
+            url.append(year).append(".").append(month).append(".").append(day).append("/");
             url.append(mState.cinema.getId()).append("_").append(mCurrentDay).append("_").append(mState.movie.getId()).append(".html");
 
         } else {

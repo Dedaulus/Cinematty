@@ -149,10 +149,12 @@ public class CinemattyApplication extends Application {
         }
 
         Map<String, ?> favs = getFavouriteCinemas();
-        for (String caption : favs.keySet()) {
-            int cinemaId = mCinemas.indexOf(new Cinema(caption));
-            if (cinemaId != -1) {
-                mCinemas.get(cinemaId).setFavourite((Long)favs.get(caption));
+        for (String id : favs.keySet()) {
+            for (Cinema cinema : mCinemas) {
+                if (cinema.getId().equalsIgnoreCase(id)) {
+                    cinema.setFavourite((Long)favs.get(id));
+                    break;
+                }
             }
         }
 
@@ -242,9 +244,9 @@ public class CinemattyApplication extends Application {
         SharedPreferences.Editor editor = preferences.edit();
         for (Cinema cinema : mCinemas) {
             if (cinema.getFavourite() > 0) {
-                editor.putLong(cinema.getCaption(), cinema.getFavourite());
+                editor.putLong(cinema.getId(), cinema.getFavourite());
             } else {
-                editor.remove(cinema.getCaption());
+                editor.remove(cinema.getId());
             }
         }
 
