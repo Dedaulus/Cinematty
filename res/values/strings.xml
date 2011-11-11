@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.0.1</string>
-    <string name="app_version_code">11</string>
+    <string name="app_version">1.0.2</string>
+    <string name="app_version_code">12</string>
     <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
-    <string name="email">dedaulus@gmail.com</string>
+    <string name="email">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
 
     <string name="new_version_caption">Что нового?</string>
-    <string name="new_version">● Внутренние изменения, связанные с обновлением сервера</string>
+    <string name="new_version">● Внутренние изменения, связанные с переездом на новый хостинг</string>
 
     <string name="loading_schedule">Загружается расписание...</string>
     <string name="loading_cities">Загружается список городов...</string>
@@ -78,8 +78,8 @@
     <string name="wiki">Википедия</string>
 
     <string name="cities_file">cities.xml</string>
-    <string name="settings_url">http://dedaulus.narod.ru/cinematty</string>
-    <string name="shared_url">http://dedaulus.narod.ru/cinematty/shared/</string>
+    <string name="settings_url">http://gdekino.net/cinematty</string>
+    <string name="shared_url">http://gdekino.net/cinematty/shared/</string>
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
     <string name="image_search_url">http://www.google.com/m/search?site=images&amp;q=кадры из фильма</string>
     <string name="google_search_url">http://www.google.com/m/search?&amp;q=</string>
