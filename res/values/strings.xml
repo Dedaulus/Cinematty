@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.0.2</string>
-    <string name="app_version_code">12</string>
+    <string name="app_version">1.0.3</string>
+    <string name="app_version_code">13</string>
     <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
     <string name="email">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
