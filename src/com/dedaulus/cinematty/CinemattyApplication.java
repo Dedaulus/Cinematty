@@ -15,6 +15,12 @@ import com.dedaulus.cinematty.activities.MainActivity;
 import com.dedaulus.cinematty.activities.StartupActivity;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -439,5 +445,84 @@ public class CinemattyApplication extends Application {
             editor.putInt(PREF_CURRENT_VERSION, currentVersion);
             editor.commit();
         }
+    }
+
+    public String getSharedPageUrl(Movie movie, Cinema cinema, Integer day) {
+        try {
+            // JSON data:
+            JSONObject json = new JSONObject();
+            json.put("city", mCurrentCity.getFileName());
+            json.put("movie", movie.getId());
+            if (cinema != null && day != null) {
+                json.put("cinema", cinema.getId());
+                json.put("day", day.intValue());
+            }
+
+            JSONArray postJson = new JSONArray();
+            postJson.put(json);
+
+            // Post the data:
+            HttpPost httpPost = new HttpPost(getString(R.string.shared_url2));
+            httpPost.setHeader("json", json.toString());
+            httpPost.getParams().setParameter("jsonpost", postJson);
+
+            // Execute HTTP Post Request
+            System.out.print(json);
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response = httpClient.execute(httpPost);
+
+            // for JSON:
+            if(response != null)
+            {
+                InputStream is = response.getEntity().getContent();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+                is.close();
+
+                String sharedPageUrl = new JSONObject(sb.toString()).getString("url");
+                return sharedPageUrl;
+            }
+        } catch (Exception e) {
+            // TODO something
+        }
+
+        return null;
+
+        /*
+        try {
+            StringBuilder postString = new StringBuilder();
+            postString.append("{");
+            postString.append("\"file\": \"").append(mCurrentCity.getFileName()).append("\"");
+            postString.append("\"movie\": \"").append(movie.getId()).append("\"");
+            postString.append("}");
+
+            URL url = new URL(getString(R.string.shared_url2));
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(postString.toString());
+            wr.flush();
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String result = "";
+            String line;
+            while ((line = rd.readLine()) != null) result += line;
+            wr.close();
+            rd.close();
+
+            String sharedPageUrl = new JSONObject(result).getString("url");
+            return sharedPageUrl;
+        } catch (Exception e) {
+            return null;
+        }
+        */
     }
 }

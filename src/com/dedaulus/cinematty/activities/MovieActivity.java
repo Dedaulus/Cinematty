@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,10 +10,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
@@ -374,25 +372,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onShareButtonClick(View view) {
-        final StringBuilder url = new StringBuilder(getString(R.string.shared_url));
-        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            Calendar now = Calendar.getInstance();
-
-            int hours = now.get(Calendar.HOUR_OF_DAY);
-            if (hours < Constants.LAST_SHOWTIME_HOUR) {
-                now.add(Calendar.DAY_OF_MONTH, -1);
-            }
-
-            int year = now.get(Calendar.YEAR);
-            int month = now.get(Calendar.MONTH) + 1;
-            int day = now.get(Calendar.DAY_OF_MONTH);
-
-            url.append(year).append(".").append(month).append(".").append(day).append("/");
-            url.append(mState.cinema.getId()).append("_").append(mCurrentDay).append("_").append(mState.movie.getId()).append(".html");
-
-        } else {
-            url.append(mState.movie.getId()).append(".html");
-        }
+        final boolean isScheduled = mState.activityType == ActivityState.MOVIE_INFO_W_SCHED;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -400,17 +380,26 @@ public class MovieActivity extends Activity implements PictureReceiver {
         progressDialog.setCancelable(true);
         progressDialog.show();
 
+        final CinemattyApplication app = mApp;
+        final ActivityState state = mState;
+        final Context ctx = this;
+
         new Thread(new Runnable() {
             public void run() {
-                final String shortUrl = DataConverter.longUrlToShort(url.toString());
+                String url = isScheduled ? app.getSharedPageUrl(state.movie, mState.cinema, mCurrentDay) : app.getSharedPageUrl(state.movie, null, null);
+                final String shortUrl = url != null ? DataConverter.longUrlToShort(url) : null;
                 runOnUiThread(new Runnable() {
                     public void run() {
                         progressDialog.cancel();
-                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                        sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(Intent.EXTRA_TEXT, shortUrl);
-                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mState.movie.getCaption());
-                        startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_link)));
+                        if (shortUrl != null) {
+                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                            sharingIntent.setType("text/plain");
+                            sharingIntent.putExtra(Intent.EXTRA_TEXT, shortUrl);
+                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mState.movie.getCaption());
+                            startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_link)));
+                        } else {
+                            Toast.makeText(ctx, ctx.getString(R.string.generate_link_failed), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }

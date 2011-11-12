@@ -235,12 +235,7 @@ public class DataConverter {
                 m = 0;
                 ++km;
             }
-
-            //if (m == 0) {
-                //return Integer.toString(km) + context.getString(R.string.km);
-            //} else {
-                return Integer.toString(km) + "." + Long.toString(m) + context.getString(R.string.km);
-            //}
+            return Integer.toString(km) + "." + Long.toString(m) + context.getString(R.string.km);
         } else {
             return Integer.toString(meters) + context.getString(R.string.m);
         }
