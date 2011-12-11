@@ -14,7 +14,7 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"/>
     -->
-    <com.jakewharton.android.viewpagerindicator.TitlePageIndicator
+    <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

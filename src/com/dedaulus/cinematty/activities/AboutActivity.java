@@ -2,7 +2,7 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.jakewharton.android.viewpagerindicator.R;
+import com.dedaulus.cinematty.R;
 
 /**
  * User: Dedaulus

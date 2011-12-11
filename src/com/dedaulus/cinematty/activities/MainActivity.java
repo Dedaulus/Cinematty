@@ -11,7 +11,7 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
-import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

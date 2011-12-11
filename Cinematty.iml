@@ -19,6 +19,7 @@
         <option name="LIBRARY_PROJECT" value="false" />
         <option name="RUN_PROCESS_RESOURCES_MAVEN_TASK" value="true" />
         <option name="GENERATE_UNSIGNED_APK" value="false" />
+        <option name="CUSTOM_DEBUG_KEYSTORE_PATH" value="" />
       </configuration>
     </facet>
   </component>
@@ -33,13 +34,12 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/android-support-v4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../ViewPagerIndicator/library/libs/android-support-v4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="ViewPagerIndicator" exported="" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -50,6 +50,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="NewQuickAction3D" exported="" />
+    <orderEntry type="module" module-name="ViewPageIndicator" exported="" />
   </component>
 </module>
 
