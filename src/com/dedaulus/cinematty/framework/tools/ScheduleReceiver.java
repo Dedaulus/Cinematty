@@ -26,7 +26,7 @@ public class ScheduleReceiver {
     private static final int VALID_HOURS_FOR_JUST_DOWNLOADED = 12;
 
     public ScheduleReceiver(CinemattyApplication app, String fileName) throws MalformedURLException {
-        mXmlUrl = new URL(app.getString(R.string.settings_url) + "/" + fileName);
+        mXmlUrl = new URL(app.getString(R.string.schedules_url) + "/" + fileName);
         mXmlFile = fileName;
         mCacheDir = app.getCacheDir();
     }

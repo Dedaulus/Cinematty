@@ -198,25 +198,28 @@ public class ScheduleHandler extends DefaultHandler {
 
     private List<String> parseGenres(String genres) {
         List<String> list = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(genres, "/");
+        if (genres != null) {
+            StringTokenizer st = new StringTokenizer(genres, "/");
 
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
+            while (st.hasMoreTokens()) {
+                list.add(st.nextToken());
+            }
         }
 
         return list;
     }
 
     private List<String> parseActors(String actors) {
-        if (actors.endsWith(ACTORS_BUG_SUFFIX)) {
-            actors = actors.substring(0, actors.length() - ACTORS_BUG_SUFFIX.length());
-        }
-
         List<String> list = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(actors, ";");
+        if (actors != null) {
+            if (actors.endsWith(ACTORS_BUG_SUFFIX)) {
+                actors = actors.substring(0, actors.length() - ACTORS_BUG_SUFFIX.length());
+            }
 
-        while (st.hasMoreTokens()) {
-            list.add(st.nextToken());
+            StringTokenizer st = new StringTokenizer(actors, ";");
+            while (st.hasMoreTokens()) {
+                list.add(st.nextToken());
+            }
         }
 
         return list;
