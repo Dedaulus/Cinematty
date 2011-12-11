@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.dedaulus.cinematty.framework.tools.Constants;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -111,6 +113,13 @@ public class StartupActivity extends Activity
                 } catch (SocketException e) {
                     error = e.toString();
                     message = getString(R.string.connect_error);
+                } catch (FileNotFoundException e) {
+                    error = e.toString();
+                    message = getString(R.string.connect_error);
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://market.android.com/details?id=com.dedaulus.cinematty"));
+                    startActivity(intent);
                 } catch (IOException e) {
                     error = e.toString();
                 } catch (ParserConfigurationException e) {
