@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.0.4</string>
-    <string name="app_version_code">14</string>
+    <string name="app_version">1.0.5</string>
+    <string name="app_version_code">15</string>
     <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
     <string name="email">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
 
     <string name="new_version_caption">Что нового?</string>
-    <string name="new_version">● Исправлена ошибка, из-за которой нельзя было сортировать фильмы по рейтингу на странице кинотеатра</string>
+    <string name="new_version">● Исправлены ошибки</string>
 
     <string name="loading_schedule">Загружается расписание...</string>
     <string name="loading_cities">Загружается список городов...</string>
     <string name="try_again">Попробовать еще раз</string>
 
     <string name="unknown_error">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки</string>
-    <string name="connect_error">Не удается подключиться к серверу. Убедитесь, что ваш телефон имеет доступ в интернет</string>
+    <string name="connect_error">"Не удается подключиться к серверу. Убедитесь, что ваш телефон имеет доступ в интернет</string>
 
     <string name="categories_caption">Категории</string>
     <string name="whats_new_caption">Новинки</string>
@@ -29,7 +29,7 @@
     <string name="wait_dialog_caption">Синхронизация</string>
     <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
 
-    <string name="movie_trailer_link">Трейлеры на YouTube</string>
+    <string name="movie_trailer_link">"Трейлеры на YouTube</string>
     <string name="movie_length">Продолжительность</string>
     <string name="genre">Жанр</string>
     <string name="actors">Актёры</string>
