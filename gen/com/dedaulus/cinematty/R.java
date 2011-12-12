@@ -8,1030 +8,335 @@
 package com.dedaulus.cinematty;
 
 public final class R {
-    public static final class anim {
-        public static final int disappear=0x7f040000;
-        public static final int grow_from_bottom=0x7f040001;
-        public static final int grow_from_bottomleft_to_topright=0x7f040002;
-        public static final int grow_from_bottomright_to_topleft=0x7f040003;
-        public static final int grow_from_top=0x7f040004;
-        public static final int grow_from_topleft_to_bottomright=0x7f040005;
-        public static final int grow_from_topright_to_bottomleft=0x7f040006;
-        public static final int pump_bottom=0x7f040007;
-        public static final int pump_top=0x7f040008;
-        public static final int rail=0x7f040009;
-        public static final int shrink_from_bottom=0x7f04000a;
-        public static final int shrink_from_bottomleft_to_topright=0x7f04000b;
-        public static final int shrink_from_bottomright_to_topleft=0x7f04000c;
-        public static final int shrink_from_top=0x7f04000d;
-        public static final int shrink_from_topleft_to_bottomright=0x7f04000e;
-        public static final int shrink_from_topright_to_bottomleft=0x7f04000f;
-    }
     public static final class attr {
-        /**  Whether or not the indicators should be centered. 
-         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int centered=0x7f010002;
-        /**  Style of the circle indicator. 
-         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int circlePageIndicatorStyle=0x7f010000;
-        /**  Screen edge padding. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int clipPadding=0x7f010008;
-        /**  Color of the filled circle that represents the current page. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int fillColor=0x7f010003;
-        /**  Color of the footer line and indicator. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int footerColor=0x7f010009;
-        /**  Height of the indicator above the footer line. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int footerIndicatorHeight=0x7f01000c;
-        /**  Style of the indicator. Default is triangle. 
-         <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>none</code></td><td>0</td><td></td></tr>
-<tr><td><code>triangle</code></td><td>1</td><td></td></tr>
-<tr><td><code>underline</code></td><td>2</td><td></td></tr>
-</table>
-         */
-        public static final int footerIndicatorStyle=0x7f01000b;
-        /**  Left and right padding of the underline indicator. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int footerIndicatorUnderlinePadding=0x7f01000d;
-        /**  Height of the footer line. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int footerLineHeight=0x7f01000a;
-        /**  Padding between the bottom of the title and the footer. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int footerPadding=0x7f01000e;
-        /**  Radius of the circles. This is also the spacing between circles. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int radius=0x7f010004;
-        /**  Whether or not the selected item is displayed as bold. 
-         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int selectedBold=0x7f010010;
-        /**  Color of the selected title. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int selectedColor=0x7f01000f;
-        /**  Whether or not the selected indicator snaps to the circles. 
-         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int snap=0x7f010005;
-        /**  Color of the open circles. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int strokeColor=0x7f010006;
-        /**  Width of the stroke used to draw the circles. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int strokeWidth=0x7f010007;
-        /**  Color of regular titles. 
-         <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textColor=0x7f010011;
-        /**  Size of title text. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int textSize=0x7f010012;
-        /**  Padding between titles when bumping into each other. 
-         <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int titlePadding=0x7f010013;
-        /**  Style of the title indicator. 
-         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static final int titlePageIndicatorStyle=0x7f010001;
-    }
-    public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f090000;
-        public static final int default_circle_indicator_snap=0x7f090001;
-        public static final int default_title_indicator_selected_bold=0x7f090002;
-    }
-    public static final class color {
-        public static final int default_circle_indicator_fill_color=0x7f0a0000;
-        public static final int default_circle_indicator_stroke_color=0x7f0a0001;
-        public static final int default_title_indicator_footer_color=0x7f0a0002;
-        public static final int default_title_indicator_selected_color=0x7f0a0003;
-        public static final int default_title_indicator_text_color=0x7f0a0004;
-    }
-    public static final class dimen {
-        public static final int default_circle_indicator_radius=0x7f0b0000;
-        public static final int default_circle_indicator_stroke_width=0x7f0b0001;
-        public static final int default_title_indicator_clip_padding=0x7f0b0002;
-        public static final int default_title_indicator_footer_indicator_height=0x7f0b0004;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f0b0005;
-        public static final int default_title_indicator_footer_line_height=0x7f0b0003;
-        public static final int default_title_indicator_footer_padding=0x7f0b0006;
-        public static final int default_title_indicator_text_size=0x7f0b0007;
-        public static final int default_title_indicator_title_padding=0x7f0b0008;
     }
     public static final class drawable {
-        public static final int action_item_btn=0x7f020000;
-        public static final int action_item_selected=0x7f020001;
-        public static final int arrow_down=0x7f020002;
-        public static final int arrow_up=0x7f020003;
-        public static final int checked=0x7f020004;
-        public static final int cinema_data_divider=0x7f020005;
-        public static final int ic_actors=0x7f020006;
-        public static final int ic_arrow_left=0x7f020007;
-        public static final int ic_arrow_right=0x7f020008;
-        public static final int ic_blank_movie=0x7f020009;
-        public static final int ic_call_white=0x7f02000a;
-        public static final int ic_day=0x7f02000b;
-        public static final int ic_genres=0x7f02000c;
-        public static final int ic_home=0x7f02000d;
-        public static final int ic_menu_actors=0x7f02000e;
-        public static final int ic_menu_call=0x7f02000f;
-        public static final int ic_menu_home=0x7f020010;
-        public static final int ic_menu_info_details=0x7f020011;
-        public static final int ic_menu_mapmode=0x7f020012;
-        public static final int ic_menu_share=0x7f020013;
-        public static final int ic_menu_sort_by_size=0x7f020014;
-        public static final int ic_menu_today=0x7f020015;
-        public static final int ic_more=0x7f020016;
-        public static final int ic_more_google=0x7f020017;
-        public static final int ic_more_wiki=0x7f020018;
-        public static final int ic_more_yandex=0x7f020019;
-        public static final int ic_movies=0x7f02001a;
-        public static final int ic_place=0x7f02001b;
-        public static final int ic_place_white=0x7f02001c;
-        public static final int ic_share=0x7f02001d;
-        public static final int ic_whats_new=0x7f02001e;
-        public static final int icon=0x7f02001f;
-        public static final int img_loading=0x7f020020;
-        public static final int list_divider=0x7f020021;
-        public static final int movie_data_divider=0x7f020022;
-        public static final int picture_border=0x7f020023;
-        public static final int popup=0x7f020024;
-        public static final int splash=0x7f020025;
+        public static final int checked=0x7f020000;
+        public static final int cinema_data_divider=0x7f020001;
+        public static final int ic_actors=0x7f020002;
+        public static final int ic_arrow_left=0x7f020003;
+        public static final int ic_arrow_right=0x7f020004;
+        public static final int ic_blank_movie=0x7f020005;
+        public static final int ic_call_white=0x7f020006;
+        public static final int ic_day=0x7f020007;
+        public static final int ic_genres=0x7f020008;
+        public static final int ic_home=0x7f020009;
+        public static final int ic_menu_actors=0x7f02000a;
+        public static final int ic_menu_call=0x7f02000b;
+        public static final int ic_menu_home=0x7f02000c;
+        public static final int ic_menu_info_details=0x7f02000d;
+        public static final int ic_menu_mapmode=0x7f02000e;
+        public static final int ic_menu_share=0x7f02000f;
+        public static final int ic_menu_sort_by_size=0x7f020010;
+        public static final int ic_menu_today=0x7f020011;
+        public static final int ic_more=0x7f020012;
+        public static final int ic_more_google=0x7f020013;
+        public static final int ic_more_wiki=0x7f020014;
+        public static final int ic_more_yandex=0x7f020015;
+        public static final int ic_movies=0x7f020016;
+        public static final int ic_place=0x7f020017;
+        public static final int ic_place_white=0x7f020018;
+        public static final int ic_share=0x7f020019;
+        public static final int ic_whats_new=0x7f02001a;
+        public static final int icon=0x7f02001b;
+        public static final int img_loading=0x7f02001c;
+        public static final int list_divider=0x7f02001d;
+        public static final int movie_data_divider=0x7f02001e;
+        public static final int picture_border=0x7f02001f;
+        public static final int splash=0x7f020020;
     }
     public static final class id {
-        public static final int about_title=0x7f080003;
-        public static final int actor_caption_in_actor_list=0x7f08000f;
-        public static final int actor_list=0x7f080013;
-        public static final int actor_list_title=0x7f080010;
-        public static final int actor_list_title_home=0x7f080011;
-        public static final int actors_ico=0x7f08001d;
-        public static final int actors_panel=0x7f08001c;
-        public static final int advanced_movie_panel=0x7f080045;
-        public static final int app_name=0x7f080005;
-        public static final int app_version=0x7f080006;
-        public static final int arrow_down=0x7f080069;
-        public static final int arrow_up=0x7f080068;
-        public static final int call_ico=0x7f08002a;
-        public static final int cinema_address=0x7f080026;
-        public static final int cinema_address_in_cinema_list=0x7f08002f;
-        public static final int cinema_address_panel=0x7f080024;
-        public static final int cinema_caption=0x7f080022;
-        public static final int cinema_caption_in_cinema_list=0x7f08002d;
-        public static final int cinema_caption_in_movie_list=0x7f080063;
-        public static final int cinema_caption_panel=0x7f080021;
-        public static final int cinema_into=0x7f080027;
-        public static final int cinema_list=0x7f080037;
-        public static final int cinema_list_title=0x7f080032;
-        public static final int cinema_list_title_day=0x7f080035;
-        public static final int cinema_list_title_home=0x7f080034;
-        public static final int cinema_metro=0x7f080028;
-        public static final int cinema_panel_in_movie_list=0x7f080062;
-        public static final int cinema_phone=0x7f08002b;
-        public static final int cinema_phone_panel=0x7f080029;
-        public static final int cinema_url=0x7f080023;
-        public static final int cinemas_ico=0x7f080019;
-        public static final int cinemas_panel=0x7f080018;
-        public static final int city_caption=0x7f080015;
-        public static final int city_caption_in_city_list=0x7f080039;
-        public static final int city_checked_icon=0x7f08003a;
-        public static final int city_list=0x7f08003b;
-        public static final int copyright=0x7f080007;
-        public static final int distance=0x7f08002e;
-        public static final int email=0x7f080008;
-        public static final int error_message=0x7f08006b;
-        public static final int error_string=0x7f08006c;
-        public static final int fav_icon_in_actor_list=0x7f08000d;
-        public static final int fav_icon_in_cinema_info=0x7f080020;
-        public static final int fav_icon_in_cinema_list=0x7f08002c;
-        public static final int genre_caption_in_genre_list=0x7f08003c;
-        public static final int genre_list=0x7f08003e;
-        public static final int genres_ico=0x7f08001f;
-        public static final int genres_panel=0x7f08001e;
-        public static final int icons_copyright=0x7f080009;
-        public static final int icons_url=0x7f08000a;
-        public static final int imdb=0x7f08004b;
-        public static final int indicator=0x7f08003f;
-        public static final int iv_icon=0x7f08000b;
-        public static final int loading_error_panel=0x7f08006a;
-        public static final int loading_schedule_panel=0x7f08006d;
-        public static final int loading_schedules_progress=0x7f08006e;
-        public static final int map_ico=0x7f080025;
-        public static final int menu_about=0x7f080070;
-        public static final int menu_call=0x7f080071;
-        public static final int menu_cinema_sort=0x7f080072;
-        public static final int menu_day=0x7f08007b;
-        public static final int menu_home=0x7f080076;
-        public static final int menu_movie_sort=0x7f080077;
-        public static final int menu_share=0x7f08007e;
-        public static final int menu_show_actors=0x7f08007f;
-        public static final int menu_show_map=0x7f080080;
-        public static final int more_icon_in_actor_list=0x7f08000e;
-        public static final int movie_actor_in_movie_list=0x7f08005b;
-        public static final int movie_actors=0x7f080053;
-        public static final int movie_actors_panel=0x7f080052;
-        public static final int movie_caption=0x7f080048;
-        public static final int movie_caption_in_actor_list=0x7f080012;
-        public static final int movie_caption_in_cinema_list=0x7f080036;
-        public static final int movie_caption_in_genre_list=0x7f08003d;
-        public static final int movie_caption_in_movie_list=0x7f080059;
-        public static final int movie_description=0x7f080055;
-        public static final int movie_description_panel=0x7f080054;
-        public static final int movie_genre=0x7f080051;
-        public static final int movie_genre_in_movie_list=0x7f08005a;
-        public static final int movie_genre_panel=0x7f080050;
-        public static final int movie_icon=0x7f080047;
-        public static final int movie_icon_loading=0x7f080046;
-        public static final int movie_length=0x7f080049;
-        public static final int movie_list=0x7f080065;
-        public static final int movie_list_icon=0x7f080058;
-        public static final int movie_list_icon_loading=0x7f080057;
-        public static final int movie_list_icon_panel=0x7f080056;
-        public static final int movie_list_title=0x7f08005f;
-        public static final int movie_list_title_day=0x7f080061;
-        public static final int movie_list_title_home=0x7f080060;
-        public static final int movie_only_tomorrow_in_movie_list=0x7f08005c;
-        public static final int movie_schedule_enum_panel=0x7f08004d;
-        public static final int movie_schedule_in_cinema_list=0x7f080030;
-        public static final int movie_schedule_in_movie_list=0x7f08005d;
-        public static final int movie_title=0x7f080041;
-        public static final int movie_title_day=0x7f080044;
-        public static final int movie_title_home=0x7f080042;
-        public static final int movie_title_share=0x7f080043;
-        public static final int movie_trailer_url=0x7f08004c;
-        public static final int movies_ico=0x7f08001b;
-        public static final int movies_panel=0x7f08001a;
-        public static final int no_schedule=0x7f080038;
-        public static final int none=0x7f080000;
-        public static final int rating=0x7f08004a;
-        public static final int schedule_enum_for_one_cinema=0x7f08004f;
-        public static final int schedule_title=0x7f08004e;
-        public static final int scroller=0x7f080066;
-        public static final int select_cinema_ico=0x7f080064;
-        public static final int select_city_panel=0x7f080014;
-        public static final int slider=0x7f080040;
-        public static final int splash_icon=0x7f080004;
-        public static final int submenu_cinema_sort_by_caption=0x7f080073;
-        public static final int submenu_cinema_sort_by_distance=0x7f080075;
-        public static final int submenu_cinema_sort_by_favourite=0x7f080074;
-        public static final int submenu_movie_sort_by_caption=0x7f080078;
-        public static final int submenu_movie_sort_by_popular=0x7f080079;
-        public static final int submenu_movie_sort_by_rating=0x7f08007a;
-        public static final int submenu_select_day_today=0x7f08007c;
-        public static final int submenu_select_day_tomorrow=0x7f08007d;
-        public static final int time_left_in_cinema_list=0x7f080031;
-        public static final int time_left_in_movie_list=0x7f08005e;
-        public static final int titlebar_caption=0x7f080033;
-        public static final int tracks=0x7f080067;
-        public static final int triangle=0x7f080001;
-        public static final int tv_title=0x7f08000c;
-        public static final int underline=0x7f080002;
-        public static final int whats_new_grid=0x7f08006f;
-        public static final int whats_new_ico=0x7f080017;
-        public static final int whats_new_panel=0x7f080016;
-    }
-    public static final class integer {
-        public static final int default_title_indicator_footer_indicator_style=0x7f0c0000;
+        public static final int about_title=0x7f080000;
+        public static final int actor_caption_in_actor_list=0x7f08000a;
+        public static final int actor_list=0x7f08000e;
+        public static final int actor_list_title=0x7f08000b;
+        public static final int actor_list_title_home=0x7f08000c;
+        public static final int actors_ico=0x7f080018;
+        public static final int actors_panel=0x7f080017;
+        public static final int advanced_movie_panel=0x7f08003f;
+        public static final int app_name=0x7f080002;
+        public static final int app_version=0x7f080003;
+        public static final int call_ico=0x7f080025;
+        public static final int cinema_address=0x7f080021;
+        public static final int cinema_address_in_cinema_list=0x7f08002a;
+        public static final int cinema_address_panel=0x7f08001f;
+        public static final int cinema_caption=0x7f08001d;
+        public static final int cinema_caption_in_cinema_list=0x7f080028;
+        public static final int cinema_caption_in_movie_list=0x7f08005d;
+        public static final int cinema_caption_panel=0x7f08001c;
+        public static final int cinema_into=0x7f080022;
+        public static final int cinema_list=0x7f080032;
+        public static final int cinema_list_title=0x7f08002d;
+        public static final int cinema_list_title_day=0x7f080030;
+        public static final int cinema_list_title_home=0x7f08002f;
+        public static final int cinema_metro=0x7f080023;
+        public static final int cinema_panel_in_movie_list=0x7f08005c;
+        public static final int cinema_phone=0x7f080026;
+        public static final int cinema_phone_panel=0x7f080024;
+        public static final int cinema_url=0x7f08001e;
+        public static final int cinemas_ico=0x7f080014;
+        public static final int cinemas_panel=0x7f080013;
+        public static final int city_caption=0x7f080010;
+        public static final int city_caption_in_city_list=0x7f080034;
+        public static final int city_checked_icon=0x7f080035;
+        public static final int city_list=0x7f080036;
+        public static final int copyright=0x7f080004;
+        public static final int distance=0x7f080029;
+        public static final int email=0x7f080005;
+        public static final int error_message=0x7f080061;
+        public static final int error_string=0x7f080062;
+        public static final int fav_icon_in_actor_list=0x7f080008;
+        public static final int fav_icon_in_cinema_info=0x7f08001b;
+        public static final int fav_icon_in_cinema_list=0x7f080027;
+        public static final int genre_caption_in_genre_list=0x7f080037;
+        public static final int genre_list=0x7f080039;
+        public static final int genres_ico=0x7f08001a;
+        public static final int genres_panel=0x7f080019;
+        public static final int icons_copyright=0x7f080006;
+        public static final int icons_url=0x7f080007;
+        public static final int imdb=0x7f080045;
+        public static final int loading_error_panel=0x7f080060;
+        public static final int loading_schedule_panel=0x7f080063;
+        public static final int loading_schedules_progress=0x7f080064;
+        public static final int map_ico=0x7f080020;
+        public static final int menu_about=0x7f080066;
+        public static final int menu_call=0x7f080067;
+        public static final int menu_cinema_sort=0x7f080068;
+        public static final int menu_day=0x7f080071;
+        public static final int menu_home=0x7f08006c;
+        public static final int menu_movie_sort=0x7f08006d;
+        public static final int menu_share=0x7f080074;
+        public static final int menu_show_actors=0x7f080075;
+        public static final int menu_show_map=0x7f080076;
+        public static final int more_icon_in_actor_list=0x7f080009;
+        public static final int movie_actor_in_movie_list=0x7f080055;
+        public static final int movie_actors=0x7f08004d;
+        public static final int movie_actors_panel=0x7f08004c;
+        public static final int movie_caption=0x7f080042;
+        public static final int movie_caption_in_actor_list=0x7f08000d;
+        public static final int movie_caption_in_cinema_list=0x7f080031;
+        public static final int movie_caption_in_genre_list=0x7f080038;
+        public static final int movie_caption_in_movie_list=0x7f080053;
+        public static final int movie_description=0x7f08004f;
+        public static final int movie_description_panel=0x7f08004e;
+        public static final int movie_genre=0x7f08004b;
+        public static final int movie_genre_in_movie_list=0x7f080054;
+        public static final int movie_genre_panel=0x7f08004a;
+        public static final int movie_icon=0x7f080041;
+        public static final int movie_icon_loading=0x7f080040;
+        public static final int movie_length=0x7f080043;
+        public static final int movie_list=0x7f08005f;
+        public static final int movie_list_icon=0x7f080052;
+        public static final int movie_list_icon_loading=0x7f080051;
+        public static final int movie_list_icon_panel=0x7f080050;
+        public static final int movie_list_title=0x7f080059;
+        public static final int movie_list_title_day=0x7f08005b;
+        public static final int movie_list_title_home=0x7f08005a;
+        public static final int movie_only_tomorrow_in_movie_list=0x7f080056;
+        public static final int movie_schedule_enum_panel=0x7f080047;
+        public static final int movie_schedule_in_cinema_list=0x7f08002b;
+        public static final int movie_schedule_in_movie_list=0x7f080057;
+        public static final int movie_title=0x7f08003b;
+        public static final int movie_title_day=0x7f08003e;
+        public static final int movie_title_home=0x7f08003c;
+        public static final int movie_title_share=0x7f08003d;
+        public static final int movie_trailer_url=0x7f080046;
+        public static final int movies_ico=0x7f080016;
+        public static final int movies_panel=0x7f080015;
+        public static final int no_schedule=0x7f080033;
+        public static final int rating=0x7f080044;
+        public static final int schedule_enum_for_one_cinema=0x7f080049;
+        public static final int schedule_title=0x7f080048;
+        public static final int select_cinema_ico=0x7f08005e;
+        public static final int select_city_panel=0x7f08000f;
+        public static final int slider=0x7f08003a;
+        public static final int splash_icon=0x7f080001;
+        public static final int submenu_cinema_sort_by_caption=0x7f080069;
+        public static final int submenu_cinema_sort_by_distance=0x7f08006b;
+        public static final int submenu_cinema_sort_by_favourite=0x7f08006a;
+        public static final int submenu_movie_sort_by_caption=0x7f08006e;
+        public static final int submenu_movie_sort_by_popular=0x7f08006f;
+        public static final int submenu_movie_sort_by_rating=0x7f080070;
+        public static final int submenu_select_day_today=0x7f080072;
+        public static final int submenu_select_day_tomorrow=0x7f080073;
+        public static final int time_left_in_cinema_list=0x7f08002c;
+        public static final int time_left_in_movie_list=0x7f080058;
+        public static final int titlebar_caption=0x7f08002e;
+        public static final int whats_new_grid=0x7f080065;
+        public static final int whats_new_ico=0x7f080012;
+        public static final int whats_new_panel=0x7f080011;
     }
     public static final class layout {
         public static final int about=0x7f030000;
-        public static final int action_item=0x7f030001;
-        public static final int actor_item=0x7f030002;
-        public static final int actor_list=0x7f030003;
-        public static final int categories=0x7f030004;
-        public static final int cinema_info=0x7f030005;
-        public static final int cinema_item=0x7f030006;
-        public static final int cinema_item_with_schedule=0x7f030007;
-        public static final int cinema_list=0x7f030008;
-        public static final int city_item=0x7f030009;
-        public static final int city_list=0x7f03000a;
-        public static final int genre_item=0x7f03000b;
-        public static final int genre_list=0x7f03000c;
-        public static final int main=0x7f03000d;
-        public static final int movie_info=0x7f03000e;
-        public static final int movie_item=0x7f03000f;
-        public static final int movie_item_w_schedule=0x7f030010;
-        public static final int movie_list=0x7f030011;
-        public static final int popup=0x7f030012;
-        public static final int poster_item=0x7f030013;
-        public static final int splash_screen=0x7f030014;
-        public static final int whats_new=0x7f030015;
+        public static final int actor_item=0x7f030001;
+        public static final int actor_list=0x7f030002;
+        public static final int categories=0x7f030003;
+        public static final int cinema_info=0x7f030004;
+        public static final int cinema_item=0x7f030005;
+        public static final int cinema_item_with_schedule=0x7f030006;
+        public static final int cinema_list=0x7f030007;
+        public static final int city_item=0x7f030008;
+        public static final int city_list=0x7f030009;
+        public static final int genre_item=0x7f03000a;
+        public static final int genre_list=0x7f03000b;
+        public static final int main=0x7f03000c;
+        public static final int movie_info=0x7f03000d;
+        public static final int movie_item=0x7f03000e;
+        public static final int movie_item_w_schedule=0x7f03000f;
+        public static final int movie_list=0x7f030010;
+        public static final int poster_item=0x7f030011;
+        public static final int splash_screen=0x7f030012;
+        public static final int whats_new=0x7f030013;
     }
     public static final class menu {
-        public static final int about_menu=0x7f0d0000;
-        public static final int call_menu=0x7f0d0001;
-        public static final int cinema_sort_menu=0x7f0d0002;
-        public static final int home_menu=0x7f0d0003;
-        public static final int movie_sort_menu=0x7f0d0004;
-        public static final int select_day_menu=0x7f0d0005;
-        public static final int select_day_submenu=0x7f0d0006;
-        public static final int share_menu=0x7f0d0007;
-        public static final int show_actors_menu=0x7f0d0008;
-        public static final int show_map_menu=0x7f0d0009;
+        public static final int about_menu=0x7f070000;
+        public static final int call_menu=0x7f070001;
+        public static final int cinema_sort_menu=0x7f070002;
+        public static final int home_menu=0x7f070003;
+        public static final int movie_sort_menu=0x7f070004;
+        public static final int select_day_menu=0x7f070005;
+        public static final int select_day_submenu=0x7f070006;
+        public static final int share_menu=0x7f070007;
+        public static final int show_actors_menu=0x7f070008;
+        public static final int show_map_menu=0x7f070009;
     }
     public static final class raw {
-        public static final int cities=0x7f050000;
+        public static final int cities=0x7f040000;
     }
     public static final class string {
-        public static final int about_caption=0x7f060015;
-        public static final int actors=0x7f06001b;
-        public static final int actors_caption=0x7f060013;
-        public static final int app_name=0x7f060000;
-        public static final int app_version=0x7f060001;
-        public static final int app_version_code=0x7f060002;
-        public static final int categories_caption=0x7f06000e;
-        public static final int cinemas_caption=0x7f060010;
-        public static final int cities_file=0x7f06003f;
-        public static final int connect_error=0x7f06000d;
-        public static final int copyright=0x7f060003;
-        public static final int copyright_icons=0x7f060005;
-        public static final int date=0x7f060027;
-        public static final int email=0x7f060004;
-        public static final int generate_link=0x7f060037;
-        public static final int generate_link_failed=0x7f060038;
-        public static final int genre=0x7f06001a;
-        public static final int genres_caption=0x7f060014;
-        public static final int google=0x7f06003c;
-        public static final int google_search_url=0x7f060046;
-        public static final int hour=0x7f06001d;
-        public static final int icons_url=0x7f060006;
-        public static final int image_search_url=0x7f060045;
-        public static final int imdb=0x7f060021;
-        public static final int inf=0x7f06003b;
-        public static final int km=0x7f060039;
-        public static final int loading_cities=0x7f06000a;
-        public static final int loading_schedule=0x7f060009;
-        public static final int look_for_schedule=0x7f060020;
-        public static final int m=0x7f06003a;
-        public static final int menu_about=0x7f060031;
-        public static final int menu_call=0x7f060033;
-        public static final int menu_home=0x7f060032;
-        public static final int menu_share=0x7f060035;
-        public static final int menu_show_map=0x7f060034;
-        public static final int metro_near=0x7f06002a;
-        public static final int minute=0x7f06001e;
-        public static final int movie_caption=0x7f060012;
-        public static final int movie_description=0x7f06001c;
-        public static final int movie_length=0x7f060019;
-        public static final int movie_trailer_link=0x7f060018;
-        public static final int movies_caption=0x7f060011;
-        public static final int new_version=0x7f060008;
-        public static final int new_version_caption=0x7f060007;
-        public static final int no_schedule=0x7f060023;
-        public static final int schedule_enum=0x7f060022;
-        public static final int schedule_now=0x7f060025;
-        public static final int schedule_start_in=0x7f060026;
-        public static final int schedules_url=0x7f060040;
-        public static final int send_link=0x7f060036;
-        public static final int settings_url=0x7f060041;
-        public static final int shared_url=0x7f060042;
-        public static final int shared_url2=0x7f060043;
-        public static final int sort=0x7f06002b;
-        public static final int sort_by_caption=0x7f06002c;
-        public static final int sort_by_distance=0x7f06002e;
-        public static final int sort_by_fav=0x7f06002d;
-        public static final int sort_by_popular=0x7f06002f;
-        public static final int sort_by_rating=0x7f060030;
-        public static final int today=0x7f060028;
-        public static final int tomorrow=0x7f060029;
-        public static final int try_again=0x7f06000b;
-        public static final int unknown=0x7f06001f;
-        public static final int unknown_error=0x7f06000c;
-        public static final int unknown_schedule=0x7f060024;
-        public static final int wait_dialog_caption=0x7f060016;
-        public static final int wait_dialog_text=0x7f060017;
-        public static final int whats_new_caption=0x7f06000f;
-        public static final int wiki=0x7f06003e;
-        public static final int wiki_search_url=0x7f060047;
-        public static final int yandex=0x7f06003d;
-        public static final int yandex_search_url=0x7f060048;
-        public static final int youtube_search_url=0x7f060044;
+        public static final int about_caption=0x7f050015;
+        public static final int actors=0x7f05001b;
+        public static final int actors_caption=0x7f050013;
+        public static final int app_name=0x7f050000;
+        public static final int app_version=0x7f050001;
+        public static final int app_version_code=0x7f050002;
+        public static final int categories_caption=0x7f05000e;
+        public static final int cinemas_caption=0x7f050010;
+        public static final int cities_file=0x7f05003f;
+        public static final int connect_error=0x7f05000d;
+        public static final int copyright=0x7f050003;
+        public static final int copyright_icons=0x7f050005;
+        public static final int date=0x7f050027;
+        public static final int email=0x7f050004;
+        public static final int generate_link=0x7f050037;
+        public static final int generate_link_failed=0x7f050038;
+        public static final int genre=0x7f05001a;
+        public static final int genres_caption=0x7f050014;
+        public static final int google=0x7f05003c;
+        public static final int google_search_url=0x7f050046;
+        public static final int hour=0x7f05001d;
+        public static final int icons_url=0x7f050006;
+        public static final int image_search_url=0x7f050045;
+        public static final int imdb=0x7f050021;
+        public static final int inf=0x7f05003b;
+        public static final int km=0x7f050039;
+        public static final int loading_cities=0x7f05000a;
+        public static final int loading_schedule=0x7f050009;
+        public static final int look_for_schedule=0x7f050020;
+        public static final int m=0x7f05003a;
+        public static final int menu_about=0x7f050031;
+        public static final int menu_call=0x7f050033;
+        public static final int menu_home=0x7f050032;
+        public static final int menu_share=0x7f050035;
+        public static final int menu_show_map=0x7f050034;
+        public static final int metro_near=0x7f05002a;
+        public static final int minute=0x7f05001e;
+        public static final int movie_caption=0x7f050012;
+        public static final int movie_description=0x7f05001c;
+        public static final int movie_length=0x7f050019;
+        public static final int movie_trailer_link=0x7f050018;
+        public static final int movies_caption=0x7f050011;
+        public static final int new_version=0x7f050008;
+        public static final int new_version_caption=0x7f050007;
+        public static final int no_schedule=0x7f050023;
+        public static final int schedule_enum=0x7f050022;
+        public static final int schedule_now=0x7f050025;
+        public static final int schedule_start_in=0x7f050026;
+        public static final int schedules_url=0x7f050040;
+        public static final int send_link=0x7f050036;
+        public static final int settings_url=0x7f050041;
+        public static final int shared_url=0x7f050042;
+        public static final int shared_url2=0x7f050043;
+        public static final int sort=0x7f05002b;
+        public static final int sort_by_caption=0x7f05002c;
+        public static final int sort_by_distance=0x7f05002e;
+        public static final int sort_by_fav=0x7f05002d;
+        public static final int sort_by_popular=0x7f05002f;
+        public static final int sort_by_rating=0x7f050030;
+        public static final int today=0x7f050028;
+        public static final int tomorrow=0x7f050029;
+        public static final int try_again=0x7f05000b;
+        public static final int unknown=0x7f05001f;
+        public static final int unknown_error=0x7f05000c;
+        public static final int unknown_schedule=0x7f050024;
+        public static final int wait_dialog_caption=0x7f050016;
+        public static final int wait_dialog_text=0x7f050017;
+        public static final int whats_new_caption=0x7f05000f;
+        public static final int wiki=0x7f05003e;
+        public static final int wiki_search_url=0x7f050047;
+        public static final int yandex=0x7f05003d;
+        public static final int yandex_search_url=0x7f050048;
+        public static final int youtube_search_url=0x7f050044;
     }
     public static final class style {
-        public static final int ActivityTitleBar=0x7f070010;
-        public static final int ActivityTitleBarArrow=0x7f070011;
-        public static final int ActivityTitleBarArrow_Left=0x7f070012;
-        public static final int ActivityTitleBarArrow_Right=0x7f070013;
-        public static final int ActivityTitleBarDay=0x7f070015;
-        public static final int ActivityTitleBarHome=0x7f070014;
-        public static final int ActivityTitleBarShare=0x7f070016;
-        public static final int ActivityTitleText=0x7f070017;
-        public static final int Animations=0x7f070000;
-        /**  PopDownMenu 
-         */
-        public static final int Animations_PopDownMenu=0x7f070001;
-        public static final int Animations_PopDownMenu_Center=0x7f070002;
-        public static final int Animations_PopDownMenu_Left=0x7f070003;
-        public static final int Animations_PopDownMenu_Reflect=0x7f070005;
-        public static final int Animations_PopDownMenu_Right=0x7f070004;
-        /**  PopUpMenu 
-         */
-        public static final int Animations_PopUpMenu=0x7f070006;
-        public static final int Animations_PopUpMenu_Center=0x7f070007;
-        public static final int Animations_PopUpMenu_Left=0x7f070008;
-        public static final int Animations_PopUpMenu_Reflect=0x7f07000a;
-        public static final int Animations_PopUpMenu_Right=0x7f070009;
+        public static final int ActivityTitleBar=0x7f060002;
+        public static final int ActivityTitleBarArrow=0x7f060003;
+        public static final int ActivityTitleBarArrow_Left=0x7f060004;
+        public static final int ActivityTitleBarArrow_Right=0x7f060005;
+        public static final int ActivityTitleBarDay=0x7f060007;
+        public static final int ActivityTitleBarHome=0x7f060006;
+        public static final int ActivityTitleBarShare=0x7f060008;
+        public static final int ActivityTitleText=0x7f060009;
         /** <item name="android:background">#000033</item>
          */
-        public static final int Background=0x7f07000e;
-        public static final int Background_Caption=0x7f07000f;
-        public static final int CategoryItem=0x7f070019;
-        public static final int CategoryItem_Caption=0x7f07001a;
-        public static final int CategoryItem_Caption_Actors=0x7f07001e;
-        public static final int CategoryItem_Caption_Cinemas=0x7f07001c;
-        public static final int CategoryItem_Caption_Genres=0x7f07001f;
-        public static final int CategoryItem_Caption_Movies=0x7f07001d;
-        public static final int CategoryItem_Caption_WhatsNew=0x7f07001b;
-        public static final int CategoryItem_Image=0x7f070020;
-        public static final int CategoryItem_Image_Actors=0x7f070024;
-        public static final int CategoryItem_Image_Cinemas=0x7f070022;
-        public static final int CategoryItem_Image_Genres=0x7f070025;
-        public static final int CategoryItem_Image_Movies=0x7f070023;
-        public static final int CategoryItem_Image_WhatsNew=0x7f070021;
-        public static final int CategoryItemPanel=0x7f070018;
+        public static final int Background=0x7f060000;
+        public static final int Background_Caption=0x7f060001;
+        public static final int CategoryItem=0x7f06000b;
+        public static final int CategoryItem_Caption=0x7f06000c;
+        public static final int CategoryItem_Caption_Actors=0x7f060010;
+        public static final int CategoryItem_Caption_Cinemas=0x7f06000e;
+        public static final int CategoryItem_Caption_Genres=0x7f060011;
+        public static final int CategoryItem_Caption_Movies=0x7f06000f;
+        public static final int CategoryItem_Caption_WhatsNew=0x7f06000d;
+        public static final int CategoryItem_Image=0x7f060012;
+        public static final int CategoryItem_Image_Actors=0x7f060016;
+        public static final int CategoryItem_Image_Cinemas=0x7f060014;
+        public static final int CategoryItem_Image_Genres=0x7f060017;
+        public static final int CategoryItem_Image_Movies=0x7f060015;
+        public static final int CategoryItem_Image_WhatsNew=0x7f060013;
+        public static final int CategoryItemPanel=0x7f06000a;
         /** <item name="android:cacheColorHint">#000033</item>
          */
-        public static final int List=0x7f070026;
-        public static final int List_Actors=0x7f07002a;
-        public static final int List_Cinemas=0x7f070027;
-        public static final int List_Cities=0x7f070029;
-        public static final int List_Genres=0x7f07002b;
-        public static final int List_Movies=0x7f070028;
-        public static final int ListCaption=0x7f07002c;
-        public static final int ListCaption_Actor=0x7f07002f;
-        public static final int ListCaption_Cinema=0x7f07002d;
-        public static final int ListCaption_Genre=0x7f070030;
-        public static final int ListCaption_Movie=0x7f07002e;
-        public static final int ListItem=0x7f070031;
-        public static final int ListItem_Caption=0x7f070032;
-        public static final int ListItem_Caption_Actor=0x7f070035;
-        public static final int ListItem_Caption_Cinema=0x7f070033;
-        public static final int ListItem_Caption_City=0x7f070037;
-        public static final int ListItem_Caption_Genre=0x7f070036;
-        public static final int ListItem_Caption_Movie=0x7f070034;
-        public static final int ListItem_Data=0x7f070038;
-        public static final int ListItem_Data_CinemaAddress=0x7f070039;
-        public static final int ListItem_Data_CinemaDistance=0x7f07003a;
-        public static final int ListItem_Data_CinemaSchedule=0x7f07003b;
-        public static final int ListItem_Data_MovieActor=0x7f070041;
-        public static final int ListItem_Data_MovieGenre=0x7f07003c;
-        public static final int ListItem_Data_MovieOnlyTomorrow=0x7f070042;
-        public static final int ListItem_Data_MovieRating=0x7f07003d;
-        public static final int ListItem_Data_MovieRatingValue=0x7f07003e;
-        public static final int ListItem_Data_MovieSchedule=0x7f07003f;
+        public static final int List=0x7f060018;
+        public static final int List_Actors=0x7f06001c;
+        public static final int List_Cinemas=0x7f060019;
+        public static final int List_Cities=0x7f06001b;
+        public static final int List_Genres=0x7f06001d;
+        public static final int List_Movies=0x7f06001a;
+        public static final int ListCaption=0x7f06001e;
+        public static final int ListCaption_Actor=0x7f060021;
+        public static final int ListCaption_Cinema=0x7f06001f;
+        public static final int ListCaption_Genre=0x7f060022;
+        public static final int ListCaption_Movie=0x7f060020;
+        public static final int ListItem=0x7f060023;
+        public static final int ListItem_Caption=0x7f060024;
+        public static final int ListItem_Caption_Actor=0x7f060027;
+        public static final int ListItem_Caption_Cinema=0x7f060025;
+        public static final int ListItem_Caption_City=0x7f060029;
+        public static final int ListItem_Caption_Genre=0x7f060028;
+        public static final int ListItem_Caption_Movie=0x7f060026;
+        public static final int ListItem_Data=0x7f06002a;
+        public static final int ListItem_Data_CinemaAddress=0x7f06002b;
+        public static final int ListItem_Data_CinemaDistance=0x7f06002c;
+        public static final int ListItem_Data_CinemaSchedule=0x7f06002d;
+        public static final int ListItem_Data_MovieActor=0x7f060033;
+        public static final int ListItem_Data_MovieGenre=0x7f06002e;
+        public static final int ListItem_Data_MovieOnlyTomorrow=0x7f060034;
+        public static final int ListItem_Data_MovieRating=0x7f06002f;
+        public static final int ListItem_Data_MovieRatingValue=0x7f060030;
+        public static final int ListItem_Data_MovieSchedule=0x7f060031;
         /**  0094FF 
          */
-        public static final int ListItem_Data_MovieTimeLeft=0x7f070040;
-        public static final int Theme_PageIndicatorDefaults=0x7f07000b;
-        public static final int Widget_CirclePageIndicator=0x7f07000c;
-        public static final int Widget_TitlePageIndicator=0x7f07000d;
+        public static final int ListItem_Data_MovieTimeLeft=0x7f060032;
     }
-    public static final class styleable {
-        /** Attributes that can be used with a CirclePageIndicator.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #CirclePageIndicator_centered com.dedaulus.cinematty:centered}</code></td><td> Whether or not the indicators should be centered.</td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_fillColor com.dedaulus.cinematty:fillColor}</code></td><td> Color of the filled circle that represents the current page.</td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_radius com.dedaulus.cinematty:radius}</code></td><td> Radius of the circles.</td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_snap com.dedaulus.cinematty:snap}</code></td><td> Whether or not the selected indicator snaps to the circles.</td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_strokeColor com.dedaulus.cinematty:strokeColor}</code></td><td> Color of the open circles.</td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_strokeWidth com.dedaulus.cinematty:strokeWidth}</code></td><td> Width of the stroke used to draw the circles.</td></tr>
-           </table>
-           @see #CirclePageIndicator_centered
-           @see #CirclePageIndicator_fillColor
-           @see #CirclePageIndicator_radius
-           @see #CirclePageIndicator_snap
-           @see #CirclePageIndicator_strokeColor
-           @see #CirclePageIndicator_strokeWidth
-         */
-        public static final int[] CirclePageIndicator = {
-            0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005,
-            0x7f010006, 0x7f010007
-        };
-        /**
-          <p>
-          @attr description
-           Whether or not the indicators should be centered. 
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:centered
-        */
-        public static final int CirclePageIndicator_centered = 0;
-        /**
-          <p>
-          @attr description
-           Color of the filled circle that represents the current page. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:fillColor
-        */
-        public static final int CirclePageIndicator_fillColor = 1;
-        /**
-          <p>
-          @attr description
-           Radius of the circles. This is also the spacing between circles. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:radius
-        */
-        public static final int CirclePageIndicator_radius = 2;
-        /**
-          <p>
-          @attr description
-           Whether or not the selected indicator snaps to the circles. 
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:snap
-        */
-        public static final int CirclePageIndicator_snap = 3;
-        /**
-          <p>
-          @attr description
-           Color of the open circles. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:strokeColor
-        */
-        public static final int CirclePageIndicator_strokeColor = 4;
-        /**
-          <p>
-          @attr description
-           Width of the stroke used to draw the circles. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:strokeWidth
-        */
-        public static final int CirclePageIndicator_strokeWidth = 5;
-        /** Attributes that can be used with a TitlePageIndicator.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #TitlePageIndicator_clipPadding com.dedaulus.cinematty:clipPadding}</code></td><td> Screen edge padding.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerColor com.dedaulus.cinematty:footerColor}</code></td><td> Color of the footer line and indicator.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerIndicatorHeight com.dedaulus.cinematty:footerIndicatorHeight}</code></td><td> Height of the indicator above the footer line.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerIndicatorStyle com.dedaulus.cinematty:footerIndicatorStyle}</code></td><td> Style of the indicator.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerIndicatorUnderlinePadding com.dedaulus.cinematty:footerIndicatorUnderlinePadding}</code></td><td> Left and right padding of the underline indicator.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerLineHeight com.dedaulus.cinematty:footerLineHeight}</code></td><td> Height of the footer line.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_footerPadding com.dedaulus.cinematty:footerPadding}</code></td><td> Padding between the bottom of the title and the footer.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_selectedBold com.dedaulus.cinematty:selectedBold}</code></td><td> Whether or not the selected item is displayed as bold.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_selectedColor com.dedaulus.cinematty:selectedColor}</code></td><td> Color of the selected title.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_textColor com.dedaulus.cinematty:textColor}</code></td><td> Color of regular titles.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_textSize com.dedaulus.cinematty:textSize}</code></td><td> Size of title text.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_titlePadding com.dedaulus.cinematty:titlePadding}</code></td><td> Padding between titles when bumping into each other.</td></tr>
-           </table>
-           @see #TitlePageIndicator_clipPadding
-           @see #TitlePageIndicator_footerColor
-           @see #TitlePageIndicator_footerIndicatorHeight
-           @see #TitlePageIndicator_footerIndicatorStyle
-           @see #TitlePageIndicator_footerIndicatorUnderlinePadding
-           @see #TitlePageIndicator_footerLineHeight
-           @see #TitlePageIndicator_footerPadding
-           @see #TitlePageIndicator_selectedBold
-           @see #TitlePageIndicator_selectedColor
-           @see #TitlePageIndicator_textColor
-           @see #TitlePageIndicator_textSize
-           @see #TitlePageIndicator_titlePadding
-         */
-        public static final int[] TitlePageIndicator = {
-            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
-            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
-            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013
-        };
-        /**
-          <p>
-          @attr description
-           Screen edge padding. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:clipPadding
-        */
-        public static final int TitlePageIndicator_clipPadding = 0;
-        /**
-          <p>
-          @attr description
-           Color of the footer line and indicator. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:footerColor
-        */
-        public static final int TitlePageIndicator_footerColor = 1;
-        /**
-          <p>
-          @attr description
-           Height of the indicator above the footer line. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:footerIndicatorHeight
-        */
-        public static final int TitlePageIndicator_footerIndicatorHeight = 4;
-        /**
-          <p>
-          @attr description
-           Style of the indicator. Default is triangle. 
-
-
-          <p>Must be one of the following constant values.</p>
-<table>
-<colgroup align="left" />
-<colgroup align="left" />
-<colgroup align="left" />
-<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
-<tr><td><code>none</code></td><td>0</td><td></td></tr>
-<tr><td><code>triangle</code></td><td>1</td><td></td></tr>
-<tr><td><code>underline</code></td><td>2</td><td></td></tr>
-</table>
-          <p>This is a private symbol.
-          @attr name android:footerIndicatorStyle
-        */
-        public static final int TitlePageIndicator_footerIndicatorStyle = 3;
-        /**
-          <p>
-          @attr description
-           Left and right padding of the underline indicator. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:footerIndicatorUnderlinePadding
-        */
-        public static final int TitlePageIndicator_footerIndicatorUnderlinePadding = 5;
-        /**
-          <p>
-          @attr description
-           Height of the footer line. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:footerLineHeight
-        */
-        public static final int TitlePageIndicator_footerLineHeight = 2;
-        /**
-          <p>
-          @attr description
-           Padding between the bottom of the title and the footer. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:footerPadding
-        */
-        public static final int TitlePageIndicator_footerPadding = 6;
-        /**
-          <p>
-          @attr description
-           Whether or not the selected item is displayed as bold. 
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:selectedBold
-        */
-        public static final int TitlePageIndicator_selectedBold = 8;
-        /**
-          <p>
-          @attr description
-           Color of the selected title. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:selectedColor
-        */
-        public static final int TitlePageIndicator_selectedColor = 7;
-        /**
-          <p>
-          @attr description
-           Color of regular titles. 
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:textColor
-        */
-        public static final int TitlePageIndicator_textColor = 9;
-        /**
-          <p>
-          @attr description
-           Size of title text. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:textSize
-        */
-        public static final int TitlePageIndicator_textSize = 10;
-        /**
-          <p>
-          @attr description
-           Padding between titles when bumping into each other. 
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          <p>This is a private symbol.
-          @attr name android:titlePadding
-        */
-        public static final int TitlePageIndicator_titlePadding = 11;
-        /** Attributes that can be used with a ViewPagerIndicator.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ViewPagerIndicator_circlePageIndicatorStyle com.dedaulus.cinematty:circlePageIndicatorStyle}</code></td><td> Style of the circle indicator.</td></tr>
-           <tr><td><code>{@link #ViewPagerIndicator_titlePageIndicatorStyle com.dedaulus.cinematty:titlePageIndicatorStyle}</code></td><td> Style of the title indicator.</td></tr>
-           </table>
-           @see #ViewPagerIndicator_circlePageIndicatorStyle
-           @see #ViewPagerIndicator_titlePageIndicatorStyle
-         */
-        public static final int[] ViewPagerIndicator = {
-            0x7f010000, 0x7f010001
-        };
-        /**
-          <p>
-          @attr description
-           Style of the circle indicator. 
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          <p>This is a private symbol.
-          @attr name android:circlePageIndicatorStyle
-        */
-        public static final int ViewPagerIndicator_circlePageIndicatorStyle = 0;
-        /**
-          <p>
-          @attr description
-           Style of the title indicator. 
-
-
-          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          <p>This is a private symbol.
-          @attr name android:titlePageIndicatorStyle
-        */
-        public static final int ViewPagerIndicator_titlePageIndicatorStyle = 1;
-    };
 }

@@ -4,7 +4,6 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import com.viewpagerindicator.TitleProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * Date: 04.09.11
  * Time: 19:57
  */
-public class SliderAdapter extends PagerAdapter implements TitleProvider {
+public class SliderAdapter extends PagerAdapter {
     private List<SliderPage> mPages;
     private List<SliderPage> mCreatedPages = new ArrayList<SliderPage>();
 
