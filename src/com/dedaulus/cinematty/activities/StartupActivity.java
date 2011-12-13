@@ -32,7 +32,8 @@ public class StartupActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        BugSenseHandler.setup(this, "97371d41");
+        // TODO: uncomment following before release!!!
+        //BugSenseHandler.setup(this, "97371d41");
 
         mApp = (CinemattyApplication)getApplication();
         mApp.setCurrentDay(Constants.TODAY_SCHEDULE);
