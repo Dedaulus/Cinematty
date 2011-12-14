@@ -45,9 +45,6 @@ public class MovieGenre implements Comparable<MovieGenre> {
     }
 
     public int compareTo(MovieGenre o) {
-        if (this == o) return 0;
-        if (o == null) return 1;
-
         return mGenre.compareTo(o.mGenre);
     }
 }

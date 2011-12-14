@@ -62,9 +62,6 @@ public class MovieActor implements Comparable<MovieActor> {
     }
 
     public int compareTo(MovieActor o) {
-        if (this == o) return 0;
-        if (o == null) return 1;
-
         return mActor.compareTo(o.mActor);
     }
 }

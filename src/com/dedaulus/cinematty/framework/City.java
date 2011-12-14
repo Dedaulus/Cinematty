@@ -44,9 +44,6 @@ public class City implements Comparable<City> {
     }
 
     public int compareTo(City city) {
-        if (this == city) return 0;
-        if (city == null) return 1;
-
         if (mId > city.mId) return 1;
         else if (mId < city.mId) return -1;
         else return 0;

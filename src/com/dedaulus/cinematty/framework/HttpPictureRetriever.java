@@ -35,18 +35,15 @@ public class HttpPictureRetriever implements PictureRetriever, Runnable {
         }
 
         public int compareTo(PictureWrapper o) {
-            if (this == o) return 0;
-            else {
-                int cmp = picId.compareTo(o.picId);
-                if (cmp == 0) {
-                    return pictureType.compareTo(o.pictureType);
-                } else if (cmp > 0) return 1;
-                else return -1;
-            }
+            int cmp = picId.compareTo(o.picId);
+            if (cmp == 0) {
+                return pictureType.compareTo(o.pictureType);
+            } else if (cmp > 0) return 1;
+            else return -1;
         }
     }
 
-    private static final int APROX_PICS_COUNT = 80; // This is a nearly count of moscow movies at once
+    private static final int APROX_PICS_COUNT = 100; // This is a nearly count of moscow movies at once
 
     private Context mContext;
     private String mRemotePictureFolder;

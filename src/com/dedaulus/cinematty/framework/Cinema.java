@@ -165,9 +165,6 @@ public class Cinema implements Comparable<Cinema> {
     }
 
     public int compareTo(Cinema o) {
-        if (this == o) return 0;
-        if (o == null) return 1;
-
         return mCaption.compareTo(o.mCaption);
     }
 }

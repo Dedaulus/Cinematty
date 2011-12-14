@@ -31,6 +31,13 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String MOVIE_LENGTH_ATTR         = "length";
     private static final String MOVIE_TYPE_ATTR           = "type";
     private static final String MOVIE_IMDB_ATTR           = "imdb";
+    private static final String MOVIE_ACTORS_TAG          = "actors";
+    private static final String MOVIE_DESCRIPTION_TAG     = "description";
+    private static final String MOVIE_REVIEWS_TAG         = "reviews";
+    private static final String MOVIE_REVIEWS_TITLE_ATTR  = "title";
+    private static final String MOVIE_REVIEWS_URL_ATTR    = "url";
+    private static final String MOVIE_FRAMES_TAG          = "frames";
+    private static final String MOVIE_FRAMES_ID_ATTR      = "id";
 
     private static final String SHOWTIME_TAG              = "showtime";
     private static final String SHOWTIME_THEATER_ID_ATTR  = "theater_id";
@@ -43,7 +50,6 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String POSTERS_TAG               = "posters";
     private static final String POSTERS_LIVE_TIME_ATTR    = "live_time";
     private static final String POSTERS_DATE_ATTR         = "date";
-
     private static final String POSTER_TAG                = "poster";
     private static final String POSTER_IMAGE_ATTR         = "image";
     private static final String POSTER_MOVIE_ATTR         = "movie";
@@ -166,7 +172,7 @@ public class ScheduleHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
 
-        if (qName.equalsIgnoreCase("actors") && mBuffer.length() > 0) {
+        if (qName.equalsIgnoreCase(MOVIE_ACTORS_TAG) && mBuffer.length() > 0) {
             List<String> actors = parseActors(mBuffer.toString());
             for (String actor : actors) {
                 MovieActor movieActor = mActors.get(actor);
@@ -179,7 +185,7 @@ public class ScheduleHandler extends DefaultHandler {
                 }
             }
         }
-        else if (qName.equalsIgnoreCase("description") && mBuffer.length() > 0) {
+        else if (qName.equalsIgnoreCase(MOVIE_DESCRIPTION_TAG) && mBuffer.length() > 0) {
             mCurrentMovie.setDescription(mBuffer.toString());
         }
         else if (qName.equalsIgnoreCase(SHOWTIME_TAG) && mBuffer.length() > 0) {
