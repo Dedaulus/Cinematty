@@ -16,6 +16,7 @@ import com.dedaulus.cinematty.activities.MovieActivity;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
+import com.viewpagerindicator.TitleProvider;
 
 import java.util.ArrayList;
 import java.util.UUID;

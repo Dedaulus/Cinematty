@@ -1,4 +1,19 @@
 <resources>
+    <style name="StyledIndicators" parent="@android:style/Theme.NoTitleBar">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="vpiTabTextStyle">@style/CustomTabPageIndicator.Text</item>
+    </style>
+
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+        <!--<item name="android:background">@drawable/custom_tab_indicator</item>-->
+    </style>
+
+    <style name="CustomTabPageIndicator.Text" parent="Widget.TabPageIndicator.Text">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="Background">
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">fill_parent</item>

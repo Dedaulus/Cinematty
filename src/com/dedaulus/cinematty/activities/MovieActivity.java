@@ -307,7 +307,8 @@ public class MovieActivity extends Activity implements MovieImageRetriever.Movie
 
     private void setDescription() {
         TextView text = (TextView)findViewById(R.id.movie_description);
-        if (state.movie.getDescription().length() != 0) {
+        String description = state.movie.getDescription();
+        if (description != null) {
             text.setText(state.movie.getDescription());
             findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
         } else {

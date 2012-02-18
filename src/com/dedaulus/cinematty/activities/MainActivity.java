@@ -14,6 +14,8 @@ import com.dedaulus.cinematty.activities.adapters.*;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
+import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +80,12 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         slider.setAdapter(adapter);
         slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
 
+        //Bind the title indicator to the adapter
+        TabPageIndicator pageIndicator = (TabPageIndicator)findViewById(R.id.titles);
+        pageIndicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
+
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
+        pageChangeListenerProxy.addListener(pageIndicator);
         pageChangeListenerProxy.addListener(this);
         slider.setOnPageChangeListener(pageChangeListenerProxy);
 
