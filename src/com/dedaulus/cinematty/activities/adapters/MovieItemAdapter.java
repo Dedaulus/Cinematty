@@ -161,9 +161,12 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
 
     public void onStop() {
         imageReceivedActionHandler.stop();
+        imageRetriever.pause();
+        imageRetriever.saveState();
     }
 
     public void onResume() {
         imageReceivedActionHandler.start();
+        imageRetriever.resume();
     }
 }

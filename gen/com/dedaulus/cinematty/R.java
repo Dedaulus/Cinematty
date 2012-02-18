@@ -39,10 +39,11 @@ public final class R {
         public static final int ic_share=0x7f020019;
         public static final int ic_whats_new=0x7f02001a;
         public static final int icon=0x7f02001b;
-        public static final int list_divider=0x7f02001c;
-        public static final int movie_data_divider=0x7f02001d;
-        public static final int picture_border=0x7f02001e;
-        public static final int splash=0x7f02001f;
+        public static final int img_loading=0x7f02001c;
+        public static final int list_divider=0x7f02001d;
+        public static final int movie_data_divider=0x7f02001e;
+        public static final int picture_border=0x7f02001f;
+        public static final int splash=0x7f020020;
     }
     public static final class id {
         public static final int about_title=0x7f080000;

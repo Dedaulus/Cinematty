@@ -189,7 +189,9 @@ public class ImageRetriever implements Runnable {
                     if (wrapper.useMemoryCache) {
                         wrapper.image = loadImage(wrapper.path);
                     }
-                    images.put(request.url, wrapper);
+                    synchronized (images) {
+                        images.put(request.url, wrapper);
+                    }
 
                     if (request.action != null) {
                         request.action.onImageReceived(request.url, true);

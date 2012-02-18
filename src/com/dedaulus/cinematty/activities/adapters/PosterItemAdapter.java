@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PosterImageRetriever;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dedaulus
  * Date: 22.08.11
  * Time: 3:46
  */
-public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriever.PosterImageReceivedAction {
+public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriever.PosterImageReceivedAction, StoppableAndResumable {
     private Context context;
     private ArrayList<MoviePoster> posters;
     private PosterImageRetriever imageRetriever;
@@ -66,7 +66,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
             imageView.setImageBitmap(bitmap);
         } else {
             imageRetriever.addRequest(poster.getPosterPath(), this);
-            //imageView.setImageResource(R.drawable.img_loading);
+            imageView.setImageResource(R.drawable.img_loading);
         }
 
         return imageView;
@@ -79,5 +79,16 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
                 notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        imageRetriever.pause();
+        imageRetriever.saveState();
+    }
+
+    @Override
+    public void onResume() {
+        imageRetriever.resume();
     }
 }

@@ -30,6 +30,8 @@ public class WhatsNewPage implements SliderPage {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
+    private PosterItemAdapter posterItemAdapter;
+    private Boolean binded = false;
 
     public WhatsNewPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -50,11 +52,17 @@ public class WhatsNewPage implements SliderPage {
         return context.getString(R.string.whats_new_caption);
     }
 
-    public void onResume() {}
+    public void onResume() {
+        if (binded) {
+            posterItemAdapter.onResume();
+        }
+    }
 
     public void onPause() {}
 
-    public void onStop() {}
+    public void onStop() {
+        posterItemAdapter.onStop();
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
@@ -66,12 +74,15 @@ public class WhatsNewPage implements SliderPage {
 
     private View bindView(View view) {
         GridView whatsNewGrid = (GridView)view.findViewById(R.id.whats_new_grid);
-        whatsNewGrid.setAdapter(new PosterItemAdapter(context, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever()));
+        posterItemAdapter = new PosterItemAdapter(context, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever());
+        whatsNewGrid.setAdapter(posterItemAdapter);
         whatsNewGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onPosterItemClick(adapterView, view, i, l);
             }
         });
+        binded = true;
+        onResume();
 
         return view;
     }
