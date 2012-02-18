@@ -9,6 +9,198 @@ package com.dedaulus.cinematty;
 
 public final class R {
     public static final class attr {
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int abBackground=0x7f010020;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int abBackgroundStacked=0x7f010021;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abCustomNavigationLayout=0x7f010022;
+        /** <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>useLogo</code></td><td>0x1</td><td></td></tr>
+<tr><td><code>showHome</code></td><td>0x2</td><td></td></tr>
+<tr><td><code>homeAsUp</code></td><td>0x4</td><td></td></tr>
+<tr><td><code>showTitle</code></td><td>0x8</td><td></td></tr>
+<tr><td><code>showCustom</code></td><td>0x10</td><td></td></tr>
+</table>
+         */
+        public static final int abDisplayOptions=0x7f010018;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int abDivider=0x7f01001f;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+         */
+        public static final int abHeight=0x7f010023;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abHomeLayout=0x7f010024;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abIcon=0x7f01001d;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abIndeterminateProgressStyle=0x7f010026;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int abItemPadding=0x7f010028;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abLogo=0x7f01001e;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td></td></tr>
+<tr><td><code>listMode</code></td><td>1</td><td></td></tr>
+<tr><td><code>tabMode</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int abNavigationMode=0x7f010017;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int abProgressBarPadding=0x7f010027;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abProgressBarStyle=0x7f010025;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int abSubtitle=0x7f01001a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abSubtitleTextStyle=0x7f01001c;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int abTitle=0x7f010019;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int abTitleTextStyle=0x7f01001b;
+        /** attr name="actionBarStyle" format="reference" /
+         <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
+</table>
+         */
+        public static final int actionBarSize=0x7f010007;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabBarStyle=0x7f010003;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabStyle=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionBarTabTextStyle=0x7f010004;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionButtonStyle=0x7f010001;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionDropDownStyle=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionHomeButtonStyle=0x7f010006;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionMenuTextAppearance=0x7f010008;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int actionMenuTextColor=0x7f010009;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeBackground=0x7f01000b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeCloseButtonStyle=0x7f01000a;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionModeCloseDrawable=0x7f01000c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionOverflowButtonStyle=0x7f010005;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int actionSpinnerItemStyle=0x7f010012;
         /**  Whether or not the indicators should be centered. 
          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -17,7 +209,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int centered=0x7f010004;
+        public static final int centered=0x7f01002d;
         /**  Screen edge padding. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -28,7 +220,21 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int clipPadding=0x7f01000c;
+        public static final int clipPadding=0x7f010035;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int dropDownListViewStyle=0x7f01000f;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int dropdownListPreferredItemHeight=0x7f010011;
         /**  Color of the filled circle that represents the current page. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -38,7 +244,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int fillColor=0x7f010005;
+        public static final int fillColor=0x7f01002e;
         /**  Color of the footer line and indicator. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -48,7 +254,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int footerColor=0x7f01000d;
+        public static final int footerColor=0x7f010036;
         /**  Height of the indicator above the footer line. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -59,7 +265,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int footerIndicatorHeight=0x7f010010;
+        public static final int footerIndicatorHeight=0x7f010039;
         /**  Style of the indicator. Default is triangle. 
          <p>Must be one of the following constant values.</p>
 <table>
@@ -72,7 +278,7 @@ containing a value of this type.
 <tr><td><code>underline</code></td><td>2</td><td></td></tr>
 </table>
          */
-        public static final int footerIndicatorStyle=0x7f01000f;
+        public static final int footerIndicatorStyle=0x7f010038;
         /**  Left and right padding of the underline indicator. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -83,7 +289,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int footerIndicatorUnderlinePadding=0x7f010011;
+        public static final int footerIndicatorUnderlinePadding=0x7f01003a;
         /**  Height of the footer line. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -94,7 +300,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int footerLineHeight=0x7f01000e;
+        public static final int footerLineHeight=0x7f010037;
         /**  Padding between the bottom of the title and the footer. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -105,7 +311,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int footerPadding=0x7f010012;
+        public static final int footerPadding=0x7f01003b;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int homeAsUpIndicator=0x7f01000d;
         /**  Orientation of the indicator. 
          <p>Must be one of the following constant values.</p>
 <table>
@@ -117,7 +327,7 @@ containing a value of this type.
 <tr><td><code>vertical</code></td><td>1</td><td></td></tr>
 </table>
          */
-        public static final int orientation=0x7f010007;
+        public static final int orientation=0x7f010030;
         /**  Color of the filled circles that represents pages. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -127,7 +337,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int pageColor=0x7f010006;
+        public static final int pageColor=0x7f01002f;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int popupMenuStyle=0x7f010010;
         /**  Radius of the circles. This is also the spacing between circles. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -138,7 +352,11 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int radius=0x7f010008;
+        public static final int radius=0x7f010031;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int selectableItemBackground=0x7f01000e;
         /**  Whether or not the selected item is displayed as bold. 
          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -147,7 +365,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int selectedBold=0x7f010014;
+        public static final int selectedBold=0x7f01003d;
         /**  Color of the selected title. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -157,7 +375,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int selectedColor=0x7f010013;
+        public static final int selectedColor=0x7f01003c;
         /**  Whether or not the selected indicator snaps to the circles. 
          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
@@ -166,7 +384,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int snap=0x7f010009;
+        public static final int snap=0x7f010032;
         /**  Color of the open circles. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -176,7 +394,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int strokeColor=0x7f01000a;
+        public static final int strokeColor=0x7f010033;
         /**  Width of the stroke used to draw the circles. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -187,7 +405,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int strokeWidth=0x7f01000b;
+        public static final int strokeWidth=0x7f010034;
         /**  Color of regular titles. 
          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
@@ -197,7 +415,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int textColor=0x7f010015;
+        public static final int textColor=0x7f01003e;
         /**  Size of title text. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -208,7 +426,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int textSize=0x7f010016;
+        public static final int textSize=0x7f01003f;
         /**  Padding between titles when bumping into each other. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -219,7 +437,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int titlePadding=0x7f010017;
+        public static final int titlePadding=0x7f010040;
         /**  Padding between titles and the top of the View. 
          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -230,266 +448,420 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int topPadding=0x7f010018;
+        public static final int topPadding=0x7f010041;
         /**  Style of the circle indicator. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int vpiCirclePageIndicatorStyle=0x7f010000;
+        public static final int vpiCirclePageIndicatorStyle=0x7f010029;
         /**  Style of the tab indicator. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int vpiTabPageIndicatorStyle=0x7f010002;
+        public static final int vpiTabPageIndicatorStyle=0x7f01002b;
         /**  Style of the text in a tab. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int vpiTabTextStyle=0x7f010003;
+        public static final int vpiTabTextStyle=0x7f01002c;
         /**  Style of the title indicator. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static final int vpiTitlePageIndicatorStyle=0x7f010001;
+        public static final int vpiTitlePageIndicatorStyle=0x7f01002a;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionBar=0x7f010014;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionBarOverlay=0x7f010015;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowActionModeOverlay=0x7f010016;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int windowNoTitle=0x7f010013;
     }
     public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f070000;
-        public static final int default_circle_indicator_snap=0x7f070001;
-        public static final int default_title_indicator_selected_bold=0x7f070002;
+        /**  Whether action menu items should obey the "withText" showAsAction
+         flag. This may be set to false for situations where space is
+         extremely limited. 
+ Whether action menu items should obey the "withText" showAsAction
+         flag. This may be set to false for situations where space is
+         extremely limited. 
+         */
+        public static final int abs__config_allowActionMenuItemTextWithIcon=0x7f060000;
+        public static final int default_circle_indicator_centered=0x7f060001;
+        public static final int default_circle_indicator_snap=0x7f060002;
+        public static final int default_title_indicator_selected_bold=0x7f060003;
     }
     public static final class color {
-        public static final int default_circle_indicator_fill_color=0x7f060008;
-        public static final int default_circle_indicator_page_color=0x7f060009;
-        public static final int default_circle_indicator_stroke_color=0x7f06000a;
-        public static final int default_title_indicator_footer_color=0x7f06000b;
-        public static final int default_title_indicator_selected_color=0x7f06000c;
-        public static final int default_title_indicator_text_color=0x7f06000d;
-        public static final int vpi__background_holo_dark=0x7f060000;
-        public static final int vpi__background_holo_light=0x7f060001;
-        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f060004;
-        public static final int vpi__bright_foreground_disabled_holo_light=0x7f060005;
-        public static final int vpi__bright_foreground_holo_dark=0x7f060002;
-        public static final int vpi__bright_foreground_holo_light=0x7f060003;
-        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f060006;
-        public static final int vpi__bright_foreground_inverse_holo_light=0x7f060007;
-        public static final int vpi__dark_theme=0x7f06000e;
-        public static final int vpi__light_theme=0x7f06000f;
+        public static final int abs__item_bg=0x7f07000f;
+        public static final int abs__item_focused=0x7f070000;
+        public static final int abs__tab_text_color_dark=0x7f070010;
+        public static final int abs__tab_text_color_light=0x7f070011;
+        public static final int default_circle_indicator_fill_color=0x7f070009;
+        public static final int default_circle_indicator_page_color=0x7f07000a;
+        public static final int default_circle_indicator_stroke_color=0x7f07000b;
+        public static final int default_title_indicator_footer_color=0x7f07000c;
+        public static final int default_title_indicator_selected_color=0x7f07000d;
+        public static final int default_title_indicator_text_color=0x7f07000e;
+        public static final int vpi__background_holo_dark=0x7f070001;
+        public static final int vpi__background_holo_light=0x7f070002;
+        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f070005;
+        public static final int vpi__bright_foreground_disabled_holo_light=0x7f070006;
+        public static final int vpi__bright_foreground_holo_dark=0x7f070003;
+        public static final int vpi__bright_foreground_holo_light=0x7f070004;
+        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f070007;
+        public static final int vpi__bright_foreground_inverse_holo_light=0x7f070008;
+        public static final int vpi__dark_theme=0x7f070012;
+        public static final int vpi__light_theme=0x7f070013;
     }
     public static final class dimen {
-        public static final int default_circle_indicator_radius=0x7f090000;
-        public static final int default_circle_indicator_stroke_width=0x7f090001;
-        public static final int default_title_indicator_clip_padding=0x7f090002;
-        public static final int default_title_indicator_footer_indicator_height=0x7f090004;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f090005;
-        public static final int default_title_indicator_footer_line_height=0x7f090003;
-        public static final int default_title_indicator_footer_padding=0x7f090006;
-        public static final int default_title_indicator_text_size=0x7f090007;
-        public static final int default_title_indicator_title_padding=0x7f090008;
-        public static final int default_title_indicator_top_padding=0x7f090009;
+        /**  Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+ Default height of an action bar. 
+         */
+        public static final int abs__action_bar_default_height=0x7f0a0000;
+        /**  Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+ Bottom margin for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_bottom_margin=0x7f0a0004;
+        /**  Text size for action bar subtitles 
+ Text size for action bar subtitles 
+ Text size for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_text_size=0x7f0a0002;
+        /**  Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+ Top margin for action bar subtitles 
+         */
+        public static final int abs__action_bar_subtitle_top_margin=0x7f0a0003;
+        /**  Text size for action bar titles 
+ Text size for action bar titles 
+ Text size for action bar titles 
+         */
+        public static final int abs__action_bar_title_text_size=0x7f0a0001;
+        public static final int default_circle_indicator_radius=0x7f0a0005;
+        public static final int default_circle_indicator_stroke_width=0x7f0a0006;
+        public static final int default_title_indicator_clip_padding=0x7f0a0007;
+        public static final int default_title_indicator_footer_indicator_height=0x7f0a0009;
+        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f0a000a;
+        public static final int default_title_indicator_footer_line_height=0x7f0a0008;
+        public static final int default_title_indicator_footer_padding=0x7f0a000b;
+        public static final int default_title_indicator_text_size=0x7f0a000c;
+        public static final int default_title_indicator_title_padding=0x7f0a000d;
+        public static final int default_title_indicator_top_padding=0x7f0a000e;
     }
     public static final class drawable {
-        public static final int checked=0x7f020000;
-        public static final int cinema_data_divider=0x7f020001;
-        public static final int custom_tab_indicator=0x7f020002;
-        public static final int custom_tab_indicator_focused=0x7f020003;
-        public static final int custom_tab_indicator_selected=0x7f020004;
-        public static final int custom_tab_indicator_selected_focused=0x7f020005;
-        public static final int custom_tab_indicator_selected_pressed=0x7f020006;
-        public static final int custom_tab_indicator_unselected=0x7f020007;
-        public static final int custom_tab_indicator_unselected_focused=0x7f020008;
-        public static final int custom_tab_indicator_unselected_pressed=0x7f020009;
-        public static final int ic_actors=0x7f02000a;
-        public static final int ic_arrow_left=0x7f02000b;
-        public static final int ic_arrow_right=0x7f02000c;
-        public static final int ic_blank_movie=0x7f02000d;
-        public static final int ic_call_white=0x7f02000e;
-        public static final int ic_day=0x7f02000f;
-        public static final int ic_genres=0x7f020010;
-        public static final int ic_home=0x7f020011;
-        public static final int ic_menu_actors=0x7f020012;
-        public static final int ic_menu_call=0x7f020013;
-        public static final int ic_menu_home=0x7f020014;
-        public static final int ic_menu_info_details=0x7f020015;
-        public static final int ic_menu_mapmode=0x7f020016;
-        public static final int ic_menu_share=0x7f020017;
-        public static final int ic_menu_sort_by_size=0x7f020018;
-        public static final int ic_menu_today=0x7f020019;
-        public static final int ic_more=0x7f02001a;
-        public static final int ic_more_google=0x7f02001b;
-        public static final int ic_more_wiki=0x7f02001c;
-        public static final int ic_more_yandex=0x7f02001d;
-        public static final int ic_movies=0x7f02001e;
-        public static final int ic_place=0x7f02001f;
-        public static final int ic_place_white=0x7f020020;
-        public static final int ic_share=0x7f020021;
-        public static final int ic_whats_new=0x7f020022;
-        public static final int icon=0x7f020023;
-        public static final int img_loading=0x7f020024;
-        public static final int list_divider=0x7f020025;
-        public static final int movie_data_divider=0x7f020026;
-        public static final int picture_border=0x7f020027;
-        public static final int splash=0x7f020028;
-        public static final int vpi__tab_indicator=0x7f020029;
-        public static final int vpi__tab_selected_focused_holo=0x7f02002a;
-        public static final int vpi__tab_selected_holo=0x7f02002b;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02002c;
-        public static final int vpi__tab_unselected_focused_holo=0x7f02002d;
-        public static final int vpi__tab_unselected_holo=0x7f02002e;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f02002f;
+        public static final int abs__ab_solid_dark_holo=0x7f020000;
+        public static final int abs__ab_stacked_transparent_dark_holo=0x7f020001;
+        public static final int abs__ab_stacked_transparent_light_holo=0x7f020002;
+        public static final int abs__action_item_divider=0x7f020003;
+        public static final int abs__cab_background_holo_dark=0x7f020004;
+        public static final int abs__cab_background_holo_light=0x7f020005;
+        public static final int abs__cab_ic_close_focused_holo=0x7f020006;
+        public static final int abs__cab_ic_close_holo=0x7f020007;
+        public static final int abs__cab_ic_close_normal_holo=0x7f020008;
+        public static final int abs__cab_ic_close_pressed_holo=0x7f020009;
+        public static final int abs__ic_ab_back_holo_dark=0x7f02000a;
+        public static final int abs__ic_ab_back_holo_light=0x7f02000b;
+        public static final int abs__item_background_holo_dark=0x7f02000c;
+        public static final int abs__item_background_holo_light=0x7f02000d;
+        public static final int abs__list_focused_holo=0x7f02000e;
+        public static final int abs__list_longpressed_holo=0x7f02000f;
+        public static final int abs__list_pressed_holo_dark=0x7f020010;
+        public static final int abs__list_pressed_holo_light=0x7f020011;
+        public static final int abs__list_selector_background_transition_holo_dark=0x7f020012;
+        public static final int abs__list_selector_background_transition_holo_light=0x7f020013;
+        public static final int abs__list_selector_disabled_holo_dark=0x7f020014;
+        public static final int abs__list_selector_disabled_holo_light=0x7f020015;
+        public static final int abs__spinner_background_holo_dark=0x7f020016;
+        public static final int abs__spinner_background_holo_light=0x7f020017;
+        public static final int abs__spinner_default_holo_dark=0x7f020018;
+        public static final int abs__spinner_default_holo_light=0x7f020019;
+        public static final int abs__spinner_disabled_holo_dark=0x7f02001a;
+        public static final int abs__spinner_disabled_holo_light=0x7f02001b;
+        public static final int abs__spinner_focused_holo_dark=0x7f02001c;
+        public static final int abs__spinner_focused_holo_light=0x7f02001d;
+        public static final int abs__spinner_pressed_holo_dark=0x7f02001e;
+        public static final int abs__spinner_pressed_holo_light=0x7f02001f;
+        public static final int abs__tab_indicator_holo=0x7f020020;
+        public static final int abs__tab_selected_focused_holo=0x7f020021;
+        public static final int abs__tab_selected_holo=0x7f020022;
+        public static final int abs__tab_selected_pressed_focused_holo=0x7f020023;
+        public static final int abs__tab_selected_pressed_holo=0x7f020024;
+        public static final int abs__tab_unselected_focused_holo=0x7f020025;
+        public static final int abs__tab_unselected_holo=0x7f020026;
+        public static final int abs__tab_unselected_pressed_focused_holo=0x7f020027;
+        public static final int abs__tab_unselected_pressed_holo=0x7f020028;
+        public static final int checked=0x7f020029;
+        public static final int cinema_data_divider=0x7f02002a;
+        public static final int custom_tab_indicator=0x7f02002b;
+        public static final int custom_tab_indicator_focused=0x7f02002c;
+        public static final int custom_tab_indicator_selected=0x7f02002d;
+        public static final int custom_tab_indicator_selected_focused=0x7f02002e;
+        public static final int custom_tab_indicator_selected_pressed=0x7f02002f;
+        public static final int custom_tab_indicator_unselected=0x7f020030;
+        public static final int custom_tab_indicator_unselected_focused=0x7f020031;
+        public static final int custom_tab_indicator_unselected_pressed=0x7f020032;
+        public static final int ic_actors=0x7f020033;
+        public static final int ic_arrow_left=0x7f020034;
+        public static final int ic_arrow_right=0x7f020035;
+        public static final int ic_blank_movie=0x7f020036;
+        public static final int ic_call_white=0x7f020037;
+        public static final int ic_day=0x7f020038;
+        public static final int ic_genres=0x7f020039;
+        public static final int ic_home=0x7f02003a;
+        public static final int ic_menu_actors=0x7f02003b;
+        public static final int ic_menu_call=0x7f02003c;
+        public static final int ic_menu_home=0x7f02003d;
+        public static final int ic_menu_info_details=0x7f02003e;
+        public static final int ic_menu_mapmode=0x7f02003f;
+        public static final int ic_menu_share=0x7f020040;
+        public static final int ic_menu_sort_by_size=0x7f020041;
+        public static final int ic_menu_today=0x7f020042;
+        public static final int ic_more=0x7f020043;
+        public static final int ic_more_google=0x7f020044;
+        public static final int ic_more_wiki=0x7f020045;
+        public static final int ic_more_yandex=0x7f020046;
+        public static final int ic_movies=0x7f020047;
+        public static final int ic_place=0x7f020048;
+        public static final int ic_place_white=0x7f020049;
+        public static final int ic_share=0x7f02004a;
+        public static final int ic_whats_new=0x7f02004b;
+        public static final int icon=0x7f02004c;
+        public static final int img_loading=0x7f02004d;
+        public static final int list_divider=0x7f02004e;
+        public static final int movie_data_divider=0x7f02004f;
+        public static final int picture_border=0x7f020050;
+        public static final int splash=0x7f020051;
+        public static final int vpi__tab_indicator=0x7f020052;
+        public static final int vpi__tab_selected_focused_holo=0x7f020053;
+        public static final int vpi__tab_selected_holo=0x7f020054;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020055;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020056;
+        public static final int vpi__tab_unselected_holo=0x7f020057;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020058;
     }
     public static final class id {
-        public static final int about_title=0x7f050005;
-        public static final int actor_caption_in_actor_list=0x7f05000f;
-        public static final int actor_list=0x7f050013;
-        public static final int actor_list_title=0x7f050010;
-        public static final int actor_list_title_home=0x7f050011;
-        public static final int actors_ico=0x7f05001d;
-        public static final int actors_panel=0x7f05001c;
-        public static final int advanced_movie_panel=0x7f050045;
-        public static final int app_name=0x7f050007;
-        public static final int app_version=0x7f050008;
-        public static final int call_ico=0x7f05002a;
-        public static final int cinema_address=0x7f050026;
-        public static final int cinema_address_in_cinema_list=0x7f05002f;
-        public static final int cinema_address_panel=0x7f050024;
-        public static final int cinema_caption=0x7f050022;
-        public static final int cinema_caption_in_cinema_list=0x7f05002d;
-        public static final int cinema_caption_in_movie_list=0x7f050063;
-        public static final int cinema_caption_panel=0x7f050021;
-        public static final int cinema_into=0x7f050027;
-        public static final int cinema_list=0x7f050037;
-        public static final int cinema_list_title=0x7f050032;
-        public static final int cinema_list_title_day=0x7f050035;
-        public static final int cinema_list_title_home=0x7f050034;
-        public static final int cinema_metro=0x7f050028;
-        public static final int cinema_panel_in_movie_list=0x7f050062;
-        public static final int cinema_phone=0x7f05002b;
-        public static final int cinema_phone_panel=0x7f050029;
-        public static final int cinema_url=0x7f050023;
-        public static final int cinemas_ico=0x7f050019;
-        public static final int cinemas_panel=0x7f050018;
-        public static final int city_caption=0x7f050015;
-        public static final int city_caption_in_city_list=0x7f050039;
-        public static final int city_checked_icon=0x7f05003a;
-        public static final int city_list=0x7f05003b;
-        public static final int copyright=0x7f050009;
-        public static final int distance=0x7f05002e;
-        public static final int email=0x7f05000a;
-        public static final int error_message=0x7f050067;
-        public static final int error_string=0x7f050068;
-        public static final int fav_icon_in_actor_list=0x7f05000d;
-        public static final int fav_icon_in_cinema_info=0x7f050020;
-        public static final int fav_icon_in_cinema_list=0x7f05002c;
-        public static final int genre_caption_in_genre_list=0x7f05003c;
-        public static final int genre_list=0x7f05003e;
-        public static final int genres_ico=0x7f05001f;
-        public static final int genres_panel=0x7f05001e;
-        public static final int horizontal=0x7f050000;
-        public static final int icons_copyright=0x7f05000b;
-        public static final int icons_url=0x7f05000c;
-        public static final int imdb=0x7f05004b;
-        public static final int loading_error_panel=0x7f050066;
-        public static final int loading_schedule_panel=0x7f050069;
-        public static final int loading_schedules_progress=0x7f05006a;
-        public static final int map_ico=0x7f050025;
-        public static final int menu_about=0x7f05006c;
-        public static final int menu_call=0x7f05006d;
-        public static final int menu_cinema_sort=0x7f05006e;
-        public static final int menu_day=0x7f050077;
-        public static final int menu_home=0x7f050072;
-        public static final int menu_movie_sort=0x7f050073;
-        public static final int menu_share=0x7f05007a;
-        public static final int menu_show_actors=0x7f05007b;
-        public static final int menu_show_map=0x7f05007c;
-        public static final int more_icon_in_actor_list=0x7f05000e;
-        public static final int movie_actor_in_movie_list=0x7f05005b;
-        public static final int movie_actors=0x7f050053;
-        public static final int movie_actors_panel=0x7f050052;
-        public static final int movie_caption=0x7f050048;
-        public static final int movie_caption_in_actor_list=0x7f050012;
-        public static final int movie_caption_in_cinema_list=0x7f050036;
-        public static final int movie_caption_in_genre_list=0x7f05003d;
-        public static final int movie_caption_in_movie_list=0x7f050059;
-        public static final int movie_description=0x7f050055;
-        public static final int movie_description_panel=0x7f050054;
-        public static final int movie_genre=0x7f050051;
-        public static final int movie_genre_in_movie_list=0x7f05005a;
-        public static final int movie_genre_panel=0x7f050050;
-        public static final int movie_icon=0x7f050047;
-        public static final int movie_icon_loading=0x7f050046;
-        public static final int movie_length=0x7f050049;
-        public static final int movie_list=0x7f050065;
-        public static final int movie_list_icon=0x7f050058;
-        public static final int movie_list_icon_loading=0x7f050057;
-        public static final int movie_list_icon_panel=0x7f050056;
-        public static final int movie_list_title=0x7f05005f;
-        public static final int movie_list_title_day=0x7f050061;
-        public static final int movie_list_title_home=0x7f050060;
-        public static final int movie_only_tomorrow_in_movie_list=0x7f05005c;
-        public static final int movie_schedule_enum_panel=0x7f05004d;
-        public static final int movie_schedule_in_cinema_list=0x7f050030;
-        public static final int movie_schedule_in_movie_list=0x7f05005d;
-        public static final int movie_title=0x7f050041;
-        public static final int movie_title_day=0x7f050044;
-        public static final int movie_title_home=0x7f050042;
-        public static final int movie_title_share=0x7f050043;
-        public static final int movie_trailer_url=0x7f05004c;
-        public static final int movies_ico=0x7f05001b;
-        public static final int movies_panel=0x7f05001a;
-        public static final int no_schedule=0x7f050038;
-        public static final int none=0x7f050002;
-        public static final int rating=0x7f05004a;
-        public static final int schedule_enum_for_one_cinema=0x7f05004f;
-        public static final int schedule_title=0x7f05004e;
-        public static final int select_cinema_ico=0x7f050064;
-        public static final int select_city_panel=0x7f050014;
-        public static final int slider=0x7f050040;
-        public static final int splash_icon=0x7f050006;
-        public static final int submenu_cinema_sort_by_caption=0x7f05006f;
-        public static final int submenu_cinema_sort_by_distance=0x7f050071;
-        public static final int submenu_cinema_sort_by_favourite=0x7f050070;
-        public static final int submenu_movie_sort_by_caption=0x7f050074;
-        public static final int submenu_movie_sort_by_popular=0x7f050075;
-        public static final int submenu_movie_sort_by_rating=0x7f050076;
-        public static final int submenu_select_day_today=0x7f050078;
-        public static final int submenu_select_day_tomorrow=0x7f050079;
-        public static final int time_left_in_cinema_list=0x7f050031;
-        public static final int time_left_in_movie_list=0x7f05005e;
-        public static final int titlebar_caption=0x7f050033;
-        public static final int titles=0x7f05003f;
-        public static final int triangle=0x7f050003;
-        public static final int underline=0x7f050004;
-        public static final int vertical=0x7f050001;
-        public static final int whats_new_grid=0x7f05006b;
-        public static final int whats_new_ico=0x7f050017;
-        public static final int whats_new_panel=0x7f050016;
+        public static final int about_title=0x7f05000f;
+        public static final int abs__action_bar=0x7f050028;
+        public static final int abs__action_bar_container=0x7f050027;
+        public static final int abs__action_bar_subtitle=0x7f050024;
+        public static final int abs__action_bar_title=0x7f050023;
+        public static final int abs__action_menu_presenter=0x7f050009;
+        public static final int abs__actions=0x7f050018;
+        public static final int abs__content=0x7f050029;
+        public static final int abs__custom=0x7f05001b;
+        public static final int abs__home=0x7f05001e;
+        public static final int abs__home_wrapper=0x7f050017;
+        public static final int abs__imageButton=0x7f050025;
+        public static final int abs__iprogress=0x7f050019;
+        public static final int abs__nav_list=0x7f05001a;
+        public static final int abs__nav_tabs=0x7f05001c;
+        public static final int abs__nav_tabs_layout=0x7f05001f;
+        public static final int abs__tab=0x7f050021;
+        public static final int abs__tab_custom=0x7f050022;
+        public static final int abs__tab_icon=0x7f050020;
+        public static final int abs__textButton=0x7f050026;
+        public static final int abs__up=0x7f05001d;
+        public static final int actor_caption_in_actor_list=0x7f05002c;
+        public static final int actor_list=0x7f050030;
+        public static final int actor_list_title=0x7f05002d;
+        public static final int actor_list_title_home=0x7f05002e;
+        public static final int actors_ico=0x7f05003a;
+        public static final int actors_panel=0x7f050039;
+        public static final int advanced_movie_panel=0x7f050063;
+        public static final int app_name=0x7f050011;
+        public static final int app_version=0x7f050012;
+        public static final int call_ico=0x7f050047;
+        public static final int cinema_address=0x7f050043;
+        public static final int cinema_address_in_cinema_list=0x7f05004c;
+        public static final int cinema_address_panel=0x7f050041;
+        public static final int cinema_caption=0x7f05003f;
+        public static final int cinema_caption_in_cinema_list=0x7f05004a;
+        public static final int cinema_caption_in_movie_list=0x7f050081;
+        public static final int cinema_caption_panel=0x7f05003e;
+        public static final int cinema_into=0x7f050044;
+        public static final int cinema_list=0x7f050054;
+        public static final int cinema_list_title=0x7f05004f;
+        public static final int cinema_list_title_day=0x7f050052;
+        public static final int cinema_list_title_home=0x7f050051;
+        public static final int cinema_metro=0x7f050045;
+        public static final int cinema_panel_in_movie_list=0x7f050080;
+        public static final int cinema_phone=0x7f050048;
+        public static final int cinema_phone_panel=0x7f050046;
+        public static final int cinema_url=0x7f050040;
+        public static final int cinemas_ico=0x7f050036;
+        public static final int cinemas_panel=0x7f050035;
+        public static final int city_caption=0x7f050032;
+        public static final int city_caption_in_city_list=0x7f050056;
+        public static final int city_checked_icon=0x7f050057;
+        public static final int city_list=0x7f050058;
+        public static final int copyright=0x7f050013;
+        public static final int distance=0x7f05004b;
+        public static final int email=0x7f050014;
+        public static final int error_message=0x7f050085;
+        public static final int error_string=0x7f050086;
+        public static final int fav_icon_in_actor_list=0x7f05002a;
+        public static final int fav_icon_in_cinema_info=0x7f05003d;
+        public static final int fav_icon_in_cinema_list=0x7f050049;
+        public static final int genre_caption_in_genre_list=0x7f050059;
+        public static final int genre_list=0x7f05005b;
+        public static final int genres_ico=0x7f05003c;
+        public static final int genres_panel=0x7f05003b;
+        public static final int homeAsUp=0x7f050006;
+        public static final int horizontal=0x7f05000a;
+        public static final int icons_copyright=0x7f050015;
+        public static final int icons_url=0x7f050016;
+        public static final int imdb=0x7f050069;
+        public static final int listMode=0x7f050002;
+        public static final int loading_error_panel=0x7f050084;
+        public static final int loading_schedule_panel=0x7f050087;
+        public static final int loading_schedules_progress=0x7f050088;
+        public static final int map_ico=0x7f050042;
+        public static final int menu_about=0x7f05008a;
+        public static final int menu_call=0x7f05008b;
+        public static final int menu_cinema_sort=0x7f05008c;
+        public static final int menu_day=0x7f050095;
+        public static final int menu_home=0x7f050090;
+        public static final int menu_movie_sort=0x7f050091;
+        public static final int menu_share=0x7f050098;
+        public static final int menu_show_actors=0x7f050099;
+        public static final int menu_show_map=0x7f05009a;
+        public static final int more_icon_in_actor_list=0x7f05002b;
+        public static final int movie_actor_in_movie_list=0x7f050079;
+        public static final int movie_actors=0x7f050071;
+        public static final int movie_actors_panel=0x7f050070;
+        public static final int movie_caption=0x7f050066;
+        public static final int movie_caption_in_actor_list=0x7f05002f;
+        public static final int movie_caption_in_cinema_list=0x7f050053;
+        public static final int movie_caption_in_genre_list=0x7f05005a;
+        public static final int movie_caption_in_movie_list=0x7f050077;
+        public static final int movie_description=0x7f050073;
+        public static final int movie_description_panel=0x7f050072;
+        public static final int movie_genre=0x7f05006f;
+        public static final int movie_genre_in_movie_list=0x7f050078;
+        public static final int movie_genre_panel=0x7f05006e;
+        public static final int movie_icon=0x7f050065;
+        public static final int movie_icon_loading=0x7f050064;
+        public static final int movie_length=0x7f050067;
+        public static final int movie_list=0x7f050083;
+        public static final int movie_list_icon=0x7f050076;
+        public static final int movie_list_icon_loading=0x7f050075;
+        public static final int movie_list_icon_panel=0x7f050074;
+        public static final int movie_list_title=0x7f05007d;
+        public static final int movie_list_title_day=0x7f05007f;
+        public static final int movie_list_title_home=0x7f05007e;
+        public static final int movie_only_tomorrow_in_movie_list=0x7f05007a;
+        public static final int movie_schedule_enum_panel=0x7f05006b;
+        public static final int movie_schedule_in_cinema_list=0x7f05004d;
+        public static final int movie_schedule_in_movie_list=0x7f05007b;
+        public static final int movie_title=0x7f05005f;
+        public static final int movie_title_day=0x7f050062;
+        public static final int movie_title_home=0x7f050060;
+        public static final int movie_title_share=0x7f050061;
+        public static final int movie_trailer_url=0x7f05006a;
+        public static final int movies_ico=0x7f050038;
+        public static final int movies_panel=0x7f050037;
+        public static final int no_schedule=0x7f050055;
+        public static final int none=0x7f05000c;
+        public static final int normal=0x7f050001;
+        public static final int rating=0x7f050068;
+        public static final int schedule_enum_for_one_cinema=0x7f05006d;
+        public static final int schedule_title=0x7f05006c;
+        public static final int select_cinema_ico=0x7f050082;
+        public static final int select_city_panel=0x7f050031;
+        public static final int showCustom=0x7f050008;
+        public static final int showHome=0x7f050005;
+        public static final int showTitle=0x7f050007;
+        public static final int slider=0x7f05005d;
+        public static final int splash_icon=0x7f050010;
+        public static final int submenu_cinema_sort_by_caption=0x7f05008d;
+        public static final int submenu_cinema_sort_by_distance=0x7f05008f;
+        public static final int submenu_cinema_sort_by_favourite=0x7f05008e;
+        public static final int submenu_movie_sort_by_caption=0x7f050092;
+        public static final int submenu_movie_sort_by_popular=0x7f050093;
+        public static final int submenu_movie_sort_by_rating=0x7f050094;
+        public static final int submenu_select_day_today=0x7f050096;
+        public static final int submenu_select_day_tomorrow=0x7f050097;
+        public static final int tabMode=0x7f050003;
+        public static final int tabs=0x7f05005e;
+        public static final int time_left_in_cinema_list=0x7f05004e;
+        public static final int time_left_in_movie_list=0x7f05007c;
+        public static final int titlebar_caption=0x7f050050;
+        public static final int titles=0x7f05005c;
+        public static final int triangle=0x7f05000d;
+        public static final int underline=0x7f05000e;
+        public static final int useLogo=0x7f050004;
+        public static final int vertical=0x7f05000b;
+        public static final int whats_new_grid=0x7f050089;
+        public static final int whats_new_ico=0x7f050034;
+        public static final int whats_new_panel=0x7f050033;
+        public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
-        public static final int default_circle_indicator_orientation=0x7f080000;
-        public static final int default_title_indicator_footer_indicator_style=0x7f080001;
+        public static final int abs__max_action_buttons=0x7f080000;
+        public static final int default_circle_indicator_orientation=0x7f080001;
+        public static final int default_title_indicator_footer_indicator_style=0x7f080002;
     }
     public static final class layout {
         public static final int about=0x7f030000;
-        public static final int actor_item=0x7f030001;
-        public static final int actor_list=0x7f030002;
-        public static final int categories=0x7f030003;
-        public static final int cinema_info=0x7f030004;
-        public static final int cinema_item=0x7f030005;
-        public static final int cinema_item_with_schedule=0x7f030006;
-        public static final int cinema_list=0x7f030007;
-        public static final int city_item=0x7f030008;
-        public static final int city_list=0x7f030009;
-        public static final int genre_item=0x7f03000a;
-        public static final int genre_list=0x7f03000b;
-        public static final int main=0x7f03000c;
-        public static final int movie_info=0x7f03000d;
-        public static final int movie_item=0x7f03000e;
-        public static final int movie_item_w_schedule=0x7f03000f;
-        public static final int movie_list=0x7f030010;
-        public static final int poster_item=0x7f030011;
-        public static final int splash_screen=0x7f030012;
-        public static final int vpi__tab=0x7f030013;
-        public static final int whats_new=0x7f030014;
+        public static final int abs__action_bar=0x7f030001;
+        public static final int abs__action_bar_home=0x7f030002;
+        public static final int abs__action_bar_inline=0x7f030003;
+        public static final int abs__action_bar_tab_layout=0x7f030004;
+        public static final int abs__action_bar_title_item=0x7f030005;
+        public static final int abs__action_menu_item_layout=0x7f030006;
+        public static final int abs__action_menu_layout=0x7f030007;
+        public static final int abs__screen_action_bar=0x7f030008;
+        public static final int abs__screen_action_bar_overlay=0x7f030009;
+        public static final int abs__screen_simple=0x7f03000a;
+        public static final int abs__simple_spinner_item=0x7f03000b;
+        public static final int actor_item=0x7f03000c;
+        public static final int actor_list=0x7f03000d;
+        public static final int categories=0x7f03000e;
+        public static final int cinema_info=0x7f03000f;
+        public static final int cinema_item=0x7f030010;
+        public static final int cinema_item_with_schedule=0x7f030011;
+        public static final int cinema_list=0x7f030012;
+        public static final int city_item=0x7f030013;
+        public static final int city_list=0x7f030014;
+        public static final int genre_item=0x7f030015;
+        public static final int genre_list=0x7f030016;
+        public static final int main=0x7f030017;
+        public static final int movie_info=0x7f030018;
+        public static final int movie_item=0x7f030019;
+        public static final int movie_item_w_schedule=0x7f03001a;
+        public static final int movie_list=0x7f03001b;
+        public static final int poster_item=0x7f03001c;
+        public static final int splash_screen=0x7f03001d;
+        public static final int vpi__tab=0x7f03001e;
+        public static final int whats_new=0x7f03001f;
     }
     public static final class menu {
         public static final int about_menu=0x7f0c0000;
@@ -507,152 +879,186 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int cities=0x7f040000;
     }
     public static final class string {
-        public static final int about_caption=0x7f0b0015;
-        public static final int actors=0x7f0b001b;
-        public static final int actors_caption=0x7f0b0013;
-        public static final int app_name=0x7f0b0000;
-        public static final int app_version=0x7f0b0001;
-        public static final int app_version_code=0x7f0b0002;
-        public static final int bad_response=0x7f0b000c;
-        public static final int categories_caption=0x7f0b000e;
-        public static final int cinemas_caption=0x7f0b0010;
-        public static final int cities_file=0x7f0b003f;
-        public static final int copyright=0x7f0b0003;
-        public static final int copyright_icons=0x7f0b0005;
-        public static final int date=0x7f0b0027;
-        public static final int email=0x7f0b0004;
-        public static final int generate_link=0x7f0b0037;
-        public static final int generate_link_failed=0x7f0b0038;
-        public static final int genre=0x7f0b001a;
-        public static final int genres_caption=0x7f0b0014;
-        public static final int google=0x7f0b003c;
-        public static final int google_search_url=0x7f0b0046;
-        public static final int hour=0x7f0b001d;
-        public static final int icons_url=0x7f0b0006;
-        public static final int image_search_url=0x7f0b0045;
-        public static final int imdb=0x7f0b0021;
-        public static final int inf=0x7f0b003b;
-        public static final int km=0x7f0b0039;
-        public static final int loading_cities=0x7f0b000a;
-        public static final int loading_schedule=0x7f0b0009;
-        public static final int look_for_schedule=0x7f0b0020;
-        public static final int m=0x7f0b003a;
-        public static final int menu_about=0x7f0b0031;
-        public static final int menu_call=0x7f0b0033;
-        public static final int menu_home=0x7f0b0032;
-        public static final int menu_share=0x7f0b0035;
-        public static final int menu_show_map=0x7f0b0034;
-        public static final int metro_near=0x7f0b002a;
-        public static final int minute=0x7f0b001e;
-        public static final int movie_caption=0x7f0b0012;
-        public static final int movie_description=0x7f0b001c;
-        public static final int movie_length=0x7f0b0019;
-        public static final int movie_trailer_link=0x7f0b0018;
-        public static final int movies_caption=0x7f0b0011;
-        public static final int new_version=0x7f0b0008;
-        public static final int new_version_caption=0x7f0b0007;
-        public static final int no_response=0x7f0b000d;
-        public static final int no_schedule=0x7f0b0023;
-        public static final int schedule_enum=0x7f0b0022;
-        public static final int schedule_now=0x7f0b0025;
-        public static final int schedule_start_in=0x7f0b0026;
-        public static final int schedules_url=0x7f0b0040;
-        public static final int send_link=0x7f0b0036;
-        public static final int settings_url=0x7f0b0041;
-        public static final int shared_url=0x7f0b0042;
-        public static final int shared_url2=0x7f0b0043;
-        public static final int sort=0x7f0b002b;
-        public static final int sort_by_caption=0x7f0b002c;
-        public static final int sort_by_distance=0x7f0b002e;
-        public static final int sort_by_fav=0x7f0b002d;
-        public static final int sort_by_popular=0x7f0b002f;
-        public static final int sort_by_rating=0x7f0b0030;
-        public static final int today=0x7f0b0028;
-        public static final int tomorrow=0x7f0b0029;
-        public static final int try_again=0x7f0b000b;
-        public static final int unknown=0x7f0b001f;
-        public static final int unknown_schedule=0x7f0b0024;
-        public static final int wait_dialog_caption=0x7f0b0016;
-        public static final int wait_dialog_text=0x7f0b0017;
-        public static final int whats_new_caption=0x7f0b000f;
-        public static final int wiki=0x7f0b003e;
-        public static final int wiki_search_url=0x7f0b0047;
-        public static final int yandex=0x7f0b003d;
-        public static final int yandex_search_url=0x7f0b0048;
-        public static final int youtube_search_url=0x7f0b0044;
+        public static final int about_caption=0x7f090016;
+        public static final int abs__tab_under_ab_tag=0x7f090000;
+        public static final int actors=0x7f09001c;
+        public static final int actors_caption=0x7f090014;
+        public static final int app_name=0x7f090001;
+        public static final int app_version=0x7f090002;
+        public static final int app_version_code=0x7f090003;
+        public static final int bad_response=0x7f09000d;
+        public static final int categories_caption=0x7f09000f;
+        public static final int cinemas_caption=0x7f090011;
+        public static final int cities_file=0x7f090040;
+        public static final int copyright=0x7f090004;
+        public static final int copyright_icons=0x7f090006;
+        public static final int date=0x7f090028;
+        public static final int email=0x7f090005;
+        public static final int generate_link=0x7f090038;
+        public static final int generate_link_failed=0x7f090039;
+        public static final int genre=0x7f09001b;
+        public static final int genres_caption=0x7f090015;
+        public static final int google=0x7f09003d;
+        public static final int google_search_url=0x7f090047;
+        public static final int hour=0x7f09001e;
+        public static final int icons_url=0x7f090007;
+        public static final int image_search_url=0x7f090046;
+        public static final int imdb=0x7f090022;
+        public static final int inf=0x7f09003c;
+        public static final int km=0x7f09003a;
+        public static final int loading_cities=0x7f09000b;
+        public static final int loading_schedule=0x7f09000a;
+        public static final int look_for_schedule=0x7f090021;
+        public static final int m=0x7f09003b;
+        public static final int menu_about=0x7f090032;
+        public static final int menu_call=0x7f090034;
+        public static final int menu_home=0x7f090033;
+        public static final int menu_share=0x7f090036;
+        public static final int menu_show_map=0x7f090035;
+        public static final int metro_near=0x7f09002b;
+        public static final int minute=0x7f09001f;
+        public static final int movie_caption=0x7f090013;
+        public static final int movie_description=0x7f09001d;
+        public static final int movie_length=0x7f09001a;
+        public static final int movie_trailer_link=0x7f090019;
+        public static final int movies_caption=0x7f090012;
+        public static final int new_version=0x7f090009;
+        public static final int new_version_caption=0x7f090008;
+        public static final int no_response=0x7f09000e;
+        public static final int no_schedule=0x7f090024;
+        public static final int schedule_enum=0x7f090023;
+        public static final int schedule_now=0x7f090026;
+        public static final int schedule_start_in=0x7f090027;
+        public static final int schedules_url=0x7f090041;
+        public static final int send_link=0x7f090037;
+        public static final int settings_url=0x7f090042;
+        public static final int shared_url=0x7f090043;
+        public static final int shared_url2=0x7f090044;
+        public static final int sort=0x7f09002c;
+        public static final int sort_by_caption=0x7f09002d;
+        public static final int sort_by_distance=0x7f09002f;
+        public static final int sort_by_fav=0x7f09002e;
+        public static final int sort_by_popular=0x7f090030;
+        public static final int sort_by_rating=0x7f090031;
+        public static final int today=0x7f090029;
+        public static final int tomorrow=0x7f09002a;
+        public static final int try_again=0x7f09000c;
+        public static final int unknown=0x7f090020;
+        public static final int unknown_schedule=0x7f090025;
+        public static final int wait_dialog_caption=0x7f090017;
+        public static final int wait_dialog_text=0x7f090018;
+        public static final int whats_new_caption=0x7f090010;
+        public static final int wiki=0x7f09003f;
+        public static final int wiki_search_url=0x7f090048;
+        public static final int yandex=0x7f09003e;
+        public static final int yandex_search_url=0x7f090049;
+        public static final int youtube_search_url=0x7f090045;
     }
     public static final class style {
-        public static final int ActivityTitleBar=0x7f0a000c;
-        public static final int ActivityTitleBarArrow=0x7f0a000d;
-        public static final int ActivityTitleBarArrow_Left=0x7f0a000e;
-        public static final int ActivityTitleBarArrow_Right=0x7f0a000f;
-        public static final int ActivityTitleBarDay=0x7f0a0011;
-        public static final int ActivityTitleBarHome=0x7f0a0010;
-        public static final int ActivityTitleBarShare=0x7f0a0012;
-        public static final int ActivityTitleText=0x7f0a0013;
+        public static final int ActivityTitleBar=0x7f0b002c;
+        public static final int ActivityTitleBarArrow=0x7f0b002d;
+        public static final int ActivityTitleBarArrow_Left=0x7f0b002e;
+        public static final int ActivityTitleBarArrow_Right=0x7f0b002f;
+        public static final int ActivityTitleBarDay=0x7f0b0031;
+        public static final int ActivityTitleBarHome=0x7f0b0030;
+        public static final int ActivityTitleBarShare=0x7f0b0032;
+        public static final int ActivityTitleText=0x7f0b0033;
         /** <item name="android:background">#000033</item>
          */
-        public static final int Background=0x7f0a000a;
-        public static final int Background_Caption=0x7f0a000b;
-        public static final int CategoryItem=0x7f0a0015;
-        public static final int CategoryItem_Caption=0x7f0a0016;
-        public static final int CategoryItem_Caption_Actors=0x7f0a001a;
-        public static final int CategoryItem_Caption_Cinemas=0x7f0a0018;
-        public static final int CategoryItem_Caption_Genres=0x7f0a001b;
-        public static final int CategoryItem_Caption_Movies=0x7f0a0019;
-        public static final int CategoryItem_Caption_WhatsNew=0x7f0a0017;
-        public static final int CategoryItem_Image=0x7f0a001c;
-        public static final int CategoryItem_Image_Actors=0x7f0a0020;
-        public static final int CategoryItem_Image_Cinemas=0x7f0a001e;
-        public static final int CategoryItem_Image_Genres=0x7f0a0021;
-        public static final int CategoryItem_Image_Movies=0x7f0a001f;
-        public static final int CategoryItem_Image_WhatsNew=0x7f0a001d;
-        public static final int CategoryItemPanel=0x7f0a0014;
-        /** <item name="android:background">@drawable/custom_tab_indicator</item>
-         */
-        public static final int CustomTabPageIndicator=0x7f0a0008;
-        public static final int CustomTabPageIndicator_Text=0x7f0a0009;
+        public static final int Background=0x7f0b002a;
+        public static final int Background_Caption=0x7f0b002b;
+        public static final int CategoryItem=0x7f0b0035;
+        public static final int CategoryItem_Caption=0x7f0b0036;
+        public static final int CategoryItem_Caption_Actors=0x7f0b003a;
+        public static final int CategoryItem_Caption_Cinemas=0x7f0b0038;
+        public static final int CategoryItem_Caption_Genres=0x7f0b003b;
+        public static final int CategoryItem_Caption_Movies=0x7f0b0039;
+        public static final int CategoryItem_Caption_WhatsNew=0x7f0b0037;
+        public static final int CategoryItem_Image=0x7f0b003c;
+        public static final int CategoryItem_Image_Actors=0x7f0b0040;
+        public static final int CategoryItem_Image_Cinemas=0x7f0b003e;
+        public static final int CategoryItem_Image_Genres=0x7f0b0041;
+        public static final int CategoryItem_Image_Movies=0x7f0b003f;
+        public static final int CategoryItem_Image_WhatsNew=0x7f0b003d;
+        public static final int CategoryItemPanel=0x7f0b0034;
+        public static final int CustomTabPageIndicator=0x7f0b0028;
+        public static final int CustomTabPageIndicator_Text=0x7f0b0029;
+        public static final int CustomTitlePageIndicator=0x7f0b0027;
+        public static final int Internal_Widget_Sherlock_ActionBar=0x7f0b001c;
+        public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f0b001d;
         /** <item name="android:cacheColorHint">#000033</item>
          */
-        public static final int List=0x7f0a0022;
-        public static final int List_Actors=0x7f0a0026;
-        public static final int List_Cinemas=0x7f0a0023;
-        public static final int List_Cities=0x7f0a0025;
-        public static final int List_Genres=0x7f0a0027;
-        public static final int List_Movies=0x7f0a0024;
-        public static final int ListCaption=0x7f0a0028;
-        public static final int ListCaption_Actor=0x7f0a002b;
-        public static final int ListCaption_Cinema=0x7f0a0029;
-        public static final int ListCaption_Genre=0x7f0a002c;
-        public static final int ListCaption_Movie=0x7f0a002a;
-        public static final int ListItem=0x7f0a002d;
-        public static final int ListItem_Caption=0x7f0a002e;
-        public static final int ListItem_Caption_Actor=0x7f0a0031;
-        public static final int ListItem_Caption_Cinema=0x7f0a002f;
-        public static final int ListItem_Caption_City=0x7f0a0033;
-        public static final int ListItem_Caption_Genre=0x7f0a0032;
-        public static final int ListItem_Caption_Movie=0x7f0a0030;
-        public static final int ListItem_Data=0x7f0a0034;
-        public static final int ListItem_Data_CinemaAddress=0x7f0a0035;
-        public static final int ListItem_Data_CinemaDistance=0x7f0a0036;
-        public static final int ListItem_Data_CinemaSchedule=0x7f0a0037;
-        public static final int ListItem_Data_MovieActor=0x7f0a003d;
-        public static final int ListItem_Data_MovieGenre=0x7f0a0038;
-        public static final int ListItem_Data_MovieOnlyTomorrow=0x7f0a003e;
-        public static final int ListItem_Data_MovieRating=0x7f0a0039;
-        public static final int ListItem_Data_MovieRatingValue=0x7f0a003a;
-        public static final int ListItem_Data_MovieSchedule=0x7f0a003b;
+        public static final int List=0x7f0b0042;
+        public static final int List_Actors=0x7f0b0046;
+        public static final int List_Cinemas=0x7f0b0043;
+        public static final int List_Cities=0x7f0b0045;
+        public static final int List_Genres=0x7f0b0047;
+        public static final int List_Movies=0x7f0b0044;
+        public static final int ListCaption=0x7f0b0048;
+        public static final int ListCaption_Actor=0x7f0b004b;
+        public static final int ListCaption_Cinema=0x7f0b0049;
+        public static final int ListCaption_Genre=0x7f0b004c;
+        public static final int ListCaption_Movie=0x7f0b004a;
+        public static final int ListItem=0x7f0b004d;
+        public static final int ListItem_Caption=0x7f0b004e;
+        public static final int ListItem_Caption_Actor=0x7f0b0051;
+        public static final int ListItem_Caption_Cinema=0x7f0b004f;
+        public static final int ListItem_Caption_City=0x7f0b0053;
+        public static final int ListItem_Caption_Genre=0x7f0b0052;
+        public static final int ListItem_Caption_Movie=0x7f0b0050;
+        public static final int ListItem_Data=0x7f0b0054;
+        public static final int ListItem_Data_CinemaAddress=0x7f0b0055;
+        public static final int ListItem_Data_CinemaDistance=0x7f0b0056;
+        public static final int ListItem_Data_CinemaSchedule=0x7f0b0057;
+        public static final int ListItem_Data_MovieActor=0x7f0b005d;
+        public static final int ListItem_Data_MovieGenre=0x7f0b0058;
+        public static final int ListItem_Data_MovieOnlyTomorrow=0x7f0b005e;
+        public static final int ListItem_Data_MovieRating=0x7f0b0059;
+        public static final int ListItem_Data_MovieRatingValue=0x7f0b005a;
+        public static final int ListItem_Data_MovieSchedule=0x7f0b005b;
         /**  0094FF 
          */
-        public static final int ListItem_Data_MovieTimeLeft=0x7f0a003c;
-        public static final int StyledIndicators=0x7f0a0007;
-        public static final int TextAppearance_TabPageIndicator=0x7f0a0006;
-        public static final int Theme_PageIndicatorDefaults=0x7f0a0000;
-        public static final int Widget=0x7f0a0001;
-        public static final int Widget_CirclePageIndicator=0x7f0a0002;
-        public static final int Widget_TabPageIndicator=0x7f0a0004;
-        public static final int Widget_TabPageIndicator_Text=0x7f0a0005;
-        public static final int Widget_TitlePageIndicator=0x7f0a0003;
+        public static final int ListItem_Data_MovieTimeLeft=0x7f0b005c;
+        public static final int StyledIndicators=0x7f0b0026;
+        public static final int TextAppearance_TabPageIndicator=0x7f0b0025;
+        public static final int TextAppearance_Widget_Subtitle=0x7f0b001b;
+        public static final int TextAppearance_Widget_Title=0x7f0b001a;
+        public static final int Theme_PageIndicatorDefaults=0x7f0b001f;
+        public static final int Theme_Sherlock=0x7f0b0000;
+        public static final int Theme_Sherlock_Light=0x7f0b000d;
+        public static final int Widget=0x7f0b0020;
+        public static final int Widget_CirclePageIndicator=0x7f0b0021;
+        public static final int Widget_Sherlock_ActionBar_TabBar=0x7f0b0001;
+        public static final int Widget_Sherlock_ActionBar_TabText=0x7f0b0003;
+        public static final int Widget_Sherlock_ActionBar_TabView=0x7f0b0002;
+        public static final int Widget_Sherlock_ActionButton=0x7f0b0004;
+        public static final int Widget_Sherlock_ActionButton_CloseMode=0x7f0b0006;
+        public static final int Widget_Sherlock_ActionButton_Home=0x7f0b0007;
+        public static final int Widget_Sherlock_ActionButton_Overflow=0x7f0b0008;
+        public static final int Widget_Sherlock_Light_ActionBar_TabBar=0x7f0b000e;
+        public static final int Widget_Sherlock_Light_ActionBar_TabText=0x7f0b0010;
+        /**  Tabs are in AB here, so we need Dark Variant of Theme 
+ Tabs are in AB here, so we need Dark Variant of Theme 
+         */
+        public static final int Widget_Sherlock_Light_ActionBar_TabText_Inverse=0x7f0b001e;
+        public static final int Widget_Sherlock_Light_ActionBar_TabView=0x7f0b000f;
+        public static final int Widget_Sherlock_Light_ActionButton=0x7f0b0011;
+        public static final int Widget_Sherlock_Light_ActionButton_CloseMode=0x7f0b0016;
+        public static final int Widget_Sherlock_Light_ActionButton_Home=0x7f0b0012;
+        public static final int Widget_Sherlock_Light_ActionButton_Overflow=0x7f0b0013;
+        public static final int Widget_Sherlock_Light_ListPopupWindow=0x7f0b0018;
+        public static final int Widget_Sherlock_Light_ListView_DropDown=0x7f0b0017;
+        public static final int Widget_Sherlock_Light_PopupMenu=0x7f0b0019;
+        public static final int Widget_Sherlock_Light_Spinner=0x7f0b0015;
+        public static final int Widget_Sherlock_Light_TextView_SpinnerItem_ActionBar=0x7f0b0014;
+        public static final int Widget_Sherlock_ListPopupWindow=0x7f0b000a;
+        public static final int Widget_Sherlock_ListView_DropDown=0x7f0b000b;
+        public static final int Widget_Sherlock_PopupMenu=0x7f0b000c;
+        public static final int Widget_Sherlock_Spinner=0x7f0b0005;
+        public static final int Widget_Sherlock_TextView_SpinnerItem_ActionBar=0x7f0b0009;
+        public static final int Widget_TabPageIndicator=0x7f0b0023;
+        public static final int Widget_TabPageIndicator_Text=0x7f0b0024;
+        public static final int Widget_TitlePageIndicator=0x7f0b0022;
     }
     public static final class styleable {
         /** Attributes that can be used with a CirclePageIndicator.
@@ -680,8 +1086,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #CirclePageIndicator_strokeWidth
          */
         public static final int[] CirclePageIndicator = {
-            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
-            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b
+            0x7f01002d, 0x7f01002e, 0x7f01002f, 0x7f010030,
+            0x7f010031, 0x7f010032, 0x7f010033, 0x7f010034
         };
         /**
           <p>
@@ -821,6 +1227,606 @@ containing a value of this type.
           @attr name android:strokeWidth
         */
         public static final int CirclePageIndicator_strokeWidth = 7;
+        /** Attributes that can be used with a SherlockTheme.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SherlockTheme_abBackground com.dedaulus.cinematty:abBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abBackgroundStacked com.dedaulus.cinematty:abBackgroundStacked}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abCustomNavigationLayout com.dedaulus.cinematty:abCustomNavigationLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abDisplayOptions com.dedaulus.cinematty:abDisplayOptions}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abDivider com.dedaulus.cinematty:abDivider}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abHeight com.dedaulus.cinematty:abHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abHomeLayout com.dedaulus.cinematty:abHomeLayout}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abIcon com.dedaulus.cinematty:abIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abIndeterminateProgressStyle com.dedaulus.cinematty:abIndeterminateProgressStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abItemPadding com.dedaulus.cinematty:abItemPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abLogo com.dedaulus.cinematty:abLogo}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abNavigationMode com.dedaulus.cinematty:abNavigationMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abProgressBarPadding com.dedaulus.cinematty:abProgressBarPadding}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abProgressBarStyle com.dedaulus.cinematty:abProgressBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abSubtitle com.dedaulus.cinematty:abSubtitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abSubtitleTextStyle com.dedaulus.cinematty:abSubtitleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abTitle com.dedaulus.cinematty:abTitle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_abTitleTextStyle com.dedaulus.cinematty:abTitleTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarSize com.dedaulus.cinematty:actionBarSize}</code></td><td>attr name="actionBarStyle" format="reference" /</td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabBarStyle com.dedaulus.cinematty:actionBarTabBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabStyle com.dedaulus.cinematty:actionBarTabStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionBarTabTextStyle com.dedaulus.cinematty:actionBarTabTextStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionButtonStyle com.dedaulus.cinematty:actionButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionDropDownStyle com.dedaulus.cinematty:actionDropDownStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionHomeButtonStyle com.dedaulus.cinematty:actionHomeButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextAppearance com.dedaulus.cinematty:actionMenuTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionMenuTextColor com.dedaulus.cinematty:actionMenuTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeBackground com.dedaulus.cinematty:actionModeBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseButtonStyle com.dedaulus.cinematty:actionModeCloseButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionModeCloseDrawable com.dedaulus.cinematty:actionModeCloseDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionOverflowButtonStyle com.dedaulus.cinematty:actionOverflowButtonStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_actionSpinnerItemStyle com.dedaulus.cinematty:actionSpinnerItemStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropDownListViewStyle com.dedaulus.cinematty:dropDownListViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_dropdownListPreferredItemHeight com.dedaulus.cinematty:dropdownListPreferredItemHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_homeAsUpIndicator com.dedaulus.cinematty:homeAsUpIndicator}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_popupMenuStyle com.dedaulus.cinematty:popupMenuStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_selectableItemBackground com.dedaulus.cinematty:selectableItemBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBar com.dedaulus.cinematty:windowActionBar}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionBarOverlay com.dedaulus.cinematty:windowActionBarOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowActionModeOverlay com.dedaulus.cinematty:windowActionModeOverlay}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockTheme_windowNoTitle com.dedaulus.cinematty:windowNoTitle}</code></td><td></td></tr>
+           </table>
+           @see #SherlockTheme_abBackground
+           @see #SherlockTheme_abBackgroundStacked
+           @see #SherlockTheme_abCustomNavigationLayout
+           @see #SherlockTheme_abDisplayOptions
+           @see #SherlockTheme_abDivider
+           @see #SherlockTheme_abHeight
+           @see #SherlockTheme_abHomeLayout
+           @see #SherlockTheme_abIcon
+           @see #SherlockTheme_abIndeterminateProgressStyle
+           @see #SherlockTheme_abItemPadding
+           @see #SherlockTheme_abLogo
+           @see #SherlockTheme_abNavigationMode
+           @see #SherlockTheme_abProgressBarPadding
+           @see #SherlockTheme_abProgressBarStyle
+           @see #SherlockTheme_abSubtitle
+           @see #SherlockTheme_abSubtitleTextStyle
+           @see #SherlockTheme_abTitle
+           @see #SherlockTheme_abTitleTextStyle
+           @see #SherlockTheme_actionBarSize
+           @see #SherlockTheme_actionBarTabBarStyle
+           @see #SherlockTheme_actionBarTabStyle
+           @see #SherlockTheme_actionBarTabTextStyle
+           @see #SherlockTheme_actionButtonStyle
+           @see #SherlockTheme_actionDropDownStyle
+           @see #SherlockTheme_actionHomeButtonStyle
+           @see #SherlockTheme_actionMenuTextAppearance
+           @see #SherlockTheme_actionMenuTextColor
+           @see #SherlockTheme_actionModeBackground
+           @see #SherlockTheme_actionModeCloseButtonStyle
+           @see #SherlockTheme_actionModeCloseDrawable
+           @see #SherlockTheme_actionOverflowButtonStyle
+           @see #SherlockTheme_actionSpinnerItemStyle
+           @see #SherlockTheme_dropDownListViewStyle
+           @see #SherlockTheme_dropdownListPreferredItemHeight
+           @see #SherlockTheme_homeAsUpIndicator
+           @see #SherlockTheme_popupMenuStyle
+           @see #SherlockTheme_selectableItemBackground
+           @see #SherlockTheme_windowActionBar
+           @see #SherlockTheme_windowActionBarOverlay
+           @see #SherlockTheme_windowActionModeOverlay
+           @see #SherlockTheme_windowNoTitle
+         */
+        public static final int[] SherlockTheme = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
+            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013,
+            0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017,
+            0x7f010018, 0x7f010019, 0x7f01001a, 0x7f01001b,
+            0x7f01001c, 0x7f01001d, 0x7f01001e, 0x7f01001f,
+            0x7f010020, 0x7f010021, 0x7f010022, 0x7f010023,
+            0x7f010024, 0x7f010025, 0x7f010026, 0x7f010027,
+            0x7f010028
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abBackground}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name android:abBackground
+        */
+        public static final int SherlockTheme_abBackground = 32;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abBackgroundStacked}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name android:abBackgroundStacked
+        */
+        public static final int SherlockTheme_abBackgroundStacked = 33;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abCustomNavigationLayout}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abCustomNavigationLayout
+        */
+        public static final int SherlockTheme_abCustomNavigationLayout = 34;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abDisplayOptions}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be one or more (separated by '|') of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>useLogo</code></td><td>0x1</td><td></td></tr>
+<tr><td><code>showHome</code></td><td>0x2</td><td></td></tr>
+<tr><td><code>homeAsUp</code></td><td>0x4</td><td></td></tr>
+<tr><td><code>showTitle</code></td><td>0x8</td><td></td></tr>
+<tr><td><code>showCustom</code></td><td>0x10</td><td></td></tr>
+</table>
+          @attr name android:abDisplayOptions
+        */
+        public static final int SherlockTheme_abDisplayOptions = 24;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abDivider}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name android:abDivider
+        */
+        public static final int SherlockTheme_abDivider = 31;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abHeight}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+          @attr name android:abHeight
+        */
+        public static final int SherlockTheme_abHeight = 35;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abHomeLayout}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abHomeLayout
+        */
+        public static final int SherlockTheme_abHomeLayout = 36;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abIcon}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abIcon
+        */
+        public static final int SherlockTheme_abIcon = 29;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abIndeterminateProgressStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abIndeterminateProgressStyle
+        */
+        public static final int SherlockTheme_abIndeterminateProgressStyle = 38;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abItemPadding}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:abItemPadding
+        */
+        public static final int SherlockTheme_abItemPadding = 40;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abLogo}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abLogo
+        */
+        public static final int SherlockTheme_abLogo = 30;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abNavigationMode}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>normal</code></td><td>0</td><td></td></tr>
+<tr><td><code>listMode</code></td><td>1</td><td></td></tr>
+<tr><td><code>tabMode</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name android:abNavigationMode
+        */
+        public static final int SherlockTheme_abNavigationMode = 23;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abProgressBarPadding}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:abProgressBarPadding
+        */
+        public static final int SherlockTheme_abProgressBarPadding = 39;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abProgressBarStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abProgressBarStyle
+        */
+        public static final int SherlockTheme_abProgressBarStyle = 37;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abSubtitle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:abSubtitle
+        */
+        public static final int SherlockTheme_abSubtitle = 26;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abSubtitleTextStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abSubtitleTextStyle
+        */
+        public static final int SherlockTheme_abSubtitleTextStyle = 28;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abTitle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:abTitle
+        */
+        public static final int SherlockTheme_abTitle = 25;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#abTitleTextStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:abTitleTextStyle
+        */
+        public static final int SherlockTheme_abTitleTextStyle = 27;
+        /**
+          <p>
+          @attr description
+          attr name="actionBarStyle" format="reference" /
+
+
+          <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name android:actionBarSize
+        */
+        public static final int SherlockTheme_actionBarSize = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionBarTabBarStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionBarTabBarStyle
+        */
+        public static final int SherlockTheme_actionBarTabBarStyle = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionBarTabStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionBarTabStyle
+        */
+        public static final int SherlockTheme_actionBarTabStyle = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionBarTabTextStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionBarTabTextStyle
+        */
+        public static final int SherlockTheme_actionBarTabTextStyle = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionButtonStyle
+        */
+        public static final int SherlockTheme_actionButtonStyle = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionDropDownStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionDropDownStyle
+        */
+        public static final int SherlockTheme_actionDropDownStyle = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionHomeButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionHomeButtonStyle
+        */
+        public static final int SherlockTheme_actionHomeButtonStyle = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionMenuTextAppearance}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionMenuTextAppearance
+        */
+        public static final int SherlockTheme_actionMenuTextAppearance = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionMenuTextColor}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name android:actionMenuTextColor
+        */
+        public static final int SherlockTheme_actionMenuTextColor = 9;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionModeBackground}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionModeBackground
+        */
+        public static final int SherlockTheme_actionModeBackground = 11;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionModeCloseButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionModeCloseButtonStyle
+        */
+        public static final int SherlockTheme_actionModeCloseButtonStyle = 10;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionModeCloseDrawable}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionModeCloseDrawable
+        */
+        public static final int SherlockTheme_actionModeCloseDrawable = 12;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionOverflowButtonStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionOverflowButtonStyle
+        */
+        public static final int SherlockTheme_actionOverflowButtonStyle = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#actionSpinnerItemStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:actionSpinnerItemStyle
+        */
+        public static final int SherlockTheme_actionSpinnerItemStyle = 18;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#dropDownListViewStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:dropDownListViewStyle
+        */
+        public static final int SherlockTheme_dropDownListViewStyle = 15;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#dropdownListPreferredItemHeight}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:dropdownListPreferredItemHeight
+        */
+        public static final int SherlockTheme_dropdownListPreferredItemHeight = 17;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#homeAsUpIndicator}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:homeAsUpIndicator
+        */
+        public static final int SherlockTheme_homeAsUpIndicator = 13;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#popupMenuStyle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:popupMenuStyle
+        */
+        public static final int SherlockTheme_popupMenuStyle = 16;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#selectableItemBackground}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:selectableItemBackground
+        */
+        public static final int SherlockTheme_selectableItemBackground = 14;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#windowActionBar}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:windowActionBar
+        */
+        public static final int SherlockTheme_windowActionBar = 20;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#windowActionBarOverlay}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:windowActionBarOverlay
+        */
+        public static final int SherlockTheme_windowActionBarOverlay = 21;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#windowActionModeOverlay}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:windowActionModeOverlay
+        */
+        public static final int SherlockTheme_windowActionModeOverlay = 22;
+        /**
+          <p>This symbol is the offset where the {@link com.dedaulus.cinematty.R.attr#windowNoTitle}
+          attribute's value can be found in the {@link #SherlockTheme} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:windowNoTitle
+        */
+        public static final int SherlockTheme_windowNoTitle = 19;
         /** Attributes that can be used with a TitlePageIndicator.
            <p>Includes the following attributes:</p>
            <table>
@@ -856,10 +1862,10 @@ containing a value of this type.
            @see #TitlePageIndicator_topPadding
          */
         public static final int[] TitlePageIndicator = {
-            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
-            0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013,
-            0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017,
-            0x7f010018
+            0x7f010035, 0x7f010036, 0x7f010037, 0x7f010038,
+            0x7f010039, 0x7f01003a, 0x7f01003b, 0x7f01003c,
+            0x7f01003d, 0x7f01003e, 0x7f01003f, 0x7f010040,
+            0x7f010041
         };
         /**
           <p>
@@ -1109,7 +2115,7 @@ containing a value of this type.
            @see #ViewPagerIndicator_vpiTitlePageIndicatorStyle
          */
         public static final int[] ViewPagerIndicator = {
-            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003
+            0x7f010029, 0x7f01002a, 0x7f01002b, 0x7f01002c
         };
         /**
           <p>

@@ -8,7 +8,8 @@
     <application
         android:name="CinemattyApplication"
         android:label="@string/app_name"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/icon"
+        android:theme="@style/Theme.Sherlock">
 
         <activity
             android:name=".activities.StartupActivity"
@@ -26,36 +27,28 @@
             android:launchMode="singleTask"/>
 
         <activity
-            android:name=".activities.CinemaWithScheduleListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.CinemaWithScheduleListActivity"/>
 
         <activity
-            android:name=".activities.MovieListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.MovieListActivity"/>
 
         <activity
-            android:name=".activities.MovieWithScheduleListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.MovieWithScheduleListActivity"/>
 
         <activity
-            android:name=".activities.MovieActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.MovieActivity"/>
 
         <activity
-            android:name=".activities.ActorListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.ActorListActivity"/>
 
         <activity
-            android:name=".activities.GenreListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.GenreListActivity"/>
 
         <activity
-            android:name=".activities.CityListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.CityListActivity"/>
 
         <activity
-            android:name=".activities.AboutActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
+            android:name=".activities.AboutActivity"/>
 
     </application>
 

@@ -1,11 +1,14 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
+import android.view.Display;
 import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.Surface;
+import android.view.WindowManager;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.LocationState;
@@ -26,7 +29,7 @@ import java.util.List;
  * Date: 28.05.11
  * Time: 2:15
  */
-public class MainActivity extends Activity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
     private static final String FAKE_STATE_ID = "fake_state";
     private static final int SLIDERS_COUNT = 6;
 
@@ -80,12 +83,20 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         slider.setAdapter(adapter);
         slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
 
-        //Bind the title indicator to the adapter
-        TabPageIndicator pageIndicator = (TabPageIndicator)findViewById(R.id.titles);
-        pageIndicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
-
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
-        pageChangeListenerProxy.addListener(pageIndicator);
+
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int rotation = display.getRotation();
+        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+            TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
+            indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
+            pageChangeListenerProxy.addListener(indicator);
+        } else {
+            TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.tabs);
+            indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
+            pageChangeListenerProxy.addListener(indicator);
+        }
+
         pageChangeListenerProxy.addListener(this);
         slider.setOnPageChangeListener(pageChangeListenerProxy);
 
