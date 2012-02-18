@@ -10,15 +10,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -27,47 +32,46 @@ import java.util.UUID;
  * Time: 23:37
  */
 public class MovieListActivity extends Activity {
-    private CinemattyApplication mApp;
-    private SortableAdapter<Movie> mMovieListAdapter;
-    private UniqueSortedList<Movie> mScopeMovies;
-    private ActivityState mState;
-    private String mStateId;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private SortableAdapter<Movie> movieListAdapter;
+    private ActivityState state;
+    private String stateId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
+
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
 
         findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
+        Map<String, Movie> scopeMovies;
 
-        switch (mState.activityType) {
+        switch (state.activityType) {
         case ActivityState.MOVIE_LIST_W_ACTOR:
-            captionLabel.setText(mState.actor.getActor());
-            mScopeMovies = mState.actor.getMovies();
+            captionLabel.setText(state.actor.getName());
+            scopeMovies = state.actor.getMovies();
             break;
 
         case ActivityState.MOVIE_LIST_W_GENRE:
-            captionLabel.setText(mState.genre.getGenre());
-            mScopeMovies = mState.genre.getMovies();
+            captionLabel.setText(state.genre.getName());
+            scopeMovies = state.genre.getMovies();
             break;
 
         default:
@@ -75,8 +79,8 @@ public class MovieListActivity extends Activity {
         }
 
         captionView.setVisibility(View.VISIBLE);
-        mMovieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(mScopeMovies), mApp.getPictureRetriever());
-        list.setAdapter(mMovieListAdapter);
+        movieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(scopeMovies.values()), app.getImageRetrievers().getMovieSmallImageRetriever());
+        list.setAdapter(movieListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);
@@ -86,23 +90,23 @@ public class MovieListActivity extends Activity {
 
     @Override
     protected void onResume() {
-        ((StoppableAndResumable)mMovieListAdapter).onResume();
-        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+        ((StoppableAndResumable)movieListAdapter).onResume();
+        movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
 
         super.onResume();
     }
 
     @Override
     protected void onStop() {
-        ((StoppableAndResumable)mMovieListAdapter).onStop();
-        mApp.dumpData();
+        ((StoppableAndResumable)movieListAdapter).onStop();
+        activitiesState.dump();
 
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
 
         super.onBackPressed();
     }
@@ -116,19 +120,16 @@ public class MovieListActivity extends Activity {
         inflater.inflate(R.menu.home_menu, menu);
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
-        switch (mApp.getMovieSortOrder()) {
+        switch (settings.getMovieSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
             break;
-
         case BY_POPULAR:
             menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
             break;
-
         case BY_RATING:
             menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
             break;
-
         default:
             break;
         }
@@ -141,33 +142,33 @@ public class MovieListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
-            mApp.goHome(this);
+            case R.id.menu_home:
+            app.goHome(this);
             return true;
 
         case R.id.menu_movie_sort:
             return true;
 
         case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+        movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+        settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+        movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+        settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_rating:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
             item.setChecked(true);
             return true;
 
         case R.id.menu_about:
-            mApp.showAbout(this);
+            app.showAbout(this);
             return true;
 
         default:
@@ -181,10 +182,10 @@ public class MovieListActivity extends Activity {
         Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.movie = movie;
         state.activityType = ActivityState.MOVIE_INFO;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
@@ -192,6 +193,6 @@ public class MovieListActivity extends Activity {
     }
 
     public void onHomeButtonClick(View view) {
-        mApp.goHome(this);
+        app.goHome(this);
     }
 }

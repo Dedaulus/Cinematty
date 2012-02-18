@@ -6,9 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.CinemattyApplication;
+import com.dedaulus.cinematty.LocationState;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.*;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
@@ -22,13 +25,15 @@ import java.util.List;
  * Time: 2:15
  */
 public class MainActivity extends Activity implements ViewPager.OnPageChangeListener {
-    private CinemattyApplication mApp;
-    private SliderAdapter mAdapter;
-    private List<SliderPage> mPages;
-    private Integer mCurrentPage = 0;
     private static final String FAKE_STATE_ID = "fake_state";
-
     private static final int SLIDERS_COUNT = 6;
+
+    private CinemattyApplication app;
+    private ActivitiesState activitiesState;
+    private LocationState locationState;
+    private SliderAdapter adapter;
+    private List<SliderPage> pages;
+    private Integer currentPage = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -37,20 +42,17 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mApp.setState(FAKE_STATE_ID, new ActivityState(0, null, null, null, null));
+        activitiesState = app.getActivitiesState();
+        locationState = app.getLocationState();
+
+        activitiesState.setState(FAKE_STATE_ID, new ActivityState(0, null, null, null, null));
 
         ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
@@ -62,30 +64,30 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
         slideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
 
-        mCurrentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
+        currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
 
-        mPages = new ArrayList<SliderPage>(SLIDERS_COUNT);
-        mPages.add(new CategoriesPage(this, mApp, slider, slideIds));
-        mPages.add(new WhatsNewPage(this, mApp));
-        mPages.add(new CinemasPage(this, mApp));
-        mPages.add(new MoviesPage(this, mApp));
-        mPages.add(new ActorsPage(this, mApp));
-        mPages.add(new GenresPage(this, mApp));
+        pages = new ArrayList<SliderPage>(SLIDERS_COUNT);
+        pages.add(new CategoriesPage(this, app, slider, slideIds));
+        pages.add(new WhatsNewPage(this, app));
+        pages.add(new CinemasPage(this, app));
+        pages.add(new MoviesPage(this, app));
+        pages.add(new ActorsPage(this, app));
+        pages.add(new GenresPage(this, app));
 
-        mAdapter = new SliderAdapter(mPages);
-        slider.setAdapter(mAdapter);
+        adapter = new SliderAdapter(pages);
+        slider.setAdapter(adapter);
         slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
 
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
         pageChangeListenerProxy.addListener(this);
         slider.setOnPageChangeListener(pageChangeListenerProxy);
 
-        mApp.showWhatsNewIfNeeded(this);
+        //app.showWhatsNewIfNeeded(this);
     }
 
     @Override
     protected void onResume() {
-        for (SliderPage page : mAdapter.getCreatedPages()) {
+        for (SliderPage page : adapter.getCreatedPages()) {
             page.onResume();
         }
 
@@ -94,29 +96,29 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
 
     @Override
     protected void onPause() {
-        for (SliderPage page : mAdapter.getCreatedPages()) {
+        for (SliderPage page : adapter.getCreatedPages()) {
             page.onPause();
         }
 
-        mApp.stopListenLocation();
+        locationState.stopLocationListening();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        for (SliderPage page : mAdapter.getCreatedPages()) {
+        for (SliderPage page : adapter.getCreatedPages()) {
             page.onStop();
         }
 
-        mApp.stopListenLocation();
-        mApp.dumpData();
+        locationState.stopLocationListening();
+        activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
         if (getCurrentPage() == Constants.WHATS_NEW_SLIDE) {
-            mApp.removeState(FAKE_STATE_ID);
+            activitiesState.removeState(FAKE_STATE_ID);
             super.onBackPressed();
         } else {
             ViewPager slider = (ViewPager)findViewById(R.id.slider);
@@ -128,7 +130,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        mPages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.about_menu, menu);
@@ -140,23 +142,23 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_about:
-            mApp.showAbout(this);
+            app.showAbout(this);
             return true;
 
         default:
-            return mPages.get(getCurrentPage()).onOptionsItemSelected(item);
+            return pages.get(getCurrentPage()).onOptionsItemSelected(item);
         }
     }
 
     public void onPageScrolled(int i, float v, int i1) {}
 
     public synchronized void onPageSelected(int i) {
-        mCurrentPage = i;
+        currentPage = i;
     }
 
     public void onPageScrollStateChanged(int i) {}
 
     public synchronized int getCurrentPage() {
-        return mCurrentPage;
+        return currentPage;
     }
 }

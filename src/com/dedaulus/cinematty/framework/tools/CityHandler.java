@@ -19,7 +19,7 @@ public class CityHandler extends DefaultHandler {
     private static final String CITY_NAME_ATTR  = "name";
     private static final String CITY_FILE_ATTR  = "file";
 
-    private List<City> mCityList = new ArrayList<City>();
+    private List<City> cities = new ArrayList<City>();
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -30,11 +30,11 @@ public class CityHandler extends DefaultHandler {
             String name = attributes.getValue(CITY_NAME_ATTR);
             String file = attributes.getValue(CITY_FILE_ATTR);
 
-            mCityList.add(new City(id, name, file));
+            cities.add(new City(name, id, file));
         }
     }
 
     public List<City> getCityList() {
-        return mCityList;
+        return cities;
     }
 }

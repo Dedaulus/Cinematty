@@ -14,6 +14,7 @@ import com.dedaulus.cinematty.framework.tools.CityHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,23 +23,23 @@ import java.util.List;
  * Time: 13:49
  */
 public class CityListActivity extends Activity {
-    private CinemattyApplication mApp;
-    private List<City> mCities;
+    private CinemattyApplication app;
+    private List<City> cities;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.city_list);
 
-        mApp = (CinemattyApplication)getApplication();
+        app = (CinemattyApplication)getApplication();
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
             CityHandler handler = new CityHandler();
             parser.parse(getResources().openRawResource(R.raw.cities), handler);
-            mCities = handler.getCityList();
+            cities = handler.getCityList();
             ListView list = (ListView)findViewById(R.id.city_list);
-            list.setAdapter(new CityItemAdapter(this, mCities, mApp.getCurrentCityId()));
+            list.setAdapter(new CityItemAdapter(this, new ArrayList<City>(cities), app.getCurrentCity()));
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onCityItemClick(adapterView, view, i, l);
@@ -51,7 +52,8 @@ public class CityListActivity extends Activity {
 
     @Override
     protected void onResume() {
-        int id = mCities.indexOf(new City(mApp.getCurrentCityId(), null, null));
+        City city = app.getCurrentCity();
+        int id = cities.indexOf(new City(null, city != null ? city.getId() : 0, null));
         ListView list = (ListView)findViewById(R.id.city_list);
         list.smoothScrollToPosition(id);
 
@@ -63,8 +65,7 @@ public class CityListActivity extends Activity {
         ListView list = (ListView)view.getParent();
         City city = (City)adapter.getItem(i - list.getHeaderViewsCount());
 
-        mApp.saveCurrentCityId(city.getId());
-        mApp.setCurrentCity(city);
+        app.saveCurrentCity(city);
 
         Intent intent = new Intent(this, StartupActivity.class);
         startActivity(intent);

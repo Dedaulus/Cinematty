@@ -22,27 +22,27 @@ import java.util.HashMap;
  * Time: 20:17
  */
 public class CategoriesPage implements SliderPage {
-    private Context mContext;
-    private CinemattyApplication mApp;
-    private HashMap<Integer, Integer> mSlideIds;
-    private ViewPager mSlider;
+    private Context context;
+    private CinemattyApplication app;
+    private HashMap<Integer, Integer> slideIds;
+    private ViewPager slider;
 
     public CategoriesPage(Context context, CinemattyApplication app, ViewPager slider, HashMap<Integer, Integer> slideIds) {
-        mSlider = slider;
-        mContext = context;
-        mApp = app;
-        mSlideIds = slideIds;
+        this.slider = slider;
+        this.context = context;
+        this.app = app;
+        this.slideIds = slideIds;
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.categories, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.categories_caption);
+        return context.getString(R.string.categories_caption);
     }
 
     public void onResume() {}
@@ -67,7 +67,7 @@ public class CategoriesPage implements SliderPage {
             }
         });
         TextView cityCaption = (TextView)cityPanel.findViewById(R.id.city_caption);
-        cityCaption.setText(mApp.getCurrentCity().getName());
+        cityCaption.setText(app.getCurrentCity().getName());
 
         View whatsNewPanel = view.findViewById(R.id.whats_new_panel);
         whatsNewPanel.setOnClickListener(new View.OnClickListener() {
@@ -108,28 +108,28 @@ public class CategoriesPage implements SliderPage {
     }
 
     public void onCityClick(View view) {
-        Intent intent = new Intent(mContext, CityListActivity.class);
-        mContext.startActivity(intent);
-        ((Activity)mContext).finish();
+        Intent intent = new Intent(context, CityListActivity.class);
+        context.startActivity(intent);
+        ((Activity) context).finish();
     }
 
     public void onWhatsNewClick(View view) {
-        mSlider.setCurrentItem(mSlideIds.get(Constants.WHATS_NEW_SLIDE));
+        slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
     }
 
     public void onCinemasClick(View view) {
-        mSlider.setCurrentItem(mSlideIds.get(Constants.CINEMAS_SLIDE));
+        slider.setCurrentItem(slideIds.get(Constants.CINEMAS_SLIDE));
     }
 
     public void onMoviesClick(View view) {
-        mSlider.setCurrentItem(mSlideIds.get(Constants.MOVIES_SLIDE));
+        slider.setCurrentItem(slideIds.get(Constants.MOVIES_SLIDE));
     }
 
     public void onActorsClick(View view) {
-        mSlider.setCurrentItem(mSlideIds.get(Constants.ACTORS_SLIDE));
+        slider.setCurrentItem(slideIds.get(Constants.ACTORS_SLIDE));
     }
 
     public void onGenresClick(View view) {
-        mSlider.setCurrentItem(mSlideIds.get(Constants.GENRES_SLIDE));
+        slider.setCurrentItem(slideIds.get(Constants.GENRES_SLIDE));
     }
 }

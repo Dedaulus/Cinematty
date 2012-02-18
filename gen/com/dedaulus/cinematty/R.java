@@ -39,11 +39,10 @@ public final class R {
         public static final int ic_share=0x7f020019;
         public static final int ic_whats_new=0x7f02001a;
         public static final int icon=0x7f02001b;
-        public static final int img_loading=0x7f02001c;
-        public static final int list_divider=0x7f02001d;
-        public static final int movie_data_divider=0x7f02001e;
-        public static final int picture_border=0x7f02001f;
-        public static final int splash=0x7f020020;
+        public static final int list_divider=0x7f02001c;
+        public static final int movie_data_divider=0x7f02001d;
+        public static final int picture_border=0x7f02001e;
+        public static final int splash=0x7f02001f;
     }
     public static final class id {
         public static final int about_title=0x7f080000;
@@ -210,10 +209,10 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int app_version=0x7f050001;
         public static final int app_version_code=0x7f050002;
+        public static final int bad_response=0x7f05000c;
         public static final int categories_caption=0x7f05000e;
         public static final int cinemas_caption=0x7f050010;
         public static final int cities_file=0x7f05003f;
-        public static final int connect_error=0x7f05000d;
         public static final int copyright=0x7f050003;
         public static final int copyright_icons=0x7f050005;
         public static final int date=0x7f050027;
@@ -248,6 +247,7 @@ public final class R {
         public static final int movies_caption=0x7f050011;
         public static final int new_version=0x7f050008;
         public static final int new_version_caption=0x7f050007;
+        public static final int no_response=0x7f05000d;
         public static final int no_schedule=0x7f050023;
         public static final int schedule_enum=0x7f050022;
         public static final int schedule_now=0x7f050025;
@@ -267,7 +267,6 @@ public final class R {
         public static final int tomorrow=0x7f050029;
         public static final int try_again=0x7f05000b;
         public static final int unknown=0x7f05001f;
-        public static final int unknown_error=0x7f05000c;
         public static final int unknown_schedule=0x7f050024;
         public static final int wait_dialog_caption=0x7f050016;
         public static final int wait_dialog_text=0x7f050017;

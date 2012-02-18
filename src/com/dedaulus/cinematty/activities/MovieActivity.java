@@ -9,12 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Pair;
 import android.view.*;
 import android.widget.*;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.PictureRetriever;
+import com.dedaulus.cinematty.framework.MovieImageRetriever;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Calendar;
@@ -27,36 +31,35 @@ import java.util.UUID;
  * Date: 16.03.11
  * Time: 22:28
  */
-public class MovieActivity extends Activity implements PictureReceiver {
-    private CinemattyApplication mApp;
-    private ActivityState mState;
-    private String mStateId;
-    private int mCurrentDay;
+public class MovieActivity extends Activity implements MovieImageRetriever.MovieImageReceivedAction {
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private ActivityState state;
+    private String stateId;
+    private int currentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_info);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
 
-        switch (mState.activityType) {
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
+
+        switch (state.activityType) {
         case ActivityState.MOVIE_INFO_W_SCHED:
-            mCurrentDay = mApp.getCurrentDay();
+            currentDay = settings.getCurrentDay();
             changeTitleBar();
             TextView textView = (TextView)findViewById(R.id.titlebar_caption);
             textView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +88,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     private void changeTitleBar() {
         findViewById(R.id.movie_title_day).setVisibility(View.VISIBLE);
         TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (mApp.getCurrentDay()) {
+        switch (settings.getCurrentDay()) {
         case Constants.TODAY_SCHEDULE:
             text.setText(R.string.today);
             break;
@@ -97,8 +100,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     @Override
     protected void onResume() {
-        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED && mCurrentDay != mApp.getCurrentDay()) {
-            setCurrentDay(mApp.getCurrentDay());
+        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED && currentDay != settings.getCurrentDay()) {
+            setCurrentDay(settings.getCurrentDay());
         }
         setActors();
         super.onResume();
@@ -106,13 +109,13 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     @Override
     protected void onStop() {
-        mApp.dumpData();
+        activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
         super.onBackPressed();
     }
 
@@ -124,20 +127,20 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
         inflater.inflate(R.menu.home_menu, menu);
 
-        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            if (mState.cinema.getPhone() != null) {
+        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
+            if (state.cinema.getPhone() != null) {
                 inflater.inflate(R.menu.call_menu, menu);
             }
 
             inflater.inflate(R.menu.select_day_menu, menu);
-            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+            if (currentDay == Constants.TODAY_SCHEDULE) {
                 menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
             } else {
                 menu.findItem(R.id.menu_day).setTitle(R.string.today);
             }
         }
 
-        if (mState.movie.getActors() != null) {
+        if (state.movie.getActors() != null) {
             inflater.inflate(R.menu.show_actors_menu, menu);
         }
 
@@ -151,18 +154,18 @@ public class MovieActivity extends Activity implements PictureReceiver {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
-            mApp.goHome(this);
+            case R.id.menu_home:
+            app.goHome(this);
             return true;
 
         case R.id.menu_call:
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:+7" + mState.cinema.getPlainPhone()));
+            intent.setData(Uri.parse("tel:+7" + state.cinema.getPlainPhone()));
             startActivity(intent);
             return true;
 
         case R.id.menu_day:
-            setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
             return true;
 
         case R.id.menu_show_actors:
@@ -173,8 +176,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
             onShareButtonClick(null);
             return true;
 
-        case R.id.menu_about:
-            mApp.showAbout(this);
+            case R.id.menu_about:
+            app.showAbout(this);
             return true;
 
         default:
@@ -194,12 +197,12 @@ public class MovieActivity extends Activity implements PictureReceiver {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
         case R.id.submenu_select_day_today:
-            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+            if (currentDay != Constants.TODAY_SCHEDULE) {
                 setCurrentDay(Constants.TODAY_SCHEDULE);
             }
             return true;
         case R.id.submenu_select_day_tomorrow:
-            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+            if (currentDay != Constants.TOMORROW_SCHEDULE) {
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
             }
             return true;
@@ -215,34 +218,35 @@ public class MovieActivity extends Activity implements PictureReceiver {
         progressBar.setVisibility(View.GONE);
         imageView.setVisibility(View.GONE);
 
-        String picId = mState.movie.getPicId();
+        String picId = state.movie.getPicId();
         if (picId != null) {
-            PictureRetriever retriever = mApp.getPictureRetriever();
-            Bitmap picture = retriever.getPicture(picId, PictureType.ORIGINAL);
-            if (picture != null) {
-                imageView.setImageBitmap(picture);
+            MovieImageRetriever retriever = app.getImageRetrievers().getMovieImageRetriever();
+            Bitmap image = retriever.getImage(picId, false);
+            if (image != null) {
+                imageView.setImageBitmap(image);
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 progressBar.setVisibility(View.VISIBLE);
-                retriever.addRequest(picId, PictureType.ORIGINAL, this);
+                retriever.addRequest(picId, false, this);
             }
         }
     }
 
     private void setCaption() {
         TextView text = (TextView)findViewById(R.id.movie_caption);
-        text.setText(mState.movie.getCaption());
+        text.setText(state.movie.getName());
     }
 
     private void setSchedule() {
-        if (mState.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
+        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
             TextView text = (TextView)findViewById(R.id.schedule_title);
-            text.setText(getString(R.string.schedule_enum) + " " + mState.cinema.getCaption());
+            text.setText(getString(R.string.schedule_enum) + " " + state.cinema.getName());
 
             text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-            Map<Movie, List<Calendar>> map = mState.cinema.getShowTimes(mApp.getCurrentDay());
-            List<Calendar> showTimes = map != null ? map.get(mState.movie) : null;
-            text.setText(DataConverter.showTimesToSpannableString(this, showTimes));
+            Pair<Movie, List<Calendar>> showTimes = state.cinema.getShowTimes(settings.getCurrentDay()).get(state.movie.getName());
+            if (showTimes != null) {
+                text.setText(DataConverter.showTimesToSpannableString(this, showTimes.second));
+            }
 
             findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
         } else {
@@ -251,7 +255,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     private void setImdb() {
-        float imdb = mState.movie.getImdb();
+        float imdb = state.movie.getImdb();
         if (imdb > 0) {
             String imdbString = String.format(" %.1f", imdb);
             TextView imdbView = (TextView)findViewById(R.id.imdb);
@@ -264,8 +268,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     private void setLength() {
         TextView text = (TextView)findViewById(R.id.movie_length);
-        if (mState.movie.getLengthInMinutes() != 0) {
-            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, mState.movie.getLengthInMinutes()));
+        if (state.movie.getLength() != 0) {
+            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, state.movie.getLength()));
             text.setVisibility(View.VISIBLE);
         } else {
             text.setVisibility(View.GONE);
@@ -283,8 +287,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     private void setGenre() {
         TextView text = (TextView)findViewById(R.id.movie_genre);
-        if (mState.movie.getGenres().size() != 0) {
-            text.setText(DataConverter.genresToString(mState.movie.getGenres()));
+        if (state.movie.getGenres().size() != 0) {
+            text.setText(DataConverter.genresToString(state.movie.getGenres().values()));
             findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_genre_panel).setVisibility(View.GONE);
@@ -293,8 +297,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     private void setActors() {
         TextView text = (TextView)findViewById(R.id.movie_actors);
-        if (mState.movie.getActors().size() != 0) {
-            text.setText(DataConverter.actorsToSpannableString(mState.movie.getActors()));
+        if (state.movie.getActors().size() != 0) {
+            text.setText(DataConverter.actorsToSpannableString(state.movie.getActors().values()));
             findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_actors_panel).setVisibility(View.GONE);
@@ -303,8 +307,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     private void setDescription() {
         TextView text = (TextView)findViewById(R.id.movie_description);
-        if (mState.movie.getDescription().length() != 0) {
-            text.setText(mState.movie.getDescription());
+        if (state.movie.getDescription().length() != 0) {
+            text.setText(state.movie.getDescription());
             findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.movie_description_panel).setVisibility(View.GONE);
@@ -313,9 +317,9 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     public void onSchedulesClick(View view) {
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.activityType = ActivityState.CINEMA_LIST_W_MOVIE;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, CinemaWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
@@ -326,7 +330,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
         StringBuilder buffer = new StringBuilder();
         buffer.append(getString(R.string.youtube_search_url));
         buffer.append(" \"\"");
-        buffer.insert(buffer.length() - 1, mState.movie.getCaption());
+        buffer.insert(buffer.length() - 1, state.movie.getName());
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(buffer.toString()));
@@ -335,7 +339,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     public void onPictureClick(View view) {
         StringBuilder url = new StringBuilder();
-        url.append(getString(R.string.image_search_url)).append(" ").append(mState.movie.getCaption()).append("#i=1");
+        url.append(getString(R.string.image_search_url)).append(" ").append(state.movie.getName()).append("#i=1");
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url.toString()));
         startActivity(intent);
@@ -343,16 +347,16 @@ public class MovieActivity extends Activity implements PictureReceiver {
 
     public void onActorsClick(View view) {
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.activityType = ActivityState.ACTOR_LIST_W_MOVIE;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, ActorListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }
 
-    public void onPictureReceive(String picId, int pictureType, boolean success) {
+    public void onImageReceived(boolean success) {
         if (success) {
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -363,7 +367,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onHomeButtonClick(View view) {
-        mApp.goHome(this);
+        app.goHome(this);
     }
 
     public void onDayButtonClick(View view) {
@@ -372,7 +376,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     public void onShareButtonClick(View view) {
-        final boolean isScheduled = mState.activityType == ActivityState.MOVIE_INFO_W_SCHED;
+        final boolean isScheduled = state.activityType == ActivityState.MOVIE_INFO_W_SCHED;
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -380,13 +384,13 @@ public class MovieActivity extends Activity implements PictureReceiver {
         progressDialog.setCancelable(true);
         progressDialog.show();
 
-        final CinemattyApplication app = mApp;
-        final ActivityState state = mState;
+        final CinemattyApplication app = this.app;
+        final ActivityState state = this.state;
         final Context ctx = this;
 
         new Thread(new Runnable() {
             public void run() {
-                String url = isScheduled ? app.getSharedPageUrl(state.movie, mState.cinema, mCurrentDay) : app.getSharedPageUrl(state.movie, null, null);
+                String url = isScheduled ? state.movie.getSharedPageUrl(settings.getCurrentCity(), MovieActivity.this.state.cinema, currentDay) : state.movie.getSharedPageUrl(settings.getCurrentCity());
                 final String shortUrl = url != null ? DataConverter.longUrlToShort(url) : null;
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -395,7 +399,7 @@ public class MovieActivity extends Activity implements PictureReceiver {
                             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                             sharingIntent.setType("text/plain");
                             sharingIntent.putExtra(Intent.EXTRA_TEXT, shortUrl);
-                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mState.movie.getCaption());
+                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, MovieActivity.this.state.movie.getName());
                             startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_link)));
                         } else {
                             Toast.makeText(ctx, ctx.getString(R.string.generate_link_failed), Toast.LENGTH_SHORT).show();
@@ -407,8 +411,8 @@ public class MovieActivity extends Activity implements PictureReceiver {
     }
 
     private void setCurrentDay(int day) {
-        mApp.setCurrentDay(day);
-        mCurrentDay = day;
+        settings.setCurrentDay(day);
+        currentDay = day;
         changeTitleBar();
         setSchedule();
     }

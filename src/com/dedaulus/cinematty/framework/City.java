@@ -6,46 +6,50 @@ package com.dedaulus.cinematty.framework;
  * Time: 15:27
  */
 public class City implements Comparable<City> {
-    private int mId;
-    private String mName;
-    private String mFileName;
+    private String name;
+    private int id;
+    private String fileName;
+    private String zipFileName;
 
-    public City(int id, String name, String fileName) {
-        mId = id;
-        mName = name;
-        mFileName = fileName;
-    }
-
-    public int getId() {
-        return mId;
+    public City(String name, int id, String fileName) {
+        this.id = id;
+        this.name = name;
+        this.fileName = fileName;
+        zipFileName = fileName + ".gz";
     }
 
     public String getName() {
-        return mName;
+        return name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFileName() {
-        return mFileName;
+        return fileName;
+    }
+
+    public String getZipFileName() {
+        return zipFileName;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        City city = (City) o;
-
-        return mId == city.mId;
+        City other = (City)o;
+        return id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return mId;
+        return id;
     }
 
     public int compareTo(City city) {
-        if (mId > city.mId) return 1;
-        else if (mId < city.mId) return -1;
+        if (id > city.id) return 1;
+        else if (id < city.id) return -1;
         else return 0;
 
     }

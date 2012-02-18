@@ -3,35 +3,41 @@ package com.dedaulus.cinematty.framework;
 import com.dedaulus.cinematty.framework.tools.DefaultComparator;
 import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * User: Dedaulus
  * Date: 02.04.11
  * Time: 2:48
  */
 public class MovieActor implements Comparable<MovieActor> {
-    private String mActor;
-    private UniqueSortedList<Movie> mMovies;
+    private String name;
+    private Map<String, Movie> movies;
     private long mFavValue = 0;
-
-    public MovieActor(String actor) {
-        mActor = actor;
-        mMovies = new UniqueSortedList<Movie>(new DefaultComparator<Movie>());
+    
+    {
+        movies = new HashMap<String, Movie>();
     }
 
-    public String getActor() {
-        return mActor;
+    public MovieActor(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void addMovie(Movie movie) {
-        mMovies.add(movie);
+        movies.put(movie.getName(), movie);
     }
 
-    public UniqueSortedList<Movie> getMovies() {
-        return mMovies;
+    public Map<String, Movie> getMovies() {
+        return movies;
     }
 
-    public void setFavourite(boolean addToFavourite) {
-        if (addToFavourite) {
+    public void setFavourite(boolean isFavourite) {
+        if (isFavourite) {
             mFavValue = System.currentTimeMillis();
         } else {
             mFavValue = 0;
@@ -50,18 +56,16 @@ public class MovieActor implements Comparable<MovieActor> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        MovieActor that = (MovieActor) o;
-
-        return mActor.equals(that.mActor);
+        MovieActor other = (MovieActor)o;
+        return name.equals(other.name);
     }
 
     @Override
     public int hashCode() {
-        return mActor.hashCode();
+        return name.hashCode();
     }
 
     public int compareTo(MovieActor o) {
-        return mActor.compareTo(o.mActor);
+        return name.compareTo(o.name);
     }
 }

@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.GenreItemAdapter;
 import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
@@ -26,38 +29,35 @@ import java.util.UUID;
  * Time: 5:12
  */
 public class GenreListActivity extends Activity {
-    private CinemattyApplication mApp;
-    private ActivityState mState;
-    private String mStateId;
+    private CinemattyApplication app;
+    private ActivitiesState activitiesState;
+    private ActivityState state;
+    private String stateId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.genre_list);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        activitiesState = app.getActivitiesState();
+
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
 
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_genre_list);
         ListView list = (ListView)findViewById(R.id.genre_list);
 
-        switch (mState.activityType) {
+        switch (state.activityType) {
         case ActivityState.GENRE_LIST:
             movieLabel.setVisibility(View.GONE);
-            list.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(mApp.getGenres())));
+            list.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(app.getSettings().getGenres().values())));
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onGenreItemClick(adapterView, view, i, l);
@@ -72,13 +72,13 @@ public class GenreListActivity extends Activity {
 
     @Override
     protected void onStop() {
-        mApp.dumpData();
+        activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
 
         super.onBackPressed();
     }
@@ -98,11 +98,11 @@ public class GenreListActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_home:
-            mApp.goHome(this);
+            app.goHome(this);
             return true;
 
         case R.id.menu_about:
-            mApp.showAbout(this);
+            app.showAbout(this);
             return true;
 
         default:
@@ -116,10 +116,10 @@ public class GenreListActivity extends Activity {
         MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.genre = genre;
         state.activityType = ActivityState.MOVIE_LIST_W_GENRE;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);

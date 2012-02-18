@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
@@ -25,33 +27,38 @@ import java.util.UUID;
  * Time: 20:18
  */
 public class ActorsPage implements SliderPage {
-    private Context mContext;
-    private CinemattyApplication mApp;
-    private SortableAdapter<MovieActor> mActorListAdapter;
-    private boolean mBinded = false;
+    private Context context;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private SortableAdapter<MovieActor> actorListAdapter;
+    private boolean binded = false;
 
     public ActorsPage(Context context, CinemattyApplication app) {
-        mContext = context;
-        mApp = app;
+        this.context = context;
+        this.app = app;
+
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.actor_list, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.actors_caption);
+        return context.getString(R.string.actors_caption);
     }
 
     public void onResume() {
-        if (mBinded) {
-            mActorListAdapter.sortBy(new Comparator<MovieActor>() {
+        if (binded) {
+            actorListAdapter.sortBy(new Comparator<MovieActor>() {
                 public int compare(MovieActor a1, MovieActor a2) {
                     if (a1.getFavourite() == a2.getFavourite()) {
-                        return a1.getActor().compareTo(a2.getActor());
+                        return a1.getName().compareTo(a2.getName());
                     } else return a1.getFavourite() < a2.getFavourite() ? 1 : -1;
                 }
             });
@@ -59,7 +66,7 @@ public class ActorsPage implements SliderPage {
     }
 
     public void onPause() {
-        mApp.saveFavouriteActors();
+        settings.saveFavouriteActors();
     }
 
     public void onStop() {}
@@ -74,15 +81,15 @@ public class ActorsPage implements SliderPage {
 
     private View bindView(View view) {
         ListView list = (ListView)view.findViewById(R.id.actor_list);
-        mActorListAdapter = new ActorItemAdapter(mContext, new ArrayList<MovieActor>(mApp.getActors()));
-        list.setAdapter(mActorListAdapter);
+        actorListAdapter = new ActorItemAdapter(context, settings.getActors());
+        list.setAdapter(actorListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onActorItemClick(adapterView, view, i, l);
             }
         });
 
-        mBinded = true;
+        binded = true;
         onResume();
 
         return view;
@@ -95,10 +102,10 @@ public class ActorsPage implements SliderPage {
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, actor, null);
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieListActivity.class);
+        Intent intent = new Intent(context, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
 }

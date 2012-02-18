@@ -6,18 +6,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Pair;
 import android.view.*;
 import android.widget.*;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -25,39 +28,37 @@ import java.util.UUID;
  * Time: 10:05
  */
 public class MovieWithScheduleListActivity extends Activity {
-    private CinemattyApplication mApp;
-    private SortableAdapter<Movie> mMovieListAdapter;
-    private UniqueSortedList<Movie> mScopeMovies;
-    private ActivityState mState;
-    private String mStateId;
-    private int mCurrentDay;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private SortableAdapter<Movie> movieListAdapter;
+    private ActivityState state;
+    private String stateId;
+    private int currentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
+
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
 
         findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
-        switch (mState.activityType) {
+        switch (state.activityType) {
         case ActivityState.MOVIE_LIST_W_CINEMA:
             captionView.setVisibility(View.GONE);
             LayoutInflater layoutInflater = LayoutInflater.from(this);
@@ -66,7 +67,7 @@ public class MovieWithScheduleListActivity extends Activity {
 
             list.addHeaderView(view, null, false);
 
-            setCurrentDay(mApp.getCurrentDay());
+            setCurrentDay(settings.getCurrentDay());
 
             TextView textView = (TextView)findViewById(R.id.titlebar_caption);
             textView.setOnClickListener(new View.OnClickListener() {
@@ -90,26 +91,26 @@ public class MovieWithScheduleListActivity extends Activity {
 
     @Override
     protected void onResume() {
-        ((StoppableAndResumable)mMovieListAdapter).onResume();
-        if (mCurrentDay != mApp.getCurrentDay()) {
-            setCurrentDay(mApp.getCurrentDay());
+        ((StoppableAndResumable) movieListAdapter).onResume();
+        if (currentDay != settings.getCurrentDay()) {
+            setCurrentDay(settings.getCurrentDay());
         }
-        mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), mApp.getCurrentDay()));
+        movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), settings.getCurrentDay()));
 
         super.onResume();
     }
 
     @Override
     protected void onStop() {
-        ((StoppableAndResumable)mMovieListAdapter).onStop();
-        mApp.dumpData();
+        ((StoppableAndResumable) movieListAdapter).onStop();
+        activitiesState.dump();
 
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
 
         super.onBackPressed();
     }
@@ -119,44 +120,39 @@ public class MovieWithScheduleListActivity extends Activity {
         menu.clear();
 
         MenuInflater inflater = getMenuInflater();
-
         inflater.inflate(R.menu.home_menu, menu);
 
-        if (mState.cinema.getAddress() != null) {
+        if (state.cinema.getAddress() != null) {
             inflater.inflate(R.menu.show_map_menu, menu);
         }
 
-        if (mState.cinema.getPhone() != null) {
+        if (state.cinema.getPhone() != null) {
             inflater.inflate(R.menu.call_menu, menu);
         }
 
         inflater.inflate(R.menu.select_day_menu, menu);
-        if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+        if (currentDay == Constants.TODAY_SCHEDULE) {
             menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
         } else {
             menu.findItem(R.id.menu_day).setTitle(R.string.today);
         }
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
-        switch (mApp.getMovieSortOrder()) {
+        switch (settings.getMovieSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
             break;
-
         case BY_POPULAR:
             menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
             break;
-
         case BY_RATING:
             menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
             break;
-
         default:
             break;
         }
 
         inflater.inflate(R.menu.about_menu, menu);
-
         return true;
     }
 
@@ -164,48 +160,39 @@ public class MovieWithScheduleListActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_home:
-            mApp.goHome(this);
+            app.goHome(this);
             return true;
-
         case R.id.menu_call:
             onCinemaPhoneClick(null);
             return true;
-
         case R.id.menu_show_map:
             onCinemaAddressClick(null);
             return true;
-
         case R.id.menu_day:
-            int day = mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
+            int day = currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
             setCurrentDay(day);
-            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), day));
+            movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), day));
             return true;
-
         case R.id.menu_movie_sort:
             return true;
-
         case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
-
         case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;
-
         case R.id.submenu_movie_sort_by_rating:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
             item.setChecked(true);
             return true;
-
         case R.id.menu_about:
-            mApp.showAbout(this);
+            app.showAbout(this);
             return true;
-
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -222,15 +209,15 @@ public class MovieWithScheduleListActivity extends Activity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.submenu_select_day_today:
-            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+            if (currentDay != Constants.TODAY_SCHEDULE) {
                 setCurrentDay(Constants.TODAY_SCHEDULE);
-                mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
             }
             return true;
         case R.id.submenu_select_day_tomorrow:
-            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+            if (currentDay != Constants.TOMORROW_SCHEDULE) {
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
             }
             return true;
         default:
@@ -241,7 +228,7 @@ public class MovieWithScheduleListActivity extends Activity {
     private void changeTitleBar() {
         findViewById(R.id.movie_list_title_day).setVisibility(View.VISIBLE);
         TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (mApp.getCurrentDay()) {
+        switch (settings.getCurrentDay()) {
         case Constants.TODAY_SCHEDULE:
             text.setText(R.string.today);
             break;
@@ -258,10 +245,10 @@ public class MovieWithScheduleListActivity extends Activity {
         Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.movie = movie;
         state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
@@ -269,7 +256,7 @@ public class MovieWithScheduleListActivity extends Activity {
     }
 
     public void onHomeButtonClick(View view) {
-        mApp.goHome(this);
+        app.goHome(this);
     }
 
     public void onDayButtonClick(View view) {
@@ -278,26 +265,25 @@ public class MovieWithScheduleListActivity extends Activity {
     }
 
     private void setCurrentDay(int day) {
-        mApp.setCurrentDay(day);
-        mCurrentDay = day;
+        settings.setCurrentDay(day);
+        currentDay = day;
 
         changeTitleBar();
 
-        mScopeMovies = mState.cinema.getMovies(mApp.getCurrentDay());
-        if (mScopeMovies == null) {
-            mScopeMovies = new UniqueSortedList<Movie>(null);
+        Collection<Movie> movies = state.cinema.getMovies(settings.getCurrentDay()).values();
+        if (movies.isEmpty()) {
             findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        StoppableAndResumable sar = (StoppableAndResumable)mMovieListAdapter;
+        StoppableAndResumable sar = (StoppableAndResumable) movieListAdapter;
         if (sar != null) sar.onStop();
-        mMovieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(mScopeMovies), mState.cinema, mApp.getCurrentDay(), mApp.getPictureRetriever());
-        sar = (StoppableAndResumable)mMovieListAdapter;
+        movieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(movies), state.cinema, settings.getCurrentDay(), app.getImageRetrievers().getMovieSmallImageRetriever());
+        sar = (StoppableAndResumable) movieListAdapter;
         sar.onResume();
         ListView list = (ListView)findViewById(R.id.movie_list);
-        list.setAdapter(mMovieListAdapter);
+        list.setAdapter(movieListAdapter);
     }
 
     private void setCinemaHeader(View view) {
@@ -311,7 +297,7 @@ public class MovieWithScheduleListActivity extends Activity {
     private void setCinemaFavourite(View view) {
         ImageView favIcon = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_info);
 
-        if (mState.cinema.getFavourite() > 0) {
+        if (state.cinema.getFavourite() > 0) {
             favIcon.setImageResource(android.R.drawable.btn_star_big_on);
         } else {
             favIcon.setImageResource(android.R.drawable.btn_star_big_off);
@@ -320,29 +306,29 @@ public class MovieWithScheduleListActivity extends Activity {
 
     private void setCinemaCaption(View view) {
         TextView caption = (TextView)view.findViewById(R.id.cinema_caption);
-        caption.setText(mState.cinema.getCaption());
+        caption.setText(state.cinema.getName());
     }
 
     private void setCinemaAddress(View view) {
         View panel = view.findViewById(R.id.cinema_address_panel);
-        if (mState.cinema.getAddress() != null) {
+        if (state.cinema.getAddress() != null) {
             TextView address = (TextView)view.findViewById(R.id.cinema_address);
-            address.setText(mState.cinema.getAddress());
+            address.setText(state.cinema.getAddress());
 
             TextView into = (TextView)view.findViewById(R.id.cinema_into);
-            if (mState.cinema.getInto() != null) {
-                into.setText(mState.cinema.getInto());
+            if (state.cinema.getInto() != null) {
+                into.setText(state.cinema.getInto());
                 into.setVisibility(View.VISIBLE);
             } else {
                 into.setVisibility(View.GONE);
             }
 
             TextView metro = (TextView)view.findViewById(R.id.cinema_metro);
-            if (mState.cinema.getMetro() != null) {
-                metro.setText(getString(R.string.metro_near) + ": " + mState.cinema.getMetro());
-                metro.setVisibility(View.VISIBLE);
-            } else {
+            if (state.cinema.getMetros().isEmpty()) {
                 metro.setVisibility(View.GONE);
+            } else {
+                //metro.setText(getString(R.string.metro_near) + ": " + state.cinema.getMetros());
+                metro.setVisibility(View.VISIBLE);
             }
 
             panel.setVisibility(View.VISIBLE);
@@ -353,9 +339,9 @@ public class MovieWithScheduleListActivity extends Activity {
 
     private void setCinemaPhone(View view) {
         View panel = view.findViewById(R.id.cinema_phone_panel);
-        if (mState.cinema.getPhone() != null) {
+        if (state.cinema.getPhone() != null) {
             TextView phone = (TextView)view.findViewById(R.id.cinema_phone);
-            phone.setText(mState.cinema.getPhone());
+            phone.setText(state.cinema.getPhone());
 
             panel.setVisibility(View.VISIBLE);
         }
@@ -366,10 +352,10 @@ public class MovieWithScheduleListActivity extends Activity {
 
     private void setCinemaUrl(View view) {
         TextView url = (TextView)view.findViewById(R.id.cinema_url);
-        if (mState.cinema.getUrl() != null) {
-            StringBuilder buf = new StringBuilder(mState.cinema.getUrl());
+        if (state.cinema.getUrl() != null) {
+            StringBuilder buf = new StringBuilder(state.cinema.getUrl());
 
-            if (mState.cinema.getUrl().startsWith("http://")) {
+            if (state.cinema.getUrl().startsWith("http://")) {
                 buf.delete(0, "http://".length());
             }
 
@@ -391,30 +377,30 @@ public class MovieWithScheduleListActivity extends Activity {
 
     public void onCinemaAddressClick(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:0,0?q=Россия, " + mApp.getCurrentCity().getName() + ", " + mState.cinema.getAddress()));
+        intent.setData(Uri.parse("geo:0,0?q=Россия, " + app.getCurrentCity().getName() + ", " + state.cinema.getAddress()));
         startActivity(intent);
     }
 
     public void onCinemaPhoneClick(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:+7" + mState.cinema.getPlainPhone()));
+        intent.setData(Uri.parse("tel:+7" + state.cinema.getPlainPhone()));
         startActivity(intent);
     }
 
     public void onCinemaUrlClick(View view) {
-        if (mState.cinema.getUrl() != null) {
+        if (state.cinema.getUrl() != null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(mState.cinema.getUrl()));
+            intent.setData(Uri.parse(state.cinema.getUrl()));
             startActivity(intent);
         }
     }
 
     public void onCinemaFavIconClick(View view) {
-        if (mState.cinema.getFavourite() > 0) {
-            mState.cinema.setFavourite(false);
+        if (state.cinema.getFavourite() > 0) {
+            state.cinema.setFavourite(false);
             ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
         } else {
-            mState.cinema.setFavourite(true);
+            state.cinema.setFavourite(true);
             ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
         }
     }

@@ -45,7 +45,7 @@ public class ScheduleDateHandler extends DefaultHandler {
 
         mDate = Calendar.getInstance();
 
-        //mDate.set(Calendar.YEAR, list.get(0));
+        mDate.set(Calendar.YEAR, list.get(0));
         mDate.set(Calendar.MONTH, list.get(1) - 1);
         mDate.set(Calendar.DAY_OF_MONTH, list.get(2));
         mDate.set(Calendar.HOUR_OF_DAY, list.get(3));

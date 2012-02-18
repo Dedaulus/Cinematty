@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
@@ -24,23 +26,26 @@ import java.util.UUID;
  * Time: 20:18
  */
 public class GenresPage implements SliderPage {
-    private Context mContext;
-    private CinemattyApplication mApp;
+    private Context context;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
 
     public GenresPage(Context context, CinemattyApplication app) {
-        mContext = context;
-        mApp = app;
+        this.context = context;
+
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.genre_list, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.genres_caption);
+        return context.getString(R.string.genres_caption);
     }
 
     public void onResume() {}
@@ -59,7 +64,7 @@ public class GenresPage implements SliderPage {
 
     private View bindView(View view) {
         ListView list = (ListView)view.findViewById(R.id.genre_list);
-        list.setAdapter(new GenreItemAdapter(mContext, new ArrayList<MovieGenre>(mApp.getGenres())));
+        list.setAdapter(new GenreItemAdapter(context, new ArrayList<MovieGenre>(settings.getGenres().values())));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onGenreItemClick(adapterView, view, i, l);
@@ -75,10 +80,10 @@ public class GenresPage implements SliderPage {
         MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_GENRE, null, null, null, genre);
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieListActivity.class);
+        Intent intent = new Intent(context, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
 }

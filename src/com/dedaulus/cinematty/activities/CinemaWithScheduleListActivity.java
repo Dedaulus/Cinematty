@@ -8,17 +8,15 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -26,43 +24,44 @@ import java.util.UUID;
  * Time: 21:27
  */
 public class CinemaWithScheduleListActivity extends Activity implements LocationClient {
-    private CinemattyApplication mApp;
-    private SortableAdapter<Cinema> mCinemaListAdapter;
-    private ActivityState mState;
-    private String mStateId;
-    private int mCurrentDay;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private LocationState locationState;
+    private SortableAdapter<Cinema> cinemaListAdapter;
+    private ActivityState state;
+    private String stateId;
+    private int currentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_list);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
+        locationState = app.getLocationState();
+
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
 
         findViewById(R.id.cinema_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
-        switch (mState.activityType) {
+        switch (state.activityType) {
         case ActivityState.CINEMA_LIST_W_MOVIE:
             movieLabel.setVisibility(View.VISIBLE);
-            movieLabel.setText(mState.movie.getCaption());
+            movieLabel.setText(state.movie.getName());
 
-            setCurrentDay(mApp.getCurrentDay());
+            setCurrentDay(settings.getCurrentDay());
 
             TextView textView = (TextView)findViewById(R.id.titlebar_caption);
             textView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +86,7 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     private void changeTitleBar() {
         findViewById(R.id.cinema_list_title_day).setVisibility(View.VISIBLE);
         TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (mApp.getCurrentDay()) {
+        switch (settings.getCurrentDay()) {
         case Constants.TODAY_SCHEDULE:
             text.setText(R.string.today);
             break;
@@ -99,32 +98,32 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
 
     @Override
     protected void onResume() {
-        mApp.startListenLocation();
-        mApp.addLocationClient(this);
-        if (mCurrentDay != mApp.getCurrentDay()) {
-            setCurrentDay(mApp.getCurrentDay());
+        locationState.startLocationListening();
+        locationState.addLocationClient(this);
+        if (currentDay != settings.getCurrentDay()) {
+            setCurrentDay(settings.getCurrentDay());
         }
-        mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+        cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mApp.removeLocationClient(this);
-        mApp.stopListenLocation();
-        mApp.saveFavouriteCinemas();
+        locationState.removeLocationClient(this);
+        locationState.stopLocationListening();
+        settings.saveFavouriteCinemas();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        mApp.dumpData();
+        activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
         super.onBackPressed();
     }
 
@@ -137,26 +136,23 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
         inflater.inflate(R.menu.home_menu, menu);
 
         inflater.inflate(R.menu.select_day_menu, menu);
-        if (mCurrentDay == Constants.TODAY_SCHEDULE) {
+        if (currentDay == Constants.TODAY_SCHEDULE) {
             menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
         } else {
             menu.findItem(R.id.menu_day).setTitle(R.string.today);
         }
 
         inflater.inflate(R.menu.cinema_sort_menu, menu);
-        switch (mApp.getCinemaSortOrder()) {
+        switch (settings.getCinemaSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
             break;
-
         case BY_FAVOURITE:
             menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
             break;
-
         case BY_DISTANCE:
             menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
             break;
-
         default:
             break;
         }
@@ -170,39 +166,33 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_home:
-            mApp.goHome(this);
+            app.goHome(this);
             return true;
 
         case R.id.menu_day:
-            setCurrentDay(mCurrentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
-            mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+            setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             return true;
-
         case R.id.menu_cinema_sort:
             return true;
-
         case R.id.submenu_cinema_sort_by_caption:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
-
         case R.id.submenu_cinema_sort_by_favourite:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
-
         case R.id.submenu_cinema_sort_by_distance:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
-
         case R.id.menu_about:
-            mApp.showAbout(this);
+            app.showAbout(this);
             return true;
-
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -219,15 +209,15 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.submenu_select_day_today:
-            if (mCurrentDay != Constants.TODAY_SCHEDULE) {
+            if (currentDay != Constants.TODAY_SCHEDULE) {
                 setCurrentDay(Constants.TODAY_SCHEDULE);
-                mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             }
             return true;
         case R.id.submenu_select_day_tomorrow:
-            if (mCurrentDay != Constants.TOMORROW_SCHEDULE) {
+            if (currentDay != Constants.TOMORROW_SCHEDULE) {
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             }
             return true;
         default:
@@ -241,10 +231,10 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
         Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.cinema = cinema;
         state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
@@ -252,7 +242,7 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     }
 
     public void onHomeButtonClick(View view) {
-        mApp.goHome(this);
+        app.goHome(this);
     }
 
     public void onDayButtonClick(View view) {
@@ -261,25 +251,25 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     }
 
     private void setCurrentDay(int day) {
-        mApp.setCurrentDay(day);
-        mCurrentDay = day;
+        settings.setCurrentDay(day);
+        currentDay = day;
 
         changeTitleBar();
 
-        List<Cinema> cinemaList = mState.movie.getCinemas(mApp.getCurrentDay());
-        if (cinemaList == null) {
-            cinemaList = new ArrayList<Cinema>();
+        Map<String, Cinema> cinemas = state.movie.getCinemas(settings.getCurrentDay());
+        if (cinemas.isEmpty()) {
             findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
-        mCinemaListAdapter = new CinemaItemWithScheduleAdapter(this, new ArrayList<Cinema>(cinemaList), mState.movie, mApp.getCurrentDay(), mApp.getCurrentLocation());
+        
+        cinemaListAdapter = new CinemaItemWithScheduleAdapter(this, cinemas, state.movie, settings.getCurrentDay(), locationState.getCurrentLocation());
         ListView list = (ListView)findViewById(R.id.cinema_list);
-        list.setAdapter(mCinemaListAdapter);
+        list.setAdapter(cinemaListAdapter);
     }
 
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)mCinemaListAdapter;
+        LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
         adapter.setCurrentLocation(location);
     }
 }

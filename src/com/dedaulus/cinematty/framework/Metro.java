@@ -1,45 +1,44 @@
 package com.dedaulus.cinematty.framework;
 
-import com.dedaulus.cinematty.framework.tools.DefaultComparator;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * User: Dedaulus
- * Date: 02.04.11
- * Time: 2:52
+ * Date: 05.01.12
+ * Time: 5:11
  */
-public class MovieGenre implements Comparable<MovieGenre> {
+public class Metro implements Comparable<Metro> {
     private String name;
-    private Map<String, Movie> movies;
+    private int color;
+    private Map<String, Cinema> cinemas;
     
     {
-        movies = new HashMap<String, Movie>();
+        cinemas = new HashMap<String, Cinema>();
     }
 
-    public MovieGenre(String name) {
+    public Metro(String name, int color) {
         this.name = name;
+        this.color = color;
     }
 
     public String getName() {
         return name;
     }
 
-    public void addMovie(Movie movie) {
-        movies.put(movie.getName(), movie);
+    public void addCinema(Cinema cinema) {
+        cinemas.put(cinema.getName(), cinema);
     }
 
-    public Map<String, Movie> getMovies() {
-        return movies;
+    public Map<String, Cinema> getCinemas() {
+        return cinemas;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovieGenre other = (MovieGenre)o;
+        Metro other = (Metro)o;
         return name.equals(other.name);
     }
 
@@ -48,7 +47,7 @@ public class MovieGenre implements Comparable<MovieGenre> {
         return name.hashCode();
     }
 
-    public int compareTo(MovieGenre o) {
+    public int compareTo(Metro o) {
         return name.compareTo(o.name);
     }
 }

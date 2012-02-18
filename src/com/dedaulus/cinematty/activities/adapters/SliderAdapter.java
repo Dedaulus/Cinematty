@@ -14,20 +14,24 @@ import java.util.List;
  * Time: 19:57
  */
 public class SliderAdapter extends PagerAdapter {
-    private List<SliderPage> mPages;
-    private List<SliderPage> mCreatedPages = new ArrayList<SliderPage>();
+    private List<SliderPage> pages;
+    private List<SliderPage> createdPages;
+
+    {
+        createdPages = new ArrayList<SliderPage>();
+    }
 
     public SliderAdapter(List<SliderPage> pages) {
-        mPages = pages;
+        this.pages = pages;
     }
 
     public List<SliderPage> getCreatedPages() {
-        return mCreatedPages;
+        return createdPages;
     }
 
     @Override
     public int getCount() {
-        return mPages.size();
+        return pages.size();
     }
 
     @Override
@@ -35,20 +39,20 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(View collection, int position) {
-        SliderPage page = mPages.get(position);
+        SliderPage page = pages.get(position);
         View view = page.getView();
         ((ViewPager)collection).addView(view);
-        mCreatedPages.add(page);
+        createdPages.add(page);
         return view;
     }
 
     @Override
     public void destroyItem(View collection, int position, Object view) {
-        SliderPage page = mPages.get(position);
+        SliderPage page = pages.get(position);
         page.onPause();
         page.onStop();
         ((ViewPager)collection).removeView((View) view);
-        mCreatedPages.remove(page);
+        createdPages.remove(page);
     }
 
     @Override
@@ -68,6 +72,6 @@ public class SliderAdapter extends PagerAdapter {
     public void restoreState(Parcelable parcelable, ClassLoader classLoader) {}
 
     public String getTitle(int pos) {
-        return mPages.get(pos).getTitle();
+        return pages.get(pos).getTitle();
     }
 }

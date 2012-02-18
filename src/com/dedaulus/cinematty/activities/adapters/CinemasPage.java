@@ -7,8 +7,7 @@ import android.location.Location;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
@@ -22,48 +21,53 @@ import java.util.UUID;
  * Time: 20:17
  */
 public class CinemasPage implements SliderPage, LocationClient {
-    private Context mContext;
-    private CinemattyApplication mApp;
-    private SortableAdapter<Cinema> mCinemaListAdapter;
-    private boolean mBinded = false;
+    private Context context;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private LocationState locationState;
+    private SortableAdapter<Cinema> cinemaListAdapter;
+    private boolean binded = false;
 
     public CinemasPage(Context context, CinemattyApplication app) {
-        mContext = context;
-        mApp = app;
+        this.context = context;
+
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
+        locationState = app.getLocationState();
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.cinema_list, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.cinemas_caption);
+        return context.getString(R.string.cinemas_caption);
     }
 
     public void onResume() {
-        if (mBinded) {
-            mApp.startListenLocation();
-            mApp.addLocationClient(this);
-            mCinemaListAdapter.sortBy(new CinemaComparator(mApp.getCinemaSortOrder(), mApp.getCurrentLocation()));
+        if (binded) {
+            locationState.startLocationListening();
+            locationState.addLocationClient(this);
+            cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
         }
     }
 
     public void onPause() {
-        mApp.removeLocationClient(this);
-        mApp.stopListenLocation();
-        mApp.saveFavouriteCinemas();
+        locationState.removeLocationClient(this);
+        locationState.stopLocationListening();
+        settings.saveFavouriteCinemas();
     }
 
     public void onStop() {}
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((Activity)mContext).getMenuInflater();
+        MenuInflater inflater = ((Activity) context).getMenuInflater();
         inflater.inflate(R.menu.cinema_sort_menu, menu);
 
-        switch (mApp.getCinemaSortOrder()) {
+        switch (settings.getCinemaSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
             break;
@@ -89,20 +93,20 @@ public class CinemasPage implements SliderPage, LocationClient {
             return true;
 
         case R.id.submenu_cinema_sort_by_caption:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_favourite:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_cinema_sort_by_distance:
-            mCinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, mApp.getCurrentLocation()));
-            mApp.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
+            settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
 
@@ -113,14 +117,14 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     private View bindView(View view) {
         ListView list = (ListView)view.findViewById(R.id.cinema_list);
-        mCinemaListAdapter = new CinemaItemAdapter(mContext, new ArrayList<Cinema>(mApp.getCinemas()), mApp.getCurrentLocation());
-        list.setAdapter(mCinemaListAdapter);
+        cinemaListAdapter = new CinemaItemAdapter(context, settings.getCinemas(), locationState.getCurrentLocation());
+        list.setAdapter(cinemaListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onCinemaItemClick(adapterView, view, i, l);
             }
         });
-        mBinded = true;
+        binded = true;
         onResume();
 
         return view;
@@ -133,15 +137,15 @@ public class CinemasPage implements SliderPage, LocationClient {
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieWithScheduleListActivity.class);
+        Intent intent = new Intent(context, MovieWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
 
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)mCinemaListAdapter;
+        LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
         adapter.setCurrentLocation(location);
     }
 }

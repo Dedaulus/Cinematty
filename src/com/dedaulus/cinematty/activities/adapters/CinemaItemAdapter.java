@@ -13,9 +13,7 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -23,22 +21,24 @@ import java.util.List;
  * Time: 22:11
  */
 public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Cinema>, LocationAdapter {
-    private Context mContext;
-    private List<Cinema> mCinemas;
-    private Location mCurrentLocation;
+    private Context context;
+    private Map<String, Cinema> cinemaEntries;
+    private ArrayList<Cinema> cinemas;
+    private Location currentLocation;
 
-    public CinemaItemAdapter(Context context, List<Cinema> cinemas, Location location) {
-        mContext = context;
-        mCinemas = cinemas;
-        mCurrentLocation = location;
+    public CinemaItemAdapter(Context context, Map<String, Cinema> cinemaEntries, Location location) {
+        this.context = context;
+        this.cinemaEntries = cinemaEntries;
+        this.cinemas = new ArrayList<Cinema>(cinemaEntries.values());
+        currentLocation = location;
     }
 
     public int getCount() {
-        return mCinemas.size();
+        return cinemas.size();
     }
 
     public Object getItem(int i) {
-        return mCinemas.get(i);
+        return cinemas.get(i);
     }
 
     public long getItemId(int i) {
@@ -51,7 +51,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     }
 
     private void bindView(int position, View view) {
-        Cinema cinema = mCinemas.get(position);
+        Cinema cinema = cinemas.get(position);
 
         ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
@@ -67,7 +67,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         });
 
         TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        text.setText(cinema.getCaption());
+        text.setText(cinema.getName());
 
         View addressPanel = view.findViewById(R.id.cinema_address_panel);
         String address = cinema.getAddress();
@@ -77,11 +77,11 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
 
             text = (TextView)addressPanel.findViewById(R.id.distance);
             Coordinate coordinate = cinema.getCoordinate();
-            if (coordinate != null && mCurrentLocation != null) {
+            if (coordinate != null && currentLocation != null) {
                 float[] distance = new float[1];
-                Location.distanceBetween(coordinate.latitude, coordinate.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), distance);
+                Location.distanceBetween(coordinate.latitude, coordinate.longitude, currentLocation.getLatitude(), currentLocation.getLongitude(), distance);
                 int m = (int)distance[0];
-                text.setText(DataConverter.metersToDistance(mContext, m));
+                text.setText(DataConverter.metersToDistance(context, m));
             }
 
             addressPanel.setVisibility(View.VISIBLE);
@@ -95,7 +95,7 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         if (view != null) {
             myView = view;
         } else {
-            myView = newView(mContext, viewGroup);
+            myView = newView(context, viewGroup);
         }
 
         bindView(i, myView);
@@ -104,30 +104,25 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     }
 
     public void sortBy(Comparator<Cinema> cinemaComparator) {
-        Collections.sort(mCinemas, cinemaComparator);
+        Collections.sort(cinemas, cinemaComparator);
         notifyDataSetChanged();
     }
 
     public void setCurrentLocation(Location location) {
-        mCurrentLocation = location;
+        currentLocation = location;
         notifyDataSetChanged();
     }
 
     private void onCinemaFavIconClick(View view) {
         View parent = (View)view.getParent();
         TextView caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-
-        int cinemaId = mCinemas.indexOf(new Cinema(caption.getText().toString()));
-        if (cinemaId != -1) {
-            Cinema cinema = mCinemas.get(cinemaId);
-
-            if (cinema.getFavourite() > 0) {
-                cinema.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                cinema.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
+        Cinema cinema = cinemaEntries.get(caption.getText().toString());
+        if (cinema.getFavourite() > 0) {
+            cinema.setFavourite(false);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+        } else {
+            cinema.setFavourite(true);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
         }
     }
 }

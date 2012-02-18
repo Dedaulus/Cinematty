@@ -30,6 +30,8 @@ public class ActivityState implements Cloneable {
     public MovieActor actor;
     public MovieGenre genre;
 
+    public ActivityState() {}
+
     public ActivityState(int activityType, Cinema cinema, Movie movie, MovieActor actor, MovieGenre genre) {
         this.activityType = activityType;
         this.cinema = cinema;

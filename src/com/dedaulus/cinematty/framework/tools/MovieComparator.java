@@ -3,8 +3,8 @@ package com.dedaulus.cinematty.framework.tools;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * User: Dedaulus
@@ -12,22 +12,22 @@ import java.util.List;
  * Time: 2:18
  */
 public class MovieComparator implements Comparator<Movie> {
-    private MovieSortOrder mSortOrder;
-    private int mCurrentDay;
+    private MovieSortOrder sortOrder;
+    private int currentDay;
 
     public MovieComparator(MovieSortOrder sortOrder, int day) {
-        mSortOrder = sortOrder;
-        mCurrentDay = day;
+        this.sortOrder = sortOrder;
+        currentDay = day;
     }
 
     public int compare(Movie o1, Movie o2) {
-        switch (mSortOrder) {
+        switch (sortOrder) {
         case BY_CAPTION:
-            return o1.getCaption().compareTo(o2.getCaption());
+            return o1.getName().compareTo(o2.getName());
 
         case BY_POPULAR:
-            List<Cinema> l1 = o1.getCinemas(mCurrentDay);
-            List<Cinema> l2 = o2.getCinemas(mCurrentDay);
+            Collection<Cinema> l1 = o1.getCinemas(currentDay).values();
+            Collection<Cinema> l2 = o2.getCinemas(currentDay).values();
             int size1 = l1 != null ? l1.size() : 0;
             int size2 = l2 != null ? l2.size() : 0;
             if (size1 == size2) return 0;

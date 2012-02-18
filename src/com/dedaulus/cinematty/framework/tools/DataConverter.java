@@ -26,7 +26,7 @@ public class DataConverter {
         if (genres.size() != 0) {
             StringBuilder genresString = new StringBuilder();
             for (MovieGenre genre : genres) {
-                genresString.append(genre.getGenre()).append("/");
+                genresString.append(genre.getName()).append("/");
             }
 
             genresString.delete(genresString.length() - 1, genresString.length());
@@ -40,7 +40,7 @@ public class DataConverter {
         if (actors.size() != 0) {
             StringBuilder actorsString = new StringBuilder();
             for (MovieActor genre : actors) {
-                actorsString.append(genre.getActor()).append(", ");
+                actorsString.append(genre.getName()).append(", ");
             }
 
             actorsString.delete(actorsString.length() - 2, actorsString.length());
@@ -171,7 +171,7 @@ public class DataConverter {
             List<Pair<Integer, Integer>> favActorsPoints = new ArrayList<Pair<Integer, Integer>>(actors.size());
             for (MovieActor actor : actors) {
                 int start = actorsStr.length();
-                actorsStr.append(actor.getActor()).append(", ");
+                actorsStr.append(actor.getName()).append(", ");
                 if (actor.getFavourite() != 0) {
                     int end = actorsStr.length() - 2;
                     favActorsPoints.add(new Pair<Integer, Integer>(start, end));

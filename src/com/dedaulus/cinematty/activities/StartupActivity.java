@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.City;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import org.xml.sax.SAXException;
 
@@ -23,7 +24,7 @@ import java.net.UnknownHostException;
 public class StartupActivity extends Activity
 {
     private static final int GET_CURRENT_CITY = RESULT_FIRST_USER + 1;
-    private CinemattyApplication mApp;
+    private CinemattyApplication app;
 
     /** Called when the activity is first created. */
     @Override
@@ -35,25 +36,18 @@ public class StartupActivity extends Activity
         // TODO: uncomment following before release!!!
         //BugSenseHandler.setup(this, "97371d41");
 
-        mApp = (CinemattyApplication)getApplication();
-        mApp.setCurrentDay(Constants.TODAY_SCHEDULE);
-        mApp.startListenLocation();
-
-        City city = mApp.getCurrentCity();
-        if (city != null) {
-            //TextView textView = (TextView)findViewById(R.id.current_city);
-            //textView.setText(city.getName());
-            mApp.setCurrentCity(city);
-            getSchedule();
-        } else {
+        app = (CinemattyApplication)getApplication();
+        if (app.getVersionState() == CinemattyApplication.NEW_INSTALLATION) {
             getCitiesList();
+        } else {
+            getSchedule();
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            mApp.stopListenLocation();
+            app.getLocationState().stopLocationListening();
             // This is need due to frozen internet connection
             android.os.Process.killProcess(android.os.Process.myPid());
         }
@@ -71,12 +65,7 @@ public class StartupActivity extends Activity
         startActivity(intent);
     }
 
-    private void setErrorString(String error, String message) {
-        if (error != null) {
-            TextView textView = (TextView)findViewById(R.id.error_string);
-            textView.setText(error);
-        }
-
+    private void setErrorString(String message) {
         if (message != null) {
             TextView textView = (TextView)findViewById(R.id.error_message);
             textView.setText(message);
@@ -100,43 +89,29 @@ public class StartupActivity extends Activity
     }
 
     private void getSchedule() {
+        final int densityDpi = CinemattyApplication.getDensityDpi(this);
         final Activity activity = this;
+        
         new Thread(new Runnable() {
-            private String error;
-            private String message = getString(R.string.unknown_error);
-            private boolean success = false;
+            private SyncStatus syncStatus;
             public void run() {
-                try {
-                    success = mApp.retrieveData(false);
-                } catch (UnknownHostException e) {
-                    error = e.toString();
-                    message = getString(R.string.connect_error);
-                } catch (SocketException e) {
-                    error = e.toString();
-                    message = getString(R.string.connect_error);
-                } catch (FileNotFoundException e) {
-                    error = e.toString();
-                    message = getString(R.string.connect_error);
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://market.android.com/details?id=com.dedaulus.cinematty"));
-                    startActivity(intent);
-                } catch (IOException e) {
-                    error = e.toString();
-                } catch (ParserConfigurationException e) {
-                    error = e.toString();
-                } catch (SAXException e) {
-                    error = e.toString();
-                }
+                syncStatus = app.syncSchedule(densityDpi);
 
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
-                        if (success) {
+                        if (syncStatus == SyncStatus.OK) {
                             Intent intent = new Intent(activity, MainActivity.class);
                             startActivity(intent);
                             finish();
+                        } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("https://market.android.com/details?id=com.dedaulus.cinematty"));
+                            startActivity(intent);
+                            finish();
+                        } else if (syncStatus == SyncStatus.BAD_RESPONSE) {
+                            setErrorString(getString(R.string.bad_response));
                         } else {
-                            setErrorString(error, message);
+                            setErrorString(getString(R.string.no_response));
                         }
                     }
                 });

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.City;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * User: Dedaulus
@@ -17,22 +17,22 @@ import java.util.List;
  * Time: 15:44
  */
 public class CityItemAdapter extends BaseAdapter {
-    private Context mContext;
-    private List<City> mCities;
-    private int mCurrentCityId;
+    private Context context;
+    private ArrayList<City> cities;
+    private int currentCityId;
 
-    public CityItemAdapter(Context context, List<City> cities, int currentCityId) {
-        mContext = context;
-        mCities = cities;
-        mCurrentCityId = currentCityId;
+    public CityItemAdapter(Context context, ArrayList<City> cities, City city) {
+        this.context = context;
+        this.cities = cities;
+        this.currentCityId = city != null ? city.getId() : -1;
     }
 
     public int getCount() {
-        return mCities.size();
+        return cities.size();
     }
 
     public Object getItem(int i) {
-        return mCities.get(i);
+        return cities.get(i);
     }
 
     public long getItemId(int i) {
@@ -45,12 +45,12 @@ public class CityItemAdapter extends BaseAdapter {
     }
 
     private void bindView(int position, View view) {
-        City city = mCities.get(position);
+        City city = cities.get(position);
 
         TextView text = (TextView)view.findViewById(R.id.city_caption_in_city_list);
         text.setText(city.getName());
 
-        if (city.getId() == mCurrentCityId) {
+        if (city.getId() == currentCityId) {
             view.findViewById(R.id.city_checked_icon).setVisibility(View.VISIBLE);
         } else {
             view.findViewById(R.id.city_checked_icon).setVisibility(View.GONE);
@@ -62,7 +62,7 @@ public class CityItemAdapter extends BaseAdapter {
         if (view != null) {
             myView = view;
         } else {
-            myView = newView(mContext, viewGroup);
+            myView = newView(context, viewGroup);
         }
 
         bindView(i, myView);

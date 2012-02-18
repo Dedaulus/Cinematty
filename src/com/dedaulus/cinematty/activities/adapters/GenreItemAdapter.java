@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,20 +18,20 @@ import java.util.List;
  * Time: 5:09
  */
 public class GenreItemAdapter extends BaseAdapter {
-    private Context mContext;
-    private List<MovieGenre> mGenres;
+    private Context context;
+    private ArrayList<MovieGenre> genres;
 
-    public GenreItemAdapter(Context context, List<MovieGenre> genres) {
-        mContext = context;
-        mGenres = genres;
+    public GenreItemAdapter(Context context, ArrayList<MovieGenre> genres) {
+        this.context = context;
+        this.genres = genres;
     }
 
     public int getCount() {
-        return mGenres.size();
+        return genres.size();
     }
 
     public Object getItem(int i) {
-        return mGenres.get(i);
+        return genres.get(i);
     }
 
     public long getItemId(int i) {
@@ -44,7 +45,7 @@ public class GenreItemAdapter extends BaseAdapter {
 
     private void bindView(int position, View view) {
         TextView text = (TextView)view.findViewById(R.id.genre_caption_in_genre_list);
-        text.setText(mGenres.get(position).getGenre());
+        text.setText(genres.get(position).getName());
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -52,7 +53,7 @@ public class GenreItemAdapter extends BaseAdapter {
         if (view != null) {
             myView = view;
         } else {
-            myView = newView(mContext, viewGroup);
+            myView = newView(context, viewGroup);
         }
 
         bindView(i, myView);

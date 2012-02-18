@@ -12,7 +12,10 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 /**
  * User: Dedaulus
@@ -20,92 +23,95 @@ import java.util.List;
  * Time: 22:37
  */
 public class ScheduleReceiver {
-    private URL mXmlUrl;
-    private String mXmlFile;
-    private File mCacheDir;
     private static final int VALID_HOURS_FOR_JUST_DOWNLOADED = 12;
+    
+    private URL scheduleUrl;
+    private File scheduleFile;
 
-    public ScheduleReceiver(CinemattyApplication app, String fileName) throws MalformedURLException {
-        mXmlUrl = new URL(app.getString(R.string.schedules_url) + "/" + fileName);
-        mXmlFile = fileName;
-        mCacheDir = app.getCacheDir();
+    public ScheduleReceiver(URL scheduleUrl, File scheduleFile) {
+        this.scheduleUrl = scheduleUrl;
+        this.scheduleFile = scheduleFile;
     }
 
-    public boolean getSchedule(UniqueSortedList<Cinema> cinemas,
-                            UniqueSortedList<Movie> movies,
-                            UniqueSortedList<MovieActor> actors,
-                            UniqueSortedList<MovieGenre> genres,
-                            StringBuffer pictureFolder,
-                            List<MoviePoster> posters,
-                            boolean useLocalOnly) throws IOException, ParserConfigurationException, SAXException {
-        InputStream is = useLocalOnly ? getFileStream() : getActualXmlStream();
-        if (is == null) return false;
-
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
-        ScheduleHandler handler = new ScheduleHandler();
-        parser.parse(is, handler);
-        handler.getSchedule(cinemas, movies, actors, genres, pictureFolder, posters);
-        return true;
-    }
-
-    private InputStream getActualXmlStream() throws IOException, ParserConfigurationException, SAXException {
-        InputStream is = getFileStream();
-        if (is == null) {
-            is = dumpStream(mXmlUrl.openConnection().getInputStream());
-            if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
-                return getFileStream();
-            } else {
-                return null;
-            }
-        }
-
-        boolean isActual = false;
+    public SyncStatus getSchedule(
+            Map<String, Cinema> cinemas,
+            Map<String, Movie> movies,
+            Map<String, MovieActor> actors,
+            Map<String, MovieGenre> genres,
+            List<MoviePoster> posters) {
         try {
-            isActual = isActualXmlStream(is, 0);
-        } catch (Exception e) {}
-        if (isActual) return getFileStream();
+            InputStream is = getActualXmlStream();
+            if (is == null) return SyncStatus.BAD_RESPONSE;
 
-        is = dumpStream(mXmlUrl.openConnection().getInputStream());
-        if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
-            return getFileStream();
-        } else {
-            return null;
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            ScheduleHandler handler = new ScheduleHandler();
+            parser.parse(is, handler);
+            handler.getSchedule(cinemas, movies, actors, genres, posters);
+            return SyncStatus.OK;
+        } catch (FileNotFoundException e) {
+            return SyncStatus.BAD_RESPONSE;
+        } catch (ParserConfigurationException e) {
+            return SyncStatus.BAD_RESPONSE;
+        } catch (SAXException e) {
+            return SyncStatus.BAD_RESPONSE;
+        } catch (IOException e) {
+            return SyncStatus.BAD_RESPONSE;
         }
     }
 
-    private boolean isActualXmlStream(InputStream is, int hours) throws IOException, ParserConfigurationException, SAXException {
-        if (is == null) return false;
-
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
-        ScheduleDateHandler handler = new ScheduleDateHandler();
-        parser.parse(is, handler);
-
-        Calendar got = handler.getActualDate();
-        got.add(Calendar.HOUR_OF_DAY, hours);
-        Calendar now = Calendar.getInstance();
-        return now.before(got);
-    }
-
-    private InputStream getFileStream() {
-        File file = new File(mCacheDir, mXmlFile);
-        if (!file.exists()) return null;
-
+    private InputStream getActualXmlStream() throws FileNotFoundException {
         InputStream is;
         try {
-            is = new FileInputStream(file);
+            is = new FileInputStream(scheduleFile);
+            if (isActualXmlStream(is, 0)) {
+                is = new FileInputStream(scheduleFile);
+            } else {
+                is = null;
+            }
         } catch (FileNotFoundException e) {
-            return null;
+            is = null;
         }
-
+        
+        if (is == null) {
+            try {
+                is = dumpStream(scheduleUrl.openConnection().getInputStream());
+                if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
+                    is = new FileInputStream(scheduleFile);
+                } else {
+                    is = null;
+                }
+            } catch (IOException e) {
+                is = null;
+            }
+        }
+        
         return is;
     }
 
-    private InputStream dumpStream(InputStream is) throws IOException {
-        InputStream input = new BufferedInputStream(is);
-        OutputStream output = new FileOutputStream(new File(mCacheDir, mXmlFile));
+    private boolean isActualXmlStream(InputStream is, int hours) {
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser parser = factory.newSAXParser();
+            ScheduleDateHandler handler = new ScheduleDateHandler();
+            parser.parse(is, handler);
+    
+            Calendar got = handler.getActualDate();
+            got.add(Calendar.HOUR_OF_DAY, hours);
+            Calendar now = Calendar.getInstance();
+            return now.before(got);
+        } catch (SAXException e) {
+            return false;
+        } catch (ParserConfigurationException e) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
+    private InputStream dumpStream(InputStream is) throws IOException {
+        GZIPInputStream input = new GZIPInputStream(new BufferedInputStream(is));
+        OutputStream output = new FileOutputStream(scheduleFile);
         byte data[] = new byte[1024];
 
         int count;
@@ -117,6 +123,6 @@ public class ScheduleReceiver {
         output.close();
         input.close();
 
-        return getFileStream();
+        return new FileInputStream(scheduleFile);
     }
 }

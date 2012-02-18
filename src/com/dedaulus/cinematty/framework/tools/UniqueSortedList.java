@@ -8,40 +8,40 @@ import java.util.*;
  * Time: 17:01
  */
 public class UniqueSortedList<T> extends AbstractList<T> {
-    private ArrayList<T> mSource;
-    private Comparator<T> mComparator;
+    private ArrayList<T> source;
+    private Comparator<T> comparator;
 
     public UniqueSortedList(Comparator<T> comparator) {
-        mComparator = comparator;
-        mSource = new ArrayList<T>();
+        this.comparator = comparator;
+        source = new ArrayList<T>();
     }
 
     public UniqueSortedList(int capacity, Comparator<T> comparator) {
-        mComparator = comparator;
-        mSource = new ArrayList<T>(capacity);
+        this.comparator = comparator;
+        source = new ArrayList<T>(capacity);
     }
 
     public UniqueSortedList(Collection<T> collection, Comparator<T> comparator) {
-        mComparator = comparator;
-        mSource = new ArrayList<T>(new HashSet<T>(collection));
-        Collections.sort(mSource, mComparator);
+        this.comparator = comparator;
+        source = new ArrayList<T>(new HashSet<T>(collection));
+        Collections.sort(source, this.comparator);
     }
 
     @Override
     public T get(int index) {
-        return mSource.get(index);
+        return source.get(index);
     }
 
     @Override
     public T remove(int index) {
-        return mSource.remove(index);
+        return source.remove(index);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public int indexOf(Object o) {
         if (o == null) return -1;
-        int i = Collections.binarySearch(mSource, (T)o, mComparator);
+        int i = Collections.binarySearch(source, (T)o, comparator);
         return i >= 0 ? i : -1;
     }
 
@@ -52,12 +52,12 @@ public class UniqueSortedList<T> extends AbstractList<T> {
 
     @Override
     public void clear() {
-        mSource.clear();
+        source.clear();
     }
 
     @Override
     public int size() {
-        return mSource.size();
+        return source.size();
     }
 
     @Override
@@ -68,9 +68,9 @@ public class UniqueSortedList<T> extends AbstractList<T> {
     @Override
     public boolean add(T t) {
         if (t != null) {
-            int i = Collections.binarySearch(mSource, t, mComparator);
+            int i = Collections.binarySearch(source, t, comparator);
             if (i < 0) {
-                mSource.add(-i - 1, t);
+                source.add(-i - 1, t);
                 return true;
             }
         }

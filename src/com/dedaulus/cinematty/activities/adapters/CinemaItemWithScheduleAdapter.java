@@ -3,6 +3,7 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.content.Context;
 import android.location.Location;
 import android.text.SpannableString;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,7 @@ import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -27,26 +25,28 @@ import java.util.List;
  * Time: 23:02
  */
 public class CinemaItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Cinema>, LocationAdapter {
-    private Context mContext;
-    private List<Cinema> mCinemas;
-    private Movie mCurrentMovie;
-    private int mCurrentDay;
-    private Location mCurrentLocation;
+    private Context context;
+    private Map<String, Cinema> cinemaEntries;
+    private ArrayList<Cinema> cinemas;
+    private Movie currentMovie;
+    private int currentDay;
+    private Location currentLocation;
 
-    public CinemaItemWithScheduleAdapter(Context context, List<Cinema> cinemas, Movie currentMovie, int day, Location location) {
-        mContext = context;
-        mCinemas = cinemas;
-        mCurrentMovie = currentMovie;
-        mCurrentDay = day;
-        mCurrentLocation = location;
+    public CinemaItemWithScheduleAdapter(Context context, Map<String, Cinema> cinemaEntries, Movie currentMovie, int day, Location location) {
+        this.context = context;
+        this.cinemaEntries = cinemaEntries;
+        cinemas = new ArrayList<Cinema>(cinemaEntries.values());
+        this.currentMovie = currentMovie;
+        currentDay = day;
+        currentLocation = location;
     }
 
     public int getCount() {
-        return mCinemas.size();
+        return cinemas.size();
     }
 
     public Object getItem(int i) {
-        return mCinemas.get(i);
+        return cinemas.get(i);
     }
 
     public long getItemId(int i) {
@@ -59,7 +59,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     }
 
     private void bindView(int position, View view) {
-        Cinema cinema = mCinemas.get(position);
+        Cinema cinema = cinemas.get(position);
 
         ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
@@ -75,7 +75,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         });
 
         TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        text.setText(cinema.getCaption());
+        text.setText(cinema.getName());
 
         View addressPanel = view.findViewById(R.id.cinema_address_panel);
         String address = cinema.getAddress();
@@ -85,11 +85,11 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
 
             text = (TextView)addressPanel.findViewById(R.id.distance);
             Coordinate coordinate = cinema.getCoordinate();
-            if (coordinate != null && mCurrentLocation != null) {
+            if (coordinate != null && currentLocation != null) {
                 float[] distance = new float[1];
-                Location.distanceBetween(coordinate.latitude, coordinate.longitude, mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), distance);
+                Location.distanceBetween(coordinate.latitude, coordinate.longitude, currentLocation.getLatitude(), currentLocation.getLongitude(), distance);
                 int m = (int)distance[0];
-                text.setText(DataConverter.metersToDistance(mContext, m));
+                text.setText(DataConverter.metersToDistance(context, m));
             }
 
             addressPanel.setVisibility(View.VISIBLE);
@@ -100,8 +100,9 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_cinema_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_cinema_list);
 
-        List<Calendar> showTimes = cinema.getShowTimes(mCurrentDay).get(mCurrentMovie);
-        if (showTimes != null) {
+        Map<String, Pair<Movie, List<Calendar>>> showTimesEntries = cinema.getShowTimes(currentDay);
+        if (!showTimesEntries.isEmpty()) {
+            List<Calendar> showTimes = showTimesEntries.get(currentMovie.getName()).second;
             String showTimesStr = DataConverter.showTimesToString(showTimes);
             if (showTimesStr.length() != 0) {
                 scheduleView.setText(showTimesStr);
@@ -109,8 +110,8 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             } else {
                 scheduleView.setVisibility(View.GONE);
             }
-            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
-                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
+            if (currentDay == Constants.TODAY_SCHEDULE) {
+                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(context, showTimes);
                 timeLeftView.setText(timeLeftString);
             } else {
                 timeLeftView.setVisibility(View.GONE);
@@ -126,7 +127,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         if (view != null) {
             myView = view;
         } else {
-            myView = newView(mContext, viewGroup);
+            myView = newView(context, viewGroup);
         }
 
         bindView(i, myView);
@@ -135,30 +136,25 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     }
 
     public void sortBy(Comparator<Cinema> cinemaComparator) {
-        Collections.sort(mCinemas, cinemaComparator);
+        Collections.sort(cinemas, cinemaComparator);
         notifyDataSetChanged();
     }
 
     public void setCurrentLocation(Location location) {
-        mCurrentLocation = location;
+        currentLocation = location;
         notifyDataSetChanged();
     }
 
     private void onCinemaFavIconClick(View view) {
         View parent = (View)view.getParent();
         TextView caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-
-        int cinemaId = mCinemas.indexOf(new Cinema(caption.getText().toString()));
-        if (cinemaId != -1) {
-            Cinema cinema = mCinemas.get(cinemaId);
-
-            if (cinema.getFavourite() > 0) {
-                cinema.setFavourite(false);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
-            } else {
-                cinema.setFavourite(true);
-                ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
-            }
+        Cinema cinema = cinemaEntries.get(caption.getText().toString());
+        if (cinema.getFavourite() > 0) {
+            cinema.setFavourite(false);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+        } else {
+            cinema.setFavourite(true);
+            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
         }
     }
 }

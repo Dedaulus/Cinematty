@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieActivity;
@@ -24,45 +26,50 @@ import java.util.UUID;
  * Time: 20:18
  */
 public class MoviesPage implements SliderPage {
-    private Context mContext;
-    private CinemattyApplication mApp;
-    private SortableAdapter<Movie> mMovieListAdapter;
-    private boolean mBinded = false;
+    private Context context;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private SortableAdapter<Movie> movieListAdapter;
+    private boolean binded = false;
 
     public MoviesPage(Context context, CinemattyApplication app) {
-        mContext = context;
-        mApp = app;
+        this.context = context;
+        this.app = app;
+
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.movie_list, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.movies_caption);
+        return context.getString(R.string.movies_caption);
     }
 
     public void onResume() {
-        if (mBinded) {
-            ((StoppableAndResumable)mMovieListAdapter).onResume();
-            mMovieListAdapter.sortBy(new MovieComparator(mApp.getMovieSortOrder(), mApp.getCurrentDay()));
+        if (binded) {
+            ((StoppableAndResumable) movieListAdapter).onResume();
+            movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), settings.getCurrentDay()));
         }
     }
 
     public void onPause() {}
 
     public void onStop() {
-        ((StoppableAndResumable)mMovieListAdapter).onStop();
+        ((StoppableAndResumable) movieListAdapter).onStop();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((Activity)mContext).getMenuInflater();
+        MenuInflater inflater = ((Activity) context).getMenuInflater();
         inflater.inflate(R.menu.movie_sort_menu, menu);
 
-        switch (mApp.getMovieSortOrder()) {
+        switch (settings.getMovieSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
             break;
@@ -88,20 +95,20 @@ public class MoviesPage implements SliderPage {
             return true;
 
         case R.id.submenu_movie_sort_by_caption:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_popular:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
             item.setChecked(true);
             return true;
 
         case R.id.submenu_movie_sort_by_rating:
-            mMovieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, mApp.getCurrentDay()));
-            mApp.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+            settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
             item.setChecked(true);
             return true;
 
@@ -112,14 +119,14 @@ public class MoviesPage implements SliderPage {
 
     private View bindView(View view) {
         ListView list = (ListView)view.findViewById(R.id.movie_list);
-        mMovieListAdapter = new MovieItemAdapter(mContext, new ArrayList<Movie>(mApp.getMovies()), mApp.getPictureRetriever());
-        list.setAdapter(mMovieListAdapter);
+        movieListAdapter = new MovieItemAdapter(context, new ArrayList<Movie>(settings.getMovies().values()), app.getImageRetrievers().getMovieSmallImageRetriever());
+        list.setAdapter(movieListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);
             }
         });
-        mBinded = true;
+        binded = true;
         onResume();
 
         return view;
@@ -131,10 +138,10 @@ public class MoviesPage implements SliderPage {
         Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
         ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, movie, null, null);
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieActivity.class);
+        Intent intent = new Intent(context, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
 }

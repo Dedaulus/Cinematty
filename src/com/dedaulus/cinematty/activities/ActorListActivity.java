@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.adapters.ActorItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.MovieActor;
+import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
@@ -28,53 +28,52 @@ import java.util.UUID;
  * Time: 4:28
  */
 public class ActorListActivity extends Activity {
-    private CinemattyApplication mApp;
-    private SortableAdapter<MovieActor> mActorListAdapter;
-    private ActivityState mState;
-    private String mStateId;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
+    private SortableAdapter<MovieActor> actorListAdapter;
+    private ActivityState state;
+    private String stateId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actor_list);
 
-        mApp = (CinemattyApplication)getApplication();
-        if (!mApp.isDataActual()) {
-            boolean b = false;
-            try {
-                b = mApp.retrieveData(true);
-            } catch (Exception e) {}
-            if (!b) {
-                mApp.restart();
-                finish();
-                return;
-            }
+        app = (CinemattyApplication)getApplication();
+        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+            app.restart();
+            finish();
+            return;
         }
 
-        mStateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        mState = mApp.getState(mStateId);
-        if (mState == null) throw new RuntimeException("ActivityState error");
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
+
+        stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
+        state = activitiesState.getState(stateId);
+        if (state == null) throw new RuntimeException("ActivityState error");
 
         findViewById(R.id.actor_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
-        switch (mState.activityType) {
+        switch (state.activityType) {
         case ActivityState.ACTOR_LIST:
             movieLabel.setVisibility(View.GONE);
-            mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mApp.getActors()));
+            actorListAdapter = new ActorItemAdapter(this, settings.getActors());
             break;
 
         case ActivityState.ACTOR_LIST_W_MOVIE:
-            movieLabel.setText(mState.movie.getCaption());
+            movieLabel.setText(state.movie.getName());
             movieLabel.setVisibility(View.VISIBLE);
-            mActorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(mState.movie.getActors()));
+            actorListAdapter = new ActorItemAdapter(this, state.movie.getActors());
             break;
 
         default:
             throw new RuntimeException("ActivityType error");
         }
 
-        list.setAdapter(mActorListAdapter);
+        list.setAdapter(actorListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onActorItemClick(adapterView, view, i, l);
@@ -84,10 +83,10 @@ public class ActorListActivity extends Activity {
 
     @Override
     protected void onResume() {
-        mActorListAdapter.sortBy(new Comparator<MovieActor>() {
+        actorListAdapter.sortBy(new Comparator<MovieActor>() {
             public int compare(MovieActor a1, MovieActor a2) {
                 if (a1.getFavourite() == a2.getFavourite()) {
-                    return a1.getActor().compareTo(a2.getActor());
+                    return a1.getName().compareTo(a2.getName());
                 } else return a1.getFavourite() < a2.getFavourite() ? 1 : -1;
             }
         });
@@ -97,20 +96,20 @@ public class ActorListActivity extends Activity {
 
     @Override
     protected void onPause() {
-        mApp.saveFavouriteActors();
+        settings.saveFavouriteActors();
 
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        mApp.dumpData();
+        activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        mApp.removeState(mStateId);
+        activitiesState.removeState(stateId);
 
         super.onBackPressed();
     }
@@ -129,12 +128,12 @@ public class ActorListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
-            mApp.goHome(this);
+            case R.id.menu_home:
+            app.goHome(this);
             return true;
 
-        case R.id.menu_about:
-            mApp.showAbout(this);
+            case R.id.menu_about:
+            app.showAbout(this);
             return true;
 
         default:
@@ -148,10 +147,10 @@ public class ActorListActivity extends Activity {
         MovieActor actor = (MovieActor)adapter.getItem(i - list.getHeaderViewsCount());
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = mState.clone();
+        ActivityState state = this.state.clone();
         state.actor = actor;
         state.activityType = ActivityState.MOVIE_LIST_W_ACTOR;
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(this, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
@@ -159,6 +158,6 @@ public class ActorListActivity extends Activity {
     }
 
     public void onHomeButtonClick(View view) {
-        mApp.goHome(this);
+        app.goHome(this);
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.SpannableString;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,34 +16,36 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, OnPictureReceiveAction, StoppableAndResumable {
-    private Context mContext;
-    private List<Movie> mMovies;
-    private Cinema mCinema;
-    private int mCurrentDay;
-    private PictureRetriever mPictureRetriever;
-    private MoviePictureReceiver mPictureReceiver;
+/**
+ * User: Dedaulus
+ * Date: 14.03.11
+ * Time: 23:41
+ */
+public class MovieItemWithScheduleAdapter extends BaseAdapter implements SortableAdapter<Movie>, MovieImageRetriever.MovieImageReceivedAction, StoppableAndResumable {
+    private Context context;
+    private ArrayList<Movie> movies;
+    private Cinema cinema;
+    private int currentDay;
+    private MovieImageRetriever imageRetriever;
+    private MovieImageReceivedActionHandler imageReceivedActionHandler;
 
-    public MovieItemWithScheduleAdapter(Context context, List<Movie> movies, Cinema cinema, int day, PictureRetriever pictureRetriever) {
-        mContext = context;
-        mMovies = movies;
-        mCinema = cinema;
-        mCurrentDay = day;
-        mPictureRetriever = pictureRetriever;
-        mPictureReceiver = new MoviePictureReceiver(this, (Activity)mContext);
+    public MovieItemWithScheduleAdapter(Context context, ArrayList<Movie> movies, Cinema cinema, int day, MovieImageRetriever imageRetriever) {
+        this.context = context;
+        this.movies = movies;
+        this.cinema = cinema;
+        currentDay = day;
+        this.imageRetriever = imageRetriever;
+        imageReceivedActionHandler = new MovieImageReceivedActionHandler(this, (Activity)this.context);
     }
 
     public int getCount() {
-        return mMovies.size();
+        return movies.size();
     }
 
     public Object getItem(int i) {
-        return mMovies.get(i);
+        return movies.get(i);
     }
 
     public long getItemId(int i) {
@@ -55,7 +58,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     }
 
     private void bindView(int position, View view) {
-        Movie movie = mMovies.get(position);
+        Movie movie = movies.get(position);
 
         RelativeLayout progressBar = (RelativeLayout)view.findViewById(R.id.movie_list_icon_loading);
         ImageView imageView = (ImageView)view.findViewById(R.id.movie_list_icon);
@@ -65,13 +68,13 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
 
         String picId = movie.getPicId();
         if (picId != null) {
-            Bitmap picture = mPictureRetriever.getPicture(picId, PictureType.LIST_BIG);
+            Bitmap picture = imageRetriever.getImage(picId, true);
             if (picture != null) {
                 imageView.setImageBitmap(picture);
                 imageView.setBackgroundResource(R.drawable.picture_border);
                 imageView.setVisibility(View.VISIBLE);
             } else {
-                mPictureRetriever.addRequest(picId, PictureType.LIST_BIG, mPictureReceiver);
+                imageRetriever.addRequest(picId, true, imageReceivedActionHandler);
                 progressBar.setVisibility(View.VISIBLE);
             }
         } else {
@@ -81,13 +84,13 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         }
 
         TextView captionView = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        captionView.setText(movie.getCaption());
+        captionView.setText(movie.getName());
 
         TextView genreView = (TextView)view.findViewById(R.id.movie_genre_in_movie_list);
         if (movie.getGenres().size() != 0) {
             StringBuilder genres = new StringBuilder();
-            for (MovieGenre genre : movie.getGenres()) {
-                genres.append(genre.getGenre()).append("/");
+            for (MovieGenre genre : movie.getGenres().values()) {
+                genres.append(genre.getName()).append("/");
             }
             genres.delete(genres.length() - 1, genres.length());
             genreView.setText(genres.toString());
@@ -109,9 +112,9 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         TextView actorView = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);
         if (movie.getActors().size() != 0) {
             StringBuilder actors = new StringBuilder();
-            for (MovieActor actor : movie.getActors()) {
+            for (MovieActor actor : movie.getActors().values()) {
                 if (actor.getFavourite() != 0) {
-                    actors.append(actor.getActor()).append(", ");
+                    actors.append(actor.getName()).append(", ");
                 }
             }
 
@@ -129,8 +132,9 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         TextView scheduleView = (TextView)view.findViewById(R.id.movie_schedule_in_movie_list);
         TextView timeLeftView = (TextView)view.findViewById(R.id.time_left_in_movie_list);
 
-        List<Calendar> showTimes = mCinema.getShowTimes(mCurrentDay).get(movie);
-        if (showTimes != null) {
+        Map<String, Pair<Movie, List<Calendar>>> showTimesEntries = cinema.getShowTimes(currentDay);
+        if (!showTimesEntries.isEmpty()) {
+            List<Calendar> showTimes = showTimesEntries.get(movie.getName()).second;
             String showTimesStr = DataConverter.showTimesToString(showTimes);
             if (showTimesStr.length() != 0) {
                 scheduleView.setText(showTimesStr);
@@ -138,8 +142,8 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             } else {
                 scheduleView.setVisibility(View.GONE);
             }
-            if (mCurrentDay == Constants.TODAY_SCHEDULE) {
-                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(mContext, showTimes);
+            if (currentDay == Constants.TODAY_SCHEDULE) {
+                SpannableString timeLeftString = DataConverter.showTimesToClosestTimeString(context, showTimes);
                 timeLeftView.setText(timeLeftString);
             } else {
                 timeLeftView.setVisibility(View.GONE);
@@ -155,7 +159,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         if (view != null) {
             myView = view;
         } else {
-            myView = newView(mContext, viewGroup);
+            myView = newView(context, viewGroup);
         }
 
         bindView(i, myView);
@@ -164,19 +168,19 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     }
 
     public void sortBy(Comparator<Movie> movieComparator) {
-        Collections.sort(mMovies, movieComparator);
+        Collections.sort(movies, movieComparator);
         notifyDataSetChanged();
     }
 
-    public void OnPictureReceive(String picId, int pictureType, boolean success) {
+    public void onImageReceived(boolean success) {
         notifyDataSetChanged();
     }
 
     public void onStop() {
-        mPictureReceiver.stop();
+        imageReceivedActionHandler.stop();
     }
 
     public void onResume() {
-        mPictureReceiver.start();
+        imageReceivedActionHandler.start();
     }
 }

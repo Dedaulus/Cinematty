@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MoviePoster;
-import com.dedaulus.cinematty.framework.PictureRetriever;
-import com.dedaulus.cinematty.framework.tools.PictureReceiver;
-import com.dedaulus.cinematty.framework.tools.PictureType;
+import com.dedaulus.cinematty.framework.PosterImageRetriever;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,23 +20,23 @@ import java.util.List;
  * Date: 22.08.11
  * Time: 3:46
  */
-public class PosterItemAdapter extends BaseAdapter implements PictureReceiver {
-    private Context mContext;
-    private List<MoviePoster> mPosters;
-    private PictureRetriever mPictureRetriever;
+public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriever.PosterImageReceivedAction {
+    private Context context;
+    private ArrayList<MoviePoster> posters;
+    private PosterImageRetriever imageRetriever;
 
-    public PosterItemAdapter(Context c, List<MoviePoster> posters, PictureRetriever pictureRetriever) {
-        mContext = c;
-        mPosters = posters;
-        mPictureRetriever = pictureRetriever;
+    public PosterItemAdapter(Context context, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
+        this.context = context;
+        this.posters = posters;
+        this.imageRetriever = imageRetriever;
     }
 
     public int getCount() {
-        return mPosters.size();
+        return posters.size();
     }
 
     public Object getItem(int position) {
-        return mPosters.get(position);
+        return posters.get(position);
     }
 
     public long getItemId(int position) {
@@ -49,11 +47,11 @@ public class PosterItemAdapter extends BaseAdapter implements PictureReceiver {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ImageView imageView;
         if (convertView == null) {
-            imageView = new ImageView(mContext);
+            imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setAdjustViewBounds(false);
 
-            Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
+            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
             int height = width / 3;
 
@@ -62,20 +60,20 @@ public class PosterItemAdapter extends BaseAdapter implements PictureReceiver {
             imageView = (ImageView) convertView;
         }
 
-        MoviePoster poster = mPosters.get(position);
-        Bitmap bitmap = mPictureRetriever.getPicture(poster.getPosterPath(), PictureType.ORIGINAL_WITH_URL);
+        MoviePoster poster = posters.get(position);
+        Bitmap bitmap = imageRetriever.getImage(poster.getPosterPath());
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
         } else {
-            mPictureRetriever.addRequest(poster.getPosterPath(), this);
-            imageView.setImageResource(R.drawable.img_loading);
+            imageRetriever.addRequest(poster.getPosterPath(), this);
+            //imageView.setImageResource(R.drawable.img_loading);
         }
 
         return imageView;
     }
 
-    public void onPictureReceive(String picId, int pictureType, boolean success) {
-        Activity activity = (Activity)mContext;
+    public void onImageReceived(boolean success) {
+        Activity activity = (Activity) context;
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 notifyDataSetChanged();

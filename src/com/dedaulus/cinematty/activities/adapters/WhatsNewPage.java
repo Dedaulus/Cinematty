@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieActivity;
@@ -15,6 +17,7 @@ import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -23,23 +26,28 @@ import java.util.UUID;
  * Time: 20:17
  */
 public class WhatsNewPage implements SliderPage {
-    private Context mContext;
-    private CinemattyApplication mApp;
+    private Context context;
+    private CinemattyApplication app;
+    private ApplicationSettings settings;
+    private ActivitiesState activitiesState;
 
     public WhatsNewPage(Context context, CinemattyApplication app) {
-        mContext = context;
-        mApp = app;
+        this.context = context;
+        this.app = app;
+
+        settings = app.getSettings();
+        activitiesState = app.getActivitiesState();
     }
 
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.whats_new, null, false);
 
         return bindView(view);
     }
 
     public String getTitle() {
-        return mContext.getString(R.string.whats_new_caption);
+        return context.getString(R.string.whats_new_caption);
     }
 
     public void onResume() {}
@@ -58,7 +66,7 @@ public class WhatsNewPage implements SliderPage {
 
     private View bindView(View view) {
         GridView whatsNewGrid = (GridView)view.findViewById(R.id.whats_new_grid);
-        whatsNewGrid.setAdapter(new PosterItemAdapter(mContext, mApp.getPosters(), mApp.getPictureRetriever()));
+        whatsNewGrid.setAdapter(new PosterItemAdapter(context, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever()));
         whatsNewGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onPosterItemClick(adapterView, view, i, l);
@@ -73,10 +81,10 @@ public class WhatsNewPage implements SliderPage {
         MoviePoster poster = (MoviePoster)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
         ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, poster.getMovie(), null, null);
-        mApp.setState(cookie, state);
+        activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(mContext, MovieActivity.class);
+        Intent intent = new Intent(context, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
 }

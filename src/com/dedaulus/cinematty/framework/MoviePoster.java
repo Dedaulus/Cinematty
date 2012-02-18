@@ -6,19 +6,19 @@ package com.dedaulus.cinematty.framework;
  * Time: 0:22
  */
 public class MoviePoster {
-    private Movie mMovie;
-    private String mPosterPath;
+    private Movie movie;
+    private String posterPath;
 
     public MoviePoster(Movie movie, String posterPath) {
-        mMovie = movie;
-        mPosterPath = posterPath;
+        this.movie = movie;
+        this.posterPath = posterPath;
     }
 
     public Movie getMovie() {
-        return mMovie;
+        return movie;
     }
 
     public String getPosterPath() {
-        return mPosterPath;
+        return posterPath;
     }
 }
