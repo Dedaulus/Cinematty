@@ -207,7 +207,7 @@ public class Movie implements Comparable<Movie> {
         try {
             // JSON data:
             JSONObject json = new JSONObject();
-            json.put("city", city);
+            json.put("city", city.getFileName());
             json.put("movie", id);
             if (cinema != null && day != null) {
                 json.put("cinema", cinema.getId());
