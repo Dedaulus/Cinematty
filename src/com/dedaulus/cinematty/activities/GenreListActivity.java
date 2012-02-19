@@ -1,17 +1,17 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.GenreItemAdapter;
@@ -28,7 +28,7 @@ import java.util.UUID;
  * Date: 02.04.11
  * Time: 5:12
  */
-public class GenreListActivity extends Activity {
+public class GenreListActivity extends FragmentActivity {
     private CinemattyApplication app;
     private ActivitiesState activitiesState;
     private ActivityState state;
@@ -37,6 +37,9 @@ public class GenreListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.genre_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -87,7 +90,7 @@ public class GenreListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.about_menu, menu);
 
@@ -97,7 +100,7 @@ public class GenreListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
 

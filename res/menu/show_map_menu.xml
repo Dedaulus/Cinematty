@@ -5,6 +5,6 @@
     <item
         android:id="@+id/menu_show_map"
         android:title="@string/menu_show_map"
-        android:icon="@drawable/ic_menu_mapmode"/>
+        android:icon="@drawable/ic_menu_myplaces"/>
 
 </menu>

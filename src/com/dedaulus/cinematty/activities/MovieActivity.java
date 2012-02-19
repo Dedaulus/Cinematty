@@ -1,16 +1,21 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Pair;
-import android.view.*;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.*;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
@@ -31,7 +36,7 @@ import java.util.UUID;
  * Date: 16.03.11
  * Time: 22:28
  */
-public class MovieActivity extends Activity implements MovieImageRetriever.MovieImageReceivedAction {
+public class MovieActivity extends FragmentActivity implements MovieImageRetriever.MovieImageReceivedAction {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -42,6 +47,9 @@ public class MovieActivity extends Activity implements MovieImageRetriever.Movie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_info);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -125,7 +133,7 @@ public class MovieActivity extends Activity implements MovieImageRetriever.Movie
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
             if (state.cinema.getPhone() != null) {
@@ -154,7 +162,7 @@ public class MovieActivity extends Activity implements MovieImageRetriever.Movie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
 
@@ -193,21 +201,21 @@ public class MovieActivity extends Activity implements MovieImageRetriever.Movie
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
-        case R.id.submenu_select_day_today:
-            if (currentDay != Constants.TODAY_SCHEDULE) {
-                setCurrentDay(Constants.TODAY_SCHEDULE);
-            }
-            return true;
-        case R.id.submenu_select_day_tomorrow:
-            if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                setCurrentDay(Constants.TOMORROW_SCHEDULE);
-            }
-            return true;
-        default:
-            return super.onContextItemSelected(item);
+            case R.id.submenu_select_day_today:
+                if (currentDay != Constants.TODAY_SCHEDULE) {
+                    setCurrentDay(Constants.TODAY_SCHEDULE);
+                }
+                return true;
+            case R.id.submenu_select_day_tomorrow:
+                if (currentDay != Constants.TOMORROW_SCHEDULE) {
+                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 

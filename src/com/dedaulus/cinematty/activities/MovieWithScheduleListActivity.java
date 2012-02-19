@@ -1,13 +1,18 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Pair;
-import android.view.*;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.*;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
@@ -27,7 +32,7 @@ import java.util.*;
  * Date: 12.10.11
  * Time: 10:05
  */
-public class MovieWithScheduleListActivity extends Activity {
+public class MovieWithScheduleListActivity extends FragmentActivity {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -39,6 +44,9 @@ public class MovieWithScheduleListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -120,7 +128,7 @@ public class MovieWithScheduleListActivity extends Activity {
         menu.clear();
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         if (state.cinema.getAddress() != null) {
             inflater.inflate(R.menu.show_map_menu, menu);
@@ -159,7 +167,7 @@ public class MovieWithScheduleListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
         case R.id.menu_call:
@@ -206,22 +214,22 @@ public class MovieWithScheduleListActivity extends Activity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.submenu_select_day_today:
-            if (currentDay != Constants.TODAY_SCHEDULE) {
-                setCurrentDay(Constants.TODAY_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
-            }
-            return true;
-        case R.id.submenu_select_day_tomorrow:
-            if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
-            }
-            return true;
-        default:
-            return super.onContextItemSelected(item);
+            case R.id.submenu_select_day_today:
+                if (currentDay != Constants.TODAY_SCHEDULE) {
+                    setCurrentDay(Constants.TODAY_SCHEDULE);
+                    movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+                }
+                return true;
+            case R.id.submenu_select_day_tomorrow:
+                if (currentDay != Constants.TOMORROW_SCHEDULE) {
+                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                    movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 

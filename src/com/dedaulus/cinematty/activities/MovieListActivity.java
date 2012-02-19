@@ -1,11 +1,12 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +23,6 @@ import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ import java.util.UUID;
  * Date: 14.03.11
  * Time: 23:37
  */
-public class MovieListActivity extends Activity {
+public class MovieListActivity extends FragmentActivity {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -42,6 +42,9 @@ public class MovieListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -117,7 +120,7 @@ public class MovieListActivity extends Activity {
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {
@@ -142,7 +145,7 @@ public class MovieListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
 

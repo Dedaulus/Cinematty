@@ -53,7 +53,7 @@
 
     <string name="metro_near">Метро</string>
 
-    <string name="sort">Сортировать</string>
+    <string name="sort">Упорядочить</string>
     <string name="sort_by_caption">По названию</string>
     <string name="sort_by_fav">По любимым</string>
     <string name="sort_by_distance">По ближайшим</string>
@@ -65,6 +65,7 @@
     <string name="menu_call">Бронировать</string>
     <string name="menu_show_map">На карте</string>
     <string name="menu_share">Поделиться</string>
+    <string name="menu_search">Поиск</string>
 
     <string name="send_link">Отправить ссылку</string>
     <string name="generate_link">Генерация ссылки...</string>

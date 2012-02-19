@@ -5,6 +5,7 @@
     <item
         android:id="@+id/menu_day"
         android:title="@string/today"
-        android:icon="@drawable/ic_menu_today"/>
+        android:icon="@drawable/ic_menu_today"
+        android:showAsAction="ifRoom"/>
 
 </menu>

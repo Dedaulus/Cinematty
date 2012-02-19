@@ -1,10 +1,15 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.*;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,7 +28,7 @@ import java.util.*;
  * Date: 14.03.11
  * Time: 21:27
  */
-public class CinemaWithScheduleListActivity extends Activity implements LocationClient {
+public class CinemaWithScheduleListActivity extends FragmentActivity implements LocationClient {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -36,6 +41,9 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -133,7 +141,7 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.select_day_menu, menu);
         if (currentDay == Constants.TODAY_SCHEDULE) {
@@ -165,7 +173,7 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
 
@@ -206,22 +214,22 @@ public class CinemaWithScheduleListActivity extends Activity implements Location
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.submenu_select_day_today:
-            if (currentDay != Constants.TODAY_SCHEDULE) {
-                setCurrentDay(Constants.TODAY_SCHEDULE);
-                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
-            }
-            return true;
-        case R.id.submenu_select_day_tomorrow:
-            if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
-            }
-            return true;
-        default:
-            return super.onContextItemSelected(item);
+            case R.id.submenu_select_day_today:
+                if (currentDay != Constants.TODAY_SCHEDULE) {
+                    setCurrentDay(Constants.TODAY_SCHEDULE);
+                    cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                }
+                return true;
+            case R.id.submenu_select_day_tomorrow:
+                if (currentDay != Constants.TOMORROW_SCHEDULE) {
+                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                    cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 

@@ -1,11 +1,12 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,7 +19,6 @@ import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ import java.util.UUID;
  * Date: 02.04.11
  * Time: 4:28
  */
-public class ActorListActivity extends Activity {
+public class ActorListActivity extends FragmentActivity {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -38,6 +38,9 @@ public class ActorListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actor_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -118,7 +121,7 @@ public class ActorListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.home_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.about_menu, menu);
 
@@ -128,11 +131,11 @@ public class ActorListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_home:
+        case android.R.id.home:
             app.goHome(this);
             return true;
 
-            case R.id.menu_about:
+        case R.id.menu_about:
             app.showAbout(this);
             return true;
 

@@ -7,6 +7,11 @@
 
     <style name="Theme.Sherlock.DarkActionBar">
         <item name="abBackground">#222222</item>
+        <item name="abTitleTextStyle">@style/TextAppearance.Widget.Title.Custom</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Title.Custom">
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="CustomTitlePageIndicator" parent="Widget.TitlePageIndicator">

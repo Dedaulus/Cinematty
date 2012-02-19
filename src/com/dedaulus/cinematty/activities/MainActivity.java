@@ -148,9 +148,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
         pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
-        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.about_menu, menu);
 
         return true;
