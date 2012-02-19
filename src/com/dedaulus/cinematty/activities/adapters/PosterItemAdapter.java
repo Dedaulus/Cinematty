@@ -83,12 +83,9 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
     @Override
     public void onStop() {
-        imageRetriever.pause();
         imageRetriever.saveState();
     }
 
     @Override
-    public void onResume() {
-        imageRetriever.resume();
-    }
+    public void onResume() {}
 }

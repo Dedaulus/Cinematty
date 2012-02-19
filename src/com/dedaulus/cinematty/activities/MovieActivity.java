@@ -370,6 +370,7 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
             runOnUiThread(new Runnable() {
                 public void run() {
                     setPicture();
+                    app.getImageRetrievers().getMovieImageRetriever().saveState();
                 }
             });
         }

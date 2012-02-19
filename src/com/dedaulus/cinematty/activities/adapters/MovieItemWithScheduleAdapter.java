@@ -178,12 +178,10 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
 
     public void onStop() {
         imageReceivedActionHandler.stop();
-        imageRetriever.pause();
         imageRetriever.saveState();
     }
 
     public void onResume() {
         imageReceivedActionHandler.start();
-        imageRetriever.resume();
     }
 }
