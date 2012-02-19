@@ -1,8 +1,12 @@
 <resources>
-    <style name="StyledIndicators" parent="Theme.Sherlock">
+    <style name="StyledIndicators" parent="Theme.Sherlock.DarkActionBar">
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiTabTextStyle">@style/CustomTabPageIndicator.Text</item>
+    </style>
+
+    <style name="Theme.Sherlock.DarkActionBar">
+        <item name="abBackground">#222222</item>
     </style>
 
     <style name="CustomTitlePageIndicator" parent="Widget.TitlePageIndicator">
@@ -21,15 +25,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Background">
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:background">#FFFFFF</item>
-        <!--<item name="android:background">#000033</item>-->
-    </style>
-
-    <style name="Background.Caption">
-        <item name="android:background">#000000</item>
+    <style name="ContentContainer">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#ffffff</item>
     </style>
 
     <style name="ActivityTitleBar">

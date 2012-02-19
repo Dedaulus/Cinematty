@@ -963,10 +963,6 @@ containing a value of this type.
         public static final int ActivityTitleBarHome=0x7f0b0030;
         public static final int ActivityTitleBarShare=0x7f0b0032;
         public static final int ActivityTitleText=0x7f0b0033;
-        /** <item name="android:background">#000033</item>
-         */
-        public static final int Background=0x7f0b002a;
-        public static final int Background_Caption=0x7f0b002b;
         public static final int CategoryItem=0x7f0b0035;
         public static final int CategoryItem_Caption=0x7f0b0036;
         public static final int CategoryItem_Caption_Actors=0x7f0b003a;
@@ -981,9 +977,10 @@ containing a value of this type.
         public static final int CategoryItem_Image_Movies=0x7f0b003f;
         public static final int CategoryItem_Image_WhatsNew=0x7f0b003d;
         public static final int CategoryItemPanel=0x7f0b0034;
-        public static final int CustomTabPageIndicator=0x7f0b0028;
-        public static final int CustomTabPageIndicator_Text=0x7f0b0029;
-        public static final int CustomTitlePageIndicator=0x7f0b0027;
+        public static final int ContentContainer=0x7f0b002b;
+        public static final int CustomTabPageIndicator=0x7f0b0029;
+        public static final int CustomTabPageIndicator_Text=0x7f0b002a;
+        public static final int CustomTitlePageIndicator=0x7f0b0028;
         public static final int Internal_Widget_Sherlock_ActionBar=0x7f0b001c;
         public static final int Internal_Widget_Sherlock_Light_ActionBar=0x7f0b001d;
         /** <item name="android:cacheColorHint">#000033</item>
@@ -1025,6 +1022,7 @@ containing a value of this type.
         public static final int TextAppearance_Widget_Title=0x7f0b001a;
         public static final int Theme_PageIndicatorDefaults=0x7f0b001f;
         public static final int Theme_Sherlock=0x7f0b0000;
+        public static final int Theme_Sherlock_DarkActionBar=0x7f0b0027;
         public static final int Theme_Sherlock_Light=0x7f0b000d;
         public static final int Widget=0x7f0b0020;
         public static final int Widget_CirclePageIndicator=0x7f0b0021;
