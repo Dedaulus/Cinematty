@@ -79,7 +79,7 @@ public class CinemattyApplication extends Application {
             this.posters = new ArrayList<MoviePoster>(posters);
             
             favoriteCinemas = new HashMap<String, Cinema>();
-            SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE, MODE_PRIVATE);
+            SharedPreferences preferences = getSharedPreferences(FAV_CINEMAS_FILE + currentCity.getId(), MODE_PRIVATE);
             if (preferences != null) {
                 Map<String, ?> favs = preferences.getAll(); 
                 for (String name : favs.keySet()) {
