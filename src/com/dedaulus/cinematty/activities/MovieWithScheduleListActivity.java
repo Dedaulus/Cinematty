@@ -120,7 +120,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         menu.clear();
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
 
         if (state.cinema.getAddress() != null) {
             inflater.inflate(R.menu.show_map_menu, menu);
@@ -152,7 +151,10 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
             break;
         }
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+
+        inflater.inflate(R.menu.preferences_menu, menu);
+
         return true;
     }
 
@@ -190,7 +192,7 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
             settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
             item.setChecked(true);
             return true;
-        case R.id.menu_about:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
         default:

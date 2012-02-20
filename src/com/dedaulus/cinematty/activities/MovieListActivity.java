@@ -120,8 +120,6 @@ public class MovieListActivity extends FragmentActivity {
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.search_menu, menu);
-
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {
         case BY_CAPTION:
@@ -137,7 +135,9 @@ public class MovieListActivity extends FragmentActivity {
             break;
         }
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+
+        inflater.inflate(R.menu.preferences_menu, menu);
 
         return true;
     }
@@ -170,7 +170,7 @@ public class MovieListActivity extends FragmentActivity {
             item.setChecked(true);
             return true;
 
-        case R.id.menu_about:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
 

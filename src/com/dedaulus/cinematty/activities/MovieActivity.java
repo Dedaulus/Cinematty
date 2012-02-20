@@ -28,7 +28,6 @@ import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -114,8 +113,6 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.search_menu, menu);
-
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
             if (state.cinema.getPhone() != null) {
                 inflater.inflate(R.menu.call_menu, menu);
@@ -135,7 +132,9 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
 
         inflater.inflate(R.menu.share_menu, menu);
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+
+        inflater.inflate(R.menu.preferences_menu, menu);
 
         return true;
     }
@@ -165,7 +164,7 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
             onShareButtonClick(null);
             return true;
 
-            case R.id.menu_about:
+            case R.id.menu_preferences:
             app.showAbout(this);
             return true;
 

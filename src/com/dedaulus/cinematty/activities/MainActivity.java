@@ -149,11 +149,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         menu.clear();
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
 
         pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+
+        inflater.inflate(R.menu.preferences_menu, menu);
 
         return true;
     }
@@ -161,7 +162,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_about:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
 

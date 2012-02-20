@@ -120,8 +120,6 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
 
         MenuInflater inflater = getMenuInflater();
 
-        inflater.inflate(R.menu.search_menu, menu);
-
         inflater.inflate(R.menu.select_day_menu, menu);
         if (currentDay == Constants.TODAY_SCHEDULE) {
             menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
@@ -144,7 +142,9 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
             break;
         }
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+
+        inflater.inflate(R.menu.preferences_menu, menu);
 
         return true;
     }
@@ -177,7 +177,7 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
-        case R.id.menu_about:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
         default:

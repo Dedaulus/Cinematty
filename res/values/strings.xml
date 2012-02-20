@@ -60,7 +60,7 @@
     <string name="sort_by_popular">По популярности</string>
     <string name="sort_by_rating">По рейтингу</string>
 
-    <string name="menu_about">О программе</string>
+    <string name="menu_preferences">Настройки</string>
     <string name="menu_home">Домой</string>
     <string name="menu_call">Бронировать</string>
     <string name="menu_show_map">На карте</string>

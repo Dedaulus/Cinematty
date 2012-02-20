@@ -123,7 +123,7 @@ public class ActorListActivity extends FragmentActivity {
 
         inflater.inflate(R.menu.search_menu, menu);
 
-        inflater.inflate(R.menu.about_menu, menu);
+        inflater.inflate(R.menu.preferences_menu, menu);
 
         return true;
     }
@@ -135,7 +135,7 @@ public class ActorListActivity extends FragmentActivity {
             app.goHome(this);
             return true;
 
-        case R.id.menu_about:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
 
