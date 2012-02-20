@@ -60,15 +60,6 @@ public class CategoriesPage implements SliderPage {
     }
 
     private View bindView(View view) {
-        View cityPanel = view.findViewById(R.id.select_city_panel);
-        cityPanel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onCityClick(view);
-            }
-        });
-        TextView cityCaption = (TextView)cityPanel.findViewById(R.id.city_caption);
-        cityCaption.setText(app.getCurrentCity().getName());
-
         View whatsNewPanel = view.findViewById(R.id.whats_new_panel);
         whatsNewPanel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -105,12 +96,6 @@ public class CategoriesPage implements SliderPage {
         });
 
         return view;
-    }
-
-    public void onCityClick(View view) {
-        Intent intent = new Intent(context, CityListActivity.class);
-        context.startActivity(intent);
-        ((Activity) context).finish();
     }
 
     public void onWhatsNewClick(View view) {

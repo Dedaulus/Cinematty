@@ -50,6 +50,7 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.movie_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -68,14 +69,7 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
         switch (state.activityType) {
         case ActivityState.MOVIE_INFO_W_SCHED:
             currentDay = settings.getCurrentDay();
-            changeTitleBar();
-            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
-            textView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    registerForContextMenu(view);
-                    view.showContextMenu();
-                }
-            });
+
         case ActivityState.MOVIE_INFO:
             setPicture();
             setCaption();
@@ -90,19 +84,6 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
 
         default:
             throw new RuntimeException("ActivityType error");
-        }
-    }
-
-    private void changeTitleBar() {
-        findViewById(R.id.movie_title_day).setVisibility(View.VISIBLE);
-        TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (settings.getCurrentDay()) {
-        case Constants.TODAY_SCHEDULE:
-            text.setText(R.string.today);
-            break;
-        case Constants.TOMORROW_SCHEDULE:
-            text.setText(R.string.tomorrow);
-            break;
         }
     }
 
@@ -376,15 +357,6 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
         }
     }
 
-    public void onHomeButtonClick(View view) {
-        app.goHome(this);
-    }
-
-    public void onDayButtonClick(View view) {
-        registerForContextMenu(view);
-        view.showContextMenu();
-    }
-
     public void onShareButtonClick(View view) {
         final boolean isScheduled = state.activityType == ActivityState.MOVIE_INFO_W_SCHED;
 
@@ -423,7 +395,6 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
     private void setCurrentDay(int day) {
         settings.setCurrentDay(day);
         currentDay = day;
-        changeTitleBar();
         setSchedule();
     }
 }

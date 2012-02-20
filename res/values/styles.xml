@@ -36,64 +36,6 @@
         <item name="android:background">#ffffff</item>
     </style>
 
-    <style name="ActivityTitleBar">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:paddingTop">2dp</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:layout_alignParentTop">true</item>
-    </style>
-
-    <style name="ActivityTitleBarArrow">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="ActivityTitleBarArrow.Left">
-        <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:src">@drawable/ic_arrow_left</item>
-    </style>
-
-    <style name="ActivityTitleBarArrow.Right">
-        <item name="android:layout_alignParentRight">true</item>
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:src">@drawable/ic_arrow_right</item>
-    </style>
-
-    <style name="ActivityTitleBarHome">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:src">@drawable/ic_home</item>
-    </style>
-
-    <style name="ActivityTitleBarDay">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_alignParentRight">true</item>
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:src">@drawable/ic_day</item>
-    </style>
-
-    <style name="ActivityTitleBarShare">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_alignParentRight">true</item>
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:src">@drawable/ic_share</item>
-    </style>
-
-    <style name="ActivityTitleText">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">20dp</item>
-    </style>
-
     <style name="CategoryItemPanel">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">fill_parent</item>

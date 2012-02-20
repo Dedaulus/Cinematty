@@ -45,6 +45,7 @@ public class MovieListActivity extends FragmentActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -60,7 +61,6 @@ public class MovieListActivity extends FragmentActivity {
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);

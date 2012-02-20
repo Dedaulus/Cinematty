@@ -3,116 +3,94 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
-    <RelativeLayout
-        android:id="@+id/select_city_panel"
-        style="@style/ActivityTitleBar"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentBottom="true">
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_centerVertical="true">
 
-        <TextView
-            android:id="@+id/city_caption"
-            style="@style/ActivityTitleText"/>
-
-        <ImageView
-            style="@style/ActivityTitleBarArrow.Right"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_above="@id/select_city_panel">
-
-        <ScrollView
+        <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_centerVertical="true">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/whats_new_panel"
+                style="@style/CategoryItemPanel"
+                android:layout_marginTop="6dp">
 
-                <RelativeLayout
-                    android:id="@+id/whats_new_panel"
-                    style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp">
+                <ImageView
+                    android:id="@+id/whats_new_ico"
+                    style="@style/CategoryItem.Image.WhatsNew"/>
 
-                    <ImageView
-                        android:id="@+id/whats_new_ico"
-                        style="@style/CategoryItem.Image.WhatsNew"/>
+                <TextView
+                    style="@style/CategoryItem.Caption.WhatsNew"
+                    android:layout_toRightOf="@id/whats_new_ico"/>
 
-                    <TextView
-                        style="@style/CategoryItem.Caption.WhatsNew"
-                        android:layout_toRightOf="@id/whats_new_ico"/>
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/cinemas_panel"
+                style="@style/CategoryItemPanel"
+                android:layout_marginTop="6dp">
 
-                <RelativeLayout
-                    android:id="@+id/cinemas_panel"
-                    style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp">
+                <ImageView
+                    android:id="@+id/cinemas_ico"
+                    style="@style/CategoryItem.Image.Cinemas"/>
 
-                    <ImageView
-                        android:id="@+id/cinemas_ico"
-                        style="@style/CategoryItem.Image.Cinemas"/>
+                <TextView
+                    style="@style/CategoryItem.Caption.Cinemas"
+                    android:layout_toRightOf="@id/cinemas_ico"/>
 
-                    <TextView
-                        style="@style/CategoryItem.Caption.Cinemas"
-                        android:layout_toRightOf="@id/cinemas_ico"/>
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/movies_panel"
+                style="@style/CategoryItemPanel"
+                android:layout_marginTop="6dp">
 
-                <RelativeLayout
-                    android:id="@+id/movies_panel"
-                    style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp">
+                <ImageView
+                    android:id="@+id/movies_ico"
+                    style="@style/CategoryItem.Image.Movies"/>
 
-                    <ImageView
-                        android:id="@+id/movies_ico"
-                        style="@style/CategoryItem.Image.Movies"/>
+                <TextView
+                    style="@style/CategoryItem.Caption.Movies"
+                    android:layout_toRightOf="@id/movies_ico"/>
 
-                    <TextView
-                        style="@style/CategoryItem.Caption.Movies"
-                        android:layout_toRightOf="@id/movies_ico"/>
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/actors_panel"
+                style="@style/CategoryItemPanel"
+                android:layout_marginTop="6dp">
 
-                <RelativeLayout
-                    android:id="@+id/actors_panel"
-                    style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp">
+                <ImageView
+                    android:id="@+id/actors_ico"
+                    style="@style/CategoryItem.Image.Actors"/>
 
-                    <ImageView
-                        android:id="@+id/actors_ico"
-                        style="@style/CategoryItem.Image.Actors"/>
+                <TextView
+                    style="@style/CategoryItem.Caption.Actors"
+                    android:layout_toRightOf="@id/actors_ico"/>
 
-                    <TextView
-                        style="@style/CategoryItem.Caption.Actors"
-                        android:layout_toRightOf="@id/actors_ico"/>
+            </RelativeLayout>
 
-                </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/genres_panel"
+                style="@style/CategoryItemPanel"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp">
 
-                <RelativeLayout
-                    android:id="@+id/genres_panel"
-                    style="@style/CategoryItemPanel"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp">
+                <ImageView
+                    android:id="@+id/genres_ico"
+                    style="@style/CategoryItem.Image.Genres"/>
 
-                    <ImageView
-                        android:id="@+id/genres_ico"
-                        style="@style/CategoryItem.Image.Genres"/>
+                <TextView
+                    style="@style/CategoryItem.Caption.Genres"
+                    android:layout_toRightOf="@id/genres_ico"/>
 
-                    <TextView
-                        style="@style/CategoryItem.Caption.Genres"
-                        android:layout_toRightOf="@id/genres_ico"/>
+            </RelativeLayout>
 
-                </RelativeLayout>
+        </LinearLayout>
 
-            </LinearLayout>
-
-        </ScrollView>
-
-    </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

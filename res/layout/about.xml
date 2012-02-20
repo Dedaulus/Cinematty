@@ -1,102 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
     <RelativeLayout
-        android:id="@+id/about_title"
-        style="@style/ActivityTitleBar">
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/splash_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/splash" />
 
         <TextView
-            style="@style/ActivityTitleText"
-            android:text="@string/about_caption"/>
+            android:id="@+id/app_name"
+            android:layout_below="@id/splash_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/app_name"
+            android:textColor="#FF0000"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/app_version"
+            android:layout_below="@id/app_name"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/app_version"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/copyright"
+            android:layout_below="@id/app_version"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:text="@string/copyright"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_below="@id/copyright"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/email"
+            android:textColor="#0026ff"
+            android:textSize="16dp"
+            android:autoLink="web"/>
+
+        <TextView
+            android:id="@+id/icons_copyright"
+            android:layout_below="@id/email"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:text="@string/copyright_icons"
+            android:textColor="#000000"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/icons_url"
+            android:layout_below="@id/icons_copyright"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/icons_url"
+            android:textColor="#0026ff"
+            android:textSize="16dp"
+            android:autoLink="web"/>
 
     </RelativeLayout>
 
-    <ScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        android:layout_below="@id/about_title">
-
-        <RelativeLayout
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/splash_icon"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/splash" />
-
-            <TextView
-                android:id="@+id/app_name"
-                android:layout_below="@id/splash_icon"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/app_name"
-                android:textColor="#FF0000"
-                android:textSize="24dp" />
-
-            <TextView
-                android:id="@+id/app_version"
-                android:layout_below="@id/app_name"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/app_version"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/copyright"
-                android:layout_below="@id/app_version"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_centerHorizontal="true"
-                android:text="@string/copyright"
-                android:textColor="#000000"
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_below="@id/copyright"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/email"
-                android:textColor="#0026ff"
-                android:textSize="16dp"
-                android:autoLink="web"/>
-
-            <TextView
-                android:id="@+id/icons_copyright"
-                android:layout_below="@id/email"
-                android:paddingTop="20dp"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_centerHorizontal="true"
-                android:text="@string/copyright_icons"
-                android:textColor="#000000"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/icons_url"
-                android:layout_below="@id/icons_copyright"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/icons_url"
-                android:textColor="#0026ff"
-                android:textSize="16dp"
-                android:autoLink="web"/>
-
-        </RelativeLayout>
-
-    </ScrollView>
-
-</RelativeLayout>
+</ScrollView>

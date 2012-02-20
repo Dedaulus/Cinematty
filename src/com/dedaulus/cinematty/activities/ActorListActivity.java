@@ -41,6 +41,7 @@ public class ActorListActivity extends FragmentActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.actors_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -56,7 +57,6 @@ public class ActorListActivity extends FragmentActivity {
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        findViewById(R.id.actor_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
         ListView list = (ListView)findViewById(R.id.actor_list);
 
@@ -158,9 +158,5 @@ public class ActorListActivity extends FragmentActivity {
         Intent intent = new Intent(this, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
-    }
-
-    public void onHomeButtonClick(View view) {
-        app.goHome(this);
     }
 }

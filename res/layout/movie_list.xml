@@ -4,64 +4,34 @@
     style="@style/ContentContainer">
 
     <RelativeLayout
-        android:id="@+id/movie_list_title"
-        style="@style/ActivityTitleBar"
+        android:id="@+id/cinema_panel_in_movie_list"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/titlebar_caption"
-            style="@style/ActivityTitleText"
-            android:text="@string/movies_caption"/>
-
-        <ImageView
-            android:id="@+id/movie_list_title_home"
-            style="@style/ActivityTitleBarHome"
-            android:onClick="onHomeButtonClick"/>
-
-        <ImageView
-            android:id="@+id/movie_list_title_day"
-            style="@style/ActivityTitleBarDay"
-            android:visibility="gone"
-            android:onClick="onDayButtonClick"/>
+            android:id="@+id/cinema_caption_in_movie_list"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/select_cinema_ico"
+            style="@style/ListCaption.Cinema"/>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@id/movie_list_title">
+    <ListView
+        android:id="@+id/movie_list"
+        android:layout_below="@id/cinema_panel_in_movie_list"
+        style="@style/List.Movies"/>
 
-        <RelativeLayout
-            android:id="@+id/cinema_panel_in_movie_list"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/cinema_caption_in_movie_list"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/select_cinema_ico"
-                style="@style/ListCaption.Cinema"/>
-
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/movie_list"
-            android:layout_below="@id/cinema_panel_in_movie_list"
-            style="@style/List.Movies"/>
-
-        <TextView
-            android:id="@+id/no_schedule"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/unknown_schedule"
-            android:textColor="#404040"
-            android:textSize="20dp"
-            android:paddingBottom="140dp"
-            android:visibility="gone"/>
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/no_schedule"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/unknown_schedule"
+        android:textColor="#404040"
+        android:textSize="20dp"
+        android:paddingBottom="140dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

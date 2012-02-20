@@ -44,6 +44,7 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.cinemas_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -60,7 +61,6 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        findViewById(R.id.cinema_list_title).setVisibility(View.VISIBLE);
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
@@ -71,14 +71,6 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
 
             setCurrentDay(settings.getCurrentDay());
 
-            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
-            textView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    registerForContextMenu(view);
-                    view.showContextMenu();
-                }
-            });
-
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onScheduleItemClick(adapterView, view, i, l);
@@ -88,19 +80,6 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
 
         default:
             throw new RuntimeException("ActivityType error");
-        }
-    }
-
-    private void changeTitleBar() {
-        findViewById(R.id.cinema_list_title_day).setVisibility(View.VISIBLE);
-        TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (settings.getCurrentDay()) {
-        case Constants.TODAY_SCHEDULE:
-            text.setText(R.string.today);
-            break;
-        case Constants.TOMORROW_SCHEDULE:
-            text.setText(R.string.tomorrow);
-            break;
         }
     }
 
@@ -249,20 +228,9 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
         startActivity(intent);
     }
 
-    public void onHomeButtonClick(View view) {
-        app.goHome(this);
-    }
-
-    public void onDayButtonClick(View view) {
-        registerForContextMenu(view);
-        view.showContextMenu();
-    }
-
     private void setCurrentDay(int day) {
         settings.setCurrentDay(day);
         currentDay = day;
-
-        changeTitleBar();
 
         Map<String, Cinema> cinemas = state.movie.getCinemas(settings.getCurrentDay());
         if (cinemas.isEmpty()) {

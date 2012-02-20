@@ -47,6 +47,7 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
@@ -62,7 +63,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        findViewById(R.id.movie_list_title).setVisibility(View.VISIBLE);
         View captionView = findViewById(R.id.cinema_panel_in_movie_list);
         ListView list = (ListView)findViewById(R.id.movie_list);
 
@@ -76,14 +76,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
             list.addHeaderView(view, null, false);
 
             setCurrentDay(settings.getCurrentDay());
-
-            TextView textView = (TextView)findViewById(R.id.titlebar_caption);
-            textView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    registerForContextMenu(view);
-                    view.showContextMenu();
-                }
-            });
             break;
 
         default:
@@ -233,19 +225,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         }
     }
 
-    private void changeTitleBar() {
-        findViewById(R.id.movie_list_title_day).setVisibility(View.VISIBLE);
-        TextView text = (TextView)findViewById(R.id.titlebar_caption);
-        switch (settings.getCurrentDay()) {
-        case Constants.TODAY_SCHEDULE:
-            text.setText(R.string.today);
-            break;
-        case Constants.TOMORROW_SCHEDULE:
-            text.setText(R.string.tomorrow);
-            break;
-        }
-    }
-
     private void onScheduleItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter)adapterView.getAdapter();
         MovieItemWithScheduleAdapter adapter = (MovieItemWithScheduleAdapter)headerAdapter.getWrappedAdapter();
@@ -275,8 +254,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
     private void setCurrentDay(int day) {
         settings.setCurrentDay(day);
         currentDay = day;
-
-        changeTitleBar();
 
         Collection<Movie> movies = state.cinema.getMovies(settings.getCurrentDay()).values();
         if (movies.isEmpty()) {

@@ -3,38 +3,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
-    <RelativeLayout
-        android:id="@+id/actor_list_title"
-        style="@style/ActivityTitleBar"
-        android:visibility="gone">
+    <TextView
+        android:id="@+id/movie_caption_in_actor_list"
+        style="@style/ListCaption.Movie"
+        android:visibility="gone"/>
 
-        <TextView
-            style="@style/ActivityTitleText"
-            android:text="@string/actors_caption"/>
-
-        <ImageView
-            android:id="@+id/actor_list_title_home"
-            style="@style/ActivityTitleBarHome"
-            android:onClick="onHomeButtonClick"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@id/actor_list_title">
-
-        <TextView
-            android:id="@+id/movie_caption_in_actor_list"
-            style="@style/ListCaption.Movie"
-            android:visibility="gone"/>
-
-        <ListView
-            android:id="@+id/actor_list"
-            style="@style/List.Actors"
-            android:fastScrollEnabled="true"
-            android:layout_below="@id/movie_caption_in_actor_list"/>
-
-    </RelativeLayout>
+    <ListView
+        android:id="@+id/actor_list"
+        style="@style/List.Actors"
+        android:fastScrollEnabled="true"
+        android:layout_below="@id/movie_caption_in_actor_list"/>
 
 </RelativeLayout>
