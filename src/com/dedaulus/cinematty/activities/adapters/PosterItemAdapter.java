@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.Display;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,14 +22,30 @@ import java.util.ArrayList;
  * Time: 3:46
  */
 public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriever.PosterImageReceivedAction, StoppableAndResumable {
+    private static int PADDING = 4;
+
     private Context context;
     private ArrayList<MoviePoster> posters;
     private PosterImageRetriever imageRetriever;
+    private int imageHeight;
+    private int imageWidth;
 
     public PosterItemAdapter(Context context, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
         this.context = context;
         this.posters = posters;
         this.imageRetriever = imageRetriever;
+
+        int columns;
+        Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+        int rotation = display.getRotation();
+        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+            columns = 1;
+        } else {
+            columns = 2;
+        }
+
+        imageWidth = display.getWidth() / columns;
+        imageHeight = imageWidth / 3;
     }
 
     public int getCount() {
@@ -50,12 +67,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setAdjustViewBounds(false);
-
-            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
-            int width = display.getWidth();
-            int height = width / 3;
-
-            imageView.setLayoutParams(new GridView.LayoutParams(width, height));
+            imageView.setLayoutParams(new GridView.LayoutParams(imageWidth, imageHeight));
         } else {
             imageView = (ImageView) convertView;
         }
