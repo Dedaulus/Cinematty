@@ -244,15 +244,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         startActivity(intent);
     }
 
-    public void onHomeButtonClick(View view) {
-        app.goHome(this);
-    }
-
-    public void onDayButtonClick(View view) {
-        registerForContextMenu(view);
-        view.showContextMenu();
-    }
-
     private void setCurrentDay(int day) {
         settings.setCurrentDay(day);
         currentDay = day;
@@ -285,9 +276,9 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         ImageView favIcon = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_info);
 
         if (state.cinema.getFavourite() > 0) {
-            favIcon.setImageResource(android.R.drawable.btn_star_big_on);
+            favIcon.setImageResource(R.drawable.btn_star_on_normal_holo_light);
         } else {
-            favIcon.setImageResource(android.R.drawable.btn_star_big_off);
+            favIcon.setImageResource(R.drawable.btn_star_off_normal_holo_light);
         }
     }
 
@@ -385,10 +376,10 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
     public void onCinemaFavIconClick(View view) {
         if (state.cinema.getFavourite() > 0) {
             state.cinema.setFavourite(false);
-            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+            ((ImageView)view).setImageResource(R.drawable.btn_star_off_normal_holo_light);
         } else {
             state.cinema.setFavourite(true);
-            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
+            ((ImageView)view).setImageResource(R.drawable.btn_star_on_normal_holo_light);
         }
     }
 }

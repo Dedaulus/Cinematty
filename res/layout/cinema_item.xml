@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:paddingRight="6dp"
         android:clickable="true"
-        android:src="@android:drawable/btn_star_big_off"
+        android:src="@drawable/btn_star_off_normal_holo_light"
         android:onClick="onCinemaFavIconClick"/>
 
     <RelativeLayout
