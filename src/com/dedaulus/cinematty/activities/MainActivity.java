@@ -175,6 +175,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     public synchronized void onPageSelected(int i) {
         currentPage = i;
+        invalidateOptionsMenu();
     }
 
     public void onPageScrollStateChanged(int i) {}
