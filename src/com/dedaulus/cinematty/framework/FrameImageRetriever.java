@@ -17,21 +17,20 @@ public class FrameImageRetriever {
     private static String PREVIEW_PREFIX = "preview_";
     private static String POSTFIXES[] = {"_m.jpg", "_h.jpg", "_xh.jpg"};
     
-    private String frameNameFormat;
-    private String previewNameFormat;
+    private String remoteFolder;
+    private int postfixId;
     private ImageRetriever imageRetriever;
 
     public static interface FrameImageReceivedAction {
-        void onImageReceived(boolean downloaded);
+        void onImageReceived(Bitmap image);
     }
 
     public FrameImageRetriever(String entity, int densityDpi, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
         if (!remoteFolder.endsWith("/")) {
             remoteFolder += "/";
         }
+        this.remoteFolder = remoteFolder;
 
-        StringBuilder builder = new StringBuilder(remoteFolder);
-        int postfixId;
         final int DENSITY_XHIGH = 320; // developer.android.com/reference/android/util/DisplayMetrics.html#DENSITY_XHIGH
         switch (densityDpi) {
             case DENSITY_XHIGH:
@@ -44,8 +43,6 @@ public class FrameImageRetriever {
             default:
                 postfixId = 1;
         }
-        frameNameFormat = builder.append("%1$/").append(FRAME_PREFIX).append("%2$").append(POSTFIXES[postfixId]).toString();
-        previewNameFormat = builder.append("%1$/").append(PREVIEW_PREFIX).append("%2$").append(POSTFIXES[postfixId]).toString();
 
         imageRetriever = new ImageRetriever(entity, localFolder);
     }
@@ -62,7 +59,7 @@ public class FrameImageRetriever {
         imageRetriever.addRequest(createUrl(uid, frameId, isPreview), false, new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
-                action.onImageReceived(downloaded);
+                action.onImageReceived(imageRetriever.getImage(url));
             }
         });
     }
@@ -84,6 +81,7 @@ public class FrameImageRetriever {
     }
     
     private String createUrl(String uid, int frameId, boolean isPreview) {
-        return String.format(Locale.US, isPreview ? previewNameFormat : frameNameFormat, uid, frameId);
+        StringBuilder builder = new StringBuilder(remoteFolder).append(uid).append("/").append(isPreview ? PREVIEW_PREFIX : FRAME_PREFIX).append(frameId).append(POSTFIXES[postfixId]);
+        return builder.toString();
     }
 }

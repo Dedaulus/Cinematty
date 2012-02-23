@@ -4,6 +4,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import com.dedaulus.cinematty.activities.Pages.SliderPage;
 import com.viewpagerindicator.TitleProvider;
 
 import java.util.ArrayList;

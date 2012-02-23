@@ -1,4 +1,4 @@
-package com.dedaulus.cinematty.activities.adapters;
+package com.dedaulus.cinematty.activities.Pages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
+import com.dedaulus.cinematty.activities.adapters.GenreItemAdapter;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;

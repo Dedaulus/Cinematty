@@ -9,7 +9,7 @@ import java.util.List;
  * Time: 3:18
  */
 public class MovieFrameIdsStore {
-    private String id;
+    private String uid;
     private List<Integer> frameIds;
     
     {
@@ -17,11 +17,11 @@ public class MovieFrameIdsStore {
     }
     
     public MovieFrameIdsStore(String id) {
-        this.id = id;
+        this.uid = id;
     }
     
-    public String getId() {
-        return id;
+    public String getUid() {
+        return uid;
     }
 
     public void addFrameId(int id) {

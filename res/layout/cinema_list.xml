@@ -3,15 +3,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
-    <TextView
-        android:id="@+id/movie_caption_in_cinema_list"
-        style="@style/ListCaption.Movie"
-        android:visibility="gone"/>
-
     <ListView
         android:id="@+id/cinema_list"
-        style="@style/List.Cinemas"
-        android:layout_below="@id/movie_caption_in_cinema_list"/>
+        style="@style/List.Cinemas"/>
 
     <TextView
         android:id="@+id/no_schedule"

@@ -61,14 +61,10 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_cinema_list);
         ListView list = (ListView)findViewById(R.id.cinema_list);
 
         switch (state.activityType) {
         case ActivityState.CINEMA_LIST_W_MOVIE:
-            movieLabel.setVisibility(View.VISIBLE);
-            movieLabel.setText(state.movie.getName());
-
             setCurrentDay(settings.getCurrentDay());
 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,6 +124,7 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
         }
 
         inflater.inflate(R.menu.cinema_sort_menu, menu);
+
         switch (settings.getCinemaSortOrder()) {
         case BY_CAPTION:
             menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
@@ -160,55 +157,34 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
             setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
             cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             return true;
+
         case R.id.menu_cinema_sort:
             return true;
+
         case R.id.submenu_cinema_sort_by_caption:
             cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
             item.setChecked(true);
             return true;
+
         case R.id.submenu_cinema_sort_by_favourite:
             cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
             item.setChecked(true);
             return true;
+
         case R.id.submenu_cinema_sort_by_distance:
             cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
+
         case R.id.menu_preferences:
             app.showAbout(this);
             return true;
+
         default:
             return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_submenu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.submenu_select_day_today:
-                if (currentDay != Constants.TODAY_SCHEDULE) {
-                    setCurrentDay(Constants.TODAY_SCHEDULE);
-                    cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
-                }
-                return true;
-            case R.id.submenu_select_day_tomorrow:
-                if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                    cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
-                }
-                return true;
-            default:
-                return super.onContextItemSelected(item);
         }
     }
 

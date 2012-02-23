@@ -1,4 +1,4 @@
-package com.dedaulus.cinematty.activities.adapters;
+package com.dedaulus.cinematty.activities.Pages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +13,10 @@ import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieActivity;
+import com.dedaulus.cinematty.activities.adapters.PosterItemAdapter;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
-import com.viewpagerindicator.TitleProvider;
 
 import java.util.ArrayList;
 import java.util.UUID;

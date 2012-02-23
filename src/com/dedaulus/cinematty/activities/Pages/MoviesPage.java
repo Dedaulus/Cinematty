@@ -1,4 +1,4 @@
-package com.dedaulus.cinematty.activities.adapters;
+package com.dedaulus.cinematty.activities.Pages;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,9 @@ import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieActivity;
+import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
+import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
+import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;

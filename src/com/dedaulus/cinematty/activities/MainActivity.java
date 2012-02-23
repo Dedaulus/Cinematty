@@ -13,6 +13,7 @@ import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.LocationState;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.activities.Pages.*;
 import com.dedaulus.cinematty.activities.adapters.*;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;

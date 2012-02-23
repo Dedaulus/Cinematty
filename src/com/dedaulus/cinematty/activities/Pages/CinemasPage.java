@@ -1,4 +1,4 @@
-package com.dedaulus.cinematty.activities.adapters;
+package com.dedaulus.cinematty.activities.Pages;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
+import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
+import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
+import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**

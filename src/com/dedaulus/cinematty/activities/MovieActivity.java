@@ -10,6 +10,7 @@ import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
+import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Pair;
@@ -21,11 +22,20 @@ import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.activities.Pages.CinemasWithSchedulePage;
+import com.dedaulus.cinematty.activities.Pages.FramesPage;
+import com.dedaulus.cinematty.activities.Pages.MoviePage;
+import com.dedaulus.cinematty.activities.Pages.SliderPage;
+import com.dedaulus.cinematty.activities.adapters.PageChangeListenerProxy;
+import com.dedaulus.cinematty.activities.adapters.SliderAdapter;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
 import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
+import com.viewpagerindicator.TitlePageIndicator;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -35,17 +45,23 @@ import java.util.UUID;
  * Date: 16.03.11
  * Time: 22:28
  */
-public class MovieActivity extends FragmentActivity implements MovieImageRetriever.MovieImageReceivedAction {
+public class MovieActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+    private static int FRAMES_PAGE_ID      = 0;
+    private static int DESCRIPTION_PAGE_ID = 1;
+    private static int SHOWTIME_PAGE_ID    = 2;
+    
     private CinemattyApplication app;
-    private ApplicationSettings settings;
     private ActivitiesState activitiesState;
+    private SliderAdapter adapter;
+    private List<SliderPage> pages;
+    private Integer currentPage = 0;
+    int defaultPagePosition;
     private ActivityState state;
     private String stateId;
-    private int currentDay;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_info);
+        setContentView(R.layout.movie);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -58,53 +74,77 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
             return;
         }
 
-        settings = app.getSettings();
         activitiesState = app.getActivitiesState();
 
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        switch (state.activityType) {
-        case ActivityState.MOVIE_INFO_W_SCHED:
-            currentDay = settings.getCurrentDay();
+        ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
-        case ActivityState.MOVIE_INFO:
-            setPicture();
-            setCaption();
-            setImdb();
-            setLength();
-            setTrailerLink();
-            setGenre();
-            setActors();
-            setDescription();
-            setSchedule();
-            break;
-
-        default:
-            throw new RuntimeException("ActivityType error");
+        pages = new ArrayList<SliderPage>();
+        defaultPagePosition = DESCRIPTION_PAGE_ID;
+        MovieFrameIdsStore frameIdsStore = state.movie.getFrameIdsStore();
+        if (state.movie.getFrameIdsStore() != null) {
+            pages.add(new FramesPage(this, app, frameIdsStore));
+        } else {
+            defaultPagePosition -= 1;
         }
+        currentPage = defaultPagePosition;
+
+        pages.add(new MoviePage(this, app, state));
+        pages.add(new CinemasWithSchedulePage(this, app, state));
+
+        adapter = new SliderAdapter(pages);
+        slider.setAdapter(adapter);
+        slider.setCurrentItem(defaultPagePosition);
+
+        PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
+        TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
+        indicator.setViewPager(slider, defaultPagePosition);
+        pageChangeListenerProxy.addListener(indicator);
+
+        pageChangeListenerProxy.addListener(this);
+        slider.setOnPageChangeListener(pageChangeListenerProxy);
     }
 
     @Override
     protected void onResume() {
-        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED && currentDay != settings.getCurrentDay()) {
-            setCurrentDay(settings.getCurrentDay());
+        for (SliderPage page : adapter.getCreatedPages()) {
+            page.onResume();
         }
-        setActors();
+
         super.onResume();
     }
 
     @Override
+    protected void onPause() {
+        for (SliderPage page : adapter.getCreatedPages()) {
+            page.onPause();
+        }
+
+        super.onPause();
+    }
+
+    @Override
     protected void onStop() {
+        for (SliderPage page : adapter.getCreatedPages()) {
+            page.onStop();
+        }
+
         activitiesState.dump();
         super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-        activitiesState.removeState(stateId);
-        super.onBackPressed();
+        if (getCurrentPage() == defaultPagePosition) {
+            activitiesState.removeState(stateId);
+            super.onBackPressed();
+        } else {
+            ViewPager slider = (ViewPager)findViewById(R.id.slider);
+            slider.setCurrentItem(defaultPagePosition);
+        }
     }
 
     @Override
@@ -113,24 +153,7 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
 
         MenuInflater inflater = getMenuInflater();
 
-        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            if (state.cinema.getPhone() != null) {
-                inflater.inflate(R.menu.call_menu, menu);
-            }
-
-            inflater.inflate(R.menu.select_day_menu, menu);
-            if (currentDay == Constants.TODAY_SCHEDULE) {
-                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
-            } else {
-                menu.findItem(R.id.menu_day).setTitle(R.string.today);
-            }
-        }
-
-        if (state.movie.getActors() != null) {
-            inflater.inflate(R.menu.show_actors_menu, menu);
-        }
-
-        inflater.inflate(R.menu.share_menu, menu);
+        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
         inflater.inflate(R.menu.search_menu, menu);
 
@@ -146,254 +169,28 @@ public class MovieActivity extends FragmentActivity implements MovieImageRetriev
             app.goHome(this);
             return true;
 
-        case R.id.menu_call:
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:+7" + state.cinema.getPlainPhone()));
-            startActivity(intent);
-            return true;
-
-        case R.id.menu_day:
-            setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
-            return true;
-
-        case R.id.menu_show_actors:
-            onActorsClick(null);
-            return true;
-
-        case R.id.menu_share:
-            onShareButtonClick(null);
-            return true;
-
-            case R.id.menu_preferences:
+        case R.id.menu_preferences:
             app.showAbout(this);
             return true;
 
         default:
-            return super.onOptionsItemSelected(item);
+            return pages.get(getCurrentPage()).onOptionsItemSelected(item);
         }
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_submenu, menu);
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {
+        currentPage = position;
+        invalidateOptionsMenu();
     }
 
     @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.submenu_select_day_today:
-                if (currentDay != Constants.TODAY_SCHEDULE) {
-                    setCurrentDay(Constants.TODAY_SCHEDULE);
-                }
-                return true;
-            case R.id.submenu_select_day_tomorrow:
-                if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                }
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
+    public void onPageScrollStateChanged(int state) {}
 
-    private void setPicture() {
-        RelativeLayout progressBar = (RelativeLayout)findViewById(R.id.movie_icon_loading);
-        ImageView imageView = (ImageView)findViewById(R.id.movie_icon);
-
-        progressBar.setVisibility(View.GONE);
-        imageView.setVisibility(View.GONE);
-
-        String picId = state.movie.getPicId();
-        if (picId != null) {
-            MovieImageRetriever retriever = app.getImageRetrievers().getMovieImageRetriever();
-            Bitmap image = retriever.getImage(picId, false);
-            if (image != null) {
-                imageView.setImageBitmap(image);
-                imageView.setVisibility(View.VISIBLE);
-            } else {
-                progressBar.setVisibility(View.VISIBLE);
-                retriever.addRequest(picId, false, this);
-            }
-        }
-    }
-
-    private void setCaption() {
-        TextView text = (TextView)findViewById(R.id.movie_caption);
-        text.setText(state.movie.getName());
-    }
-
-    private void setSchedule() {
-        if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            TextView text = (TextView)findViewById(R.id.schedule_title);
-            text.setText(getString(R.string.schedule_enum) + " " + state.cinema.getName());
-
-            text = (TextView)findViewById(R.id.schedule_enum_for_one_cinema);
-            Pair<Movie, List<Calendar>> showTimes = state.cinema.getShowTimes(settings.getCurrentDay()).get(state.movie.getName());
-            if (showTimes != null) {
-                text.setText(DataConverter.showTimesToSpannableString(this, showTimes.second));
-            }
-
-            findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.GONE);
-        }
-    }
-
-    private void setImdb() {
-        float imdb = state.movie.getImdb();
-        if (imdb > 0) {
-            String imdbString = String.format(" %.1f", imdb);
-            TextView imdbView = (TextView)findViewById(R.id.imdb);
-            imdbView.setText(imdbString);
-            findViewById(R.id.rating).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.rating).setVisibility(View.GONE);
-        }
-    }
-
-    private void setLength() {
-        TextView text = (TextView)findViewById(R.id.movie_length);
-        if (state.movie.getLength() != 0) {
-            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(this, state.movie.getLength()));
-            text.setVisibility(View.VISIBLE);
-        } else {
-            text.setVisibility(View.GONE);
-        }
-    }
-
-    private void setTrailerLink() {
-        String caption = getString(R.string.movie_trailer_link);
-        SpannableString str = new SpannableString(caption);
-        str.setSpan(new UnderlineSpan(), 0, caption.length(), 0);
-
-        TextView textView = (TextView)findViewById(R.id.movie_trailer_url);
-        textView.setText(str);
-    }
-
-    private void setGenre() {
-        TextView text = (TextView)findViewById(R.id.movie_genre);
-        if (state.movie.getGenres().size() != 0) {
-            text.setText(DataConverter.genresToString(state.movie.getGenres().values()));
-            findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.movie_genre_panel).setVisibility(View.GONE);
-        }
-    }
-
-    private void setActors() {
-        TextView text = (TextView)findViewById(R.id.movie_actors);
-        if (state.movie.getActors().size() != 0) {
-            text.setText(DataConverter.actorsToSpannableString(state.movie.getActors().values()));
-            findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.movie_actors_panel).setVisibility(View.GONE);
-        }
-    }
-
-    private void setDescription() {
-        TextView text = (TextView)findViewById(R.id.movie_description);
-        String description = state.movie.getDescription();
-        if (description != null) {
-            text.setText(state.movie.getDescription());
-            findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.movie_description_panel).setVisibility(View.GONE);
-        }
-    }
-
-    public void onSchedulesClick(View view) {
-        String cookie = UUID.randomUUID().toString();
-        ActivityState state = this.state.clone();
-        state.activityType = ActivityState.CINEMA_LIST_W_MOVIE;
-        activitiesState.setState(cookie, state);
-
-        Intent intent = new Intent(this, CinemaWithScheduleListActivity.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        startActivity(intent);
-    }
-
-    public void onUrlClick(View view) {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(getString(R.string.youtube_search_url));
-        buffer.append(" \"\"");
-        buffer.insert(buffer.length() - 1, state.movie.getName());
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(buffer.toString()));
-        startActivity(intent);
-    }
-
-    public void onPictureClick(View view) {
-        StringBuilder url = new StringBuilder();
-        url.append(getString(R.string.image_search_url)).append(" ").append(state.movie.getName()).append("#i=1");
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url.toString()));
-        startActivity(intent);
-    }
-
-    public void onActorsClick(View view) {
-        String cookie = UUID.randomUUID().toString();
-        ActivityState state = this.state.clone();
-        state.activityType = ActivityState.ACTOR_LIST_W_MOVIE;
-        activitiesState.setState(cookie, state);
-
-        Intent intent = new Intent(this, ActorListActivity.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        startActivity(intent);
-    }
-
-    public void onImageReceived(boolean success) {
-        if (success) {
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    setPicture();
-                    app.getImageRetrievers().getMovieImageRetriever().saveState();
-                }
-            });
-        }
-    }
-
-    public void onShareButtonClick(View view) {
-        final boolean isScheduled = state.activityType == ActivityState.MOVIE_INFO_W_SCHED;
-
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.generate_link));
-        progressDialog.setCancelable(true);
-        progressDialog.show();
-
-        final CinemattyApplication app = this.app;
-        final ActivityState state = this.state;
-        final Context ctx = this;
-
-        new Thread(new Runnable() {
-            public void run() {
-                String url = isScheduled ? state.movie.getSharedPageUrl(settings.getCurrentCity(), MovieActivity.this.state.cinema, currentDay) : state.movie.getSharedPageUrl(settings.getCurrentCity());
-                final String shortUrl = url != null ? DataConverter.longUrlToShort(url) : null;
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        progressDialog.cancel();
-                        if (shortUrl != null) {
-                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                            sharingIntent.setType("text/plain");
-                            sharingIntent.putExtra(Intent.EXTRA_TEXT, shortUrl);
-                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, MovieActivity.this.state.movie.getName());
-                            startActivity(Intent.createChooser(sharingIntent, getString(R.string.send_link)));
-                        } else {
-                            Toast.makeText(ctx, ctx.getString(R.string.generate_link_failed), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }).start();
-    }
-
-    private void setCurrentDay(int day) {
-        settings.setCurrentDay(day);
-        currentDay = day;
-        setSchedule();
+    public synchronized int getCurrentPage() {
+        return currentPage;
     }
 }

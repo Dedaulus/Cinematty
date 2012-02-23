@@ -23,6 +23,9 @@
     <string name="cinemas_caption">Кинотеатры</string>
     <string name="movies_caption">Фильмы</string>
     <string name="movie_caption">Фильм</string>
+    <string name="showtime_caption">Сеансы</string>
+    <string name="frames_caption">Кадры</string>
+    <string name="description_caption">Описание</string>
     <string name="actors_caption">Актёры</string>
     <string name="genres_caption">Жанры</string>
     <string name="about_caption">О программе</string>
