@@ -26,7 +26,7 @@ public class ImageRetriever implements Runnable {
     private static int LIVE_DAYS = 7;
     private static String PREPREFIX = "image_retriever_";
 
-    private static Set<String> entities = new HashSet<String>();
+    private static final Set<String> entities = new HashSet<String>();
     
     private String entity;
     private String prefix;
@@ -54,8 +54,8 @@ public class ImageRetriever implements Runnable {
         }
     }
     
-    private Map<String, ImageWrapper> images;
-    private Queue<Request> requests;
+    private final Map<String, ImageWrapper> images;
+    private final Queue<Request> requests;
 
     public static interface ImageReceivedAction {
         void onImageReceived(String url, boolean downloaded);
@@ -255,12 +255,15 @@ public class ImageRetriever implements Runnable {
     }
     
     private Bitmap loadImage(String path) {
+        return BitmapFactory.decodeFile(path);
+        /*
         try {
             InputStream is = new FileInputStream(path);
             return BitmapFactory.decodeStream(is);
         } catch (FileNotFoundException e) {
             return null;
         }
+        */
     }
 
     private String downloadImage(String urlStr) {

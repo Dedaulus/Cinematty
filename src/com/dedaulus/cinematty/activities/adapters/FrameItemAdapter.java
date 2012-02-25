@@ -151,10 +151,11 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
     public void onResume() {}
     
     private static Bitmap createScaledBitmap(Bitmap image, int desiredWidth) {
-        int height = image.getHeight();
+        /*int height = image.getHeight();
         int width = image.getWidth();
         double multiplier = (double)desiredWidth / width;
 
-        return Bitmap.createScaledBitmap(image, (int)(width * multiplier), (int)(height * multiplier), false);
+        return Bitmap.createScaledBitmap(image, (int)(width * multiplier), (int)(height * multiplier), false);*/
+        return image;
     }
 }
