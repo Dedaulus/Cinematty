@@ -55,9 +55,9 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
 
         ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
-            image.setImageResource(R.drawable.btn_star_on_normal_holo_light);
+            image.setImageResource(R.drawable.ic_list_fav_on);
         } else {
-            image.setImageResource(R.drawable.btn_star_off_normal_holo_light);
+            image.setImageResource(R.drawable.ic_list_fav_off);
         }
 
         image.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +119,10 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         Cinema cinema = cinemaEntries.get(caption.getText().toString());
         if (cinema.getFavourite() > 0) {
             cinema.setFavourite(false);
-            ((ImageView)view).setImageResource(R.drawable.btn_star_off_normal_holo_light);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
         } else {
             cinema.setFavourite(true);
-            ((ImageView)view).setImageResource(R.drawable.btn_star_on_normal_holo_light);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
         }
     }
 }

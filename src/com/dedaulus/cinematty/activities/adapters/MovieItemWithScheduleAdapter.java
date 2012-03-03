@@ -78,7 +78,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
                 progressBar.setVisibility(View.VISIBLE);
             }
         } else {
-            imageView.setImageResource(R.drawable.ic_blank_movie);
+            imageView.setImageResource(R.drawable.ic_list_blank_movie);
             imageView.setBackgroundResource(0);
             imageView.setVisibility(View.VISIBLE);
         }

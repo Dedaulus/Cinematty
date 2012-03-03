@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Pair;
 import com.dedaulus.cinematty.activities.AboutActivity;
 import com.dedaulus.cinematty.framework.FrameImageRetriever;
 import com.dedaulus.cinematty.activities.MainActivity;
@@ -437,7 +438,7 @@ public class CinemattyApplication extends Application {
             return posterImageRetriever;
         }
     }
-
+    
     private Map<String, String> connectStrings;
 
     private ApplicationSettings settings;

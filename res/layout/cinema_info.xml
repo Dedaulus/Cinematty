@@ -28,7 +28,7 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="2dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/btn_star_off_normal_holo_light"
+                    android:src="@drawable/ic_list_fav_off"
                     android:clickable="true"
                     android:onClick="onCinemaFavIconClick"/>
 

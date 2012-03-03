@@ -50,9 +50,9 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
 
         ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_actor_list);
         if (actor.getFavourite() > 0) {
-            image.setImageResource(android.R.drawable.btn_star_big_on);
+            image.setImageResource(R.drawable.ic_list_fav_on);
         } else {
-            image.setImageResource(android.R.drawable.btn_star_big_off);
+            image.setImageResource(R.drawable.ic_list_fav_off);
         }
         image.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -89,10 +89,10 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         MovieActor actor = actorEntries.get(caption.getText().toString());
         if (actor.getFavourite() > 0) {
             actor.setFavourite(false);
-            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_off);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
         } else {
             actor.setFavourite(true);
-            ((ImageView)view).setImageResource(android.R.drawable.btn_star_big_on);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
         }
     }
 }

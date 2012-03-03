@@ -35,7 +35,7 @@
             android:adjustViewBounds="true"
             android:maxWidth="62dp"
             android:background="@drawable/picture_border"
-            android:src="@drawable/ic_blank_movie"/>
+            android:src="@drawable/ic_list_blank_movie"/>
 
     </LinearLayout>
 

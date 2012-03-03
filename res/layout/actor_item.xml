@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:paddingRight="6dp"
-        android:src="@android:drawable/btn_star_big_off"
+        android:src="@drawable/ic_list_fav_off"
         android:clickable="true"/>
 
     <ImageView

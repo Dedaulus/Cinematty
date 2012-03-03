@@ -22,8 +22,31 @@ import java.net.URL;
 import java.util.*;
 
 public class DataConverter {
+    public static String imdbToString(float imdb) {
+        if (imdb > 0) {
+            return String.format(Locale.US, " %.1f", imdb); 
+        }
+        return "";
+    }
+    
+    public static String favActorsToString(Collection<MovieActor> actors) {
+        if (!actors.isEmpty()) {
+            StringBuilder builder = new StringBuilder();
+            for (MovieActor actor : actors) {
+                if (actor.getFavourite() != 0) {
+                    builder.append(actor.getName()).append(", ");
+                }
+            }
+            if (builder.length() != 0) {
+                builder.delete(builder.length() - 2, builder.length());
+                return builder.toString();
+            }
+        }
+        return "";
+    }
+    
     public static String genresToString(Collection<MovieGenre> genres) {
-        if (genres.size() != 0) {
+        if (!genres.isEmpty()) {
             StringBuilder genresString = new StringBuilder();
             for (MovieGenre genre : genres) {
                 genresString.append(genre.getName()).append("/");
@@ -31,13 +54,12 @@ public class DataConverter {
 
             genresString.delete(genresString.length() - 1, genresString.length());
             return genresString.toString();
-        } else {
-            return "";
         }
+        return "";
     }
 
     public static String actorsToString(Collection<MovieActor> actors) {
-        if (actors.size() != 0) {
+        if (!actors.isEmpty()) {
             StringBuilder actorsString = new StringBuilder();
             for (MovieActor genre : actors) {
                 actorsString.append(genre.getName()).append(", ");
@@ -45,9 +67,8 @@ public class DataConverter {
 
             actorsString.delete(actorsString.length() - 2, actorsString.length());
             return actorsString.toString();
-        } else {
-            return "";
         }
+        return "";
     }
 
     public static String showTimesToString(List<Calendar> showTimes) {
@@ -139,7 +160,7 @@ public class DataConverter {
 
     public static SpannableString showTimesToClosestTimeString(Context context, List<Calendar> showTimes) {
         SpannableString timeLeftString;
-        if (showTimes.size() != 0) {
+        if (!showTimes.isEmpty()) {
             Calendar now = Calendar.getInstance();
             Calendar closestTime = getClosestTime(showTimes, now);
             if (closestTime == null) {

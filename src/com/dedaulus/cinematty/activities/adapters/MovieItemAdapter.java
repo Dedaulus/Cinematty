@@ -69,15 +69,15 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
             Bitmap picture = imageRetriever.getImage(picId, true);
             if (picture != null) {
                 imageView.setImageBitmap(picture);
-                imageView.setBackgroundResource(R.drawable.picture_border);
+                //imageView.setBackgroundResource(R.drawable.picture_border);
                 imageView.setVisibility(View.VISIBLE);
             } else {
                 imageRetriever.addRequest(picId, true, imageReceivedActionHandler);
                 progressBar.setVisibility(View.VISIBLE);
             }
         } else {
-            imageView.setImageResource(R.drawable.ic_blank_movie);
-            imageView.setBackgroundResource(0);
+            imageView.setImageResource(R.drawable.ic_list_blank_movie);
+            //imageView.setBackgroundResource(0);
             imageView.setVisibility(View.VISIBLE);
         }
 

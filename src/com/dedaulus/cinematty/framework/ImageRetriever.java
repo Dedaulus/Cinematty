@@ -256,14 +256,6 @@ public class ImageRetriever implements Runnable {
     
     private Bitmap loadImage(String path) {
         return BitmapFactory.decodeFile(path);
-        /*
-        try {
-            InputStream is = new FileInputStream(path);
-            return BitmapFactory.decodeStream(is);
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-        */
     }
 
     private String downloadImage(String urlStr) {

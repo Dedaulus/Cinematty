@@ -32,6 +32,12 @@ public class StartupActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+        
+        String str = "караша укаша";
+        //String pattern = "(?i).*ка.*";
+        String pattern = "(?i).* Ка.*|(?i)^Ка.*";
+
+        boolean b = str.matches(pattern);
 
         // TODO: uncomment following before release!!!
         //BugSenseHandler.setup(this, "97371d41");
