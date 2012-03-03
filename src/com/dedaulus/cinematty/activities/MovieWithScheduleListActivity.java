@@ -161,42 +161,55 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            app.goHome(this);
-            return true;
-        case R.id.menu_call:
-            onCinemaPhoneClick(null);
-            return true;
-        case R.id.menu_show_map:
-            onCinemaAddressClick(null);
-            return true;
-        case R.id.menu_day:
-            int day = currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
-            setCurrentDay(day);
-            movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), day));
-            return true;
-        case R.id.menu_movie_sort:
-            return true;
-        case R.id.submenu_movie_sort_by_caption:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
-        case R.id.submenu_movie_sort_by_popular:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
-            item.setChecked(true);
-            return true;
-        case R.id.submenu_movie_sort_by_rating:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
-            item.setChecked(true);
-            return true;
-        case R.id.menu_preferences:
-            app.showAbout(this);
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case android.R.id.home:
+                app.goHome(this);
+                return true;
+
+            case R.id.menu_call:
+                onCinemaPhoneClick(null);
+                return true;
+
+            case R.id.menu_show_map:
+                onCinemaAddressClick(null);
+                return true;
+
+            case R.id.menu_day:
+                int day = currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
+                setCurrentDay(day);
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), day));
+                return true;
+
+            case R.id.menu_movie_sort:
+                return true;
+
+            case R.id.submenu_movie_sort_by_caption:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_movie_sort_by_popular:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_movie_sort_by_rating:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+                item.setChecked(true);
+                return true;
+
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
+
+            case R.id.menu_preferences:
+                app.showAbout(this);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -276,9 +289,9 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         ImageView favIcon = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_info);
 
         if (state.cinema.getFavourite() > 0) {
-            favIcon.setImageResource(R.drawable.btn_star_on_normal_holo_light);
+            favIcon.setImageResource(R.drawable.ic_list_fav_on);
         } else {
-            favIcon.setImageResource(R.drawable.btn_star_off_normal_holo_light);
+            favIcon.setImageResource(R.drawable.ic_list_fav_off);
         }
     }
 
@@ -376,10 +389,10 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
     public void onCinemaFavIconClick(View view) {
         if (state.cinema.getFavourite() > 0) {
             state.cinema.setFavourite(false);
-            ((ImageView)view).setImageResource(R.drawable.btn_star_off_normal_holo_light);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
         } else {
             state.cinema.setFavourite(true);
-            ((ImageView)view).setImageResource(R.drawable.btn_star_on_normal_holo_light);
+            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
         }
     }
 }

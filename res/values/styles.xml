@@ -117,6 +117,7 @@
     </style>
     <style name="List.Actors"/>
     <style name="List.Genres"/>
+    <style name="List.Search"/>
 
     <style name="ListCaption">
         <item name="android:layout_height">wrap_content</item>

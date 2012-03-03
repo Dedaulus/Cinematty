@@ -149,42 +149,46 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            app.goHome(this);
-            return true;
+            case android.R.id.home:
+                app.goHome(this);
+                return true;
 
-        case R.id.menu_day:
-            setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
-            cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
-            return true;
+            case R.id.menu_day:
+                setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                return true;
 
-        case R.id.menu_cinema_sort:
-            return true;
+            case R.id.menu_cinema_sort:
+                return true;
 
-        case R.id.submenu_cinema_sort_by_caption:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_caption:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_cinema_sort_by_favourite:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_favourite:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_cinema_sort_by_distance:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_distance:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+                item.setChecked(true);
+                return true;
 
-        case R.id.menu_preferences:
-            app.showAbout(this);
-            return true;
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menu_preferences:
+                app.showAbout(this);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

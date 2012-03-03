@@ -19,4 +19,8 @@ public class Constants {
     public static final int TOMORROW_SCHEDULE = 1;
 
     public static final int LAST_SHOWTIME_HOUR = 6;
+
+    public static final int CINEMA_TYPE_ID = 0;
+    public static final int MOVIE_TYPE_ID = 1;
+    public static final int ACTOR_TYPE_ID = 2;
 }

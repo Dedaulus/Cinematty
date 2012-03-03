@@ -131,16 +131,20 @@ public class ActorListActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:
-            app.goHome(this);
-            return true;
+            case android.R.id.home:
+                app.goHome(this);
+                return true;
 
-        case R.id.menu_preferences:
-            app.showAbout(this);
-            return true;
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
 
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menu_preferences:
+                app.showAbout(this);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

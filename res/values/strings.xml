@@ -32,6 +32,10 @@
     <string name="wait_dialog_caption">Синхронизация</string>
     <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
 
+    <string name="cinemas_separator">Кинотеатры</string>
+    <string name="movies_separator">Фильмы</string>
+    <string name="actors_separator">Актёры</string>
+
     <string name="movie_trailer_link">"Трейлеры на YouTube</string>
     <string name="movie_length">Продолжительность</string>
     <string name="genre">Жанр</string>
