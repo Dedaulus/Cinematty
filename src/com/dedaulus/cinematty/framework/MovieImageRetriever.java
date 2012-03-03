@@ -21,9 +21,9 @@ public class MovieImageRetriever {
         void onImageReceived(boolean downloaded);
     }
 
-    public MovieImageRetriever(String entity, int densityDpi, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
+    public MovieImageRetriever(String entity, DisplayMetrics displayMetrics, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
         final int DENSITY_XHIGH = 320; // developer.android.com/reference/android/util/DisplayMetrics.html#DENSITY_XHIGH
-        switch (densityDpi) {
+        switch (displayMetrics.densityDpi) {
             case DENSITY_XHIGH:
                 smallImageName = SMALL_IMAGE_NAMES[2];
                 break;

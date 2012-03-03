@@ -48,7 +48,7 @@ public class MovieListActivity extends FragmentActivity {
         actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

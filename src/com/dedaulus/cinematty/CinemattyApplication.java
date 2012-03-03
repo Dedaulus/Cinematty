@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.view.Display;
 import com.dedaulus.cinematty.activities.AboutActivity;
 import com.dedaulus.cinematty.framework.FrameImageRetriever;
 import com.dedaulus.cinematty.activities.MainActivity;
@@ -411,10 +413,10 @@ public class CinemattyApplication extends Application {
         private FrameImageRetriever frameImageRetriever;
         private PosterImageRetriever posterImageRetriever;
 
-        private ImageRetrieversImpl(int densityDpi, Map<String, String> connectStrings) throws ImageRetriever.ObjectAlreadyExists {
-            movieSmallImageRetriever = new MovieImageRetriever(MOVIE_SMALL_IMAGE_RETRIEVER, densityDpi, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
-            movieImageRetriever = new MovieImageRetriever(MOVIE_IMAGE_RETRIEVER, densityDpi, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
-            frameImageRetriever = new FrameImageRetriever(FRAME_IMAGE_RETRIEVER, densityDpi, connectStrings.get(FRAMES_FOLDER_KEY), getCacheDir());
+        private ImageRetrieversImpl(DisplayMetrics displayMetrics, Map<String, String> connectStrings) throws ImageRetriever.ObjectAlreadyExists {
+            movieSmallImageRetriever = new MovieImageRetriever(MOVIE_SMALL_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
+            movieImageRetriever = new MovieImageRetriever(MOVIE_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
+            frameImageRetriever = new FrameImageRetriever(FRAME_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(FRAMES_FOLDER_KEY), getCacheDir());
             posterImageRetriever = new PosterImageRetriever(POSTER_IMAGE_RETRIEVER, getCacheDir());
         }
 
@@ -455,13 +457,7 @@ public class CinemattyApplication extends Application {
         locationState = new LocationStateImpl();
     }
     
-    public static int getDensityDpi(Activity activity) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return metrics.densityDpi;
-    }
-    
-    public SyncStatus syncSchedule(int densityDpi) {
+    public SyncStatus syncSchedule(Activity activity) {
         if (syncStatus != null) return syncStatus;
 
         try {
@@ -505,8 +501,10 @@ public class CinemattyApplication extends Application {
             return (syncStatus = SyncStatus.BAD_RESPONSE);
         }
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         try {
-            imageRetrievers = new ImageRetrieversImpl(densityDpi, connectStrings);
+            imageRetrievers = new ImageRetrieversImpl(displayMetrics, connectStrings);
         } catch (ImageRetriever.ObjectAlreadyExists e) {
             throw new RuntimeException(e);
         }

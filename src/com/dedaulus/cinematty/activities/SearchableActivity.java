@@ -46,7 +46,7 @@ public class SearchableActivity extends FragmentActivity implements LocationClie
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

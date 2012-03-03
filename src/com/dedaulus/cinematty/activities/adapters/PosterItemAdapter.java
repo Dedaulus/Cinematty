@@ -3,6 +3,7 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -37,14 +38,15 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
         int columns;
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
-        int rotation = display.getRotation();
-        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+        Point point = new Point();
+        display.getSize(point);
+        if (point.x < point.y) {
             columns = 1;
         } else {
             columns = 2;
         }
 
-        imageWidth = display.getWidth() / columns;
+        imageWidth = point.x / columns;
         imageHeight = imageWidth / 3;
     }
 

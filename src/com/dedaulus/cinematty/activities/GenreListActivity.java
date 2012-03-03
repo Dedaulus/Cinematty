@@ -43,7 +43,7 @@ public class GenreListActivity extends FragmentActivity {
         actionBar.setTitle(getString(R.string.genres_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

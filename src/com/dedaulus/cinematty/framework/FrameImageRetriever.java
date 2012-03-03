@@ -1,6 +1,7 @@
 package com.dedaulus.cinematty.framework;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
 import com.dedaulus.cinematty.framework.ImageRetriever;
 
@@ -17,6 +18,9 @@ public class FrameImageRetriever {
     private static String PREVIEW_PREFIX = "preview_";
     private static String POSTFIXES[] = {"_m.jpg", "_h.jpg", "_xh.jpg"};
     
+    private static final int MEDIUM_SIZE = 700;
+    private static final int BIG_SIZE    = 1000;
+
     private String remoteFolder;
     private int postfixId;
     private ImageRetriever imageRetriever;
@@ -25,23 +29,21 @@ public class FrameImageRetriever {
         void onImageReceived(Bitmap image);
     }
 
-    public FrameImageRetriever(String entity, int densityDpi, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
+    public FrameImageRetriever(String entity, DisplayMetrics displayMetrics, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
         if (!remoteFolder.endsWith("/")) {
             remoteFolder += "/";
         }
         this.remoteFolder = remoteFolder;
-
-        final int DENSITY_XHIGH = 320; // developer.android.com/reference/android/util/DisplayMetrics.html#DENSITY_XHIGH
-        switch (densityDpi) {
-            case DENSITY_XHIGH:
-                postfixId = 2;
-                break;
-            case DisplayMetrics.DENSITY_MEDIUM:
-                postfixId = 0;
-                break;
-            case DisplayMetrics.DENSITY_HIGH:
-            default:
-                postfixId = 1;
+        
+        int maxSize = displayMetrics.heightPixels;
+        if (maxSize < displayMetrics.widthPixels) maxSize = displayMetrics.widthPixels;
+        
+        if (maxSize < MEDIUM_SIZE) {
+            postfixId = 0;
+        } else if (maxSize < BIG_SIZE) {
+            postfixId = 1;
+        } else {
+            postfixId = 2;
         }
 
         imageRetriever = new ImageRetriever(entity, localFolder);

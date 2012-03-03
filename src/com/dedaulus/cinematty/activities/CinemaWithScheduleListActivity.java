@@ -47,7 +47,7 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
         actionBar.setTitle(getString(R.string.cinemas_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

@@ -1,5 +1,6 @@
 package com.dedaulus.cinematty.activities;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
@@ -49,7 +50,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         setContentView(R.layout.main);
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;
@@ -87,8 +88,9 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
 
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        int rotation = display.getRotation();
-        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+        Point point = new Point();
+        display.getSize(point);
+        if (point.x < point.y) {
             TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
             indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
             pageChangeListenerProxy.addListener(indicator);

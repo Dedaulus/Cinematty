@@ -50,7 +50,7 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
         actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;
@@ -170,7 +170,7 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
                 return true;
 
             case R.id.menu_show_map:
-                onCinemaAddressClick(null);
+                showCinemaOnMap();
                 return true;
 
             case R.id.menu_day:
@@ -394,5 +394,15 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
             state.cinema.setFavourite(true);
             ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
         }
+    }
+
+    private void showCinemaOnMap() {
+        String cookie = UUID.randomUUID().toString();
+        ActivityState state = new ActivityState(ActivityState.CINEMA_ON_MAP, this.state.cinema, null, null, null);
+        activitiesState.setState(cookie, state);
+
+        Intent intent = new Intent(this, CinemaMapView.class);
+        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        startActivity(intent);
     }
 }

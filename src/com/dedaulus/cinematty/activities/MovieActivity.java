@@ -68,7 +68,7 @@ public class MovieActivity extends FragmentActivity implements ViewPager.OnPageC
         actionBar.setTitle(getString(R.string.movie_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(CinemattyApplication.getDensityDpi(this)) != SyncStatus.OK) {
+        if (app.syncSchedule(this) != SyncStatus.OK) {
             app.restart();
             finish();
             return;
