@@ -81,15 +81,13 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
 
         int columns;
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        if (point.x < point.y) {
+        if (display.getWidth() < display.getHeight()) {
             columns = 1;
         } else {
             columns = 2;
         }
 
-        imageWidth = point.x / columns;
+        imageWidth = display.getWidth() / columns;
     }
 
     public int getCount() {

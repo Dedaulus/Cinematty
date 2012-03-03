@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MenuInflater;
 import android.view.Surface;
@@ -87,10 +88,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
 
-        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        if (point.x < point.y) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        if (displayMetrics.widthPixels < displayMetrics.heightPixels) {
             TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
             indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
             pageChangeListenerProxy.addListener(indicator);

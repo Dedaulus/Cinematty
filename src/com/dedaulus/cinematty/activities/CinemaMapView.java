@@ -14,6 +14,8 @@ public class CinemaMapView extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cinema_on_map);
+
+
     }
 
     @Override
