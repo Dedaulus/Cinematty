@@ -113,7 +113,6 @@ public class ActorListActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         activitiesState.removeState(stateId);
-
         super.onBackPressed();
     }
 
