@@ -11,6 +11,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,15 +25,15 @@ import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.ActorListActivity;
+import com.dedaulus.cinematty.activities.MovieListActivity;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -40,6 +41,8 @@ import java.util.UUID;
  * Time: 0:46
  */
 public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageReceivedAction {
+    private List<Pair<MovieActor, ImageView>> favIconHolders;
+    
     private Context context;
     private CinemattyApplication app;
     private ApplicationSettings settings;
@@ -104,10 +107,6 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
             }
         }
 
-        if (state.movie.getActors() != null) {
-            inflater.inflate(R.menu.show_actors_menu, menu);
-        }
-
         inflater.inflate(R.menu.share_menu, menu);
 
         return true;
@@ -124,10 +123,6 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
 
             case R.id.menu_day:
                 setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
-                return true;
-
-            case R.id.menu_show_actors:
-                onActorsClick();
                 return true;
 
             case R.id.menu_share:
@@ -295,18 +290,64 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     private void setActors() {
-        TextView text = (TextView)pageView.findViewById(R.id.movie_actors);
-        if (state.movie.getActors().size() != 0) {
-            text.setText(DataConverter.actorsToSpannableString(state.movie.getActors().values()));
-            text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onActorsClick();
+        ViewGroup region = (ViewGroup)pageView.findViewById(R.id.actors_region);
+        Collection<MovieActor> actors = state.movie.getActors().values();
+        if (!actors.isEmpty()) {
+            TextView textView = (TextView)region.findViewById(R.id.actors_divider).findViewById(R.id.caption);
+            textView.setText(context.getString(R.string.actors_separator));
+            
+            if (favIconHolders == null) {
+                favIconHolders = new ArrayList<Pair<MovieActor, ImageView>>(actors.size());
+                LayoutInflater inflater = LayoutInflater.from(context);
+                for (MovieActor actor : actors) {                                        
+                    View actorView = inflater.inflate(R.layout.actor_item, null);
+                    actorView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.abs__list_selector_holo_light));
+                    TextView caption = (TextView)actorView.findViewById(R.id.actor_caption);
+                    ImageView icon = (ImageView)actorView.findViewById(R.id.fav_icon);
+                    Pair<MovieActor, ImageView> iconHolder = Pair.create(actor, icon);
+
+                    caption.setText(actor.getName());
+                    View actorDataRegion = actorView.findViewById(R.id.actor_data_region);
+                    actorDataRegion.setTag(actor);
+                    actorDataRegion.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            onActorClick(view);
+                        }
+                    });
+                    
+                    if (actor.getFavourite() > 0) {
+                        icon.setImageResource(R.drawable.ic_list_fav_on);
+                    } else {
+                        icon.setImageResource(R.drawable.ic_list_fav_off);
+                    }
+                    View favIconRegion = actorView.findViewById(R.id.fav_icon_region);
+                    favIconRegion.setTag(actor);
+                    favIconRegion.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            onFavIconClick(view);
+                        }
+                    });
+
+                    favIconHolders.add(iconHolder);
+                    region.addView(actorView);
+
+                    inflater.inflate(R.layout.list_separator, region, true);
                 }
-            });
-            pageView.findViewById(R.id.movie_actors_panel).setVisibility(View.VISIBLE);
+            } else {
+                for (Pair<MovieActor, ImageView> iconHolder : favIconHolders) {
+                    if (iconHolder.first.getFavourite() > 0) {
+                        iconHolder.second.setImageResource(R.drawable.ic_list_fav_on);
+                    } else {
+                        iconHolder.second.setImageResource(R.drawable.ic_list_fav_off);
+                    }
+                }
+            }
+
+            region.setVisibility(View.VISIBLE);
         } else {
-            pageView.findViewById(R.id.movie_actors_panel).setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
 
@@ -340,15 +381,27 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         context.startActivity(intent);
     }
 
-    public void onActorsClick() {
+    public void onActorClick(View view) {
+        MovieActor actor = (MovieActor)view.getTag();
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = this.state.clone();
-        state.activityType = ActivityState.ACTOR_LIST_W_MOVIE;
+        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, actor, null);
         activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(context, ActorListActivity.class);
+        Intent intent = new Intent(context, MovieListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         context.startActivity(intent);
+    }
+    
+    private void onFavIconClick(View view) {
+        MovieActor actor = (MovieActor)view.getTag();
+        ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
+        if (actor.getFavourite() > 0) {
+            actor.setFavourite(false);
+            imageView.setImageResource(R.drawable.ic_list_fav_off);
+        } else {
+            actor.setFavourite(true);
+            imageView.setImageResource(R.drawable.ic_list_fav_on);
+        }
     }
 
     public void onImageReceived(boolean success) {

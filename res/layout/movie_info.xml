@@ -86,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="8dp"
                             android:textSize="16dp"
-                            android:textColor="#0026FF"/>
+                            android:textColor="#33B5E5"/>
 
                 </LinearLayout>
 
@@ -155,14 +155,12 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/movie_actors_panel"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp"
-                android:onClick="onActorsClick">
-
+            <LinearLayout android:id="@+id/actors_region"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="4dp">
+                <!--
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
@@ -173,7 +171,11 @@
                     android:text="@string/actors"
                     android:paddingLeft="6dp"
                     android:paddingBottom="2dp"/>
+                    -->
+                <include android:id="@+id/actors_divider"
+                        layout="@layout/data_divider"/>
 
+                <!--
                 <TextView
                     android:id="@+id/movie_actors"
                     android:layout_height="wrap_content"
@@ -183,6 +185,7 @@
                     android:paddingRight="4dp"
                     android:textSize="16dp"
                     android:textColor="#404040"/>
+                    -->
 
             </LinearLayout>
 
