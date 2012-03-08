@@ -1,8 +1,8 @@
 package com.dedaulus.cinematty.activities.Pages;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 /**
  * User: Dedaulus

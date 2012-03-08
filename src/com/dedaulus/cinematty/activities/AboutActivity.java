@@ -1,8 +1,8 @@
 package com.dedaulus.cinematty.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.dedaulus.cinematty.R;
 
 /**
@@ -10,7 +10,7 @@ import com.dedaulus.cinematty.R;
  * Date: 05.10.11
  * Time: 2:11
  */
-public class AboutActivity extends FragmentActivity {
+public class AboutActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);

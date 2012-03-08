@@ -1,14 +1,13 @@
 package com.dedaulus.cinematty.activities.Pages;
 
 import android.content.Context;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.FrameItemAdapter;
@@ -22,7 +21,6 @@ import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
 public class FramesPage implements SliderPage {
     private Context context;
     private CinemattyApplication app;
-    private ActivitiesState activitiesState;
     private FrameItemAdapter itemAdapter;
     MovieFrameIdsStore frameIdsStore;
     private Boolean binded = false;
@@ -31,8 +29,6 @@ public class FramesPage implements SliderPage {
         this.context = context;
         this.app = app;
         this.frameIdsStore = frameIdsStore;
-
-        activitiesState = app.getActivitiesState();
     }
 
     public View getView() {
@@ -59,12 +55,12 @@ public class FramesPage implements SliderPage {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         return false;
     }
 

@@ -24,7 +24,33 @@ import java.util.*;
 public class DataConverter {
     public static String imdbToString(float imdb) {
         if (imdb > 0) {
-            return String.format(Locale.US, " %.1f", imdb); 
+            return String.format(Locale.US, "imdb: %.1f", imdb);
+        }
+        return "";
+    }
+    
+    public static String directorsToString(Collection<String> directors) {
+        if (!directors.isEmpty()) {
+            StringBuilder builder = new StringBuilder();
+            for (String director : directors) {
+                builder.append(director).append(", ");
+            }
+
+            builder.delete(builder.length() - 2, builder.length());
+            return builder.toString();
+        }
+        return "";
+    }
+    
+    public static String countriesToString(Collection<String> countries) {
+        if (!countries.isEmpty()) {
+            StringBuilder builder = new StringBuilder();
+            for (String country : countries) {
+                builder.append(country).append(", ");
+            }
+
+            builder.delete(builder.length() - 2, builder.length());
+            return builder.toString();
         }
         return "";
     }

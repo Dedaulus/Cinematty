@@ -176,7 +176,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             case SEPARATOR_TYPE_ID: {
                 SeparatorViewHolder viewHolder;
                 if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.search_separator, null);
+                    convertView = inflater.inflate(R.layout.data_divider, null);
                     viewHolder = new SeparatorViewHolder();
                     viewHolder.caption = (TextView)convertView.findViewById(R.id.caption);
                     convertView.setTag(viewHolder);

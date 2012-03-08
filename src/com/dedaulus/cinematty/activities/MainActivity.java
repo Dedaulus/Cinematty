@@ -1,16 +1,12 @@
 package com.dedaulus.cinematty.activities;
 
-import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.MenuInflater;
-import android.view.Surface;
-import android.view.WindowManager;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.LocationState;
@@ -32,7 +28,7 @@ import java.util.List;
  * Date: 28.05.11
  * Time: 2:15
  */
-public class MainActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
     private static final String FAKE_STATE_ID = "fake_state";
     private static final int SLIDERS_COUNT = 6;
 
@@ -152,7 +148,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 

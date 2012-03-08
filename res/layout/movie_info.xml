@@ -1,93 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ContentContainer">
+                style="@style/ContentContainer"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp">
 
     <ScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:padding="4dp"
-                android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/movie_icon_loading"
-                    android:layout_height="100dp"
-                    android:layout_width="100dp"
-                    android:paddingRight="6dp">
+                <RelativeLayout android:id="@+id/movie_icon_loading"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:paddingRight="6dp">
 
                     <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        style="@android:style/Widget.ProgressBar.Small.Inverse"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            style="@android:style/Widget.ProgressBar.Small.Inverse"/>
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/movie_icon"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="6dp"
-                    android:adjustViewBounds="true"
-                    android:maxWidth="100dp"
-                    android:onClick="onPictureClick"/>
-
-                <LinearLayout
-                        android:id="@+id/movie_head"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:onClick="onUrlClick">
-
-                    <TextView
-                        android:id="@+id/movie_caption"
+                <ImageView android:id="@+id/movie_icon"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:textSize="20dp"
-                        android:textColor="#FF0000"/>
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="6dp"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="100dp"
+                        android:onClick="onPictureClick"/>
 
-                    <TextView
-                        android:id="@+id/movie_length"
+                <LinearLayout android:id="@+id/movie_head"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:textColor="#404040"
-                        android:textSize="16dp"/>
+                        android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/rating"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:orientation="horizontal">
+                    <TextView android:id="@+id/movie_caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="#ff0000"/>
 
-                        <TextView
-                            style="@style/ListItem.Data.MovieRating"
-                            android:text="@string/imdb"
-                            android:textSize="16dp"/>
+                    <TextView android:id="@+id/movie_year_and_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/secondary_text_light"/>
 
-                        <TextView
-                            android:id="@+id/imdb"
+                    <TextView android:id="@+id/movie_director"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/secondary_text_light"/>
+
+                    <TextView android:id="@+id/movie_length"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/secondary_text_light"/>
+
+                    <TextView android:id="@+id/imdb"
                             style="@style/ListItem.Data.MovieRatingValue"
-                            android:textSize="16dp"/>
-
-                    </LinearLayout>
+                            android:textSize="16sp"
+                            android:paddingTop="2dp"/>
 
                     <TextView
-                        android:id="@+id/movie_trailer_url"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:paddingTop="8dp"
-                        android:textSize="16dp"
-                        android:textColor="#0026FF"/>
+                            android:id="@+id/movie_trailer_url"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="8dp"
+                            android:textSize="16dp"
+                            android:textColor="#0026FF"/>
 
                 </LinearLayout>
 

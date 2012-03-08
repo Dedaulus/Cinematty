@@ -4,14 +4,14 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SearchAdapter;
@@ -30,7 +30,7 @@ import java.util.*;
  * Date: 25.02.12
  * Time: 21:33
  */
-public class SearchableActivity extends FragmentActivity implements LocationClient {
+public class SearchableActivity extends SherlockActivity implements LocationClient {
     CinemattyApplication app;
     ApplicationSettings settings;
     ActivitiesState activitiesState;
@@ -61,7 +61,7 @@ public class SearchableActivity extends FragmentActivity implements LocationClie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.preferences_menu, menu);
         return true;
     }

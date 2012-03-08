@@ -2,15 +2,15 @@ package com.dedaulus.cinematty.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -31,7 +31,7 @@ import java.util.UUID;
  * Date: 14.03.11
  * Time: 23:37
  */
-public class MovieListActivity extends FragmentActivity {
+public class MovieListActivity extends SherlockActivity {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -118,7 +118,7 @@ public class MovieListActivity extends FragmentActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {

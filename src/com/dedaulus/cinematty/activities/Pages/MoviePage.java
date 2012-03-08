@@ -9,11 +9,16 @@ import android.net.Uri;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Pair;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -84,7 +89,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((Activity) context).getMenuInflater();
+        MenuInflater inflater = ((SherlockActivity)context).getSupportMenuInflater();
 
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
             if (state.cinema.getPhone() != null) {
@@ -142,8 +147,10 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
             case ActivityState.MOVIE_INFO:
                 setPicture();
                 setCaption();
-                setImdb();
+                setYearAndDirector();
+                setDirectors();
                 setLength();
+                setImdb();
                 setTrailerLink();
                 setGenre();
                 setActors();
@@ -189,7 +196,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private void setCaption() {
         TextView text = (TextView)pageView.findViewById(R.id.movie_caption);
         text.setText(state.movie.getName());
-        
+
         View headView = pageView.findViewById(R.id.movie_head);
         headView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,26 +222,56 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
             pageView.findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.GONE);
         }
     }
-
-    private void setImdb() {
-        float imdb = state.movie.getImdb();
-        if (imdb > 0) {
-            String imdbString = String.format(" %.1f", imdb);
-            TextView imdbView = (TextView)pageView.findViewById(R.id.imdb);
-            imdbView.setText(imdbString);
-            pageView.findViewById(R.id.rating).setVisibility(View.VISIBLE);
+    
+    private void setYearAndDirector() {
+        TextView textView = (TextView)pageView.findViewById(R.id.movie_year_and_country);
+        StringBuilder builder = new StringBuilder();
+        int year = state.movie.getYear(); 
+        if (year != 0) {
+            builder.append(year).append(context.getString(R.string.year)).append(" ");            
+        }
+        String countries = DataConverter.countriesToString(state.movie.getCountries());
+        if (countries.length() != 0) {
+            builder.append(countries);
+        }
+        
+        if (builder.length() != 0) {
+            textView.setText(builder.toString());
+            textView.setVisibility(View.VISIBLE);
         } else {
-            pageView.findViewById(R.id.rating).setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+        }
+    }
+    
+    private void setDirectors() {
+        TextView textView = (TextView)pageView.findViewById(R.id.movie_director);
+        String directors = DataConverter.directorsToString(state.movie.getDirectors());
+        if (directors.length() != 0) {
+            textView.setText(new StringBuilder(context.getString(R.string.director)).append(" ").append(directors));
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
         }
     }
 
     private void setLength() {
-        TextView text = (TextView)pageView.findViewById(R.id.movie_length);
+        TextView textView = (TextView)pageView.findViewById(R.id.movie_length);
         if (state.movie.getLength() != 0) {
-            text.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(context, state.movie.getLength()));
-            text.setVisibility(View.VISIBLE);
+            textView.setText(DataConverter.timeInMinutesToTimeHoursAndMinutes(context, state.movie.getLength()));
+            textView.setVisibility(View.VISIBLE);
         } else {
-            text.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+        }
+    }
+
+    private void setImdb() {
+        TextView textView = (TextView)pageView.findViewById(R.id.imdb);
+        float imdb = state.movie.getImdb();
+        if (imdb > 0) {
+            textView.setText(DataConverter.imdbToString(imdb));
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
         }
     }
 

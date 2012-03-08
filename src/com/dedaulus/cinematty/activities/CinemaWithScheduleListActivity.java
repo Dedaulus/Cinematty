@@ -3,16 +3,14 @@ package com.dedaulus.cinematty.activities;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
@@ -28,7 +26,7 @@ import java.util.*;
  * Date: 14.03.11
  * Time: 21:27
  */
-public class CinemaWithScheduleListActivity extends FragmentActivity implements LocationClient {
+public class CinemaWithScheduleListActivity extends SherlockActivity implements LocationClient {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -114,7 +112,7 @@ public class CinemaWithScheduleListActivity extends FragmentActivity implements 
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         inflater.inflate(R.menu.select_day_menu, menu);
         if (currentDay == Constants.TODAY_SCHEDULE) {

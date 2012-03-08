@@ -32,9 +32,9 @@
     <string name="wait_dialog_caption">Синхронизация</string>
     <string name="wait_dialog_text">Загрузка кинотеатров, фильмов и прочего...</string>
 
-    <string name="cinemas_separator">Кинотеатры</string>
-    <string name="movies_separator">Фильмы</string>
-    <string name="actors_separator">Актёры</string>
+    <string name="cinemas_separator">КИНОТЕАТРЫ</string>
+    <string name="movies_separator">ФИЛЬМЫ</string>
+    <string name="actors_separator">АКТЁРЫ</string>
 
     <string name="movie_trailer_link">"Трейлеры на YouTube</string>
     <string name="movie_length">Продолжительность</string>
@@ -46,6 +46,8 @@
     <string name="unknown">неизвестно</string>
     <string name="look_for_schedule">Все сеансы</string>
 
+    <string name="year">г.</string>
+    <string name="director">Реж.</string>
     <string name="imdb">imdb:</string>
 
     <string name="schedule_enum">Сеансы в кин.</string>

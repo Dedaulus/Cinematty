@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
@@ -66,7 +71,7 @@ public class CinemasPage implements SliderPage, LocationClient {
     public void onStop() {}
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((Activity) context).getMenuInflater();
+        MenuInflater inflater = ((SherlockActivity) context).getSupportMenuInflater();
         inflater.inflate(R.menu.cinema_sort_menu, menu);
 
         switch (settings.getCinemaSortOrder()) {

@@ -1,25 +1,13 @@
 package com.dedaulus.cinematty.activities;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.util.Pair;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.*;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.Pages.CinemasWithSchedulePage;
@@ -28,24 +16,20 @@ import com.dedaulus.cinematty.activities.Pages.MoviePage;
 import com.dedaulus.cinematty.activities.Pages.SliderPage;
 import com.dedaulus.cinematty.activities.adapters.PageChangeListenerProxy;
 import com.dedaulus.cinematty.activities.adapters.SliderAdapter;
-import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
-import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * User: Dedaulus
  * Date: 16.03.11
  * Time: 22:28
  */
-public class MovieActivity extends FragmentActivity implements ViewPager.OnPageChangeListener {
+public class MovieActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
     private static int FRAMES_PAGE_ID      = 0;
     private static int DESCRIPTION_PAGE_ID = 1;
     private static int SHOWTIME_PAGE_ID    = 2;
@@ -151,7 +135,7 @@ public class MovieActivity extends FragmentActivity implements ViewPager.OnPageC
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 

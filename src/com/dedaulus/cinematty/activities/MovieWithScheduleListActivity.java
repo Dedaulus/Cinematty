@@ -3,17 +3,16 @@ package com.dedaulus.cinematty.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.*;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -32,7 +31,7 @@ import java.util.*;
  * Date: 12.10.11
  * Time: 10:05
  */
-public class MovieWithScheduleListActivity extends FragmentActivity {
+public class MovieWithScheduleListActivity extends SherlockActivity {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
@@ -119,7 +118,7 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
 
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         if (state.cinema.getAddress() != null) {
             inflater.inflate(R.menu.show_map_menu, menu);
@@ -210,33 +209,6 @@ public class MovieWithScheduleListActivity extends FragmentActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.select_day_submenu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.submenu_select_day_today:
-                if (currentDay != Constants.TODAY_SCHEDULE) {
-                    setCurrentDay(Constants.TODAY_SCHEDULE);
-                    movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
-                }
-                return true;
-            case R.id.submenu_select_day_tomorrow:
-                if (currentDay != Constants.TOMORROW_SCHEDULE) {
-                    setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                    movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
-                }
-                return true;
-            default:
-                return super.onContextItemSelected(item);
         }
     }
 

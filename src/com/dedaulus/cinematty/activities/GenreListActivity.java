@@ -2,15 +2,15 @@ package com.dedaulus.cinematty.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
@@ -28,7 +28,7 @@ import java.util.UUID;
  * Date: 02.04.11
  * Time: 5:12
  */
-public class GenreListActivity extends FragmentActivity {
+public class GenreListActivity extends SherlockActivity {
     private CinemattyApplication app;
     private ActivitiesState activitiesState;
     private ActivityState state;
@@ -89,7 +89,7 @@ public class GenreListActivity extends FragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getSupportMenuInflater();
 
         inflater.inflate(R.menu.search_menu, menu);
 

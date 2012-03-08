@@ -3,9 +3,14 @@ package com.dedaulus.cinematty.activities.Pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -69,7 +74,7 @@ public class MoviesPage implements SliderPage {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((Activity) context).getMenuInflater();
+        MenuInflater inflater = ((SherlockActivity)context).getSupportMenuInflater();
         inflater.inflate(R.menu.movie_sort_menu, menu);
 
         switch (settings.getMovieSortOrder()) {
