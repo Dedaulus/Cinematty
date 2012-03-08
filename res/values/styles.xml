@@ -154,7 +154,7 @@
     </style>
 
     <style name="ListItem.Caption">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">#000000</item>
     </style>
 
@@ -162,7 +162,7 @@
     <style name="ListItem.Caption.Movie"/>
     <style name="ListItem.Caption.Actor"/>
     <style name="ListItem.Caption.Genre">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
     <style name="ListItem.Caption.City">
         <item name="android:textSize">20dp</item>

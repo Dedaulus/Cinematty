@@ -456,6 +456,10 @@ public class CinemattyApplication extends Application {
         connectStrings = new HashMap<String, String>();
         locationState = new LocationStateImpl();
     }
+
+    public void resetSyncStatus() {
+        syncStatus = null;
+    }
     
     public SyncStatus syncSchedule(Activity activity) {
         if (syncStatus != null) return syncStatus;
