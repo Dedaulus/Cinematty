@@ -18,14 +18,18 @@ import java.util.*;
  * Time: 4:34
  */
 public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<MovieActor> {
-    private Context context;
-    private Map<String, MovieActor> actorEntries;
+    private static class ViewHolder {
+        View favIconRegion;
+        ImageView favIcon;
+        TextView caption;
+    }
+    
     private ArrayList<MovieActor> actors;
+    LayoutInflater inflater;
 
-    public ActorItemAdapter(Context context, Map<String, MovieActor> actorEntries) {
-        this.context = context;
-        this.actorEntries = actorEntries;
-        actors = new ArrayList<MovieActor>(actorEntries.values());
+    public ActorItemAdapter(Context context, ArrayList<MovieActor> actors) {
+        inflater = LayoutInflater.from(context);
+        this.actors = actors;
     }
 
     public int getCount() {
@@ -40,59 +44,49 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         return i;
     }
 
-    private View newView(Context context, ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return layoutInflater.inflate(R.layout.actor_item, parent, false);
-    }
+    private void bindView(int position, ViewHolder viewHolder) {
+        final MovieActor actor = actors.get(position);
+        viewHolder.caption.setText(actor.getName());
 
-    private void bindView(int position, View view) {
-        MovieActor actor = actors.get(position);
-
-        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_actor_list);
         if (actor.getFavourite() > 0) {
-            image.setImageResource(R.drawable.ic_list_fav_on);
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_on);
         } else {
-            image.setImageResource(R.drawable.ic_list_fav_off);
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_off);
         }
-        image.setOnClickListener(new View.OnClickListener() {
+        viewHolder.favIconRegion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onActorFavIconClick(view);
+                ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
+                if (actor.getFavourite() > 0) {
+                    actor.setFavourite(false);
+                    imageView.setImageResource(R.drawable.ic_list_fav_off);
+                } else {
+                    actor.setFavourite(true);
+                    imageView.setImageResource(R.drawable.ic_list_fav_on);
+                }
             }
         });
-
-        TextView text = (TextView)view.findViewById(R.id.actor_caption_in_actor_list);
-        text.setText(actor.getName());
     }
 
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView;
-
-        if (view != null) {
-            myView = view;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.actor_item, null);
+            viewHolder = new ViewHolder();
+            viewHolder.caption = (TextView)convertView.findViewById(R.id.actor_caption);
+            viewHolder.favIconRegion = convertView.findViewById(R.id.fav_icon_region);
+            viewHolder.favIcon = (ImageView)viewHolder.favIconRegion.findViewById(R.id.fav_icon);
+            convertView.setTag(viewHolder);
         } else {
-            myView = newView(context, viewGroup);
+            viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        bindView(i, myView);
+        bindView(position, viewHolder);
 
-        return myView;
+        return convertView;
     }
 
     public void sortBy(Comparator<MovieActor> actorComparator) {
         Collections.sort(actors, actorComparator);
         notifyDataSetChanged();
-    }
-
-    private void onActorFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption = (TextView)parent.findViewById(R.id.actor_caption_in_actor_list);
-        MovieActor actor = actorEntries.get(caption.getText().toString());
-        if (actor.getFavourite() > 0) {
-            actor.setFavourite(false);
-            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
-        } else {
-            actor.setFavourite(true);
-            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
-        }
     }
 }

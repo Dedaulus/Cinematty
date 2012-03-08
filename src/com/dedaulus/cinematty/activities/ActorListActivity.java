@@ -19,6 +19,7 @@ import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.UUID;
 
@@ -63,13 +64,13 @@ public class ActorListActivity extends SherlockActivity {
         switch (state.activityType) {
         case ActivityState.ACTOR_LIST:
             movieLabel.setVisibility(View.GONE);
-            actorListAdapter = new ActorItemAdapter(this, settings.getActors());
+            actorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(settings.getActors().values()));
             break;
 
         case ActivityState.ACTOR_LIST_W_MOVIE:
             movieLabel.setText(state.movie.getName());
             movieLabel.setVisibility(View.VISIBLE);
-            actorListAdapter = new ActorItemAdapter(this, state.movie.getActors());
+            actorListAdapter = new ActorItemAdapter(this, new ArrayList<MovieActor>(state.movie.getActors().values()));
             break;
 
         default:

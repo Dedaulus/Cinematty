@@ -19,6 +19,7 @@ import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.UUID;
 
@@ -82,7 +83,7 @@ public class ActorsPage implements SliderPage {
 
     private View bindView(View view) {
         ListView list = (ListView)view.findViewById(R.id.actor_list);
-        actorListAdapter = new ActorItemAdapter(context, settings.getActors());
+        actorListAdapter = new ActorItemAdapter(context, new ArrayList<MovieActor>(settings.getActors().values()));
         list.setAdapter(actorListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

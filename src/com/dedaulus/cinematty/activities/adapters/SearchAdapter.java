@@ -45,6 +45,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     }
 
     private static class ActorViewHolder {
+        View favIconRegion;
         ImageView favIcon;
         TextView caption;
     }
@@ -163,8 +164,9 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.actor_item, null);
                     viewHolder = new ActorViewHolder();
-                    viewHolder.favIcon = (ImageView)convertView.findViewById(R.id.fav_icon_in_actor_list);
-                    viewHolder.caption = (TextView)convertView.findViewById(R.id.actor_caption_in_actor_list);
+                    viewHolder.favIconRegion = convertView.findViewById(R.id.fav_icon_region);
+                    viewHolder.favIcon = (ImageView)viewHolder.favIconRegion.findViewById(R.id.fav_icon);
+                    viewHolder.caption = (TextView)convertView.findViewById(R.id.actor_caption);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (ActorViewHolder)convertView.getTag();
@@ -311,14 +313,15 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         } else {
             viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_off);
         }
-        viewHolder.favIcon.setOnClickListener(new View.OnClickListener() {
+        viewHolder.favIconRegion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
                 if (actor.getFavourite() > 0) {
                     actor.setFavourite(false);
-                    ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
+                    imageView.setImageResource(R.drawable.ic_list_fav_off);
                 } else {
                     actor.setFavourite(true);
-                    ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
+                    imageView.setImageResource(R.drawable.ic_list_fav_on);
                 }
             }
         });
