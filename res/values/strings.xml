@@ -35,6 +35,9 @@
     <string name="cinemas_separator">КИНОТЕАТРЫ</string>
     <string name="movies_separator">ФИЛЬМЫ</string>
     <string name="actors_separator">АКТЁРЫ</string>
+    <string name="genres_separator">ЖАНР</string>
+    <string name="director_separator">РЕЖИССЁРЫ</string>
+    <string name="description_separator">ОПИСАНИЕ</string>
 
     <string name="movie_trailer_link">"Трейлеры на YouTube</string>
     <string name="movie_length">Продолжительность</string>

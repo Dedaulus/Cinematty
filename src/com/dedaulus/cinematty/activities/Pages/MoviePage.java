@@ -142,8 +142,8 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
             case ActivityState.MOVIE_INFO:
                 setPicture();
                 setCaption();
-                setYearAndDirector();
-                setDirectors();
+                setYearAndCountry();
+                setDirector();
                 setLength();
                 setImdb();
                 setTrailerLink();
@@ -218,7 +218,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         }
     }
     
-    private void setYearAndDirector() {
+    private void setYearAndCountry() {
         TextView textView = (TextView)pageView.findViewById(R.id.movie_year_and_country);
         StringBuilder builder = new StringBuilder();
         int year = state.movie.getYear(); 
@@ -238,17 +238,6 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         }
     }
     
-    private void setDirectors() {
-        TextView textView = (TextView)pageView.findViewById(R.id.movie_director);
-        String directors = DataConverter.directorsToString(state.movie.getDirectors());
-        if (directors.length() != 0) {
-            textView.setText(new StringBuilder(context.getString(R.string.director)).append(" ").append(directors));
-            textView.setVisibility(View.VISIBLE);
-        } else {
-            textView.setVisibility(View.GONE);
-        }
-    }
-
     private void setLength() {
         TextView textView = (TextView)pageView.findViewById(R.id.movie_length);
         if (state.movie.getLength() != 0) {
@@ -280,12 +269,30 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     private void setGenre() {
-        TextView text = (TextView)pageView.findViewById(R.id.movie_genre);
-        if (state.movie.getGenres().size() != 0) {
-            text.setText(DataConverter.genresToString(state.movie.getGenres().values()));
-            pageView.findViewById(R.id.movie_genre_panel).setVisibility(View.VISIBLE);
+        View region = pageView.findViewById(R.id.genre_region);
+        String genres = DataConverter.genresToString(state.movie.getGenres().values());
+        if (genres.length() != 0) {
+            TextView divider = (TextView)region.findViewById(R.id.genre_divider).findViewById(R.id.caption);
+            divider.setText(context.getString(R.string.genres_separator));
+            TextView genreTextView = (TextView)region.findViewById(R.id.genre);
+            genreTextView.setText(genres);
+            region.setVisibility(View.VISIBLE);
         } else {
-            pageView.findViewById(R.id.movie_genre_panel).setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
+        }
+    }
+
+    private void setDirector() {
+        View region = pageView.findViewById(R.id.director_region);
+        String directors = DataConverter.directorsToString(state.movie.getDirectors());
+        if (directors.length() != 0) {
+            TextView divider = (TextView)region.findViewById(R.id.director_divider).findViewById(R.id.caption);
+            divider.setText(context.getString(R.string.director_separator));
+            TextView directorTextView = (TextView)region.findViewById(R.id.director);
+            directorTextView.setText(directors);
+            region.setVisibility(View.VISIBLE);
+        } else {
+            region.setVisibility(View.GONE);
         }
     }
 
@@ -293,15 +300,14 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         ViewGroup region = (ViewGroup)pageView.findViewById(R.id.actors_region);
         Collection<MovieActor> actors = state.movie.getActors().values();
         if (!actors.isEmpty()) {
-            TextView textView = (TextView)region.findViewById(R.id.actors_divider).findViewById(R.id.caption);
-            textView.setText(context.getString(R.string.actors_separator));
+            TextView divider = (TextView)region.findViewById(R.id.actors_divider).findViewById(R.id.caption);
+            divider.setText(context.getString(R.string.actors_separator));
             
             if (favIconHolders == null) {
                 favIconHolders = new ArrayList<Pair<MovieActor, ImageView>>(actors.size());
                 LayoutInflater inflater = LayoutInflater.from(context);
                 for (MovieActor actor : actors) {                                        
                     View actorView = inflater.inflate(R.layout.actor_item, null);
-                    actorView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.abs__list_selector_holo_light));
                     TextView caption = (TextView)actorView.findViewById(R.id.actor_caption);
                     ImageView icon = (ImageView)actorView.findViewById(R.id.fav_icon);
                     Pair<MovieActor, ImageView> iconHolder = Pair.create(actor, icon);
@@ -352,13 +358,16 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     private void setDescription() {
-        TextView text = (TextView)pageView.findViewById(R.id.movie_description);
+        View region = pageView.findViewById(R.id.description_region);
         String description = state.movie.getDescription();
         if (description != null) {
-            text.setText(state.movie.getDescription());
-            pageView.findViewById(R.id.movie_description_panel).setVisibility(View.VISIBLE);
+            TextView divider = (TextView)region.findViewById(R.id.description_divider).findViewById(R.id.caption);
+            divider.setText(context.getString(R.string.description_separator));
+            TextView descriptionTextView = (TextView)region.findViewById(R.id.description);
+            descriptionTextView.setText(description);
+            region.setVisibility(View.VISIBLE);
         } else {
-            pageView.findViewById(R.id.movie_description_panel).setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
 

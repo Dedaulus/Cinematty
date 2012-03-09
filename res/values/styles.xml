@@ -200,4 +200,20 @@
     </style>
     <style name="ListItem.Data.MovieOnlyTomorrow"/>
 
+    <style name="MovieInfoRegion">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="MovieInfoContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

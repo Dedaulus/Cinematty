@@ -61,14 +61,6 @@
                             android:textSize="14sp"
                             android:textColor="@android:color/secondary_text_light"/>
 
-                    <TextView android:id="@+id/movie_director"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:textSize="14sp"
-                            android:textColor="@android:color/secondary_text_light"/>
-
                     <TextView android:id="@+id/movie_length"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -125,97 +117,44 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/movie_genre_panel"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp">
+            <LinearLayout android:id="@+id/genre_region"
+                    style="@style/MovieInfoRegion">
 
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/movie_data_divider"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/genre"
-                    android:paddingLeft="6dp"
-                    android:paddingBottom="2dp"/>
+                <include android:id="@+id/genre_divider"
+                        layout="@layout/data_divider"/>
 
-                <TextView
-                    android:id="@+id/movie_genre"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:paddingTop="2dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:textSize="16dp"
-                    android:textColor="#404040"/>
+                <TextView android:id="@+id/genre"
+                        style="@style/MovieInfoContent"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/director_region"
+                    style="@style/MovieInfoRegion">
+
+                <include android:id="@+id/director_divider"
+                    layout="@layout/data_divider"/>
+
+                <TextView android:id="@+id/director"
+                        style="@style/MovieInfoContent"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/description_region"
+                    style="@style/MovieInfoRegion">
+
+                <include android:id="@+id/description_divider"
+                        layout="@layout/data_divider"/>
+
+                <TextView android:id="@+id/description"
+                        style="@style/MovieInfoContent"/>
 
             </LinearLayout>
 
             <LinearLayout android:id="@+id/actors_region"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingBottom="4dp">
-                <!--
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/movie_data_divider"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/actors"
-                    android:paddingLeft="6dp"
-                    android:paddingBottom="2dp"/>
-                    -->
+                    style="@style/MovieInfoRegion">
+
                 <include android:id="@+id/actors_divider"
                         layout="@layout/data_divider"/>
-
-                <!--
-                <TextView
-                    android:id="@+id/movie_actors"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:paddingTop="2dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:textSize="16dp"
-                    android:textColor="#404040"/>
-                    -->
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/movie_description_panel"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/movie_data_divider"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/movie_description"
-                    android:paddingLeft="6dp"
-                    android:paddingBottom="2dp"/>
-
-                <TextView
-                    android:id="@+id/movie_description"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:paddingTop="2dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:textSize="16dp"
-                    android:textColor="#404040"/>
 
             </LinearLayout>
 
