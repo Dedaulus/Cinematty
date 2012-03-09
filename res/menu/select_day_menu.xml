@@ -2,10 +2,25 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_day"
-        android:title="@string/today"
-        android:icon="@drawable/ic_menu_today"
-        android:showAsAction="ifRoom"/>
+    <item android:id="@+id/menu_select_day"
+          android:title="@string/today"
+          android:icon="@drawable/ic_menu_today"
+          android:showAsAction="ifRoom">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item android:id="@+id/submenu_select_day_today"
+                      android:title="@string/today"/>
+
+                <item android:id="@+id/submenu_select_day_tomorrow"
+                      android:title="@string/tomorrow"/>
+
+            </group>
+
+        </menu>
+
+    </item>
 
 </menu>

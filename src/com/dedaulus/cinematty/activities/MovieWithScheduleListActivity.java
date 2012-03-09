@@ -129,25 +129,29 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
         }
 
         inflater.inflate(R.menu.select_day_menu, menu);
-        if (currentDay == Constants.TODAY_SCHEDULE) {
-            menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
-        } else {
-            menu.findItem(R.id.menu_day).setTitle(R.string.today);
+        switch (currentDay) {
+            case Constants.TODAY_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_today).setChecked(true);
+                break;
+
+            case Constants.TOMORROW_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
+                break;
         }
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {
-        case BY_CAPTION:
-            menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
-            break;
-        case BY_POPULAR:
-            menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
-            break;
-        case BY_RATING:
-            menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
-            break;
-        default:
-            break;
+            case BY_CAPTION:
+                menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
+                break;
+            case BY_POPULAR:
+                menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
+                break;
+            case BY_RATING:
+                menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+                break;
+            default:
+                break;
         }
 
         inflater.inflate(R.menu.search_menu, menu);
@@ -172,10 +176,19 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
                 showCinemaOnMap();
                 return true;
 
-            case R.id.menu_day:
-                int day = currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE;
-                setCurrentDay(day);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), day));
+            case R.id.menu_select_day:
+                return true;
+
+            case R.id.submenu_select_day_today:
+                setCurrentDay(Constants.TODAY_SCHEDULE);
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_tomorrow:
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+                item.setChecked(true);
                 return true;
 
             case R.id.menu_movie_sort:

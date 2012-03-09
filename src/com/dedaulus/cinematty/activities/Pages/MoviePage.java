@@ -100,10 +100,14 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
             }
 
             inflater.inflate(R.menu.select_day_menu, menu);
-            if (currentDay == Constants.TODAY_SCHEDULE) {
-                menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
-            } else {
-                menu.findItem(R.id.menu_day).setTitle(R.string.today);
+            switch (currentDay) {
+                case Constants.TODAY_SCHEDULE:
+                    menu.findItem(R.id.submenu_select_day_today).setChecked(true);
+                    break;
+
+                case Constants.TOMORROW_SCHEDULE:
+                    menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
+                    break;
             }
         }
 
@@ -121,8 +125,17 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 context.startActivity(intent);
                 return true;
 
-            case R.id.menu_day:
-                setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            case R.id.menu_select_day:
+                return true;
+
+            case R.id.submenu_select_day_today:
+                setCurrentDay(Constants.TODAY_SCHEDULE);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_tomorrow:
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                item.setChecked(true);
                 return true;
 
             case R.id.menu_share:

@@ -111,30 +111,30 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-
         MenuInflater inflater = getSupportMenuInflater();
 
         inflater.inflate(R.menu.select_day_menu, menu);
-        if (currentDay == Constants.TODAY_SCHEDULE) {
-            menu.findItem(R.id.menu_day).setTitle(R.string.tomorrow);
-        } else {
-            menu.findItem(R.id.menu_day).setTitle(R.string.today);
+        switch (currentDay) {
+            case Constants.TODAY_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_today).setChecked(true);
+                break;
+            
+            case Constants.TOMORROW_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
+                break;
         }
-
+        
         inflater.inflate(R.menu.cinema_sort_menu, menu);
-
         switch (settings.getCinemaSortOrder()) {
-        case BY_CAPTION:
-            menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
-            break;
-        case BY_FAVOURITE:
-            menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
-            break;
-        case BY_DISTANCE:
-            menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
-            break;
-        default:
-            break;
+            case BY_CAPTION:
+                menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
+                break;
+            case BY_FAVOURITE:
+                menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
+                break;
+            case BY_DISTANCE:
+                menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
+                break;
         }
 
         inflater.inflate(R.menu.search_menu, menu);
@@ -150,10 +150,20 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
             case android.R.id.home:
                 app.goHome(this);
                 return true;
+            
+            case R.id.menu_select_day:
+                return true;
 
-            case R.id.menu_day:
-                setCurrentDay(currentDay == Constants.TODAY_SCHEDULE ? Constants.TOMORROW_SCHEDULE : Constants.TODAY_SCHEDULE);
+            case R.id.submenu_select_day_today:
+                setCurrentDay(Constants.TODAY_SCHEDULE);
                 cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_tomorrow:
+                setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
                 return true;
 
             case R.id.menu_cinema_sort:
