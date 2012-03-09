@@ -123,6 +123,7 @@ public class CinemasPage implements SliderPage, LocationClient {
     }
 
     private View bindView(View view) {
+        view.findViewById(R.id.day_indicator).findViewById(R.id.caption).setVisibility(View.GONE);
         ListView list = (ListView)view.findViewById(R.id.cinema_list);
         cinemaListAdapter = new CinemaItemAdapter(context, settings.getCinemas(), locationState.getCurrentLocation());
         list.setAdapter(cinemaListAdapter);

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -190,14 +191,25 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         settings.setCurrentDay(day);
         currentDay = day;
 
-        Map<String, Cinema> cinemas = state.movie.getCinemas(settings.getCurrentDay());
+        TextView dayIndicator = (TextView)pageView.findViewById(R.id.day_indicator).findViewById(R.id.caption);
+        switch (currentDay) {
+            case Constants.TODAY_SCHEDULE:
+                dayIndicator.setText(context.getString(R.string.today));
+                break;
+
+            case Constants.TOMORROW_SCHEDULE:
+                dayIndicator.setText(context.getString(R.string.tomorrow));
+                break;
+        }
+
+        Map<String, Cinema> cinemas = state.movie.getCinemas(currentDay);
         if (cinemas.isEmpty()) {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, cinemas, state.movie, settings.getCurrentDay(), locationState.getCurrentLocation());
+        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, cinemas, state.movie, currentDay, locationState.getCurrentLocation());
         ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
     }

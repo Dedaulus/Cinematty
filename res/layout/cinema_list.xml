@@ -3,18 +3,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
-    <ListView
-        android:id="@+id/cinema_list"
-        style="@style/List.Cinemas"/>
+    <include android:id="@+id/day_indicator"
+            layout="@layout/schedule_day_indicator"/>
 
-    <TextView
-        android:id="@+id/no_schedule"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/unknown_schedule"
-        android:textColor="#404040"
-        android:textSize="20dp"
-        android:visibility="gone"/>
+    <ListView android:id="@+id/cinema_list"
+            style="@style/List.Cinemas"
+            android:layout_below="@id/day_indicator"/>
+
+    <TextView android:id="@+id/no_schedule"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/unknown_schedule"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="20dp"
+            android:visibility="gone"/>
 
 </RelativeLayout>
