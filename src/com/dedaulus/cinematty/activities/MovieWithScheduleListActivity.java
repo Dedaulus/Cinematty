@@ -364,9 +364,13 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
     }
 
     public void onCinemaUrlClick(View view) {
-        if (state.cinema.getUrl() != null) {
+        String url = state.cinema.getUrl(); 
+        if (url != null) {
+            if (!url.startsWith("http://")) {
+                url = "http://" + url;
+            }
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(state.cinema.getUrl()));
+            intent.setData(Uri.parse(url));
             startActivity(intent);
         }
     }
