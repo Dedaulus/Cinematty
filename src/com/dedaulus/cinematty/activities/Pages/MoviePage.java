@@ -321,7 +321,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
 
     private void setActors() {
         ViewGroup region = (ViewGroup)pageView.findViewById(R.id.actors_region);
-        Collection<MovieActor> actors = state.movie.getActors().values();
+        TreeSet<MovieActor> actors = new TreeSet<MovieActor>(state.movie.getActors().values());
         if (!actors.isEmpty()) {
             TextView divider = (TextView)region.findViewById(R.id.actors_divider).findViewById(R.id.caption);
             divider.setText(context.getString(R.string.actors_separator));

@@ -1,8 +1,5 @@
 package com.dedaulus.cinematty.framework;
 
-import com.dedaulus.cinematty.framework.tools.DefaultComparator;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +11,7 @@ import java.util.Map;
 public class MovieActor implements Comparable<MovieActor> {
     private String name;
     private Map<String, Movie> movies;
-    private long mFavValue = 0;
+    private long favValue = 0;
     
     {
         movies = new HashMap<String, Movie>();
@@ -38,18 +35,18 @@ public class MovieActor implements Comparable<MovieActor> {
 
     public void setFavourite(boolean isFavourite) {
         if (isFavourite) {
-            mFavValue = System.currentTimeMillis();
+            favValue = System.currentTimeMillis();
         } else {
-            mFavValue = 0;
+            favValue = 0;
         }
     }
 
     public void setFavourite(long favValue) {
-        mFavValue = favValue;
+        this.favValue = favValue;
     }
 
     public long getFavourite() {
-        return mFavValue;
+        return favValue;
     }
 
     @Override
@@ -66,6 +63,9 @@ public class MovieActor implements Comparable<MovieActor> {
     }
 
     public int compareTo(MovieActor o) {
-        return name.compareTo(o.name);
+        if (favValue == o.favValue) {
+            return name.compareTo(o.name);
+        }
+        return (favValue < o.favValue) ? 1 : -1;
     }
 }
