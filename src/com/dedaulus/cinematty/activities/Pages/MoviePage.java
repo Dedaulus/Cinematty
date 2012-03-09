@@ -215,19 +215,29 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     private void setSchedule() {
+        View region = pageView.findViewById(R.id.schedule_region);
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            TextView text = (TextView)pageView.findViewById(R.id.schedule_title);
-            text.setText(context.getString(R.string.schedule_enum) + " " + state.cinema.getName());
+            StringBuilder builder = new StringBuilder();
+            switch (currentDay) {
+                case Constants.TODAY_SCHEDULE:
+                    builder.append(context.getString(R.string.today));
+                    break;
 
-            text = (TextView)pageView.findViewById(R.id.schedule_enum_for_one_cinema);
-            Pair<Movie, List<Calendar>> showTimes = state.cinema.getShowTimes(settings.getCurrentDay()).get(state.movie.getName());
-            if (showTimes != null) {
-                text.setText(DataConverter.showTimesToSpannableString(context, showTimes.second));
+                case Constants.TOMORROW_SCHEDULE:
+                    builder.append(context.getString(R.string.tomorrow));
+                    break;
             }
+            builder.append(" в ").append(state.cinema.getName());            
+            TextView divider = (TextView)region.findViewById(R.id.schedule_divider).findViewById(R.id.caption);            
+            divider.setText(builder.toString().toUpperCase());
 
-            pageView.findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.VISIBLE);
+            List<Calendar> showTimes = state.cinema.getShowTimes(currentDay).get(state.movie.getName()).second;
+            SpannableString schedule = DataConverter.showTimesToSpannableString(context, showTimes);
+            TextView scheduleTextView = (TextView)region.findViewById(R.id.schedule);
+            scheduleTextView.setText(schedule);
+            region.setVisibility(View.VISIBLE);
         } else {
-            pageView.findViewById(R.id.movie_schedule_enum_panel).setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
     

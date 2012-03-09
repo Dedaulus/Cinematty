@@ -84,36 +84,15 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/movie_schedule_enum_panel"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:paddingBottom="4dp">
+            <LinearLayout android:id="@+id/schedule_region"
+                    style="@style/MovieInfoRegion">
 
-                <TextView
-                    android:id="@+id/schedule_title"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:background="@drawable/movie_data_divider"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:textColor="#ffffff"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/schedule_enum"
-                    android:paddingLeft="6dp"
-                    android:paddingBottom="2dp"/>
+                <include android:id="@+id/schedule_divider"
+                        layout="@layout/data_divider"/>
 
-                <TextView
-                    android:id="@+id/schedule_enum_for_one_cinema"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
-                    android:paddingTop="2dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:textSize="16dp"
-                    android:textColor="#FF4E00"/>
+                <TextView android:id="@+id/schedule"
+                        style="@style/MovieInfoContent"
+                        android:textColor="#FF4E00"/>
 
             </LinearLayout>
 

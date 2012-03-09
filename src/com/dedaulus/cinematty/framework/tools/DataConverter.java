@@ -170,8 +170,8 @@ public class DataConverter {
 
                 if (outdateEndIndex != 0) {
                     int endPosition = outdateEndIndex >= str.length() ? str.length() : outdateEndIndex + 1;
+                    str.setSpan(new ForegroundColorSpan(Color.GRAY), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     str.setSpan(new StrikethroughSpan(), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    str.setSpan(new ForegroundColorSpan(Color.rgb(28, 28, 28)), 0, endPosition, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 return str;
@@ -179,7 +179,7 @@ public class DataConverter {
         }
 
         SpannableString str = new SpannableString(context.getString(R.string.unknown_schedule));
-        str.setSpan(new ForegroundColorSpan(Color.rgb(28, 28, 28)), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str.setSpan(new ForegroundColorSpan(Color.rgb(40, 40, 40)), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return str;
     }
