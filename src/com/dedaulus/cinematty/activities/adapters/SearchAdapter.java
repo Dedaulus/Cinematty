@@ -38,10 +38,8 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         RelativeLayout imageLoadingPanel;
         TextView caption;
         TextView genres;
-        LinearLayout rating;
         TextView imdb;
         TextView favActors;
-        TextView onlyTomorrow;
     }
 
     private static class ActorViewHolder {
@@ -147,10 +145,8 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                     viewHolder.imageLoadingPanel = (RelativeLayout)convertView.findViewById(R.id.movie_list_icon_loading);
                     viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption_in_movie_list);
                     viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre_in_movie_list);
-                    viewHolder.rating = (LinearLayout)convertView.findViewById(R.id.rating);
                     viewHolder.imdb = (TextView)convertView.findViewById(R.id.imdb);
                     viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor_in_movie_list);
-                    viewHolder.onlyTomorrow = (TextView)convertView.findViewById(R.id.movie_only_tomorrow_in_movie_list);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (MovieViewHolder)convertView.getTag();
@@ -288,9 +284,9 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         String imdb = DataConverter.imdbToString(movie.getImdb());
         if (imdb.length() != 0) {
             viewHolder.imdb.setText(imdb);
-            viewHolder.rating.setVisibility(View.VISIBLE);
+            viewHolder.imdb.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.rating.setVisibility(View.GONE);
+            viewHolder.imdb.setVisibility(View.GONE);
         }
         
         String actors = DataConverter.favActorsToString(movie.getActors().values());
@@ -300,8 +296,6 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         } else {
             viewHolder.favActors.setVisibility(View.GONE);
         }
-
-        viewHolder.onlyTomorrow.setVisibility(View.GONE);
     }
 
     private void setActorView(int position, ActorViewHolder viewHolder) {

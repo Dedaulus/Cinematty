@@ -56,27 +56,15 @@
             android:layout_below="@id/movie_caption_in_movie_list"
             style="@style/ListItem.Data.MovieGenre"/>
 
-        <LinearLayout
-            android:id="@+id/rating"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/movie_genre_in_movie_list">
-
-            <TextView
-                style="@style/ListItem.Data.MovieRating"
-                android:text="@string/imdb"/>
-
-            <TextView
+        <TextView
                 android:id="@+id/imdb"
-                style="@style/ListItem.Data.MovieRatingValue"/>
-
-        </LinearLayout>
+                style="@style/ListItem.Data.MovieRatingValue"
+                android:layout_below="@id/movie_genre_in_movie_list"/>
 
         <TextView
             android:id="@+id/movie_actor_in_movie_list"
             style="@style/ListItem.Data.MovieActor"
-            android:layout_below="@id/rating"/>
+            android:layout_below="@id/imdb"/>
 
         <TextView
             android:id="@+id/movie_schedule_in_movie_list"

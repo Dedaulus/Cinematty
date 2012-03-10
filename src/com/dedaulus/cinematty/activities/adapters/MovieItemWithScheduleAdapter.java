@@ -99,14 +99,13 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             genreView.setVisibility(View.GONE);
         }
 
-        float imdb = movie.getImdb();
-        if (imdb > 0) {
-            String imdbString = String.format(" %.1f", imdb);
-            TextView imdbView = (TextView)view.findViewById(R.id.imdb);
-            imdbView.setText(imdbString);
-            view.findViewById(R.id.rating).setVisibility(View.VISIBLE);
+        TextView imdbView = (TextView)view.findViewById(R.id.imdb);
+        String imdb = DataConverter.imdbToString(movie.getImdb());
+        if (imdb.length() != 0) {
+            imdbView.setText(imdb);
+            imdbView.setVisibility(View.VISIBLE);
         } else {
-            view.findViewById(R.id.rating).setVisibility(View.GONE);
+            imdbView.setVisibility(View.GONE);
         }
 
         TextView actorView = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);

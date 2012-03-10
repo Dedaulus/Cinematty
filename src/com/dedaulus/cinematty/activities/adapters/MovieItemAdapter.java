@@ -16,6 +16,7 @@ import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.tools.Constants;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
 import com.dedaulus.cinematty.framework.tools.MovieImageReceivedActionHandler;
 
 import java.util.*;
@@ -98,14 +99,13 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
             text.setVisibility(View.GONE);
         }
 
-        float imdb = movie.getImdb();
-        if (imdb > 0) {
-            String imdbString = String.format(Locale.US, " %.1f", imdb);
-            TextView imdbView = (TextView)view.findViewById(R.id.imdb);
-            imdbView.setText(imdbString);
-            view.findViewById(R.id.rating).setVisibility(View.VISIBLE);
+        TextView imdbView = (TextView)view.findViewById(R.id.imdb);
+        String imdb = DataConverter.imdbToString(movie.getImdb());
+        if (imdb.length() != 0) {
+            imdbView.setText(imdb);
+            imdbView.setVisibility(View.VISIBLE);
         } else {
-            view.findViewById(R.id.rating).setVisibility(View.GONE);
+            imdbView.setVisibility(View.GONE);
         }
 
         text = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);
@@ -127,13 +127,6 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
 
         } else {
             text.setVisibility(View.GONE);
-        }
-
-        View movieOnlyTomorrow = view.findViewById(R.id.movie_only_tomorrow_in_movie_list);
-        if (movie.getCinemas(Constants.TODAY_SCHEDULE) == null) {
-            movieOnlyTomorrow.setVisibility(View.VISIBLE);
-        } else {
-            movieOnlyTomorrow.setVisibility(View.GONE);
         }
     }
 
