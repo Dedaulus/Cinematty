@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                style="@style/ContentContainer"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp">
+                style="@style/ContentContainer">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -12,12 +10,13 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="4dp"
                 android:orientation="vertical">
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
+                    android:paddingBottom="6dp"
                     android:orientation="horizontal">
 
                 <RelativeLayout android:id="@+id/movie_icon_loading"
@@ -37,7 +36,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="6dp"
                         android:adjustViewBounds="true"
                         android:maxWidth="100dp"
                         android:background="@drawable/picture_border"
@@ -46,12 +44,14 @@
                 <LinearLayout android:id="@+id/movie_head"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
                         android:orientation="vertical">
 
                     <TextView android:id="@+id/movie_caption"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
                             android:textColor="#ff0000"/>
 
                     <TextView android:id="@+id/movie_year_and_country"

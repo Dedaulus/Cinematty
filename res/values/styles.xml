@@ -175,7 +175,9 @@
 
     <style name="ListItem.Data.CinemaAddress"/>
     <style name="ListItem.Data.CinemaDistance">
-        <item name="android:textColor">#00137F</item>
+        <item name="android:textColor">#FF6899FF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="ListItem.Data.CinemaSchedule">
         <item name="android:singleLine">false</item>
