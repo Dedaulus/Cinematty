@@ -275,7 +275,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         TextView textView = (TextView)pageView.findViewById(R.id.imdb);
         float imdb = state.movie.getImdb();
         if (imdb > 0) {
-            textView.setText(DataConverter.imdbToString(imdb));
+            textView.setText(DataConverter.imdbToString(imdb).toUpperCase());
             textView.setVisibility(View.VISIBLE);
         } else {
             textView.setVisibility(View.GONE);

@@ -40,6 +40,7 @@
                         android:layout_marginRight="6dp"
                         android:adjustViewBounds="true"
                         android:maxWidth="100dp"
+                        android:background="@drawable/picture_border"
                         android:onClick="onPictureClick"/>
 
                 <LinearLayout android:id="@+id/movie_head"
@@ -69,7 +70,9 @@
 
                     <TextView android:id="@+id/imdb"
                             style="@style/ListItem.Data.MovieRatingValue"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="#FF6899FF"
                             android:paddingTop="2dp"/>
 
                     <TextView android:id="@+id/movie_trailer_url"
