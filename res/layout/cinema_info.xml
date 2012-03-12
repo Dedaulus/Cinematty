@@ -1,143 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:background="#000000">
-
-    <LinearLayout
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent">
-
-        <LinearLayout
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
-            android:paddingTop="6dp"
-            android:orientation="vertical">
-
-            <RelativeLayout
+                style="@style/ContentContainer"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:orientation="vertical"
-                android:layout_margin="6dp">
+                android:padding="4dp">
 
-                <ImageView
-                    android:id="@+id/fav_icon_in_cinema_info"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/ic_list_fav_off"
-                    android:clickable="true"
-                    android:onClick="onCinemaFavIconClick"/>
+    <RelativeLayout android:id="@+id/cinema_caption_region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/cinema_caption_panel"
+        <ImageView android:id="@+id/expand_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:src="@drawable/ic_corner_down"/>
+
+        <TextView android:id="@+id/cinema_caption"
+                style="@style/ListCaption.Cinema"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/expand_icon"
+                android:paddingLeft="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/cinema_data_region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cinema_caption_region">
+
+        <RelativeLayout android:id="@+id/cinema_url_region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="4dp">
+
+            <TextView android:id="@+id/cinema_url"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical"
-                    android:onClick="onCinemaUrlClick"
-                    android:layout_toRightOf="@id/fav_icon_in_cinema_info">
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:textColor="#0094FF"/>
 
-                    <TextView
-                        android:id="@+id/cinema_caption"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:textSize="20dp"
-                        android:textColor="#FF6A00"/>
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/cinema_url"
-                        android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="16dp"
-                        android:textColor="#0094FF"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/cinema_address_panel"
+        <RelativeLayout android:id="@+id/cinema_address_region"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:layout_margin="6dp"
-                android:onClick="onCinemaAddressClick">
+                android:paddingBottom="4dp"
+                android:layout_below="@id/cinema_url_region">
 
-                <ImageView
-                    android:id="@+id/map_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/ic_place_white"/>
+            <include android:id="@+id/cinema_address_divider"
+                     layout="@layout/data_divider"/>
 
-                <LinearLayout
+            <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:orientation="vertical"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/map_ico">
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="2dp"
+                    android:layout_below="@id/cinema_address_divider"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/cinema_address"
+                <TextView android:id="@+id/cinema_address"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="18dp"
-                        android:textColor="#FFFFFF"/>
+                        android:textSize="18sp"/>
 
-                    <TextView
-                        android:id="@+id/cinema_into"
+                <TextView android:id="@+id/cinema_into"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="14dp"
-                        android:textColor="#C0C0C0"/>
+                        android:textSize="14sp"
+                        android:textColor="@android:color/secondary_text_light"/>
 
-                    <TextView
-                        android:id="@+id/cinema_metro"
+                <TextView android:id="@+id/cinema_metro"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="14dp"
-                        android:textColor="#C0C0C0"/>
+                        android:textSize="14sp"/>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/cinema_phone_panel"
+        <RelativeLayout android:id="@+id/cinema_phone_region"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:layout_margin="6dp"
-                android:onClick="onCinemaPhoneClick">
+                android:paddingBottom="4dp"
+                android:layout_below="@id/cinema_address_region">
 
-                <ImageView
-                    android:id="@+id/call_ico"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/ic_call_white"/>
+            <include android:id="@+id/cinema_phone_divider"
+                     layout="@layout/data_divider"/>
 
-                <TextView
-                    android:id="@+id/cinema_phone"
+            <TextView android:id="@+id/cinema_phone"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/call_ico"
-                    android:textSize="20dp"
-                    android:textColor="#FFFFFF"/>
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="2dp"
+                    android:layout_below="@id/cinema_phone_divider"
+                    android:textSize="18sp"/>
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

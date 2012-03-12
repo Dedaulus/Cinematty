@@ -41,7 +41,6 @@ public class MovieListActivity extends SherlockActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_list);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -61,27 +60,29 @@ public class MovieListActivity extends SherlockActivity {
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
 
-        View captionView = findViewById(R.id.cinema_panel_in_movie_list);
-        TextView captionLabel = (TextView)findViewById(R.id.cinema_caption_in_movie_list);
-        ListView list = (ListView)findViewById(R.id.movie_list);
         Map<String, Movie> scopeMovies;
-
         switch (state.activityType) {
-        case ActivityState.MOVIE_LIST_W_ACTOR:
-            captionLabel.setText(state.actor.getName());
-            scopeMovies = state.actor.getMovies();
-            break;
+            case ActivityState.MOVIE_LIST_W_ACTOR: {
+                    setContentView(R.layout.movie_list_w_actor);
+                    TextView captionView = (TextView)findViewById(R.id.actor);
+                    captionView.setText(state.actor.getName());
+                    scopeMovies = state.actor.getMovies();
+                }
+                break;
 
-        case ActivityState.MOVIE_LIST_W_GENRE:
-            captionLabel.setText(state.genre.getName());
-            scopeMovies = state.genre.getMovies();
-            break;
+            case ActivityState.MOVIE_LIST_W_GENRE: {
+                    setContentView(R.layout.movie_list_w_genre);
+                    TextView captionView = (TextView)findViewById(R.id.genre);
+                    captionView.setText(state.genre.getName());
+                    scopeMovies = state.genre.getMovies();
+                }
+                break;
 
-        default:
-            throw new RuntimeException("ActivityType error");
+            default:
+                throw new RuntimeException("ActivityType error");
         }
 
-        captionView.setVisibility(View.VISIBLE);
+        ListView list = (ListView)findViewById(R.id.movie_list_external).findViewById(R.id.movie_list);
         movieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(scopeMovies.values()), app.getImageRetrievers().getMovieSmallImageRetriever());
         list.setAdapter(movieListAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,17 +123,17 @@ public class MovieListActivity extends SherlockActivity {
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {
-        case BY_CAPTION:
-            menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
-            break;
-        case BY_POPULAR:
-            menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
-            break;
-        case BY_RATING:
-            menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
-            break;
-        default:
-            break;
+            case BY_CAPTION:
+                menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
+                break;
+            case BY_POPULAR:
+                menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
+                break;
+            case BY_RATING:
+                menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+                break;
+            default:
+                break;
         }
 
         inflater.inflate(R.menu.search_menu, menu);
@@ -197,9 +198,5 @@ public class MovieListActivity extends SherlockActivity {
         Intent intent = new Intent(this, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
-    }
-
-    public void onHomeButtonClick(View view) {
-        app.goHome(this);
     }
 }

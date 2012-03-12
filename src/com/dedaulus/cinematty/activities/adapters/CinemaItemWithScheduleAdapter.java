@@ -55,7 +55,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
 
     private View newView(Context context, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return layoutInflater.inflate(R.layout.cinema_item_with_schedule, parent, false);
+        return layoutInflater.inflate(R.layout.cinema_item_w_schedule, parent, false);
     }
 
     private void bindView(int position, View view) {

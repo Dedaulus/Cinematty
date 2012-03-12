@@ -39,10 +39,11 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
     private ActivityState state;
     private String stateId;
     private int currentDay;
+    boolean collapsed;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_list);
+        setContentView(R.layout.movie_list_w_cinema);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -61,26 +62,11 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
+        if (state.activityType != ActivityState.MOVIE_LIST_W_CINEMA) throw new RuntimeException("ActivityType error");
 
-        View captionView = findViewById(R.id.cinema_panel_in_movie_list);
-        ListView list = (ListView)findViewById(R.id.movie_list);
-
-        switch (state.activityType) {
-        case ActivityState.MOVIE_LIST_W_CINEMA:
-            captionView.setVisibility(View.GONE);
-            LayoutInflater layoutInflater = LayoutInflater.from(this);
-            View view = layoutInflater.inflate(R.layout.cinema_info, null, false);
-            setCinemaHeader(view);
-
-            list.addHeaderView(view, null, false);
-
-            setCurrentDay(settings.getCurrentDay());
-            break;
-
-        default:
-            throw new RuntimeException("ActivityType error");
-        }
-
+        setCinemaHeader();
+        setCurrentDay(settings.getCurrentDay());
+        ListView list = (ListView)findViewById(R.id.movie_list_external).findViewById(R.id.movie_list);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onScheduleItemClick(adapterView, view, i, l);
@@ -169,7 +155,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
                 return true;
 
             case R.id.menu_call:
-                onCinemaPhoneClick(null);
+                onCinemaPhoneClick();
                 return true;
 
             case R.id.menu_show_map:
@@ -226,10 +212,8 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
     }
 
     private void onScheduleItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        HeaderViewListAdapter headerAdapter = (HeaderViewListAdapter)adapterView.getAdapter();
-        MovieItemWithScheduleAdapter adapter = (MovieItemWithScheduleAdapter)headerAdapter.getWrappedAdapter();
-        ListView list = (ListView)view.getParent();
-        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        MovieItemWithScheduleAdapter adapter = (MovieItemWithScheduleAdapter)adapterView.getAdapter();
+        Movie movie = (Movie)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();
@@ -246,7 +230,18 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
         settings.setCurrentDay(day);
         currentDay = day;
 
-        Collection<Movie> movies = state.cinema.getMovies(settings.getCurrentDay()).values();
+        TextView dayIndicator = (TextView)findViewById(R.id.day_indicator).findViewById(R.id.caption);
+        switch (currentDay) {
+            case Constants.TODAY_SCHEDULE:
+                dayIndicator.setText(getString(R.string.today));
+                break;
+
+            case Constants.TOMORROW_SCHEDULE:
+                dayIndicator.setText(getString(R.string.tomorrow));
+                break;
+        }
+
+        Collection<Movie> movies = state.cinema.getMovies(currentDay).values();
         if (movies.isEmpty()) {
             findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
@@ -255,115 +250,149 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
         StoppableAndResumable sar = (StoppableAndResumable) movieListAdapter;
         if (sar != null) sar.onStop();
-        movieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(movies), state.cinema, settings.getCurrentDay(), app.getImageRetrievers().getMovieSmallImageRetriever());
+        movieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(movies), state.cinema, currentDay, app.getImageRetrievers().getMovieSmallImageRetriever());
         sar = (StoppableAndResumable) movieListAdapter;
         sar.onResume();
         ListView list = (ListView)findViewById(R.id.movie_list);
         list.setAdapter(movieListAdapter);
     }
 
-    private void setCinemaHeader(View view) {
-        setCinemaFavourite(view);
-        setCinemaCaption(view);
-        setCinemaAddress(view);
-        setCinemaPhone(view);
-        setCinemaUrl(view);
-    }
-
-    private void setCinemaFavourite(View view) {
-        ImageView favIcon = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_info);
-
-        if (state.cinema.getFavourite() > 0) {
-            favIcon.setImageResource(R.drawable.ic_list_fav_on);
-        } else {
-            favIcon.setImageResource(R.drawable.ic_list_fav_off);
-        }
+    private void setCinemaHeader() {
+        View cinemaView = findViewById(R.id.cinema);
+        setCinemaCaption(cinemaView);
+        setCinemaAddress(cinemaView);
+        setCinemaPhone(cinemaView);
+        setCinemaUrl(cinemaView);
     }
 
     private void setCinemaCaption(View view) {
-        TextView caption = (TextView)view.findViewById(R.id.cinema_caption);
-        caption.setText(state.cinema.getName());
+        View region = view.findViewById(R.id.cinema_caption_region);
+        TextView captionView = (TextView)region.findViewById(R.id.cinema_caption);
+        captionView.setText(state.cinema.getName());
+        final ImageView expandView = (ImageView)region.findViewById(R.id.expand_icon);
+        expandView.setImageResource(R.drawable.ic_corner_down);
+        final View dataRegion = view.findViewById(R.id.cinema_data_region);
+        dataRegion.setVisibility(View.GONE);
+        collapsed = true;
+        region.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (collapsed) {
+                    collapsed = false;
+                    expandView.setImageResource(R.drawable.ic_corner_up);
+                    dataRegion.setVisibility(View.VISIBLE);
+                } else {
+                    collapsed = true;
+                    expandView.setImageResource(R.drawable.ic_corner_down);
+                    dataRegion.setVisibility(View.GONE);
+                }
+            }
+        });
     }
-
+    
     private void setCinemaAddress(View view) {
-        View panel = view.findViewById(R.id.cinema_address_panel);
-        if (state.cinema.getAddress() != null) {
-            TextView address = (TextView)view.findViewById(R.id.cinema_address);
-            address.setText(state.cinema.getAddress());
+        View region = view.findViewById(R.id.cinema_address_region);
+        String address = state.cinema.getAddress(); 
+        if (address != null) {
+            TextView divider = (TextView)region.findViewById(R.id.cinema_address_divider).findViewById(R.id.caption);
+            divider.setText(getString(R.string.address_separator));            
+            TextView addressView = (TextView)region.findViewById(R.id.cinema_address);
+            addressView.setText(address);
 
-            TextView into = (TextView)view.findViewById(R.id.cinema_into);
-            if (state.cinema.getInto() != null) {
-                into.setText(state.cinema.getInto());
-                into.setVisibility(View.VISIBLE);
+            TextView intoView = (TextView)region.findViewById(R.id.cinema_into);
+            String into = state.cinema.getInto(); 
+            if (into != null) {
+                intoView.setText(into);
+                intoView.setVisibility(View.VISIBLE);
             } else {
-                into.setVisibility(View.GONE);
+                intoView.setVisibility(View.GONE);
             }
 
-            TextView metro = (TextView)view.findViewById(R.id.cinema_metro);
+            TextView metroView = (TextView)region.findViewById(R.id.cinema_metro);
             if (state.cinema.getMetros().isEmpty()) {
-                metro.setVisibility(View.GONE);
+                metroView.setVisibility(View.GONE);
             } else {
-                //metro.setText(getString(R.string.metro_near) + ": " + state.cinema.getMetros());
-                metro.setVisibility(View.VISIBLE);
+                //metroView.setText(getString(R.string.metro_near) + ": " + state.cinema.getMetros());
+                metroView.setVisibility(View.GONE);
             }
 
-            panel.setVisibility(View.VISIBLE);
+            region.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCinemaOnMap();
+                }
+            });
+            region.setVisibility(View.VISIBLE);
         } else {
-            panel.setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
 
     private void setCinemaPhone(View view) {
-        View panel = view.findViewById(R.id.cinema_phone_panel);
-        if (state.cinema.getPhone() != null) {
-            TextView phone = (TextView)view.findViewById(R.id.cinema_phone);
-            phone.setText(state.cinema.getPhone());
+        View region = view.findViewById(R.id.cinema_phone_region);
+        String phone = state.cinema.getPhone();
+        if (phone != null) {
+            TextView divider = (TextView)region.findViewById(R.id.cinema_phone_divider).findViewById(R.id.caption);
+            divider.setText(getString(R.string.phone_separator));
+            TextView phoneView = (TextView)view.findViewById(R.id.cinema_phone);
+            phoneView.setText(phone);
 
-            panel.setVisibility(View.VISIBLE);
+            region.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onCinemaPhoneClick();
+                }
+            });
+            region.setVisibility(View.VISIBLE);
         }
         else {
-            panel.setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
 
     private void setCinemaUrl(View view) {
-        TextView url = (TextView)view.findViewById(R.id.cinema_url);
-        if (state.cinema.getUrl() != null) {
-            StringBuilder buf = new StringBuilder(state.cinema.getUrl());
-
+        View region = findViewById(R.id.cinema_url_region);
+        TextView urlView = (TextView)region.findViewById(R.id.cinema_url);
+        String url = state.cinema.getUrl();  
+        if (url != null) {
+            StringBuilder buf = new StringBuilder(url);
             if (state.cinema.getUrl().startsWith("http://")) {
                 buf.delete(0, "http://".length());
             }
-
             int slashPos = buf.indexOf("/");
             if (slashPos != -1) {
                 buf.delete(slashPos, buf.length());
             }
-
             SpannableString str = new SpannableString(buf.toString());
             str.setSpan(new UnderlineSpan(), 0, buf.length(), 0);
+            urlView.setText(str);
+            
+            region.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onCinemaUrlClick();
+                }
+            });
 
-            url.setText(str);
-
-            url.setVisibility(View.VISIBLE);
+            region.setVisibility(View.VISIBLE);
         } else {
-            url.setVisibility(View.GONE);
+            region.setVisibility(View.GONE);
         }
     }
 
-    public void onCinemaAddressClick(View view) {
+    public void onCinemaAddressClick() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("geo:0,0?q=Россия, " + app.getCurrentCity().getName() + ", " + state.cinema.getAddress()));
         startActivity(intent);
     }
 
-    public void onCinemaPhoneClick(View view) {
+    public void onCinemaPhoneClick() {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:+7" + state.cinema.getPlainPhone()));
         startActivity(intent);
     }
 
-    public void onCinemaUrlClick(View view) {
+    public void onCinemaUrlClick() {
         String url = state.cinema.getUrl(); 
         if (url != null) {
             if (!url.startsWith("http://")) {

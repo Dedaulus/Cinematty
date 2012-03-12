@@ -1,6 +1,5 @@
 package com.dedaulus.cinematty.activities.Pages;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -52,7 +51,6 @@ public class MoviesPage implements SliderPage {
     public View getView() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.movie_list, null, false);
-
         return bindView(view);
     }
 
@@ -99,29 +97,29 @@ public class MoviesPage implements SliderPage {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_movie_sort:
-            return true;
+            case R.id.menu_movie_sort:
+                return true;
 
-        case R.id.submenu_movie_sort_by_caption:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_movie_sort_by_caption:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_movie_sort_by_popular:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_movie_sort_by_popular:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_movie_sort_by_rating:
-            movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
-            settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_movie_sort_by_rating:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+                item.setChecked(true);
+                return true;
 
-        default:
-            return true;
+            default:
+                return true;
         }
     }
 

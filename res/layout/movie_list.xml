@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ContentContainer">
+                style="@style/ContentContainer">
 
-    <RelativeLayout
-        android:id="@+id/cinema_panel_in_movie_list"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:visibility="gone">
+    <ListView android:id="@+id/movie_list"
+            style="@style/List.Movies"/>
 
-        <TextView
-            android:id="@+id/cinema_caption_in_movie_list"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/select_cinema_ico"
-            style="@style/ListCaption.Cinema"/>
-
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/movie_list"
-        android:layout_below="@id/cinema_panel_in_movie_list"
-        style="@style/List.Movies"/>
-
-    <TextView
-        android:id="@+id/no_schedule"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/unknown_schedule"
-        android:textColor="#404040"
-        android:textSize="20dp"
-        android:paddingBottom="140dp"
-        android:visibility="gone"/>
+    <TextView android:id="@+id/no_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown_schedule"
+            android:textColor="#404040"
+            android:textSize="18sp"
+            android:visibility="gone"/>
 
 </RelativeLayout>
