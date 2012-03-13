@@ -69,7 +69,7 @@
                             android:textColor="@android:color/secondary_text_light"/>
 
                     <TextView android:id="@+id/imdb"
-                            style="@style/ListItem.Data.MovieRatingValue"
+                            style="@style/ListItem.Data.MovieRating"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="#FF6899FF"

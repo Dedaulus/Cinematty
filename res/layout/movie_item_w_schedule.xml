@@ -58,7 +58,7 @@
 
         <TextView
                 android:id="@+id/imdb"
-                style="@style/ListItem.Data.MovieRatingValue"
+                style="@style/ListItem.Data.MovieRating"
                 android:layout_below="@id/movie_genre_in_movie_list"/>
 
         <TextView

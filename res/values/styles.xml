@@ -189,9 +189,6 @@
     <style name="ListItem.Data.MovieRating">
         <item name="android:textColor">#00137F</item>
     </style>
-    <style name="ListItem.Data.MovieRatingValue">
-        <item name="android:textColor">#00137F</item>
-    </style>
     <style name="ListItem.Data.MovieSchedule">
         <item name="android:textColor">#FF4E00</item>
     </style>
