@@ -273,19 +273,20 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
         expandView.setImageResource(R.drawable.ic_corner_down);
         final View dataRegion = view.findViewById(R.id.cinema_data_region);
         dataRegion.setVisibility(View.GONE);
-        collapsed = true;
+        collapsed = false;
         region.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (collapsed) {
                     collapsed = false;
-                    expandView.setImageResource(R.drawable.ic_corner_up);
-                    dataRegion.setVisibility(View.VISIBLE);
+                    expandView.setImageResource(R.drawable.ic_corner_down);
+                    //dataRegion.setVisibility(View.VISIBLE);
                 } else {
                     collapsed = true;
-                    expandView.setImageResource(R.drawable.ic_corner_down);
-                    dataRegion.setVisibility(View.GONE);
+                    expandView.setImageResource(R.drawable.ic_corner_up);
+                    //dataRegion.setVisibility(View.GONE);
                 }
+                dataRegion.setAnimation(ExpandCollapseAnimationCreator.getAnimation(dataRegion, collapsed));
             }
         });
     }
