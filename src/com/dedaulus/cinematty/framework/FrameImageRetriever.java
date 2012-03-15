@@ -26,7 +26,7 @@ public class FrameImageRetriever {
     private ImageRetriever imageRetriever;
 
     public static interface FrameImageReceivedAction {
-        void onImageReceived(Bitmap image);
+        void onImageReceived(boolean downloaded);
     }
 
     public FrameImageRetriever(String entity, DisplayMetrics displayMetrics, String remoteFolder, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
@@ -61,7 +61,7 @@ public class FrameImageRetriever {
         imageRetriever.addRequest(createUrl(uid, frameId, isPreview), false, new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
-                action.onImageReceived(imageRetriever.getImage(url));
+                action.onImageReceived(downloaded);
             }
         });
     }

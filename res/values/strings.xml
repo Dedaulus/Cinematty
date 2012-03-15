@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">ГдеКИНО</string>
     <string name="app_version">1.1.1</string>
-    <string name="app_version_code">16</string>
+    <string name="app_version_code">17</string>
     <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
     <string name="email">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
@@ -82,7 +82,7 @@
     <string name="menu_search">Поиск</string>
 
     <string name="send_link">Отправить ссылку</string>
-    <string name="generate_link">Генерация ссылки...</string>
+    <string name="generate_link">Создание ссылки...</string>
     <string name="generate_link_failed">В данный момент невозможно создать ссылку. Попробуйте позже</string>
 
     <string name="km">км</string>

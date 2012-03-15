@@ -9,7 +9,7 @@
             android:id="@+id/caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#33B5E5"
+            android:textColor="@color/main_color"
             android:textSize="14sp"
             android:textStyle="bold"
             android:singleLine="true"
@@ -21,6 +21,6 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#33B5E5"/>
+            android:background="@color/main_color"/>
 
 </LinearLayout>

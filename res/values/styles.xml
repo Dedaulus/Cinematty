@@ -25,7 +25,7 @@
     -->
 
     <style name="CustomTitlePageIndicator" parent="Widget.TitlePageIndicator">
-        <item name="footerColor">#FF33B5E5</item>
+        <item name="footerColor">@color/main_color</item>
         <item name="textSize">16sp</item>
         <item name="textColor">@android:color/secondary_text_light</item>
         <item name="selectedColor">@android:color/primary_text_light</item>

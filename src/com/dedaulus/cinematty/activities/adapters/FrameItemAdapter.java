@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.util.Pair;
-import android.view.Display;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.view.*;
+import android.widget.*;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.FrameImageRetriever;
 import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
@@ -25,48 +21,11 @@ import java.util.Map;
  * Time: 14:34
  */
 public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumable {
-    private static class ImageRequest implements FrameImageRetriever.FrameImageReceivedAction {
-        FrameImageRetriever imageRetriever;
-        String uid;
-        int id;
-        ImageView imageView;
-        int desiredWidth;
-        final Map<Pair<String, Integer>, Bitmap> cachedImages;
-        Activity activity;
-        
-        ImageRequest(FrameImageRetriever imageRetriever, String uid, int id, Map<Pair<String, Integer>, Bitmap> cachedImages, ImageView imageView, int desiredWidth, Activity activity) {
-            this.imageRetriever = imageRetriever;
-            this.uid = uid;
-            this.id = id;
-            this.cachedImages = cachedImages;
-            this.imageView = imageView;
-            this.desiredWidth = desiredWidth;
-            this.activity = activity;
-        }
-
-        @Override
-        public void onImageReceived(final Bitmap image) {
-            final FrameImageRetriever.FrameImageReceivedAction action = this;
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    if (image != null) {
-                        Bitmap newImage = createScaledBitmap(image, desiredWidth);
-                        synchronized (cachedImages) {
-                            cachedImages.put(Pair.create(uid, id), newImage);
-                        }
-                        imageView.setImageBitmap(newImage);
-                    } else {
-                        imageRetriever.addRequest(uid, id, true, action);
-                    }
-                }
-            });
-        }
-    }
-    
     private Context context;
+    LayoutInflater inflater;
     private MovieFrameIdsStore frameIdsStore;
     private FrameImageRetriever imageRetriever;
-    private int imageWidth;
+    private int screenWidth;
     
     private final Map<Pair<String, Integer>, Bitmap> cachedImages;
 
@@ -78,16 +37,10 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
         this.context = context;
         this.frameIdsStore = frameIdsStore;
         this.imageRetriever = imageRetriever;
+        inflater = LayoutInflater.from(context);
 
-        int columns;
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-        if (display.getWidth() < display.getHeight()) {
-            columns = 1;
-        } else {
-            columns = 2;
-        }
-
-        imageWidth = display.getWidth() / columns;
+        screenWidth = display.getWidth();
     }
 
     public int getCount() {
@@ -104,39 +57,79 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+//        final ImageView imageView;
         final ImageView imageView;
+        final ProgressBar progressBar;
         if (convertView == null) {
-            imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setAdjustViewBounds(true);
+//            imageView = new ImageView(context);
+//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//            imageView.setAdjustViewBounds(false);
+            convertView = inflater.inflate(R.layout.frame_item, null);
+            imageView = (ImageView)convertView.findViewById(R.id.image);
+            progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
         } else {
-            imageView = (ImageView) convertView;
+//            imageView = (ImageView)convertView;
+            imageView = (ImageView)convertView.findViewById(R.id.image);
+            progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
         }
         
-        int frameId = frameIdsStore.getFrameIds().get(position);
-
+        final int frameId = frameIdsStore.getFrameIds().get(position);
+        final Pair<String, Integer> cachedImageKey = Pair.create(frameIdsStore.getUid(), frameId);
         Bitmap bitmap;
         synchronized (cachedImages) {
-            bitmap = cachedImages.get(Pair.create(frameIdsStore.getUid(), frameId));
+            bitmap = cachedImages.get(cachedImageKey);
         }
 
         if (bitmap == null) {
-            bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
-            if (bitmap == null) {
-                imageRetriever.addRequest(frameIdsStore.getUid(), frameId, true, new ImageRequest(imageRetriever, frameIdsStore.getUid(), frameId, cachedImages, imageView, imageWidth, (Activity)context));
-                imageView.setImageResource(R.drawable.img_loading);
+            //imageView.setImageResource(R.drawable.img_loading);
+            imageView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            if (imageRetriever.hasImage(frameIdsStore.getUid(), frameId, true)) {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
+                        synchronized (cachedImages) {
+                            cachedImages.put(cachedImageKey, bitmap);
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        notifyDataSetChanged();
+                    }
+                }.execute();
             } else {
-                bitmap = createScaledBitmap(bitmap, imageWidth);
-                synchronized (cachedImages) {
-                    cachedImages.put(Pair.create(frameIdsStore.getUid(), frameId), bitmap);
-                }
-                imageView.setImageBitmap(bitmap);
+                imageRetriever.addRequest(frameIdsStore.getUid(), frameId, true, new FrameImageRetriever.FrameImageReceivedAction() {
+                    @Override
+                    public void onImageReceived(boolean downloaded) {
+                        if (downloaded) {
+                            synchronized (cachedImages) {
+                                Bitmap bitmap = cachedImages.get(cachedImageKey);
+                                if (bitmap == null) {
+                                    bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
+                                    cachedImages.put(cachedImageKey, bitmap);
+                                }
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
             }
         } else {
+            Pair<Integer, Integer> sizeHeightWidth = getProperImageSize(bitmap);
+            imageView.setLayoutParams(new RelativeLayout.LayoutParams(sizeHeightWidth.second, sizeHeightWidth.first));
             imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
 
-        return imageView;
+        return convertView;
     }
 
     @Override
@@ -150,12 +143,8 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
     @Override
     public void onResume() {}
     
-    private static Bitmap createScaledBitmap(Bitmap image, int desiredWidth) {
-        /*int height = image.getHeight();
-        int width = image.getWidth();
-        double multiplier = (double)desiredWidth / width;
-
-        return Bitmap.createScaledBitmap(image, (int)(width * multiplier), (int)(height * multiplier), false);*/
-        return image;
+    private Pair<Integer, Integer> getProperImageSize(Bitmap bitmap) {
+        double heightMultiplier = (double)screenWidth / bitmap.getWidth();
+        return Pair.create((int)(bitmap.getHeight() * heightMultiplier), screenWidth);
     }
 }
