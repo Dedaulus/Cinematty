@@ -3,7 +3,6 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.os.AsyncTask;
 import android.util.Pair;
 import android.view.*;
@@ -20,13 +19,15 @@ import java.util.Map;
  * Date: 23.02.12
  * Time: 14:34
  */
-public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumable {
+public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumable, AbsListView.OnScrollListener {
     private Context context;
     LayoutInflater inflater;
     private MovieFrameIdsStore frameIdsStore;
     private FrameImageRetriever imageRetriever;
     private int screenWidth;
-    
+    private volatile boolean notifyDataSetChangedAsked;
+    private volatile boolean idle = true;
+
     private final Map<Pair<String, Integer>, Bitmap> cachedImages;
 
     {
@@ -55,24 +56,14 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-//        final ImageView imageView;
-        final ImageView imageView;
-        final ProgressBar progressBar;
         if (convertView == null) {
-//            imageView = new ImageView(context);
-//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            imageView.setAdjustViewBounds(false);
             convertView = inflater.inflate(R.layout.frame_item, null);
-            imageView = (ImageView)convertView.findViewById(R.id.image);
-            progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
-        } else {
-//            imageView = (ImageView)convertView;
-            imageView = (ImageView)convertView.findViewById(R.id.image);
-            progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
         }
-        
+
+        final ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
+        final ProgressBar progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
+
         final int frameId = frameIdsStore.getFrameIds().get(position);
         final Pair<String, Integer> cachedImageKey = Pair.create(frameIdsStore.getUid(), frameId);
         Bitmap bitmap;
@@ -81,7 +72,6 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
         }
 
         if (bitmap == null) {
-            //imageView.setImageResource(R.drawable.img_loading);
             imageView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             if (imageRetriever.hasImage(frameIdsStore.getUid(), frameId, true)) {
@@ -97,7 +87,8 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
 
                     @Override
                     protected void onPostExecute(Void aVoid) {
-                        notifyDataSetChanged();
+                        //notifyDataSetChanged();
+                        askForNotifyDataSetChanged();
                     }
                 }.execute();
             } else {
@@ -113,7 +104,8 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
                                 }
                                 ((Activity)context).runOnUiThread(new Runnable() {
                                     public void run() {
-                                        notifyDataSetChanged();
+                                        //notifyDataSetChanged();
+                                        askForNotifyDataSetChanged();
                                     }
                                 });
                             }
@@ -146,5 +138,29 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
     private Pair<Integer, Integer> getProperImageSize(Bitmap bitmap) {
         double heightMultiplier = (double)screenWidth / bitmap.getWidth();
         return Pair.create((int)(bitmap.getHeight() * heightMultiplier), screenWidth);
+    }
+
+    private void askForNotifyDataSetChanged() {
+        if (idle) {
+            notifyDataSetChanged();
+        } else {
+            notifyDataSetChangedAsked = true;
+        }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        idle = scrollState == SCROLL_STATE_IDLE;
+        if (idle) {
+            if (notifyDataSetChangedAsked) {
+                notifyDataSetChangedAsked = false;
+                notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

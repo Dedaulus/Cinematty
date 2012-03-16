@@ -68,11 +68,8 @@ public class FramesPage implements SliderPage {
         GridView framesGrid = (GridView)view.findViewById(R.id.frames_grid);
         itemAdapter = new FrameItemAdapter(context, frameIdsStore, app.getImageRetrievers().getFrameImageRetriever());
         framesGrid.setAdapter(itemAdapter);
-        //framesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        //    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //        onPosterItemClick(adapterView, view, i, l);
-        //    }
-        //});
+        framesGrid.setOnScrollListener(itemAdapter);
+
         binded = true;
         onResume();
 
