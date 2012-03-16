@@ -259,10 +259,10 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
     private void setCinemaHeader() {
         View cinemaView = findViewById(R.id.cinema);
-        setCinemaCaption(cinemaView);
-        setCinemaAddress(cinemaView);
         setCinemaPhone(cinemaView);
+        setCinemaAddress(cinemaView);
         setCinemaUrl(cinemaView);
+        setCinemaCaption(cinemaView);
     }
 
     private void setCinemaCaption(View view) {
