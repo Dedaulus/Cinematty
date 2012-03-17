@@ -1,6 +1,5 @@
 package com.dedaulus.cinematty.activities.Pages;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -216,6 +215,6 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
     public void onLocationChanged(Location location) {
         LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
-        adapter.setCurrentLocation(location);
+        adapter.setLocation(location);
     }
 }

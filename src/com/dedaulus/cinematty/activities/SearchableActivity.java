@@ -256,6 +256,6 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     @Override
     public void onLocationChanged(Location location) {
         LocationAdapter adapter = (LocationAdapter)searchAdapter;
-        adapter.setCurrentLocation(location);
+        adapter.setLocation(location);
     }
 }

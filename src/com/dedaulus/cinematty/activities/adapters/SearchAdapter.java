@@ -17,7 +17,6 @@ import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * User: Dedaulus
@@ -26,9 +25,10 @@ import java.util.Locale;
  */
 public class SearchAdapter extends BaseAdapter implements LocationAdapter, MovieImageRetriever.MovieImageReceivedAction {
     private static class CinemaViewHolder {
+        View favIconRegion;
         ImageView favIcon;
         TextView caption;
-        RelativeLayout addressPanel;
+        RelativeLayout addressRegion;
         TextView address;
         TextView distance;
     }
@@ -123,11 +123,12 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.cinema_item, null);
                     viewHolder = new CinemaViewHolder();
-                    viewHolder.favIcon = (ImageView)convertView.findViewById(R.id.fav_icon_in_cinema_list);
-                    viewHolder.caption = (TextView)convertView.findViewById(R.id.cinema_caption_in_cinema_list);
-                    viewHolder.addressPanel = (RelativeLayout)convertView.findViewById(R.id.cinema_address_panel);
-                    viewHolder.address = (TextView)convertView.findViewById(R.id.cinema_address_in_cinema_list);
-                    viewHolder.distance = (TextView)convertView.findViewById(R.id.distance);
+                    viewHolder.favIconRegion = convertView.findViewById(R.id.fav_icon_region);
+                    viewHolder.favIcon = (ImageView)viewHolder.favIconRegion.findViewById(R.id.fav_icon);
+                    viewHolder.caption = (TextView)convertView.findViewById(R.id.cinema_caption);
+                    viewHolder.addressRegion = (RelativeLayout)convertView.findViewById(R.id.cinema_address_region);
+                    viewHolder.address = (TextView)viewHolder.addressRegion.findViewById(R.id.cinema_address);
+                    viewHolder.distance = (TextView)viewHolder.addressRegion.findViewById(R.id.cinema_distance);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (CinemaViewHolder)convertView.getTag();
@@ -221,14 +222,15 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_off);
         }
 
-        viewHolder.favIcon.setOnClickListener(new View.OnClickListener() {
+        viewHolder.favIconRegion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
                 if (cinema.getFavourite() > 0) {
                     cinema.setFavourite(false);
-                    ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
+                    imageView.setImageResource(R.drawable.ic_list_fav_off);
                 } else {
                     cinema.setFavourite(true);
-                    ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
+                    imageView.setImageResource(R.drawable.ic_list_fav_on);
                 }
             }
         });
@@ -237,17 +239,28 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         if (address != null) {
             viewHolder.address.setText(address);
             Coordinate coordinate = cinema.getCoordinate();
+            double latitude = 0.0;
+            double longitude = 0.0;
+            boolean locationValid = false;
             synchronized (locationMutex) {
-                if (coordinate != null && location != null) {
-                    float[] distance = new float[1];
-                    Location.distanceBetween(coordinate.latitude, coordinate.longitude, location.getLatitude(), location.getLongitude(), distance);
-                    int m = (int)distance[0];
-                    viewHolder.distance.setText(DataConverter.metersToDistance(context, m));
+                if (location != null) {
+                    locationValid = true;
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
                 }
             }
-            viewHolder.addressPanel.setVisibility(View.VISIBLE);
+            if (coordinate != null && locationValid) {
+                float[] distance = new float[1];
+                Location.distanceBetween(coordinate.latitude, coordinate.longitude, latitude, longitude, distance);
+                int m = (int)distance[0];
+                viewHolder.distance.setText(DataConverter.metersToDistance(context, m));
+                viewHolder.distance.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.distance.setVisibility(View.GONE);
+            }
+            viewHolder.addressRegion.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.addressPanel.setVisibility(View.GONE);
+            viewHolder.addressRegion.setVisibility(View.GONE);
         }
     }
 
@@ -326,7 +339,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         viewHolder.caption.setText(caption);
     }
 
-    public void setCurrentLocation(Location location) {
+    public void setLocation(Location location) {
         synchronized (locationMutex) {
             this.location = location;
         }

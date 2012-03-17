@@ -69,7 +69,9 @@
                 <TextView android:id="@+id/cinema_address"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
-                        android:textSize="18sp"/>
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textSize="16sp"/>
 
                 <TextView android:id="@+id/cinema_into"
                         android:layout_height="wrap_content"
@@ -102,7 +104,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="2dp"
                     android:layout_below="@id/cinema_phone_divider"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
         </RelativeLayout>
 

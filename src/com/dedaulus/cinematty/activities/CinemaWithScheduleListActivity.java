@@ -234,6 +234,6 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
 
     public void onLocationChanged(Location location) {
         LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
-        adapter.setCurrentLocation(location);
+        adapter.setLocation(location);
     }
 }

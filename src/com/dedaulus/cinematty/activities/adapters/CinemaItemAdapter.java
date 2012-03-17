@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
@@ -21,16 +22,28 @@ import java.util.*;
  * Time: 22:11
  */
 public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Cinema>, LocationAdapter {
+    private static class CinemaViewHolder {
+        View favIconRegion;
+        ImageView favIcon;
+        TextView caption;
+        RelativeLayout addressRegion;
+        TextView address;
+        TextView distance;
+    }
+
     private Context context;
+    private LayoutInflater inflater;
     private Map<String, Cinema> cinemaEntries;
     private ArrayList<Cinema> cinemas;
-    private Location currentLocation;
+    private Location location;
+    private final Object locationMutex = new Object();
 
     public CinemaItemAdapter(Context context, Map<String, Cinema> cinemaEntries, Location location) {
         this.context = context;
+        inflater = LayoutInflater.from(context);
         this.cinemaEntries = cinemaEntries;
         this.cinemas = new ArrayList<Cinema>(cinemaEntries.values());
-        currentLocation = location;
+        this.location = location;
     }
 
     public int getCount() {
@@ -45,62 +58,75 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         return i;
     }
 
-    private View newView(Context context, ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return layoutInflater.inflate(R.layout.cinema_item, parent, false);
-    }
+    private void bindView(int position, CinemaViewHolder viewHolder) {
+        final Cinema cinema = cinemas.get(position);
+        viewHolder.caption.setText(cinema.getName());
 
-    private void bindView(int position, View view) {
-        Cinema cinema = cinemas.get(position);
-
-        ImageView image = (ImageView)view.findViewById(R.id.fav_icon_in_cinema_list);
         if (cinema.getFavourite() > 0) {
-            image.setImageResource(R.drawable.ic_list_fav_on);
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_on);
         } else {
-            image.setImageResource(R.drawable.ic_list_fav_off);
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_off);
         }
 
-        image.setOnClickListener(new View.OnClickListener() {
+        viewHolder.favIconRegion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onCinemaFavIconClick(view);
+                ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
+                if (cinema.getFavourite() > 0) {
+                    cinema.setFavourite(false);
+                    imageView.setImageResource(R.drawable.ic_list_fav_off);
+                } else {
+                    cinema.setFavourite(true);
+                    imageView.setImageResource(R.drawable.ic_list_fav_on);
+                }
             }
         });
 
-        TextView text = (TextView)view.findViewById(R.id.cinema_caption_in_cinema_list);
-        text.setText(cinema.getName());
-
-        View addressPanel = view.findViewById(R.id.cinema_address_panel);
         String address = cinema.getAddress();
         if (address != null) {
-            text = (TextView)addressPanel.findViewById(R.id.cinema_address_in_cinema_list);
-            text.setText(address);
-
-            text = (TextView)addressPanel.findViewById(R.id.distance);
+            viewHolder.address.setText(address);
             Coordinate coordinate = cinema.getCoordinate();
-            if (coordinate != null && currentLocation != null) {
-                float[] distance = new float[1];
-                Location.distanceBetween(coordinate.latitude, coordinate.longitude, currentLocation.getLatitude(), currentLocation.getLongitude(), distance);
-                int m = (int)distance[0];
-                text.setText(DataConverter.metersToDistance(context, m));
+            double latitude = 0.0;
+            double longitude = 0.0;
+            boolean locationValid = false;
+            synchronized (locationMutex) {
+                if (location != null) {
+                    locationValid = true;
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
             }
-
-            addressPanel.setVisibility(View.VISIBLE);
+            if (coordinate != null && locationValid) {
+                float[] distance = new float[1];
+                Location.distanceBetween(coordinate.latitude, coordinate.longitude, latitude, longitude, distance);
+                int m = (int)distance[0];
+                viewHolder.distance.setText(DataConverter.metersToDistance(context, m));
+                viewHolder.distance.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.distance.setVisibility(View.GONE);
+            }
+            viewHolder.addressRegion.setVisibility(View.VISIBLE);
         } else {
-            addressPanel.setVisibility(View.GONE);
+            viewHolder.addressRegion.setVisibility(View.GONE);
         }
     }
 
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView;
-        if (view != null) {
-            myView = view;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        CinemaViewHolder viewHolder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.cinema_item, null);
+            viewHolder = new CinemaViewHolder();
+            viewHolder.favIconRegion = convertView.findViewById(R.id.fav_icon_region);
+            viewHolder.favIcon = (ImageView)viewHolder.favIconRegion.findViewById(R.id.fav_icon);
+            viewHolder.caption = (TextView)convertView.findViewById(R.id.cinema_caption);
+            viewHolder.addressRegion = (RelativeLayout)convertView.findViewById(R.id.cinema_address_region);
+            viewHolder.address = (TextView)viewHolder.addressRegion.findViewById(R.id.cinema_address);
+            viewHolder.distance = (TextView)viewHolder.addressRegion.findViewById(R.id.cinema_distance);
+            convertView.setTag(viewHolder);
         } else {
-            myView = newView(context, viewGroup);
+            viewHolder = (CinemaViewHolder)convertView.getTag();
         }
-
-        bindView(i, myView);
-
-        return myView;
+        bindView(position, viewHolder);
+        return convertView;
     }
 
     public void sortBy(Comparator<Cinema> cinemaComparator) {
@@ -108,21 +134,10 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         notifyDataSetChanged();
     }
 
-    public void setCurrentLocation(Location location) {
-        currentLocation = location;
-        notifyDataSetChanged();
-    }
-
-    private void onCinemaFavIconClick(View view) {
-        View parent = (View)view.getParent();
-        TextView caption = (TextView)parent.findViewById(R.id.cinema_caption_in_cinema_list);
-        Cinema cinema = cinemaEntries.get(caption.getText().toString());
-        if (cinema.getFavourite() > 0) {
-            cinema.setFavourite(false);
-            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_off);
-        } else {
-            cinema.setFavourite(true);
-            ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
+    public void setLocation(Location location) {
+        synchronized (locationMutex) {
+            this.location = location;
         }
+        notifyDataSetChanged();
     }
 }

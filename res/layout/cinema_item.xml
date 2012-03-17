@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:padding="6dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/fav_icon_in_cinema_list"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingRight="6dp"
-        android:clickable="true"
-        android:src="@drawable/ic_list_fav_off"
-        android:onClick="onCinemaFavIconClick"/>
+    <RelativeLayout android:id="@+id/fav_icon_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:clickable="true">
+
+        <ImageView android:id="@+id/fav_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_list_fav_off"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/fav_icon_in_cinema_list">
-
-        <TextView
-            android:id="@+id/cinema_caption_in_cinema_list"
-            style="@style/ListItem.Caption.Cinema"/>
-
-        <RelativeLayout
-            android:id="@+id/cinema_address_panel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_below="@id/cinema_caption_in_cinema_list">
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/fav_icon_region"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
 
-            <TextView
-                android:id="@+id/distance"
-                style="@style/ListItem.Data.CinemaDistance"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="2dp"/>
+        <TextView android:id="@+id/cinema_caption"
+                style="@style/ListItem.Caption.Cinema"/>
 
-            <TextView
-                android:id="@+id/cinema_address_in_cinema_list"
-                style="@style/ListItem.Data.CinemaAddress"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/distance"/>
+        <RelativeLayout android:id="@+id/cinema_address_region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cinema_caption">
+
+            <TextView android:id="@+id/cinema_distance"
+                    style="@style/ListItem.Data.CinemaDistance"
+                    android:layout_alignParentRight="true"/>
+
+            <TextView android:id="@+id/cinema_address"
+                    style="@style/ListItem.Data.CinemaAddress"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/cinema_distance"/>
 
         </RelativeLayout>
 
