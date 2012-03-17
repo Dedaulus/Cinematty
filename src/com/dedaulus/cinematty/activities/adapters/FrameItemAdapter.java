@@ -10,6 +10,7 @@ import android.widget.*;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.FrameImageRetriever;
 import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +20,13 @@ import java.util.Map;
  * Date: 23.02.12
  * Time: 14:34
  */
-public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumable, AbsListView.OnScrollListener {
+public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumable {
     private Context context;
     LayoutInflater inflater;
+    IdleDataSetChangeNotifier notifier;
     private MovieFrameIdsStore frameIdsStore;
     private FrameImageRetriever imageRetriever;
     private int screenWidth;
-    private volatile boolean notifyDataSetChangedAsked;
-    private volatile boolean idle = true;
 
     private final Map<Pair<String, Integer>, Bitmap> cachedImages;
 
@@ -34,9 +34,11 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
         cachedImages = new HashMap<Pair<String, Integer>, Bitmap>();
     }
 
-    public FrameItemAdapter(Context context, MovieFrameIdsStore frameIdsStore, FrameImageRetriever imageRetriever) {
+    public FrameItemAdapter(Context context, IdleDataSetChangeNotifier notifier, MovieFrameIdsStore frameIdsStore, FrameImageRetriever imageRetriever) {
         this.context = context;
         this.frameIdsStore = frameIdsStore;
+        this.notifier = notifier;
+        notifier.setAdapter(this);
         this.imageRetriever = imageRetriever;
         inflater = LayoutInflater.from(context);
 
@@ -87,8 +89,7 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
 
                     @Override
                     protected void onPostExecute(Void aVoid) {
-                        //notifyDataSetChanged();
-                        askForNotifyDataSetChanged();
+                        notifier.askForNotifyDataSetChanged();
                     }
                 }.execute();
             } else {
@@ -104,8 +105,7 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
                                 }
                                 ((Activity)context).runOnUiThread(new Runnable() {
                                     public void run() {
-                                        //notifyDataSetChanged();
-                                        askForNotifyDataSetChanged();
+                                        notifier.askForNotifyDataSetChanged();
                                     }
                                 });
                             }
@@ -138,29 +138,5 @@ public class FrameItemAdapter extends BaseAdapter implements StoppableAndResumab
     private Pair<Integer, Integer> getProperImageSize(Bitmap bitmap) {
         double heightMultiplier = (double)screenWidth / bitmap.getWidth();
         return Pair.create((int)(bitmap.getHeight() * heightMultiplier), screenWidth);
-    }
-
-    private void askForNotifyDataSetChanged() {
-        if (idle) {
-            notifyDataSetChanged();
-        } else {
-            notifyDataSetChangedAsked = true;
-        }
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        idle = scrollState == SCROLL_STATE_IDLE;
-        if (idle) {
-            if (notifyDataSetChangedAsked) {
-                notifyDataSetChangedAsked = false;
-                notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
