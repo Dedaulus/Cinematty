@@ -93,8 +93,7 @@
                         layout="@layout/data_divider"/>
 
                 <TextView android:id="@+id/schedule"
-                        style="@style/MovieInfoContent"
-                        android:textColor="#FF4E00"/>
+                        style="@style/MovieInfoContent"/>
 
             </LinearLayout>
 
