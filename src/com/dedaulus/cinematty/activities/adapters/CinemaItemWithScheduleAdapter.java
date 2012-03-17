@@ -41,20 +41,18 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private Context context;
     private LayoutInflater inflater;
     private IdleDataSetChangeNotifier notifier;
-    private Map<String, Cinema> cinemaEntries;
     private ArrayList<Cinema> cinemas;
     private Movie currentMovie;
     private int currentDay;
     private Location location;
     private Object locationMutex = new Object();
 
-    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, Map<String, Cinema> cinemaEntries, Movie currentMovie, int day, Location location) {
+    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie currentMovie, int day, Location location) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
         notifier.setAdapter(this);
-        this.cinemaEntries = cinemaEntries;
-        cinemas = new ArrayList<Cinema>(cinemaEntries.values());
+        this.cinemas = cinemas;
         this.currentMovie = currentMovie;
         currentDay = day;
         this.location = location;

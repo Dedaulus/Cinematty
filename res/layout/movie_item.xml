@@ -1,67 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-    android:orientation="horizontal"
-    android:padding="6dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="6dp">
 
-    <LinearLayout
-        android:id="@+id/movie_list_icon_panel"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_centerVertical="true">
-
-        <RelativeLayout
-            android:id="@+id/movie_list_icon_loading"
-            android:layout_height="62dp"
-            android:layout_width="62dp"
+    <RelativeLayout android:id="@+id/movie_icon_region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:paddingRight="6dp">
 
+        <RelativeLayout android:id="@+id/progress"
+                android:layout_height="62dp"
+                android:layout_width="62dp">
+
             <ProgressBar
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 style="@android:style/Widget.ProgressBar.Small.Inverse"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    style="@android:style/Widget.ProgressBar.Small.Inverse"/>
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/movie_list_icon"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="6dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="62dp"
-            android:background="@drawable/picture_border"
-            android:src="@drawable/ic_list_blank_movie"/>
+        <ImageView android:id="@+id/movie_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:maxWidth="62dp"
+                android:background="@drawable/picture_border"
+                android:src="@drawable/ic_list_blank_movie"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/movie_list_icon_panel"
-        android:layout_centerVertical="true">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/movie_icon_region"
+            android:layout_centerVertical="true">
 
-        <TextView android:id="@+id/movie_caption_in_movie_list"
-            style="@style/ListItem.Caption.Movie"/>
+        <TextView android:id="@+id/movie_caption"
+                style="@style/ListItem.Caption.Movie"/>
 
-        <TextView
-            android:id="@+id/movie_genre_in_movie_list"
-            style="@style/ListItem.Data.MovieGenre"
-            android:layout_below="@id/movie_caption_in_movie_list"/>
+        <TextView android:id="@+id/movie_genre"
+                style="@style/ListItem.Data.MovieGenre"
+                android:layout_below="@id/movie_caption"/>
 
         <TextView android:id="@+id/imdb"
                 style="@style/ListItem.Data.MovieRating"
-                android:layout_below="@id/movie_genre_in_movie_list"/>
+                android:layout_below="@id/movie_genre"/>
 
-        <TextView
-            android:id="@+id/movie_actor_in_movie_list"
-            style="@style/ListItem.Data.MovieActor"
-            android:layout_below="@id/imdb"/>
+        <TextView android:id="@+id/movie_actor"
+                style="@style/ListItem.Data.MovieActor"
+                android:layout_below="@id/imdb"/>
 
     </RelativeLayout>
 

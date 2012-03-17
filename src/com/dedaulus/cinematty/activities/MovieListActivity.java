@@ -82,9 +82,11 @@ public class MovieListActivity extends SherlockActivity {
                 throw new RuntimeException("ActivityType error");
         }
 
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        movieListAdapter = new MovieItemAdapter(this, notifier, new ArrayList<Movie>(scopeMovies.values()), app.getImageRetrievers().getMovieSmallImageRetriever());
         ListView list = (ListView)findViewById(R.id.movie_list_external).findViewById(R.id.movie_list);
-        movieListAdapter = new MovieItemAdapter(this, new ArrayList<Movie>(scopeMovies.values()), app.getImageRetrievers().getMovieSmallImageRetriever());
         list.setAdapter(movieListAdapter);
+        list.setOnScrollListener(notifier);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);

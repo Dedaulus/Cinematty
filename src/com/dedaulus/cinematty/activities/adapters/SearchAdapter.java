@@ -35,7 +35,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
 
     private static class MovieViewHolder {
         ImageView image;
-        RelativeLayout imageLoadingPanel;
+        View progress;
         TextView caption;
         TextView genres;
         TextView imdb;
@@ -142,12 +142,12 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.movie_item, null);
                     viewHolder = new MovieViewHolder();
-                    viewHolder.image = (ImageView)convertView.findViewById(R.id.movie_list_icon);
-                    viewHolder.imageLoadingPanel = (RelativeLayout)convertView.findViewById(R.id.movie_list_icon_loading);
-                    viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption_in_movie_list);
-                    viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre_in_movie_list);
+                    viewHolder.image = (ImageView)convertView.findViewById(R.id.movie_icon);
+                    viewHolder.progress = convertView.findViewById(R.id.progress);
+                    viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption);
+                    viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre);
                     viewHolder.imdb = (TextView)convertView.findViewById(R.id.imdb);
-                    viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor_in_movie_list);
+                    viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor);
                     convertView.setTag(viewHolder);
                 } else {
                     viewHolder = (MovieViewHolder)convertView.getTag();
@@ -272,16 +272,16 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         if (picId != null) {
             Bitmap picture = imageRetriever.getImage(picId, true);
             if (picture != null) {
-                viewHolder.imageLoadingPanel.setVisibility(View.GONE);
+                viewHolder.progress.setVisibility(View.GONE);
                 viewHolder.image.setImageBitmap(picture);
                 viewHolder.image.setVisibility(View.VISIBLE);
             } else {
                 viewHolder.image.setVisibility(View.GONE);
                 imageRetriever.addRequest(picId, true, this);
-                viewHolder.imageLoadingPanel.setVisibility(View.VISIBLE);
+                viewHolder.progress.setVisibility(View.VISIBLE);
             }
         } else {
-            viewHolder.imageLoadingPanel.setVisibility(View.GONE);
+            viewHolder.progress.setVisibility(View.GONE);
             viewHolder.image.setImageResource(R.drawable.ic_list_blank_movie);
             viewHolder.image.setVisibility(View.VISIBLE);
         }
@@ -293,7 +293,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         } else {
             viewHolder.genres.setVisibility(View.GONE);
         }
-        
+
         String imdb = DataConverter.imdbToString(movie.getImdb());
         if (imdb.length() != 0) {
             viewHolder.imdb.setText(imdb);
@@ -301,7 +301,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         } else {
             viewHolder.imdb.setVisibility(View.GONE);
         }
-        
+
         String actors = DataConverter.favActorsToString(movie.getActors().values());
         if (actors.length() != 0) {
             viewHolder.favActors.setText(actors);

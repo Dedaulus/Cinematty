@@ -19,10 +19,7 @@ import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
 import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.tools.ActivityState;
-import com.dedaulus.cinematty.framework.tools.Constants;
-import com.dedaulus.cinematty.framework.tools.MovieComparator;
-import com.dedaulus.cinematty.framework.tools.MovieSortOrder;
+import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -124,9 +121,11 @@ public class MoviesPage implements SliderPage {
     }
 
     private View bindView(View view) {
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        movieListAdapter = new MovieItemAdapter(context, notifier, new ArrayList<Movie>(settings.getMovies().values()), app.getImageRetrievers().getMovieSmallImageRetriever());
         ListView list = (ListView)view.findViewById(R.id.movie_list);
-        movieListAdapter = new MovieItemAdapter(context, new ArrayList<Movie>(settings.getMovies().values()), app.getImageRetrievers().getMovieSmallImageRetriever());
         list.setAdapter(movieListAdapter);
+        list.setOnScrollListener(notifier);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);

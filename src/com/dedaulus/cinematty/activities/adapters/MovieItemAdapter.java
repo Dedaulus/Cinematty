@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
 import com.dedaulus.cinematty.framework.MovieImageRetriever;
-import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
-import com.dedaulus.cinematty.framework.tools.MovieImageReceivedActionHandler;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.*;
 
@@ -23,17 +20,29 @@ import java.util.*;
  * Date: 14.03.11
  * Time: 23:40
  */
-public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, MovieImageRetriever.MovieImageReceivedAction, StoppableAndResumable {
+public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Movie>, StoppableAndResumable, MovieImageRetriever.MovieImageReceivedAction {
+    private static class MovieViewHolder {
+        ImageView image;
+        View progress;
+        TextView caption;
+        TextView genres;
+        TextView imdb;
+        TextView favActors;
+    }
+    
     private Context context;
+    private LayoutInflater inflater;
+    private IdleDataSetChangeNotifier notifier;
     private ArrayList<Movie> movies;
     private MovieImageRetriever imageRetriever;
-    private MovieImageReceivedActionHandler imageReceivedActionHandler;
 
-    public MovieItemAdapter(Context context, ArrayList<Movie> movies, MovieImageRetriever imageRetriever) {
+    public MovieItemAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Movie> movies, MovieImageRetriever imageRetriever) {
         this.context = context;
+        inflater = LayoutInflater.from(context);
+        this.notifier = notifier;
+        notifier.setAdapter(this);
         this.movies = movies;
         this.imageRetriever = imageRetriever;
-        imageReceivedActionHandler = new MovieImageReceivedActionHandler(this, (Activity)this.context);
     }
 
     public int getCount() {
@@ -48,96 +57,70 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         return i;
     }
 
-    private View newView(Context context, ViewGroup parent) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return layoutInflater.inflate(R.layout.movie_item, parent, false);
-    }
-
-    private void bindView(int position, View view) {
-        Movie movie = movies.get(position);
-
-        RelativeLayout progressBar = (RelativeLayout)view.findViewById(R.id.movie_list_icon_loading);
-        ImageView imageView = (ImageView)view.findViewById(R.id.movie_list_icon);
-
-        imageView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+    private void bindView(int position, MovieViewHolder viewHolder) {
+        final Movie movie = movies.get(position);
+        viewHolder.caption.setText(movie.getName());
 
         String picId = movie.getPicId();
         if (picId != null) {
             Bitmap picture = imageRetriever.getImage(picId, true);
             if (picture != null) {
-                imageView.setImageBitmap(picture);
-                //imageView.setBackgroundResource(R.drawable.picture_border);
-                imageView.setVisibility(View.VISIBLE);
+                viewHolder.progress.setVisibility(View.GONE);
+                viewHolder.image.setImageBitmap(picture);
+                viewHolder.image.setVisibility(View.VISIBLE);
             } else {
-                imageRetriever.addRequest(picId, true, imageReceivedActionHandler);
-                progressBar.setVisibility(View.VISIBLE);
+                viewHolder.image.setVisibility(View.GONE);
+                imageRetriever.addRequest(picId, true, this);
+                viewHolder.progress.setVisibility(View.VISIBLE);
             }
         } else {
-            imageView.setImageResource(R.drawable.ic_list_blank_movie);
-            //imageView.setBackgroundResource(0);
-            imageView.setVisibility(View.VISIBLE);
+            viewHolder.progress.setVisibility(View.GONE);
+            viewHolder.image.setImageResource(R.drawable.ic_list_blank_movie);
+            viewHolder.image.setVisibility(View.VISIBLE);
         }
 
-        TextView text = (TextView)view.findViewById(R.id.movie_caption_in_movie_list);
-        text.setText(movie.getName());
-
-        text = (TextView)view.findViewById(R.id.movie_genre_in_movie_list);
-        if (movie.getGenres().size() != 0) {
-            StringBuilder genres = new StringBuilder();
-            for (MovieGenre genre : movie.getGenres().values()) {
-                genres.append(genre.getName()).append("/");
-            }
-            genres.delete(genres.length() - 1, genres.length());
-            text.setText(genres.toString());
-
-            text.setVisibility(View.VISIBLE);
+        String genres = DataConverter.genresToString(movie.getGenres().values());
+        if (genres.length() != 0) {
+            viewHolder.genres.setText(genres);
+            viewHolder.genres.setVisibility(View.VISIBLE);
         } else {
-            text.setVisibility(View.GONE);
+            viewHolder.genres.setVisibility(View.GONE);
         }
 
-        TextView imdbView = (TextView)view.findViewById(R.id.imdb);
         String imdb = DataConverter.imdbToString(movie.getImdb());
         if (imdb.length() != 0) {
-            imdbView.setText(imdb);
-            imdbView.setVisibility(View.VISIBLE);
+            viewHolder.imdb.setText(imdb);
+            viewHolder.imdb.setVisibility(View.VISIBLE);
         } else {
-            imdbView.setVisibility(View.GONE);
+            viewHolder.imdb.setVisibility(View.GONE);
         }
 
-        text = (TextView)view.findViewById(R.id.movie_actor_in_movie_list);
-        if (movie.getActors().size() != 0) {
-            StringBuilder actors = new StringBuilder();
-            for (MovieActor actor : movie.getActors().values()) {
-                if (actor.getFavourite() != 0) {
-                    actors.append(actor.getName()).append(", ");
-                }
-            }
-
-            if (actors.length() != 0) {
-                actors.delete(actors.length() - 2, actors.length());
-                text.setText(actors.toString());
-                text.setVisibility(View.VISIBLE);
-            } else {
-                text.setVisibility(View.GONE);
-            }
-
+        String actors = DataConverter.favActorsToString(movie.getActors().values());
+        if (actors.length() != 0) {
+            viewHolder.favActors.setText(actors);
+            viewHolder.favActors.setVisibility(View.VISIBLE);
         } else {
-            text.setVisibility(View.GONE);
+            viewHolder.favActors.setVisibility(View.GONE);
         }
     }
 
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View myView;
-        if (view != null) {
-            myView = view;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        MovieViewHolder viewHolder;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.movie_item, null);
+            viewHolder = new MovieViewHolder();
+            viewHolder.image = (ImageView)convertView.findViewById(R.id.movie_icon);
+            viewHolder.progress = convertView.findViewById(R.id.progress);
+            viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption);
+            viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre);
+            viewHolder.imdb = (TextView)convertView.findViewById(R.id.imdb);
+            viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor);
+            convertView.setTag(viewHolder);
         } else {
-            myView = newView(context, viewGroup);
+            viewHolder = (MovieViewHolder)convertView.getTag();
         }
-
-        bindView(i, myView);
-
-        return myView;
+        bindView(position, viewHolder);
+        return convertView;
     }
 
     public void sortBy(Comparator<Movie> movieComparator) {
@@ -146,15 +129,17 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
     }
 
     public void onImageReceived(boolean success) {
-        notifyDataSetChanged();
+        Activity activity = (Activity)context;
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                notifier.askForNotifyDataSetChanged();
+            }
+        });
     }
 
     public void onStop() {
-        imageReceivedActionHandler.stop();
         imageRetriever.saveState();
     }
 
-    public void onResume() {
-        imageReceivedActionHandler.start();
-    }
+    public void onResume() {}
 }

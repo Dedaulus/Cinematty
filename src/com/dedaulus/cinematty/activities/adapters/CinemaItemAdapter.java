@@ -35,18 +35,16 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     private Context context;
     private LayoutInflater inflater;
     IdleDataSetChangeNotifier notifier;
-    private Map<String, Cinema> cinemaEntries;
     private ArrayList<Cinema> cinemas;
     private Location location;
     private final Object locationMutex = new Object();
 
-    public CinemaItemAdapter(Context context, IdleDataSetChangeNotifier notifier, Map<String, Cinema> cinemaEntries, Location location) {
+    public CinemaItemAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Location location) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
         notifier.setAdapter(this);
-        this.cinemaEntries = cinemaEntries;
-        this.cinemas = new ArrayList<Cinema>(cinemaEntries.values());
+        this.cinemas = cinemas;
         this.location = location;
     }
 

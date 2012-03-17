@@ -20,6 +20,7 @@ import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -209,7 +210,7 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         }
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, cinemas, state.movie, currentDay, locationState.getCurrentLocation());
+        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, new ArrayList<Cinema>(cinemas.values()), state.movie, currentDay, locationState.getCurrentLocation());
         ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
         list.setOnScrollListener(notifier);
