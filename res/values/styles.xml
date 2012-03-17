@@ -176,7 +176,8 @@
 
     <style name="ListItem.Data.CinemaAddress"/>
     <style name="ListItem.Data.CinemaDistance">
-        <item name="android:textColor">#FF6899FF</item>
+        <!--<item name="android:textColor">#FF6899FF</item>-->
+        <item name="android:textColor">@color/bar_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
