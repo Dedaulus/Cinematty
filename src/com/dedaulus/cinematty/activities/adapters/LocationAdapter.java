@@ -8,5 +8,5 @@ import android.location.Location;
  * Time: 20:54
  */
 public interface LocationAdapter {
-    void setCurrentLocation(Location location);
+    void setLocation(Location location);
 }
