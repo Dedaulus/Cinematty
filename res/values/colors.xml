@@ -3,6 +3,7 @@
 <resources>
     <color name="main_color">#FF4E00</color>
     <!--<color name="main_color">#FF6A00</color>-->
+    <color name="advanced_color">#00137F</color>
     <color name="link_color">#33B5E5</color>
     <color name="bar_color">#213A48</color>
 </resources>

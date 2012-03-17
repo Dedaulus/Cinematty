@@ -61,9 +61,9 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
         HashMap<Integer, Integer> slideIds = new HashMap<Integer, Integer>();
-        slideIds.put(Constants.CATEGORIES_SLIDE, Constants.CATEGORIES_SLIDE);
-        slideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
+        //slideIds.put(Constants.CATEGORIES_SLIDE, Constants.CATEGORIES_SLIDE);
         slideIds.put(Constants.CINEMAS_SLIDE, Constants.CINEMAS_SLIDE);
+        slideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
         slideIds.put(Constants.MOVIES_SLIDE, Constants.MOVIES_SLIDE);
         slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
         slideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
@@ -71,9 +71,9 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
 
         pages = new ArrayList<SliderPage>(SLIDERS_COUNT);
-        pages.add(new CategoriesPage(this, app, slider, slideIds));
-        pages.add(new WhatsNewPage(this, app));
+        //pages.add(new CategoriesPage(this, app, slider, slideIds));
         pages.add(new CinemasPage(this, app));
+        pages.add(new WhatsNewPage(this, app));
         pages.add(new MoviesPage(this, app));
         pages.add(new ActorsPage(this, app));
         pages.add(new GenresPage(this, app));

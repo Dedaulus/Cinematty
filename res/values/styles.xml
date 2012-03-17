@@ -88,35 +88,9 @@
         <item name="android:text">@string/genres_caption</item>
     </style>
 
-    <style name="CategoryItem.Image">
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">6dp</item>
-    </style>
-
-    <style name="CategoryItem.Image.WhatsNew">
-        <item name="android:src">@drawable/ic_whats_new</item>
-    </style>
-
-    <style name="CategoryItem.Image.Cinemas">
-        <item name="android:src">@drawable/ic_place</item>
-    </style>
-
-    <style name="CategoryItem.Image.Movies">
-        <item name="android:src">@drawable/ic_movies</item>
-    </style>
-
-    <style name="CategoryItem.Image.Actors">
-        <item name="android:src">@drawable/ic_actors</item>
-    </style>
-
-    <style name="CategoryItem.Image.Genres">
-        <item name="android:src">@drawable/ic_genres</item>
-    </style>
-
-
     <style name="List">
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:divider">@drawable/list_divider</item>
         <item name="android:dividerHeight">1px</item>
         <item name="android:cacheColorHint">#FFFFFF</item>
@@ -156,16 +130,16 @@
     </style>
 
     <style name="ListItem.Caption">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">#333333</item>
+        <!--<item name="android:textColor">#242424</item>-->
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ListItem.Caption.Cinema"/>
     <style name="ListItem.Caption.Movie"/>
     <style name="ListItem.Caption.Actor"/>
-    <style name="ListItem.Caption.Genre">
-        <item name="android:textSize">18sp</item>
-    </style>
+    <style name="ListItem.Caption.Genre"/>
     <style name="ListItem.Caption.City">
         <item name="android:textSize">20dp</item>
     </style>
@@ -177,7 +151,7 @@
     <style name="ListItem.Data.CinemaAddress"/>
     <style name="ListItem.Data.CinemaDistance">
         <!--<item name="android:textColor">#FF6899FF</item>-->
-        <item name="android:textColor">@color/bar_color</item>
+        <item name="android:textColor">@color/advanced_color</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -188,7 +162,8 @@
     </style>
     <style name="ListItem.Data.MovieGenre"/>
     <style name="ListItem.Data.MovieRating">
-        <item name="android:textColor">#00137F</item>
+        <item name="android:textColor">@color/advanced_color</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="ListItem.Data.MovieSchedule">
         <item name="android:textColor">#FF4E00</item>

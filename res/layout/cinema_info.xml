@@ -44,7 +44,7 @@
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textSize="16sp"
-                    android:textColor="#0094FF"/>
+                    android:textColor="@color/link_color"/>
 
         </RelativeLayout>
 

@@ -72,7 +72,7 @@
                             style="@style/ListItem.Data.MovieRating"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="#FF6899FF"
+                            android:textColor="@color/advanced_color"
                             android:paddingTop="2dp"/>
 
                     <TextView android:id="@+id/movie_trailer_url"
@@ -80,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="8dp"
                             android:textSize="16sp"
-                            android:textColor="#0094FF"/>
+                            android:textColor="@color/link_color"/>
 
                 </LinearLayout>
 

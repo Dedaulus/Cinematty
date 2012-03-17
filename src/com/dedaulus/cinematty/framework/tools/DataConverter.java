@@ -273,6 +273,24 @@ public class DataConverter {
         return buffer.toString();
     }
 
+    public static String timeInMinutesToTimeHoursAndMinutes(int minutes) {
+        if (minutes > 0) {
+            StringBuilder buffer = new StringBuilder();
+            if (minutes > 59) {
+                int hours = minutes / 60;
+                minutes = minutes - hours * 60;
+                buffer.append(hours).append(":");
+            } else {
+                buffer.append("0:");
+            }
+            if (minutes < 10) buffer.append("0");
+            buffer.append(minutes);
+            return buffer.toString();
+        }
+
+        return "";
+    }
+
     public static String metersToDistance(Context context, int meters) {
         if (meters > 1000) {
             int km = meters / 1000;

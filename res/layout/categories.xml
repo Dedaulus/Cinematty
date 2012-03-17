@@ -18,13 +18,8 @@
                 style="@style/CategoryItemPanel"
                 android:layout_marginTop="6dp">
 
-                <ImageView
-                    android:id="@+id/whats_new_ico"
-                    style="@style/CategoryItem.Image.WhatsNew"/>
-
                 <TextView
-                    style="@style/CategoryItem.Caption.WhatsNew"
-                    android:layout_toRightOf="@id/whats_new_ico"/>
+                    style="@style/CategoryItem.Caption.WhatsNew"/>
 
             </RelativeLayout>
 
@@ -33,13 +28,8 @@
                 style="@style/CategoryItemPanel"
                 android:layout_marginTop="6dp">
 
-                <ImageView
-                    android:id="@+id/cinemas_ico"
-                    style="@style/CategoryItem.Image.Cinemas"/>
-
                 <TextView
-                    style="@style/CategoryItem.Caption.Cinemas"
-                    android:layout_toRightOf="@id/cinemas_ico"/>
+                    style="@style/CategoryItem.Caption.Cinemas"/>
 
             </RelativeLayout>
 
@@ -48,13 +38,8 @@
                 style="@style/CategoryItemPanel"
                 android:layout_marginTop="6dp">
 
-                <ImageView
-                    android:id="@+id/movies_ico"
-                    style="@style/CategoryItem.Image.Movies"/>
-
                 <TextView
-                    style="@style/CategoryItem.Caption.Movies"
-                    android:layout_toRightOf="@id/movies_ico"/>
+                    style="@style/CategoryItem.Caption.Movies"/>
 
             </RelativeLayout>
 
@@ -63,13 +48,8 @@
                 style="@style/CategoryItemPanel"
                 android:layout_marginTop="6dp">
 
-                <ImageView
-                    android:id="@+id/actors_ico"
-                    style="@style/CategoryItem.Image.Actors"/>
-
                 <TextView
-                    style="@style/CategoryItem.Caption.Actors"
-                    android:layout_toRightOf="@id/actors_ico"/>
+                    style="@style/CategoryItem.Caption.Actors"/>
 
             </RelativeLayout>
 
@@ -79,13 +59,8 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp">
 
-                <ImageView
-                    android:id="@+id/genres_ico"
-                    style="@style/CategoryItem.Image.Genres"/>
-
                 <TextView
-                    style="@style/CategoryItem.Caption.Genres"
-                    android:layout_toRightOf="@id/genres_ico"/>
+                    style="@style/CategoryItem.Caption.Genres"/>
 
             </RelativeLayout>
 

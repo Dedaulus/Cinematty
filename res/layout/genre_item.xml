@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:padding="6dp">
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/genre_caption_in_genre_list"
