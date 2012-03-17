@@ -208,13 +208,15 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, cinemas, state.movie, currentDay, locationState.getCurrentLocation());
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, cinemas, state.movie, currentDay, locationState.getCurrentLocation());
         ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
+        list.setOnScrollListener(notifier);
     }
 
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
+        LocationAdapter adapter = (LocationAdapter)cinemaListAdapter;
         adapter.setLocation(location);
     }
 }

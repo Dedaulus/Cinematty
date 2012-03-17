@@ -17,6 +17,7 @@ import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.*;
 
@@ -39,6 +40,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     
     private Context context;
     private LayoutInflater inflater;
+    private IdleDataSetChangeNotifier notifier;
     private Map<String, Cinema> cinemaEntries;
     private ArrayList<Cinema> cinemas;
     private Movie currentMovie;
@@ -46,9 +48,11 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private Location location;
     private Object locationMutex = new Object();
 
-    public CinemaItemWithScheduleAdapter(Context context, Map<String, Cinema> cinemaEntries, Movie currentMovie, int day, Location location) {
+    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, Map<String, Cinema> cinemaEntries, Movie currentMovie, int day, Location location) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.notifier = notifier;
+        notifier.setAdapter(this);
         this.cinemaEntries = cinemaEntries;
         cinemas = new ArrayList<Cinema>(cinemaEntries.values());
         this.currentMovie = currentMovie;
@@ -167,6 +171,6 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         synchronized (locationMutex) {
             this.location = location;
         }
-        notifyDataSetChanged();
+        notifier.askForNotifyDataSetChanged();
     }
 }

@@ -77,16 +77,4 @@ public class FramesPage implements SliderPage {
 
         return view;
     }
-
-    private void onPosterItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //PosterItemAdapter adapter = (PosterItemAdapter)adapterView.getAdapter();
-        //MoviePoster poster = (MoviePoster)adapter.getItem(i);
-        //String cookie = UUID.randomUUID().toString();
-        //ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, poster.getMovie(), null, null);
-        //activitiesState.setState(cookie, state);
-
-        //Intent intent = new Intent(context, MovieActivity.class);
-        //intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        //context.startActivity(intent);
-    }
 }
