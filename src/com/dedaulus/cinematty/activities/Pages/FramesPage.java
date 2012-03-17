@@ -12,6 +12,7 @@ import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.adapters.FrameItemAdapter;
 import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 /**
  * User: Dedaulus
@@ -65,10 +66,11 @@ public class FramesPage implements SliderPage {
     }
 
     private View bindView(View view) {
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        itemAdapter = new FrameItemAdapter(context, notifier, frameIdsStore, app.getImageRetrievers().getFrameImageRetriever());
         GridView framesGrid = (GridView)view.findViewById(R.id.frames_grid);
-        itemAdapter = new FrameItemAdapter(context, frameIdsStore, app.getImageRetrievers().getFrameImageRetriever());
         framesGrid.setAdapter(itemAdapter);
-        framesGrid.setOnScrollListener(itemAdapter);
+        framesGrid.setOnScrollListener(notifier);
 
         binded = true;
         onResume();
