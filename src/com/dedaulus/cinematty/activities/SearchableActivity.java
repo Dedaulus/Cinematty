@@ -21,6 +21,7 @@ import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 import com.dedaulus.cinematty.framework.tools.LocationClient;
 
 import java.util.*;
@@ -142,9 +143,11 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
         }
         Collections.sort(foundActors);
 
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        searchAdapter = new SearchAdapter(this, notifier, foundCinemas, locationState.getCurrentLocation(), foundMovies, app.getImageRetrievers().getMovieSmallImageRetriever(), foundActors);
         ListView list = (ListView)findViewById(R.id.search_list);
-        searchAdapter = new SearchAdapter(this, foundCinemas, locationState.getCurrentLocation(), foundMovies, app.getImageRetrievers().getMovieSmallImageRetriever(), foundActors);
         list.setAdapter(searchAdapter);
+        list.setOnScrollListener(notifier);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchAdapter adapter = (SearchAdapter)parent.getAdapter();

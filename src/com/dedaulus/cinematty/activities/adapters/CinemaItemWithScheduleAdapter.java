@@ -3,7 +3,6 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.content.Context;
 import android.location.Location;
 import android.text.SpannableString;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,18 +41,18 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private LayoutInflater inflater;
     private IdleDataSetChangeNotifier notifier;
     private ArrayList<Cinema> cinemas;
-    private Movie currentMovie;
+    private Movie movie;
     private int currentDay;
     private Location location;
     private Object locationMutex = new Object();
 
-    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie currentMovie, int day, Location location) {
+    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie movie, int day, Location location) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
         notifier.setAdapter(this);
         this.cinemas = cinemas;
-        this.currentMovie = currentMovie;
+        this.movie = movie;
         currentDay = day;
         this.location = location;
     }
@@ -121,7 +120,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             viewHolder.addressRegion.setVisibility(View.GONE);
         }
 
-        List<Calendar> showTimes = cinema.getShowTimes(currentDay).get(currentMovie.getName()).second;
+        List<Calendar> showTimes = cinema.getShowTimes(currentDay).get(movie.getName()).second;
         String showTimesStr = DataConverter.showTimesToString(showTimes);
         if (showTimesStr.length() != 0) {
             viewHolder.schedule.setText(showTimesStr);

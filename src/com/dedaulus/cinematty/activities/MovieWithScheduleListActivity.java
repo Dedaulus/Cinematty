@@ -76,7 +76,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
     @Override
     protected void onResume() {
-        ((StoppableAndResumable) movieListAdapter).onResume();
+        ((StoppableAndResumable)movieListAdapter).onResume();
         if (currentDay != settings.getCurrentDay()) {
             setCurrentDay(settings.getCurrentDay());
         }
@@ -248,13 +248,17 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
             findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        StoppableAndResumable sar = (StoppableAndResumable) movieListAdapter;
+        StoppableAndResumable sar = (StoppableAndResumable)movieListAdapter;
         if (sar != null) sar.onStop();
-        movieListAdapter = new MovieItemWithScheduleAdapter(this, new ArrayList<Movie>(movies), state.cinema, currentDay, app.getImageRetrievers().getMovieSmallImageRetriever());
-        sar = (StoppableAndResumable) movieListAdapter;
-        sar.onResume();
+
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        movieListAdapter = new MovieItemWithScheduleAdapter(this, notifier, new ArrayList<Movie>(movies), state.cinema, currentDay, app.getImageRetrievers().getMovieSmallImageRetriever());
         ListView list = (ListView)findViewById(R.id.movie_list);
         list.setAdapter(movieListAdapter);
+        list.setOnScrollListener(notifier);
+
+        sar = (StoppableAndResumable)movieListAdapter;
+        sar.onResume();
     }
 
     private void setCinemaHeader() {

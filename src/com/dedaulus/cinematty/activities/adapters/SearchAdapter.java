@@ -14,6 +14,7 @@ import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     
     private Context context;
     private LayoutInflater inflater;
+    IdleDataSetChangeNotifier notifier;
     private ArrayList items;
     private Location location;
     private final Object locationMutex = new Object();
@@ -70,9 +72,11 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         items = new ArrayList();
     }
 
-    public SearchAdapter(Context context, List<Cinema> cinemas, Location location, List<Movie> movies, MovieImageRetriever imageRetriever, List<MovieActor> actors) {
+    public SearchAdapter(Context context, IdleDataSetChangeNotifier notifier, List<Cinema> cinemas, Location location, List<Movie> movies, MovieImageRetriever imageRetriever, List<MovieActor> actors) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.notifier = notifier;
+        notifier.setAdapter(this);
         
         int position = 0;
         if (cinemas != null && cinemas.size() != 0) {
@@ -343,7 +347,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         synchronized (locationMutex) {
             this.location = location;
         }
-        notifyDataSetChanged();
+        notifier.askForNotifyDataSetChanged();
     }
 
     @Override
@@ -351,7 +355,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         Activity activity = (Activity)context;
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                notifyDataSetChanged();
+                notifier.askForNotifyDataSetChanged();
             }
         });
     }
