@@ -25,6 +25,8 @@ public class StartupActivity extends Activity
 {
     private static final int GET_CURRENT_CITY = RESULT_FIRST_USER + 1;
     private CinemattyApplication app;
+    private static volatile boolean inProgress;
+    private static final Object mutex = new Object();
 
     /** Called when the activity is first created. */
     @Override
@@ -40,6 +42,10 @@ public class StartupActivity extends Activity
         if (app.getVersionState() == CinemattyApplication.NEW_INSTALLATION) {
             getCitiesList();
         } else {
+            synchronized (mutex) {
+                if (inProgress) return;
+                inProgress = true;
+            }
             getSchedule();
         }
     }
@@ -53,16 +59,6 @@ public class StartupActivity extends Activity
         }
 
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void onTryAgainClick(View view) {
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-
-        overridePendingTransition(0, 0);
-        startActivity(intent);
     }
 
     private void setErrorString(String message) {
@@ -95,6 +91,7 @@ public class StartupActivity extends Activity
             private SyncStatus syncStatus;
             public void run() {
                 syncStatus = app.syncSchedule(activity);
+                inProgress = false;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         if (syncStatus == SyncStatus.OK) {
@@ -104,7 +101,7 @@ public class StartupActivity extends Activity
                             finish();
                         } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://market.android.com/details?id=com.dedaulus.cinematty"));
+                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.dedaulus.cinematty"));
                             startActivity(intent);
                             finish();
                         } else if (syncStatus == SyncStatus.BAD_RESPONSE) {
