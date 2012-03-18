@@ -551,7 +551,9 @@ public class CinemattyApplication extends Application {
     }
 
     public void goHome(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     public void showPreferences(Activity activity) {

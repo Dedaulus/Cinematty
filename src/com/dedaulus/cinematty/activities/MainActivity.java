@@ -137,6 +137,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
     public void onBackPressed() {
         if (getCurrentPage() == Constants.WHATS_NEW_SLIDE) {
             activitiesState.removeState(FAKE_STATE_ID);
+            app.resetSyncStatus();
             super.onBackPressed();
         } else {
             ViewPager slider = (ViewPager)findViewById(R.id.slider);
