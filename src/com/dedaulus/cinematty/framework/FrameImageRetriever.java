@@ -46,7 +46,7 @@ public class FrameImageRetriever {
             postfixId = 2;
         }
 
-        imageRetriever = new ImageRetriever(entity, localFolder);
+        imageRetriever = ImageRetriever.create(entity, localFolder);
     }
 
     public Bitmap getImage(String uid, int frameId, boolean isPreview) {

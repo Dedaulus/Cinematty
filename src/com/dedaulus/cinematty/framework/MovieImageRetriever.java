@@ -40,7 +40,7 @@ public class MovieImageRetriever {
             this.remoteFolder += "/";
         }
         
-        imageRetriever = new ImageRetriever(entity, localFolder);
+        imageRetriever = ImageRetriever.create(entity, localFolder);
     }
     
     public Bitmap getImage(String uid, boolean small) {

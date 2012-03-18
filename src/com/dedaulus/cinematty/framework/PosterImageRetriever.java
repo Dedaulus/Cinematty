@@ -17,7 +17,7 @@ public class PosterImageRetriever {
     }
 
     public PosterImageRetriever(String entity, File localFolder) throws ImageRetriever.ObjectAlreadyExists {
-        imageRetriever = new ImageRetriever(entity, localFolder);
+        imageRetriever = ImageRetriever.create(entity, localFolder);
     }
 
     public Bitmap getImage(String url) {

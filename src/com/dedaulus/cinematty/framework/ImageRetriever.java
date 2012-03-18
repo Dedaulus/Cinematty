@@ -26,8 +26,8 @@ public class ImageRetriever implements Runnable {
     private static int LIVE_DAYS = 7;
     private static String PREPREFIX = "image_retriever_";
 
-    private static final Set<String> entities = new HashSet<String>();
-    
+    private static final Map<String, ImageRetriever> entities = new HashMap<String, ImageRetriever>();
+
     private String entity;
     private String prefix;
     private File localFolder;
@@ -65,13 +65,18 @@ public class ImageRetriever implements Runnable {
         images = new HashMap<String, ImageWrapper>();
         requests = new LinkedList<Request>();
     }
-    
-    public ImageRetriever(String entity, File localFolder) throws ObjectAlreadyExists {
-        if (entities.contains(entity)) {
-            throw new ObjectAlreadyExists(entity);
+
+    public static ImageRetriever create(String entity, File localFolder) {
+        if (entities.containsKey(entity)) {
+            return entities.get(entity);
         }
 
-        entities.add(entity);
+        ImageRetriever retriever = new ImageRetriever(entity, localFolder);
+        entities.put(entity, retriever);
+        return retriever;
+    }
+    
+    private ImageRetriever(String entity, File localFolder) {
         this.entity = entity;
         prefix = PREPREFIX + entity;
         this.localFolder = localFolder;
