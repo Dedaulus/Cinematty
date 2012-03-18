@@ -45,7 +45,8 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
                 String subject = String.format(
                         context.getString(R.string.support_email_subject), 
                         context.getString(R.string.app_name), 
-                        context.getString(R.string.app_version));
+                        context.getString(R.string.app_version),
+                        context.getString(R.string.app_version_code));
                 
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
@@ -65,7 +66,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
                 return true;
             }
         });
-        String aboutSummary = String.format(getString(R.string.pref_about_summary), getString(R.string.app_version));
+        String aboutSummary = String.format(getString(R.string.pref_about_summary), getString(R.string.app_version), getString(R.string.app_version_code));
         aboutPreference.setSummary(aboutSummary);
     }
 
