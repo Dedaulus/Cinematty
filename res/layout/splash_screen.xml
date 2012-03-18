@@ -32,15 +32,6 @@
             android:visibility="gone"
             android:layout_below="@id/error_message"/>
 
-        <Button
-            android:layout_marginBottom="2dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/try_again"
-            android:onClick="onTryAgainClick"/>
-
     </RelativeLayout>
 
     <RelativeLayout

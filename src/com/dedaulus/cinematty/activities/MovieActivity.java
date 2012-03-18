@@ -70,7 +70,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         defaultPagePosition = DESCRIPTION_PAGE_ID;
         MovieFrameIdsStore frameIdsStore = state.movie.getFrameIdsStore();
         if (state.movie.getFrameIdsStore() != null) {
-            pages.add(new FramesPage(this, app, frameIdsStore));
+            pages.add(new FramesPage(this, app, frameIdsStore, state));
         } else {
             defaultPagePosition -= 1;
         }

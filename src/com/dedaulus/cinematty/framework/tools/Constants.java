@@ -7,6 +7,7 @@ package com.dedaulus.cinematty.framework.tools;
  */
 public class Constants {
     public static final String ACTIVITY_STATE_ID = "activity_state_id";
+    public static final String FRAME_ID          = "frame_id";
 
     public static final int CATEGORIES_SLIDE  = -1;
     public static final int CINEMAS_SLIDE     = 0;

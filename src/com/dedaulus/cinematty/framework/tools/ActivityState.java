@@ -24,6 +24,7 @@ public class ActivityState implements Cloneable {
     public static final int MOVIE_INFO          = 11;
     public static final int MOVIE_INFO_W_SCHED  = 12;
     public static final int CINEMA_ON_MAP       = 13;
+    public static final int VIEW_FRAME          = 14;
 
     public int activityType;
     public Cinema cinema;

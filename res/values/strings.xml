@@ -4,9 +4,9 @@
     <string name="pref_cities_summary">Выберите для какого города получать расписание</string>
     <string name="pref_problem">Сообщить о проблеме</string>
     <string name="pref_about">О программе</string>
-    <string name="pref_about_summary" formatted="false">Версия %s</string>
+    <string name="pref_about_summary" formatted="false">Версия %s b%s</string>
 
-    <string name="support_email_subject" formatted="false">Проблема в %s %s</string>
+    <string name="support_email_subject" formatted="false">Проблема в %s %s b%s</string>
     <string name="support_email_intent_caption">Сообщить о проблеме</string>
 
     <string name="app_name">ГдеКИНО</string>
