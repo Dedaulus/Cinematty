@@ -39,7 +39,7 @@ public class CityListActivity extends Activity {
             parser.parse(getResources().openRawResource(R.raw.cities), handler);
             cities = handler.getCityList();
             ListView list = (ListView)findViewById(R.id.city_list);
-            list.setAdapter(new CityItemAdapter(this, new ArrayList<City>(cities), app.getCurrentCity()));
+            list.setAdapter(new CityItemAdapter(this, new ArrayList<City>(cities)));
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onCityItemClick(adapterView, view, i, l);
@@ -49,7 +49,7 @@ public class CityListActivity extends Activity {
             throw new RuntimeException(e);
         }
     }
-
+    /*
     @Override
     protected void onResume() {
         City city = app.getCurrentCity();
@@ -59,7 +59,7 @@ public class CityListActivity extends Activity {
 
         super.onResume();
     }
-
+    */
     private void onCityItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CityItemAdapter adapter = (CityItemAdapter)adapterView.getAdapter();
         ListView list = (ListView)view.getParent();

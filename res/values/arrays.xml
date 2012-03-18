@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="city_names">
+        <item name="Москва">Москва</item>
+        <item name="Санкт-Петербург">Санкт-Петербург</item>
+        <item name="Волгоград">Волгоград</item>
+        <item name="Воронеж">Воронеж</item>
+        <item name="Екатеринбург">Екатеринбург</item>
+        <item name="Казань">Казань</item>
+        <item name="Калининград">Калининград</item>
+        <item name="Липецк">Липецк</item>
+        <item name="Нижний Новгород">Нижний Новгород</item>
+        <item name="Новосибирск">Новосибирск</item>
+        <item name="Пермь">Пермь</item>
+        <item name="Петрозаводск">Петрозаводск</item>
+        <item name="Самара">Самара</item>
+        <item name="Тула">Тула</item>
+        <item name="Челябинск">Челябинск</item>
+    </string-array>
+
+    <string-array name="city_ids">
+        <item name="Москва">1</item>
+        <item name="Санкт-Петербург">2</item>
+        <item name="Волгоград">3</item>
+        <item name="Воронеж">4</item>
+        <item name="Екатеринбург">5</item>
+        <item name="Казань">6</item>
+        <item name="Калининград">7</item>
+        <item name="Липецк">8</item>
+        <item name="Нижний Новгород">9</item>
+        <item name="Новосибирск">10</item>
+        <item name="Пермь">11</item>
+        <item name="Петрозаводск">12</item>
+        <item name="Самара">13</item>
+        <item name="Тула">14</item>
+        <item name="Челябинск">15</item>
+    </string-array>
+
+</resources>

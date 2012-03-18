@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pref_cities">Город</string>
+    <string name="pref_cities_summary">Выберите для какого города получать расписание</string>
+    <string name="pref_problem">Сообщить о проблеме</string>
+    <string name="pref_about">О программе</string>
+    <string name="pref_about_summary" formatted="false">Версия %s</string>
+
+    <string name="support_email_subject" formatted="false">Проблема в %s %s</string>
+    <string name="support_email_intent_caption">Сообщить о проблеме</string>
+
     <string name="app_name">ГдеКИНО</string>
     <string name="app_version">1.1.1</string>
     <string name="app_version_code">17</string>
     <string name="copyright">© 2011, Dedaulus, Donytar, Aleserma</string>
-    <string name="email">gdekino.net</string>
+    <string name="email">support@gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
 

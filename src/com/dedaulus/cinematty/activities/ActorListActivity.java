@@ -140,7 +140,7 @@ public class ActorListActivity extends SherlockActivity {
                 return true;
 
             case R.id.menu_preferences:
-                app.showAbout(this);
+                app.showPreferences(this);
                 return true;
 
             default:

@@ -192,7 +192,7 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
                 return true;
 
             case R.id.menu_preferences:
-                app.showAbout(this);
+                app.showPreferences(this);
                 return true;
 
             default:

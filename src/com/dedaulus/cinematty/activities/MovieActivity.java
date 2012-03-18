@@ -158,7 +158,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
                 return true;
 
             case R.id.menu_preferences:
-                app.showAbout(this);
+                app.showPreferences(this);
                 return true;
 
             default:

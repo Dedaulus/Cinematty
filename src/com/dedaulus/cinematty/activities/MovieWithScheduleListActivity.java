@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
@@ -203,7 +202,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
                 return true;
 
             case R.id.menu_preferences:
-                app.showAbout(this);
+                app.showPreferences(this);
                 return true;
 
             default:

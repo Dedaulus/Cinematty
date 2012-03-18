@@ -11,10 +11,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
 import com.dedaulus.cinematty.activities.AboutActivity;
+import com.dedaulus.cinematty.activities.PreferencesActivity;
 import com.dedaulus.cinematty.framework.FrameImageRetriever;
 import com.dedaulus.cinematty.activities.MainActivity;
 import com.dedaulus.cinematty.activities.StartupActivity;
@@ -552,8 +554,8 @@ public class CinemattyApplication extends Application {
         context.startActivity(new Intent(context, MainActivity.class));
     }
 
-    public void showAbout(Context context) {
-        context.startActivity(new Intent(context, AboutActivity.class));
+    public void showPreferences(Activity activity) {
+        activity.startActivity(new Intent(activity, PreferencesActivity.class));
     }
 
     public int getVersionState() {
@@ -622,16 +624,17 @@ public class CinemattyApplication extends Application {
     }
 
     private void saveCurrentCityImpl(City city) {
-        SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
+        //SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(ApplicationSettingsImpl.PREF_CURRENT_CITY, city.getId());
+        editor.putString(ApplicationSettingsImpl.PREF_CURRENT_CITY, String.valueOf(city.getId()));
         editor.commit();
 
         currentCity = city;
     }
 
     private City getCurrentCityImpl() {
-        if (currentCity != null) return currentCity;
+        //if (currentCity != null) return currentCity;
         
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
@@ -639,8 +642,9 @@ public class CinemattyApplication extends Application {
             CityHandler handler = new CityHandler();
             parser.parse(getResources().openRawResource(R.raw.cities), handler);
 
-            SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
-            int id = preferences.getInt(ApplicationSettingsImpl.PREF_CURRENT_CITY, -1);
+            //SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            int id = Integer.parseInt(preferences.getString(ApplicationSettingsImpl.PREF_CURRENT_CITY, "-1"));
 
             List<City> cities = handler.getCityList();
             for (City city : cities) {
@@ -649,7 +653,8 @@ public class CinemattyApplication extends Application {
                     return currentCity;
                 }
             }
-            return null;
+            currentCity = cities.get(0);
+            return currentCity;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

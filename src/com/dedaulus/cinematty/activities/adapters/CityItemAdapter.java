@@ -19,12 +19,10 @@ import java.util.ArrayList;
 public class CityItemAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<City> cities;
-    private int currentCityId;
 
-    public CityItemAdapter(Context context, ArrayList<City> cities, City city) {
+    public CityItemAdapter(Context context, ArrayList<City> cities) {
         this.context = context;
         this.cities = cities;
-        this.currentCityId = city != null ? city.getId() : -1;
     }
 
     public int getCount() {
@@ -46,15 +44,8 @@ public class CityItemAdapter extends BaseAdapter {
 
     private void bindView(int position, View view) {
         City city = cities.get(position);
-
         TextView text = (TextView)view.findViewById(R.id.city_caption_in_city_list);
         text.setText(city.getName());
-
-        if (city.getId() == currentCityId) {
-            view.findViewById(R.id.city_checked_icon).setVisibility(View.VISIBLE);
-        } else {
-            view.findViewById(R.id.city_checked_icon).setVisibility(View.GONE);
-        }
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -66,7 +57,6 @@ public class CityItemAdapter extends BaseAdapter {
         }
 
         bindView(i, myView);
-
         return myView;
     }
 }

@@ -167,7 +167,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
                 return true;
 
             case R.id.menu_preferences:
-                app.showAbout(this);
+                app.showPreferences(this);
                 return true;
 
             default:

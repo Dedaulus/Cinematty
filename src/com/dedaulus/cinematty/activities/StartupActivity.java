@@ -95,11 +95,11 @@ public class StartupActivity extends Activity
             private SyncStatus syncStatus;
             public void run() {
                 syncStatus = app.syncSchedule(activity);
-
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         if (syncStatus == SyncStatus.OK) {
                             Intent intent = new Intent(activity, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                             finish();
                         } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
