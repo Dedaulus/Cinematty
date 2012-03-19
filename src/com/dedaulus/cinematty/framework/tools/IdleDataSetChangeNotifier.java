@@ -17,6 +17,10 @@ public class IdleDataSetChangeNotifier implements AbsListView.OnScrollListener {
         this.adapter = adapter;
     }
 
+    public boolean isIdle() {
+        return idle;
+    }
+
     public void askForNotifyDataSetChanged() {
         if (adapter == null) throw new RuntimeException("Adapter not set");
         if (idle) {

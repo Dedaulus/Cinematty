@@ -77,26 +77,31 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
             imageView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             if (imageRetriever.hasImage(frameIdsStore.getUid(), frameId, true)) {
-                new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
-                        synchronized (cachedImages) {
-                            cachedImages.put(cachedImageKey, bitmap);
+                if (notifier.isIdle()) {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
+                            synchronized (cachedImages) {
+                                cachedImages.put(cachedImageKey, bitmap);
+                            }
+                            return null;
                         }
-                        return null;
-                    }
 
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        notifier.askForNotifyDataSetChanged();
-                    }
-                }.execute();
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            notifier.askForNotifyDataSetChanged();
+                        }
+                    }.execute();
+                } else {
+                    notifier.askForNotifyDataSetChanged();
+                }
             } else {
                 imageRetriever.addRequest(frameIdsStore.getUid(), frameId, true, new FrameImageRetriever.FrameImageReceivedAction() {
                     @Override
                     public void onImageReceived(boolean downloaded) {
                         if (downloaded) {
+                            /*
                             synchronized (cachedImages) {
                                 Bitmap bitmap = cachedImages.get(cachedImageKey);
                                 if (bitmap == null) {
@@ -109,6 +114,12 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
                                     }
                                 });
                             }
+                            */
+                            ((Activity)context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    notifier.askForNotifyDataSetChanged();
+                                }
+                            });
                         }
                     }
                 });
