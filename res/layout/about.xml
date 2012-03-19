@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ContentContainer">
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                 style="@style/ContentContainer"
+                 android:background="@drawable/action_bar_background"
+                 android:padding="10dp">
 
     <RelativeLayout
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:padding="10dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
         <ImageView
             android:id="@+id/splash_icon"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:paddingTop="50dp"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
             android:src="@drawable/splash" />
@@ -24,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/app_name"
-            android:textColor="#FF0000"
-            android:textSize="24dp" />
+            android:textColor="#FF5D08"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/app_version"
@@ -34,7 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/app_version"
-            android:textColor="#000000" />
+            android:textColor="#ffffff"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/copyright"
@@ -43,9 +45,10 @@
             android:layout_width="wrap_content"
             android:gravity="center_horizontal"
             android:layout_centerHorizontal="true"
+            android:paddingTop="30dp"
             android:text="@string/copyright"
-            android:textColor="#000000"
-            android:textSize="16dp" />
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/email"
@@ -53,9 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
+            android:paddingBottom="40dp"
             android:text="@string/url"
-            android:textColor="@color/link_color"
-            android:textSize="16dp"
+            android:textSize="18sp"
             android:autoLink="web"/>
         <!--
         <TextView
@@ -83,4 +86,4 @@
         -->
     </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>
