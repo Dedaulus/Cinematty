@@ -20,8 +20,8 @@
                     android:orientation="horizontal">
 
                 <RelativeLayout android:id="@+id/movie_icon_loading"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:paddingRight="6dp">
 
                     <ProgressBar
