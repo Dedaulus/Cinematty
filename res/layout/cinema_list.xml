@@ -16,7 +16,7 @@
             android:layout_centerInParent="true"
             android:text="@string/unknown_schedule"
             android:textColor="@android:color/secondary_text_light"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:visibility="gone"/>
 
 </RelativeLayout>

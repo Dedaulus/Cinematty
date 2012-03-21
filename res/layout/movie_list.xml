@@ -7,11 +7,12 @@
             style="@style/List.Movies"/>
 
     <TextView android:id="@+id/no_schedule"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/unknown_schedule"
-            android:textColor="#404040"
-            android:textSize="18sp"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="20sp"
             android:visibility="gone"/>
 
 </RelativeLayout>
