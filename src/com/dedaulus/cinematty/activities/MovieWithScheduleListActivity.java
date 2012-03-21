@@ -122,6 +122,10 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
             case Constants.TOMORROW_SCHEDULE:
                 menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
                 break;
+
+            case Constants.AFTER_TOMORROW_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_after_tomorrow).setChecked(true);
+                break;
         }
 
         inflater.inflate(R.menu.movie_sort_menu, menu);
@@ -173,6 +177,12 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
                 movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_after_tomorrow:
+                setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.AFTER_TOMORROW_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
@@ -237,6 +247,10 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
             case Constants.TOMORROW_SCHEDULE:
                 dayIndicator.setText(getString(R.string.tomorrow));
+                break;
+
+            case Constants.AFTER_TOMORROW_SCHEDULE:
+                dayIndicator.setText(getString(R.string.after_tomorrow));
                 break;
         }
 

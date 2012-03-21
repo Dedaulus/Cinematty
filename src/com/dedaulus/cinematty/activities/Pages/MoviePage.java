@@ -108,6 +108,10 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 case Constants.TOMORROW_SCHEDULE:
                     menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
                     break;
+
+                case Constants.AFTER_TOMORROW_SCHEDULE:
+                    menu.findItem(R.id.submenu_select_day_after_tomorrow).setChecked(true);
+                    break;
             }
         }
 
@@ -135,6 +139,11 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
 
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_after_tomorrow:
+                setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
                 item.setChecked(true);
                 return true;
 
@@ -217,6 +226,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private void setSchedule() {
         View region = pageView.findViewById(R.id.schedule_region);
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
+            
             StringBuilder builder = new StringBuilder();
             switch (currentDay) {
                 case Constants.TODAY_SCHEDULE:
@@ -226,15 +236,23 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 case Constants.TOMORROW_SCHEDULE:
                     builder.append(context.getString(R.string.tomorrow));
                     break;
+
+                case Constants.AFTER_TOMORROW_SCHEDULE:
+                    builder.append(context.getString(R.string.after_tomorrow));
+                    break;
             }
             builder.append(" в ").append(state.cinema.getName());            
             TextView divider = (TextView)region.findViewById(R.id.schedule_divider).findViewById(R.id.caption);            
             divider.setText(builder.toString().toUpperCase());
 
-            List<Calendar> showTimes = state.cinema.getShowTimes(currentDay).get(state.movie.getName()).second;
-            SpannableString schedule = DataConverter.showTimesToSpannableString(context, showTimes);
             TextView scheduleTextView = (TextView)region.findViewById(R.id.schedule);
-            scheduleTextView.setText(schedule);
+            Pair<Movie, List<Calendar>> showTimes = state.cinema.getShowTimes(currentDay).get(state.movie.getName());
+            if (showTimes != null) {
+                SpannableString schedule = DataConverter.showTimesToSpannableString(context, showTimes.second);
+                scheduleTextView.setText(schedule);
+            } else {
+                scheduleTextView.setText(R.string.unknown_schedule);
+            }
             region.setVisibility(View.VISIBLE);
         } else {
             region.setVisibility(View.GONE);

@@ -17,6 +17,9 @@
                 <item android:id="@+id/submenu_select_day_tomorrow"
                       android:title="@string/tomorrow"/>
 
+                <item android:id="@+id/submenu_select_day_after_tomorrow"
+                      android:title="@string/after_tomorrow"/>
+
             </group>
 
         </menu>

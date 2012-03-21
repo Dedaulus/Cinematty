@@ -74,6 +74,7 @@
     <string name="date">Дата</string>
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
+    <string name="after_tomorrow">Послезавтра</string>
 
     <string name="metro_near">Метро</string>
 

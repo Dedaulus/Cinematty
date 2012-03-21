@@ -122,6 +122,10 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
             case Constants.TOMORROW_SCHEDULE:
                 menu.findItem(R.id.submenu_select_day_tomorrow).setChecked(true);
                 break;
+
+            case Constants.AFTER_TOMORROW_SCHEDULE:
+                menu.findItem(R.id.submenu_select_day_after_tomorrow).setChecked(true);
+                break;
         }
         
         inflater.inflate(R.menu.cinema_sort_menu, menu);
@@ -162,6 +166,12 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
 
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_select_day_after_tomorrow:
+                setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
                 cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
                 item.setChecked(true);
                 return true;
