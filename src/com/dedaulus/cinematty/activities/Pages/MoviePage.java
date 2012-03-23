@@ -226,7 +226,6 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private void setSchedule() {
         View region = pageView.findViewById(R.id.schedule_region);
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            
             StringBuilder builder = new StringBuilder();
             switch (currentDay) {
                 case Constants.TODAY_SCHEDULE:

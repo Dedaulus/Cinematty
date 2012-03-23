@@ -142,6 +142,11 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             }
         }
         Collections.sort(foundActors);
+        
+        if (foundCinemas.isEmpty() && foundMovies.isEmpty() && foundActors.isEmpty()) {
+            findViewById(R.id.empty_search).setVisibility(View.VISIBLE);
+            return;
+        }
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
         searchAdapter = new SearchAdapter(this, notifier, foundCinemas, locationState.getCurrentLocation(), foundMovies, app.getImageRetrievers().getMovieSmallImageRetriever(), foundActors);
