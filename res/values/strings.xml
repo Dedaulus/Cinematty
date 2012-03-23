@@ -106,10 +106,8 @@
     <string name="wiki">Википедия</string>
 
     <string name="cities_file">cities.xml</string>
-    <string name="schedules_url">http://gdekino.net/cinematty/schedules</string>
-    <string name="settings_url">http://gdekino.net/cinematty</string>
-    <string name="shared_url">http://gdekino.net/cinematty/shared/</string>
-    <string name="shared_url2">http://gdekino.net/cinematty/shared.php</string>
+    <string name="connect_url">http://gdekino.net/cinematty/connect.php</string>
+
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер</string>
     <string name="image_search_url">http://www.google.com/m/search?site=images&amp;q=кадры из фильма</string>
     <string name="google_search_url">http://www.google.com/m/search?&amp;q=</string>

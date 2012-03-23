@@ -36,7 +36,6 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     ApplicationSettings settings;
     ActivitiesState activitiesState;
     LocationState locationState;
-
     SearchAdapter searchAdapter;
     
     public void onCreate(Bundle savedInstanceState) {
@@ -263,7 +262,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
 
     @Override
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)searchAdapter;
+        LocationAdapter adapter = searchAdapter;
         adapter.setLocation(location);
     }
 }

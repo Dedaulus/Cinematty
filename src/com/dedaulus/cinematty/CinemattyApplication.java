@@ -41,7 +41,6 @@ public class CinemattyApplication extends Application {
     public static int NEW_VERSION = 1;
     public static int OLD_VERSION = 2;
     
-    private static final String CONNECT_URL = "http://gdekino.net/cinematty/connect.php";
     private static final String SCHEDULES_FOLDER_KEY = "schedules_folder";
     private static final String PICTURES_FOLDER_KEY  = "pictures_folder";
     private static final String FRAMES_FOLDER_KEY    = "frames_folder";
@@ -580,12 +579,16 @@ public class CinemattyApplication extends Application {
 
         return OLD_VERSION;
     }
+    
+    public Map<String, String> getConnect() {
+        return connectStrings;
+    }
 
     private SyncStatus downloadConnect() throws JSONException, IOException {
-        WebServerTalker talker = new WebServerTalker(CONNECT_URL, Integer.valueOf(getString(R.string.app_version_code)));
+        WebServerTalker talker = new WebServerTalker(getString(R.string.connect_url), Integer.valueOf(getString(R.string.app_version_code)));
         SyncStatus status = talker.connect();
+        connectStrings = talker.getResponse();
         if (status == SyncStatus.OK) {
-            connectStrings = talker.getResponse();
             dumpConnect();
         }
 

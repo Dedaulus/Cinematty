@@ -24,6 +24,7 @@ import java.net.UnknownHostException;
 
 public class StartupActivity extends Activity
 {
+    private static final String UPDATE_URL_KEY = "url";
     private static final int GET_CURRENT_CITY = RESULT_FIRST_USER + 1;
     private CinemattyApplication app;
     private static volatile boolean inProgress;
@@ -101,8 +102,12 @@ public class StartupActivity extends Activity
                             startActivity(intent);
                             finish();
                         } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
+                            String updateUrl = app.getConnect().get(UPDATE_URL_KEY);
+                            if (updateUrl == null || updateUrl.length() == 0) {
+                                updateUrl = "https://play.google.com/store/apps/details?id=com.dedaulus.cinematty";
+                            }
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.dedaulus.cinematty"));
+                            intent.setData(Uri.parse(updateUrl));
                             startActivity(intent);
                             finish();
                         } else if (syncStatus == SyncStatus.BAD_RESPONSE) {
