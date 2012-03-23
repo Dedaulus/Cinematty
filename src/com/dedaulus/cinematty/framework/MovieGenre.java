@@ -1,8 +1,5 @@
 package com.dedaulus.cinematty.framework;
 
-import com.dedaulus.cinematty.framework.tools.DefaultComparator;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
-
 import java.util.HashMap;
 import java.util.Map;
 

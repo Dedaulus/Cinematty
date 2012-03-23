@@ -1,7 +1,5 @@
 package com.dedaulus.cinematty.framework.tools;
 
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.*;
 import org.xml.sax.SAXException;
 
@@ -9,10 +7,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;

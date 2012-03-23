@@ -4,17 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.SpannableString;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.*;
-import com.dedaulus.cinematty.framework.tools.*;
+import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieImageRetriever;
+import com.dedaulus.cinematty.framework.tools.Constants;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.*;
 

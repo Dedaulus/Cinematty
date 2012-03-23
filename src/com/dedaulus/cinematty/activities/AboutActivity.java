@@ -2,8 +2,6 @@ package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.dedaulus.cinematty.R;
 
 /**

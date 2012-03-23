@@ -2,7 +2,10 @@ package com.dedaulus.cinematty.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

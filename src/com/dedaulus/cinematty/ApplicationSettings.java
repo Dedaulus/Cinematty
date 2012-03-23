@@ -3,7 +3,6 @@ package com.dedaulus.cinematty;
 import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.CinemaSortOrder;
 import com.dedaulus.cinematty.framework.tools.MovieSortOrder;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
 import java.util.List;
 import java.util.Map;

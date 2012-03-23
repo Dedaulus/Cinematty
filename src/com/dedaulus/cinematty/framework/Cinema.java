@@ -2,7 +2,6 @@ package com.dedaulus.cinematty.framework;
 
 import android.util.Pair;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
-import com.dedaulus.cinematty.framework.tools.UniqueSortedList;
 
 import java.util.*;
 

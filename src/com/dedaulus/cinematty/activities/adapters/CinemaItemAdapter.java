@@ -15,7 +15,9 @@ import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * User: Dedaulus

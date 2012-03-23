@@ -19,7 +19,9 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * User: Dedaulus

@@ -1,8 +1,5 @@
 package com.dedaulus.cinematty.framework.tools;
 
-import com.dedaulus.cinematty.ApplicationSettings;
-import com.dedaulus.cinematty.CinemattyApplication;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;

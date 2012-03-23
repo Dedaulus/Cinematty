@@ -4,23 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.City;
 import com.dedaulus.cinematty.framework.SyncStatus;
-import com.dedaulus.cinematty.framework.tools.Constants;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class StartupActivity extends Activity
 {

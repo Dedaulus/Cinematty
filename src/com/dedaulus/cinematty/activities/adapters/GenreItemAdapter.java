@@ -10,7 +10,6 @@ import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieGenre;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Dedaulus

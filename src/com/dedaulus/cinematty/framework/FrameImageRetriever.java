@@ -1,12 +1,9 @@
 package com.dedaulus.cinematty.framework;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.util.DisplayMetrics;
-import com.dedaulus.cinematty.framework.ImageRetriever;
 
 import java.io.File;
-import java.util.Locale;
 
 /**
  * User: Dedaulus

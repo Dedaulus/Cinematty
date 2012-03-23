@@ -18,7 +18,8 @@ import com.dedaulus.cinematty.activities.adapters.PageChangeListenerProxy;
 import com.dedaulus.cinematty.activities.adapters.SliderAdapter;
 import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
 import com.dedaulus.cinematty.framework.SyncStatus;
-import com.dedaulus.cinematty.framework.tools.*;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
+import com.dedaulus.cinematty.framework.tools.Constants;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
