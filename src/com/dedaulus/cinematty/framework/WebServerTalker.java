@@ -42,7 +42,7 @@ public class WebServerTalker {
         this.appVersion = appVersion;
     }
     
-    public SyncStatus connect() throws JSONException, IOException {
+    public SyncStatus connect() throws JSONException {
         JSONObject json = new JSONObject();
         json.put("version", appVersion);
 
@@ -52,31 +52,34 @@ public class WebServerTalker {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("json", json.toString());
         httpPost.getParams().setParameter("jsonpost", postJson);
-
         HttpClient httpClient = new DefaultHttpClient();
-        HttpResponse httpResponse = httpClient.execute(httpPost);
 
         SyncStatus syncStatus = SyncStatus.NO_RESPONSE;
-        if (httpResponse != null) {
-            InputStream is = httpResponse.getEntity().getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder builder = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-            is.close();
+        try {
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            if (httpResponse != null) {
+                InputStream is = httpResponse.getEntity().getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder builder = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                is.close();
 
-            JSONObject jsonObject = new JSONObject(builder.toString());
-            Iterator keysIterator = jsonObject.keys();
-            while (keysIterator.hasNext()) {
-                String key = (String)keysIterator.next();
-                if (key.equalsIgnoreCase(STATUS)) {
-                    syncStatus = SyncStatus.valueOf(jsonObject.getInt(key));
-                } else {
-                    response.put(key, jsonObject.getString(key));
+                JSONObject jsonObject = new JSONObject(builder.toString());
+                Iterator keysIterator = jsonObject.keys();
+                while (keysIterator.hasNext()) {
+                    String key = (String)keysIterator.next();
+                    if (key.equalsIgnoreCase(STATUS)) {
+                        syncStatus = SyncStatus.valueOf(jsonObject.getInt(key));
+                    } else {
+                        response.put(key, jsonObject.getString(key));
+                    }
                 }
             }
+        } catch (IOException e) {
+            return SyncStatus.NO_RESPONSE;
         }
         
         return syncStatus;

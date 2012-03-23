@@ -473,9 +473,9 @@ public class CinemattyApplication extends Application {
             }
         } catch (JSONException e) {
             syncStatus = SyncStatus.BAD_RESPONSE;
-        } catch (IOException e) {
-            syncStatus = SyncStatus.BAD_RESPONSE;
-        }
+        }// catch (IOException e) {
+        //    syncStatus = SyncStatus.BAD_RESPONSE;
+        //}
 
         if (syncStatus != SyncStatus.OK) {
             return syncStatus;
@@ -584,7 +584,7 @@ public class CinemattyApplication extends Application {
         return connectStrings;
     }
 
-    private SyncStatus downloadConnect() throws JSONException, IOException {
+    private SyncStatus downloadConnect() throws JSONException {
         WebServerTalker talker = new WebServerTalker(getString(R.string.connect_url), Integer.valueOf(getString(R.string.app_version_code)));
         SyncStatus status = talker.connect();
         connectStrings = talker.getResponse();

@@ -81,7 +81,7 @@ public class FramesPage implements SliderPage {
         framesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onFrameClick(adapterView, view, i, l);
+                //onFrameClick(adapterView, view, i, l);
             }
         });
 
