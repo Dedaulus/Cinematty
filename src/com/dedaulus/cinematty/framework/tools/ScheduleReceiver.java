@@ -19,6 +19,10 @@ import java.util.zip.GZIPInputStream;
  * Time: 22:37
  */
 public class ScheduleReceiver {
+    private static class OutOfDateException extends Exception {
+        public OutOfDateException(){}
+    }
+
     private static final int VALID_HOURS_FOR_JUST_DOWNLOADED = 12;
     
     private URL scheduleUrl;
@@ -34,9 +38,10 @@ public class ScheduleReceiver {
             Map<String, Movie> movies,
             Map<String, MovieActor> actors,
             Map<String, MovieGenre> genres,
-            List<MoviePoster> posters) {
+            List<MoviePoster> posters,
+            boolean local) {
         try {
-            InputStream is = getActualXmlStream();
+            InputStream is = getActualXmlStream(local);
             if (is == null) return SyncStatus.BAD_RESPONSE;
 
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -53,10 +58,12 @@ public class ScheduleReceiver {
             return SyncStatus.BAD_RESPONSE;
         } catch (IOException e) {
             return SyncStatus.BAD_RESPONSE;
+        } catch (OutOfDateException e) {
+            return SyncStatus.OUT_OF_DATE;
         }
     }
 
-    private InputStream getActualXmlStream() throws FileNotFoundException {
+    private InputStream getActualXmlStream(boolean local) throws OutOfDateException {
         InputStream is;
         try {
             is = new FileInputStream(scheduleFile);
@@ -68,17 +75,19 @@ public class ScheduleReceiver {
         } catch (FileNotFoundException e) {
             is = null;
         }
-        
-        if (is == null) {
-            try {
-                is = dumpStream(scheduleUrl.openConnection().getInputStream());
-                if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
-                    is = new FileInputStream(scheduleFile);
-                } else {
+
+        if (!local) {
+            if (is == null) {
+                try {
+                    is = dumpStream(scheduleUrl.openConnection().getInputStream());
+                    if (isActualXmlStream(is, VALID_HOURS_FOR_JUST_DOWNLOADED)) {
+                        is = new FileInputStream(scheduleFile);
+                    } else {
+                        throw new OutOfDateException();
+                    }
+                } catch (IOException e) {
                     is = null;
                 }
-            } catch (IOException e) {
-                is = null;
             }
         }
         

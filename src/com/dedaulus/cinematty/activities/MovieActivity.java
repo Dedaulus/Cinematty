@@ -53,7 +53,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         //actionBar.setTitle(getString(R.string.movie_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
@@ -53,11 +54,28 @@ public class StartupActivity extends Activity
         return super.onKeyDown(keyCode, event);
     }
 
-    private void setErrorString(String message) {
-        if (message != null) {
-            TextView textView = (TextView)findViewById(R.id.error_message);
-            textView.setText(message);
+    private void setErrorString(SyncStatus syncStatus) {
+        TextView textView = (TextView)findViewById(R.id.error_message);
+        Button button = (Button)findViewById(R.id.error_button);
+        String message;
+        if (syncStatus == SyncStatus.BAD_RESPONSE) {
+            message = getString(R.string.sync_bad_response);
+        } else if (syncStatus == SyncStatus.OUT_OF_DATE) {
+            message = getString(R.string.sync_out_of_date);
+            button.setText(getString(R.string.sync_out_of_date_button));
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    app.resetSyncStatus();
+                    getCitiesList();
+                }
+            });
+            button.setVisibility(View.VISIBLE);
+        } else {
+            message = getString(R.string.sync_no_response);
         }
+        textView.setText(message);
+
 
         findViewById(R.id.loading_schedule_panel).setVisibility(View.INVISIBLE);
         findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
@@ -82,7 +100,7 @@ public class StartupActivity extends Activity
         new Thread(new Runnable() {
             private SyncStatus syncStatus;
             public void run() {
-                syncStatus = app.syncSchedule(activity);
+                syncStatus = app.syncSchedule(activity, false);
                 inProgress = false;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
@@ -100,10 +118,8 @@ public class StartupActivity extends Activity
                             intent.setData(Uri.parse(updateUrl));
                             startActivity(intent);
                             finish();
-                        } else if (syncStatus == SyncStatus.BAD_RESPONSE) {
-                            setErrorString(getString(R.string.bad_response));
                         } else {
-                            setErrorString(getString(R.string.no_response));
+                            setErrorString(syncStatus);
                         }
                     }
                 });

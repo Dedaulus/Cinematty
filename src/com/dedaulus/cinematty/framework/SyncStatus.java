@@ -20,7 +20,9 @@ public class SyncStatus {
 
     public static final SyncStatus BAD_RESPONSE = new SyncStatus(3);
 
-    private static final SyncStatus[] STATS = {OK, UPDATE_NEEDED, NO_RESPONSE, BAD_RESPONSE};
+    public static final SyncStatus OUT_OF_DATE = new SyncStatus(4);
+
+    private static final SyncStatus[] STATS = {OK, UPDATE_NEEDED, NO_RESPONSE, BAD_RESPONSE, OUT_OF_DATE};
 
     public static SyncStatus valueOf(int statusCode) {
         return STATS[statusCode];

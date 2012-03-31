@@ -41,6 +41,7 @@ public class CinemattyApplication extends Application {
     private static final String FRAMES_FOLDER_KEY    = "frames_folder";
     private static final String POSTERS_FOLDER_KEY   = "posters_folder";
     private static final String SHARED_PAGE_KEY      = "shared_page";
+    private static final String CONNECT_DUMP_FILE    = "connect_dump.xml";
 
     private static final String VERSION_FILE    = "cinematty_preferences";
     private static final String CURRENT_VERSION = "current_version";
@@ -456,11 +457,17 @@ public class CinemattyApplication extends Application {
         syncStatus = null;
     }
     
-    public SyncStatus syncSchedule(Activity activity) {
+    public SyncStatus syncSchedule(Activity activity, boolean local) {
         if (syncStatus != null) return syncStatus;
 
         try {
-            syncStatus = downloadConnect();
+            if (local) {
+                if (restoreConnect()) {
+                    syncStatus = SyncStatus.OK;
+                }
+            } else {
+                syncStatus = downloadConnect();
+            }
         } catch (JSONException e) {
             syncStatus = SyncStatus.BAD_RESPONSE;
         }
@@ -483,7 +490,7 @@ public class CinemattyApplication extends Application {
             Map<String, MovieActor> actors = new HashMap<String, MovieActor>();
             Map<String, MovieGenre> genres = new HashMap<String, MovieGenre>();
             List<MoviePoster> posters = new ArrayList<MoviePoster>();
-            syncStatus = receiver.getSchedule(cinemas, movies, actors, genres, posters);
+            syncStatus = receiver.getSchedule(cinemas, movies, actors, genres, posters, local);
             if (syncStatus != SyncStatus.OK) {
                 return syncStatus;
             }
@@ -574,7 +581,43 @@ public class CinemattyApplication extends Application {
         WebServerTalker talker = new WebServerTalker(getString(R.string.connect_url), Integer.valueOf(getString(R.string.app_version_code)));
         SyncStatus status = talker.connect();
         connectStrings = talker.getResponse();
+        if (status == SyncStatus.OK) {
+            dumpConnect();
+        }
         return status;
+    }
+
+    private void dumpConnect() {
+        StringBuilder xml = new StringBuilder();
+        Calendar date = Calendar.getInstance();
+        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data date=\"");
+
+        String year = Integer.toString(date.get(Calendar.YEAR));
+        String month = Integer.toString(date.get(Calendar.MONTH));
+        String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+        String hour = Integer.toString(date.get(Calendar.HOUR_OF_DAY));
+        String min = Integer.toString(date.get(Calendar.MINUTE));
+        String sec = Integer.toString(date.get(Calendar.SECOND));
+        xml.append(year).append(".").append(month).append(".").append(day).append(".").append(hour).append(".").append(min).append(".").append(sec);
+        xml.append("\">");
+
+        for (Map.Entry<String, String> entry : connectStrings.entrySet()) {
+            xml.append("<folder name=\"").append(entry.getKey()).append("\" value=\"").append(entry.getValue()).append("\" />");
+        }
+
+        xml.append("</data>");
+
+        try {
+            Writer output = new BufferedWriter(new FileWriter(new File(getCacheDir(), CONNECT_DUMP_FILE)));
+            output.write(xml.toString());
+            output.close();
+        } catch (IOException e){}
+    }
+
+    private boolean restoreConnect() {
+        ConnectRestorer receiver = new ConnectRestorer(new File(getCacheDir(), CONNECT_DUMP_FILE));
+        connectStrings = receiver.getConnect();
+        return !connectStrings.isEmpty();
     }
 
     private void saveCurrentCityImpl(City city) {

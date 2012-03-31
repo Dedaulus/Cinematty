@@ -48,7 +48,7 @@ public class ActorListActivity extends SherlockActivity {
         actionBar.setTitle(getString(R.string.actors_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

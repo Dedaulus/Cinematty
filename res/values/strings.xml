@@ -25,8 +25,10 @@
     <string name="loading_cities">Загружается список городов...</string>
     <string name="try_again">Попробовать еще раз</string>
 
-    <string name="bad_response">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки</string>
-    <string name="no_response">"Не удается подключиться к серверу. Убедитесь, что ваш телефон имеет доступ в интернет</string>
+    <string name="sync_bad_response">Извините, у нас возникли проблемы на сервере. Мы постараемся всё исправить в кратчайшие сроки</string>
+    <string name="sync_no_response">Не удается подключиться к серверу. Убедитесь, что ваш телефон имеет доступ в интернет</string>
+    <string name="sync_out_of_date">К сожалению, сейчас у нас нет актуального расписания для выбранного города. Попробуйте позже или выберите другой город</string>
+    <string name="sync_out_of_date_button">Сменить город</string>
 
     <string name="categories_caption">Категории</string>
     <string name="whats_new_caption">Новинки</string>

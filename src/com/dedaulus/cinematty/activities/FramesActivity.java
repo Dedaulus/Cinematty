@@ -24,7 +24,7 @@ public class FramesActivity extends Activity {
         setContentView(R.layout.frames_gallery);
 
         CinemattyApplication app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

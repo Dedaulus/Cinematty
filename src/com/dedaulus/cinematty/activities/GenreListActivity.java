@@ -43,7 +43,7 @@ public class GenreListActivity extends SherlockActivity {
         actionBar.setTitle(getString(R.string.genres_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

@@ -32,7 +32,7 @@ public class CinemaMapView extends MapActivity {
         setContentView(R.layout.cinema_on_map);
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

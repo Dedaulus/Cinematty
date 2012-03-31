@@ -41,6 +41,10 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
     private List<SliderPage> pages;
     private Integer currentPage = 0;
 
+    {
+        pages = new ArrayList<SliderPage>(SLIDERS_COUNT);
+    }
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,7 +53,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         setContentView(R.layout.main);
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;
@@ -71,7 +75,6 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
 
         currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
 
-        pages = new ArrayList<SliderPage>(SLIDERS_COUNT);
         pages.add(new CinemasPage(this, app));
         pages.add(new WhatsNewPage(this, app));
         pages.add(new MoviesPage(this, app));
@@ -153,7 +156,9 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
 
         inflater.inflate(R.menu.search_menu, menu);
 
-        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+        if (!pages.isEmpty()) {
+            pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+        }
 
         inflater.inflate(R.menu.preferences_menu, menu);
 

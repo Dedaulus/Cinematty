@@ -47,7 +47,7 @@ public class MovieListActivity extends SherlockActivity {
         actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;

@@ -26,7 +26,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
         addPreferencesFromResource(R.xml.preferences);
 
         app = (CinemattyApplication)getApplication();
-        if (app.syncSchedule(this) != SyncStatus.OK) {
+        if (app.syncSchedule(this, true) != SyncStatus.OK) {
             app.restart();
             finish();
             return;
