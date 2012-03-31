@@ -41,7 +41,6 @@ public class CinemattyApplication extends Application {
     private static final String FRAMES_FOLDER_KEY    = "frames_folder";
     private static final String POSTERS_FOLDER_KEY   = "posters_folder";
     private static final String SHARED_PAGE_KEY      = "shared_page";
-    private static final String CONNECT_DUMP_FILE    = "connect_dump.xml";
 
     private static final String VERSION_FILE    = "cinematty_preferences";
     private static final String CURRENT_VERSION = "current_version";
@@ -461,16 +460,10 @@ public class CinemattyApplication extends Application {
         if (syncStatus != null) return syncStatus;
 
         try {
-            if (!restoreConnect()) {
-                syncStatus = downloadConnect();
-            } else {
-                syncStatus = SyncStatus.OK;
-            }
+            syncStatus = downloadConnect();
         } catch (JSONException e) {
             syncStatus = SyncStatus.BAD_RESPONSE;
-        }// catch (IOException e) {
-        //    syncStatus = SyncStatus.BAD_RESPONSE;
-        //}
+        }
 
         if (syncStatus != SyncStatus.OK) {
             return syncStatus;
@@ -537,7 +530,7 @@ public class CinemattyApplication extends Application {
     }
 
     public void restart() {
-        syncStatus = null;
+        resetSyncStatus();
 
         Intent intent = new Intent(this, StartupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -559,17 +552,15 @@ public class CinemattyApplication extends Application {
         int lastVersion = preferences.getInt(CURRENT_VERSION, -1);
         int currentVersion = Integer.parseInt(getString(R.string.app_version_code));
 
-        if (lastVersion == -1) {
+        if (lastVersion < currentVersion) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putInt(CURRENT_VERSION, currentVersion);
             editor.commit();
-            return NEW_INSTALLATION;
-        } else if (lastVersion < currentVersion) {
-            return NEW_VERSION;
-
-            //SharedPreferences.Editor editor = preferences.edit();
-            //editor.putInt(CURRENT_VERSION, currentVersion);
-            //editor.commit();
+            if (lastVersion == -1) {
+                return NEW_INSTALLATION;
+            } else {
+                return NEW_VERSION;
+            }
         }
 
         return OLD_VERSION;
@@ -583,66 +574,24 @@ public class CinemattyApplication extends Application {
         WebServerTalker talker = new WebServerTalker(getString(R.string.connect_url), Integer.valueOf(getString(R.string.app_version_code)));
         SyncStatus status = talker.connect();
         connectStrings = talker.getResponse();
-        if (status == SyncStatus.OK) {
-            dumpConnect();
-        }
-
         return status;
-    }
-    
-    private void dumpConnect() {
-        StringBuilder xml = new StringBuilder();
-        Calendar date = Calendar.getInstance();
-        xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data date=\"");
-
-        String year = Integer.toString(date.get(Calendar.YEAR));
-        String month = Integer.toString(date.get(Calendar.MONTH));
-        String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
-        String hour = Integer.toString(date.get(Calendar.HOUR_OF_DAY));
-        String min = Integer.toString(date.get(Calendar.MINUTE));
-        String sec = Integer.toString(date.get(Calendar.SECOND));
-        xml.append(year).append(".").append(month).append(".").append(day).append(".").append(hour).append(".").append(min).append(".").append(sec);
-        xml.append("\">");
-
-        for (Map.Entry<String, String> entry : connectStrings.entrySet()) {
-            xml.append("<folder name=\"").append(entry.getKey()).append("\" value=\"").append(entry.getValue()).append("\" />");
-        }
-
-        xml.append("</data>");
-
-        try {
-            Writer output = new BufferedWriter(new FileWriter(new File(getCacheDir(), CONNECT_DUMP_FILE)));
-            output.write(xml.toString());
-            output.close();
-        } catch (IOException e){}
-    }
-
-    private boolean restoreConnect() {
-        ConnectRestorer receiver = new ConnectRestorer(new File(getCacheDir(), CONNECT_DUMP_FILE));
-        connectStrings = receiver.getConnect();
-        return !connectStrings.isEmpty();
     }
 
     private void saveCurrentCityImpl(City city) {
-        //SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ApplicationSettingsImpl.PREF_CURRENT_CITY, String.valueOf(city.getId()));
         editor.commit();
-
         currentCity = city;
     }
 
     private City getCurrentCityImpl() {
-        //if (currentCity != null) return currentCity;
-        
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
             SAXParser parser = factory.newSAXParser();
             CityHandler handler = new CityHandler();
             parser.parse(getResources().openRawResource(R.raw.cities), handler);
 
-            //SharedPreferences preferences = getSharedPreferences(ApplicationSettingsImpl.PREFERENCES_FILE, MODE_PRIVATE);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             int id = Integer.parseInt(preferences.getString(ApplicationSettingsImpl.PREF_CURRENT_CITY, "-1"));
 
