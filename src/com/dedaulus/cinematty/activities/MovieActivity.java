@@ -50,7 +50,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.movie_caption));
+        //actionBar.setTitle(getString(R.string.movie_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(this) != SyncStatus.OK) {
@@ -64,6 +64,11 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
+        if (state.activityType != ActivityState.MOVIE_INFO && state.activityType != ActivityState.MOVIE_INFO_W_SCHED) {
+            throw new RuntimeException("ActivityType error");
+        }
+
+        actionBar.setTitle(state.movie.getName());
 
         ViewPager slider = (ViewPager)findViewById(R.id.slider);
 
@@ -138,9 +143,9 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
 
         MenuInflater inflater = getSupportMenuInflater();
 
-        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
-
         inflater.inflate(R.menu.search_menu, menu);
+
+        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
         inflater.inflate(R.menu.preferences_menu, menu);
 

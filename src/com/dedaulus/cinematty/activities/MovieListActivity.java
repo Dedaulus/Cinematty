@@ -123,6 +123,8 @@ public class MovieListActivity extends SherlockActivity {
 
         MenuInflater inflater = getSupportMenuInflater();
 
+        inflater.inflate(R.menu.search_menu, menu);
+
         inflater.inflate(R.menu.movie_sort_menu, menu);
         switch (settings.getMovieSortOrder()) {
             case BY_CAPTION:
@@ -137,8 +139,6 @@ public class MovieListActivity extends SherlockActivity {
             default:
                 break;
         }
-
-        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.preferences_menu, menu);
 

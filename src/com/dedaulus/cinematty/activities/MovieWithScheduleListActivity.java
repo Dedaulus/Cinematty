@@ -51,7 +51,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.movies_caption));
+        //actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(this) != SyncStatus.OK) {
@@ -67,6 +67,8 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
         state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
         if (state.activityType != ActivityState.MOVIE_LIST_W_CINEMA) throw new RuntimeException("ActivityType error");
+
+        actionBar.setTitle(state.cinema.getName());
 
         setCinemaHeader();
         setCurrentDay(settings.getCurrentDay());
@@ -110,13 +112,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
 
         MenuInflater inflater = getSupportMenuInflater();
 
-        if (state.cinema.getAddress() != null) {
-            inflater.inflate(R.menu.show_map_menu, menu);
-        }
-
-        if (state.cinema.getPhone() != null) {
-            inflater.inflate(R.menu.call_menu, menu);
-        }
+        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.select_day_menu, menu);
         switch (currentDay) {
@@ -148,7 +144,13 @@ public class MovieWithScheduleListActivity extends SherlockActivity {
                 break;
         }
 
-        inflater.inflate(R.menu.search_menu, menu);
+        if (state.cinema.getAddress() != null) {
+            inflater.inflate(R.menu.show_map_menu, menu);
+        }
+
+        if (state.cinema.getPhone() != null) {
+            inflater.inflate(R.menu.call_menu, menu);
+        }
 
         inflater.inflate(R.menu.preferences_menu, menu);
 

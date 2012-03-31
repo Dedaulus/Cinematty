@@ -115,6 +115,8 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
         menu.clear();
         MenuInflater inflater = getSupportMenuInflater();
 
+        inflater.inflate(R.menu.search_menu, menu);
+
         inflater.inflate(R.menu.select_day_menu, menu);
         switch (currentDay) {
             case Constants.TODAY_SCHEDULE:
@@ -142,8 +144,6 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
                 menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
                 break;
         }
-
-        inflater.inflate(R.menu.search_menu, menu);
 
         inflater.inflate(R.menu.preferences_menu, menu);
 

@@ -3,6 +3,7 @@ package com.dedaulus.cinematty.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -150,9 +151,9 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
 
         MenuInflater inflater = getSupportMenuInflater();
 
-        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
-
         inflater.inflate(R.menu.search_menu, menu);
+
+        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
 
         inflater.inflate(R.menu.preferences_menu, menu);
 
