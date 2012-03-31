@@ -11,6 +11,7 @@
 
     <style name="Widget.Sherlock.Light.ActionBar.Solid.Inverse.NewBackground">
         <item name="background">@drawable/action_bar_background</item>
+        <item name="backgroundSplit">@drawable/split_bar_background</item>
     </style>
 
     <!--
