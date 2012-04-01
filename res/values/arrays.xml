@@ -14,9 +14,10 @@
         <item name="Нижний Новгород">Нижний Новгород</item>
         <item name="Новосибирск">Новосибирск</item>
         <item name="Пермь">Пермь</item>
-        <item name="Петрозаводск">Петрозаводск</item>
+        <!--<item name="Петрозаводск">Петрозаводск</item>-->
         <item name="Самара">Самара</item>
         <item name="Тула">Тула</item>
+        <item name="Уфа">Уфа</item>
         <item name="Челябинск">Челябинск</item>
     </string-array>
 
@@ -32,9 +33,10 @@
         <item name="Нижний Новгород">9</item>
         <item name="Новосибирск">10</item>
         <item name="Пермь">11</item>
-        <item name="Петрозаводск">12</item>
+        <!--<item name="Петрозаводск">12</item>-->
         <item name="Самара">13</item>
         <item name="Тула">14</item>
+        <item name="Уфа">16</item>
         <item name="Челябинск">15</item>
     </string-array>
 

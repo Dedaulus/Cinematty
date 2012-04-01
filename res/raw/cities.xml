@@ -12,11 +12,11 @@
 		<city id="9"  name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>
 		<city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
         <city id="11" name="Пермь" file="perm_schedule.xml"/>
-        <city id="12" name="Петрозаводск" file="petrozavodsk_schedule.xml"/>
+        <!--<city id="12" name="Петрозаводск" file="petrozavodsk_schedule.xml"/>-->
 		<!--<city id="13" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>-->
 		<city id="13" name="Самара" file="samara_schedule.xml"/>
         <city id="14" name="Тула" file="tula_schedule.xml"/>
-		<!--<city id="15" name="Уфа" file="ufa_schedule.xml"/>-->
+		<city id="16" name="Уфа" file="ufa_schedule.xml"/>
 		<city id="15" name="Челябинск" file="chelyabinsk_schedule.xml"/>
 		
 	</cities>
