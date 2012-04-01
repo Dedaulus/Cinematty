@@ -71,10 +71,10 @@ public class CinemattyApplication extends Application {
                 Map<String, MovieActor> actors, 
                 Map<String, MovieGenre> genres, 
                 List<MoviePoster> posters) {
-            this.cinemas = new HashMap<String, Cinema>(cinemas);
-            this.movies = new HashMap<String, Movie>(movies);
-            this.actors = new HashMap<String, MovieActor>(actors);
-            this.genres = new HashMap<String, MovieGenre>(genres);
+            this.cinemas = new TreeMap<String, Cinema>(cinemas);
+            this.movies = new TreeMap<String, Movie>(movies);
+            this.actors = new TreeMap<String, MovieActor>(actors);
+            this.genres = new TreeMap<String, MovieGenre>(genres);
             this.posters = new ArrayList<MoviePoster>(posters);
             
             favoriteCinemas = new HashMap<String, Cinema>();

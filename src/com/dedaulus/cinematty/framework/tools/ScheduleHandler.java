@@ -105,10 +105,10 @@ public class ScheduleHandler extends DefaultHandler {
         }
     }
 
-    private HashMap<String, Cinema> cinemaIds;
-    private HashMap<String, Movie> movieIds;
-    private HashMap<String, MovieActor> actors;
-    private HashMap<String, MovieGenre> genres;
+    private Map<String, Cinema> cinemaIds;
+    private Map<String, Movie> movieIds;
+    private Map<String, MovieActor> actors;
+    private Map<String, MovieGenre> genres;
     private List<MoviePoster> posters;
     private Map<String, Metro> metros;
     private boolean isPostersUpToDate;
