@@ -3,9 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/ContentContainer">
 
-    <TextView android:id="@+id/genre"
-            style="@style/ListCaption.Genre"/>
-
     <include android:id="@+id/movie_list_external"
             layout="@layout/movie_list"/>
 

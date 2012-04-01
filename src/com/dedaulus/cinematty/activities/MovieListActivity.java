@@ -44,7 +44,6 @@ public class MovieListActivity extends SherlockActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.movies_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(this, true) != SyncStatus.OK) {
@@ -64,16 +63,14 @@ public class MovieListActivity extends SherlockActivity {
         switch (state.activityType) {
             case ActivityState.MOVIE_LIST_W_ACTOR: {
                     setContentView(R.layout.movie_list_w_actor);
-                    TextView captionView = (TextView)findViewById(R.id.actor);
-                    captionView.setText(state.actor.getName());
+                    actionBar.setTitle(state.actor.getName());
                     scopeMovies = state.actor.getMovies();
                 }
                 break;
 
             case ActivityState.MOVIE_LIST_W_GENRE: {
                     setContentView(R.layout.movie_list_w_genre);
-                    TextView captionView = (TextView)findViewById(R.id.genre);
-                    captionView.setText(state.genre.getName());
+                    actionBar.setTitle(state.genre.getName());
                     scopeMovies = state.genre.getMovies();
                 }
                 break;
