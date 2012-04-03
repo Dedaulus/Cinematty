@@ -5,31 +5,14 @@
                 android:layout_height="wrap_content"
                 android:padding="4dp">
 
-    <RelativeLayout android:id="@+id/cinema_caption_region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <ImageView android:id="@+id/expand_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:paddingRight="10dp"
-                android:src="@drawable/ic_corner_down"/>
-
-        <TextView android:id="@+id/cinema_caption"
-                style="@style/ListCaption.Cinema"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/expand_icon"
-                android:paddingLeft="10dp"/>
-
-    </RelativeLayout>
+    <TextView android:id="@+id/cinema_caption"
+            style="@style/ListCaption.Cinema"
+            android:paddingLeft="10dp"/>
 
     <RelativeLayout android:id="@+id/cinema_data_region"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cinema_caption_region">
+            android:layout_below="@id/cinema_caption">
 
         <RelativeLayout android:id="@+id/cinema_url_region"
                 android:layout_width="match_parent"

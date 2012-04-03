@@ -3,9 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/ContentContainer">
 
-    <include android:id="@+id/cinema"
-            layout="@layout/cinema_info"/>
-
     <include android:id="@+id/day_indicator"
             layout="@layout/schedule_day_indicator"/>
 

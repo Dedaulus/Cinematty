@@ -7,9 +7,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.Pages.CinemasWithSchedulePage;
 import com.dedaulus.cinematty.activities.Pages.FramesPage;
 import com.dedaulus.cinematty.activities.Pages.MoviePage;
@@ -41,7 +39,6 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
     private List<SliderPage> pages;
     private Integer currentPage = 0;
     int defaultPagePosition;
-    private ActivityState state;
     private String stateId;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +47,6 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        //actionBar.setTitle(getString(R.string.movie_caption));
 
         app = (CinemattyApplication)getApplication();
         if (app.syncSchedule(this, true) != SyncStatus.OK) {
@@ -59,10 +55,12 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
             return;
         }
 
+        ApplicationSettings settings = app.getSettings();
         activitiesState = app.getActivitiesState();
+        LocationState locationState = app.getLocationState();
 
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
-        state = activitiesState.getState(stateId);
+        ActivityState state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
         if (state.activityType != ActivityState.MOVIE_INFO && state.activityType != ActivityState.MOVIE_INFO_W_SCHED) {
             throw new RuntimeException("ActivityType error");
@@ -83,7 +81,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         currentPage = defaultPagePosition;
 
         pages.add(new MoviePage(this, app, state));
-        pages.add(new CinemasWithSchedulePage(this, app, state));
+        pages.add(new CinemasWithSchedulePage(this, settings, activitiesState, locationState, state));
 
         adapter = new SliderAdapter(pages);
         slider.setAdapter(adapter);

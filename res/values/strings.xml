@@ -33,6 +33,7 @@
     <string name="categories_caption">Категории</string>
     <string name="whats_new_caption">Новинки</string>
     <string name="cinemas_caption">Кинотеатры</string>
+    <string name="cinema_caption">Кинотеатр</string>
     <string name="movies_caption">Фильмы</string>
     <string name="movie_caption">Фильм</string>
     <string name="showtime_caption">Сеансы</string>

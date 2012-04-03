@@ -19,6 +19,7 @@ import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
 import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
@@ -31,18 +32,17 @@ import java.util.UUID;
  */
 public class MoviesPage implements SliderPage {
     private Context context;
-    private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
+    private MovieImageRetriever imageRetriever;
     private SortableAdapter<Movie> movieListAdapter;
     private boolean binded = false;
 
-    public MoviesPage(Context context, CinemattyApplication app) {
+    public MoviesPage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, MovieImageRetriever imageRetriever) {
         this.context = context;
-        this.app = app;
-
-        settings = app.getSettings();
-        activitiesState = app.getActivitiesState();
+        this.settings = settings;
+        this.activitiesState = activitiesState;
+        this.imageRetriever = imageRetriever;
     }
 
     public View getView() {
@@ -122,7 +122,7 @@ public class MoviesPage implements SliderPage {
 
     private View bindView(View view) {
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        movieListAdapter = new MovieItemAdapter(context, notifier, new ArrayList<Movie>(settings.getMovies().values()), app.getImageRetrievers().getMovieSmallImageRetriever());
+        movieListAdapter = new MovieItemAdapter(context, notifier, new ArrayList<Movie>(settings.getMovies().values()), imageRetriever);
         ListView list = (ListView)view.findViewById(R.id.movie_list);
         list.setAdapter(movieListAdapter);
         list.setOnScrollListener(notifier);
@@ -133,7 +133,6 @@ public class MoviesPage implements SliderPage {
         });
         binded = true;
         onResume();
-
         return view;
     }
 

@@ -94,12 +94,8 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         MenuInflater inflater = ((SherlockActivity)context).getSupportMenuInflater();
 
         if (state.activityType == ActivityState.MOVIE_INFO_W_SCHED) {
-            if (state.cinema.getPhone() != null) {
-                inflater.inflate(R.menu.call_menu, menu);
-            }
-
             inflater.inflate(R.menu.select_day_menu, menu);
-            switch (currentDay) {
+                        switch (currentDay) {
                 case Constants.TODAY_SCHEDULE:
                     menu.findItem(R.id.submenu_select_day_today).setChecked(true);
                     break;
@@ -122,12 +118,6 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_call:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:+7" + state.cinema.getPlainPhone()));
-                context.startActivity(intent);
-                return true;
-
             case R.id.menu_select_day:
                 return true;
 

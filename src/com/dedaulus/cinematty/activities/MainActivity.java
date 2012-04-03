@@ -8,10 +8,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.CinemattyApplication;
-import com.dedaulus.cinematty.LocationState;
-import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.Pages.*;
 import com.dedaulus.cinematty.activities.adapters.PageChangeListenerProxy;
 import com.dedaulus.cinematty.activities.adapters.SliderAdapter;
@@ -59,6 +56,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
             return;
         }
 
+        ApplicationSettings settings = app.getSettings();
         activitiesState = app.getActivitiesState();
         locationState = app.getLocationState();
 
@@ -77,7 +75,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
 
         pages.add(new CinemasPage(this, app));
         pages.add(new WhatsNewPage(this, app));
-        pages.add(new MoviesPage(this, app));
+        pages.add(new MoviesPage(this, settings, activitiesState, app.getImageRetrievers().getMovieSmallImageRetriever()));
         pages.add(new ActorsPage(this, app));
         pages.add(new GenresPage(this, app));
 

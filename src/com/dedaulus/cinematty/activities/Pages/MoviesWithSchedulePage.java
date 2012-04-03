@@ -2,7 +2,6 @@ package com.dedaulus.cinematty.activities.Pages;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,75 +11,85 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.dedaulus.cinematty.*;
-import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
-import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
-import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
+import com.dedaulus.cinematty.ActivitiesState;
+import com.dedaulus.cinematty.ApplicationSettings;
+import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.activities.MovieActivity;
+import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
-import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.activities.adapters.StoppableAndResumable;
+import com.dedaulus.cinematty.framework.Movie;
+import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
  * User: Dedaulus
- * Date: 23.02.12
- * Time: 0:45
+ * Date: 01.04.12
+ * Time: 23:12
  */
-public class CinemasWithSchedulePage implements SliderPage, LocationClient {
+public class MoviesWithSchedulePage implements SliderPage {
     private Context context;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
-    private LocationState locationState;
     private ActivityState state;
-    private SortableAdapter<Cinema> cinemaListAdapter;
+    private MovieImageRetriever imageRetriever;
+    private SortableAdapter<Movie> movieListAdapter;
+    IdleDataSetChangeNotifier notifier;
     private int currentDay;
     private View pageView;
     private boolean binded = false;
 
-    public CinemasWithSchedulePage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, LocationState locationState, ActivityState state) {
+    public MoviesWithSchedulePage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, ActivityState state, MovieImageRetriever imageRetriever) {
         this.context = context;
         this.settings = settings;
         this.activitiesState = activitiesState;
-        this.locationState = locationState;
         this.state = state;
+        this.imageRetriever = imageRetriever;
     }
 
+    @Override
     public View getView() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        pageView = layoutInflater.inflate(R.layout.cinema_list, null, false);
+        pageView = layoutInflater.inflate(R.layout.movie_list_w_cinema, null, false);
         return bindView(pageView);
     }
 
+    @Override
     public String getTitle() {
         return context.getString(R.string.showtime_caption);
     }
 
+    @Override
     public void onResume() {
         if (binded) {
-            locationState.startLocationListening();
-            locationState.addLocationClient(this);
+            ((StoppableAndResumable) movieListAdapter).onResume();
             if (currentDay != settings.getCurrentDay()) {
                 setCurrentDay(settings.getCurrentDay());
             }
-            cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+            movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), settings.getCurrentDay()));
         }
     }
 
-    public void onPause() {
-        locationState.removeLocationClient(this);
-        locationState.stopLocationListening();
-        settings.saveFavouriteCinemas();
+    @Override
+    public void onPause() {}
+
+    @Override
+    public void onStop() {
+        ((StoppableAndResumable) movieListAdapter).onStop();
     }
 
-    public void onStop() {}
-
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = ((SherlockActivity) context).getSupportMenuInflater();
+        MenuInflater inflater = ((SherlockActivity)context).getSupportMenuInflater();
 
         inflater.inflate(R.menu.select_day_menu, menu);
+
+        inflater.inflate(R.menu.movie_sort_menu, menu);
+
         switch (currentDay) {
             case Constants.TODAY_SCHEDULE:
                 menu.findItem(R.id.submenu_select_day_today).setChecked(true);
@@ -95,27 +104,24 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
                 break;
         }
 
-        inflater.inflate(R.menu.cinema_sort_menu, menu);
-        switch (settings.getCinemaSortOrder()) {
+        switch (settings.getMovieSortOrder()) {
             case BY_CAPTION:
-                menu.findItem(R.id.submenu_cinema_sort_by_caption).setChecked(true);
+                menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
                 break;
 
-            case BY_FAVOURITE:
-                menu.findItem(R.id.submenu_cinema_sort_by_favourite).setChecked(true);
+            case BY_POPULAR:
+                menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
                 break;
 
-            case BY_DISTANCE:
-                menu.findItem(R.id.submenu_cinema_sort_by_distance).setChecked(true);
-                break;
-
-            default:
+            case BY_RATING:
+                menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
                 break;
         }
 
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_select_day:
@@ -123,40 +129,40 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
             case R.id.submenu_select_day_today:
                 setCurrentDay(Constants.TODAY_SCHEDULE);
-                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_after_tomorrow:
                 setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
-                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.AFTER_TOMORROW_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
-            case R.id.menu_cinema_sort:
+            case R.id.menu_movie_sort:
                 return true;
 
-            case R.id.submenu_cinema_sort_by_caption:
-                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-                settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
+            case R.id.submenu_movie_sort_by_caption:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
                 item.setChecked(true);
                 return true;
 
-            case R.id.submenu_cinema_sort_by_favourite:
-                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-                settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
+            case R.id.submenu_movie_sort_by_popular:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
                 item.setChecked(true);
                 return true;
 
-            case R.id.submenu_cinema_sort_by_distance:
-                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
-                settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+            case R.id.submenu_movie_sort_by_rating:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
                 item.setChecked(true);
                 return true;
 
@@ -166,11 +172,13 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
     }
 
     private View bindView(View view) {
+        notifier = new IdleDataSetChangeNotifier();
         setCurrentDay(settings.getCurrentDay());
-        ListView list = (ListView)view.findViewById(R.id.cinema_list);
+        ListView list = (ListView)view.findViewById(R.id.movie_list);
+        list.setOnScrollListener(notifier);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onCinemaItemClick(adapterView, view, i, l);
+                onMovieItemClick(adapterView, view, i, l);
             }
         });
         binded = true;
@@ -178,18 +186,17 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         return view;
     }
 
-    private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        CinemaItemWithScheduleAdapter adapter = (CinemaItemWithScheduleAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+    private void onMovieItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        MovieItemWithScheduleAdapter adapter = (MovieItemWithScheduleAdapter)adapterView.getAdapter();
+        Movie movie = (Movie)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();
-        state.cinema = cinema;
-        state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
+        state.movie = movie;
+        state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
         activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(context, MovieWithScheduleListActivity.class);
+        Intent intent = new Intent(context, MovieActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         context.startActivity(intent);
     }
@@ -213,22 +220,21 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
                 break;
         }
 
-        Map<String, Cinema> cinemas = state.movie.getCinemas(currentDay);
-        if (cinemas.isEmpty()) {
+        Collection<Movie> movies = state.cinema.getMovies(currentDay).values();
+        if (movies.isEmpty()) {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, new ArrayList<Cinema>(cinemas.values()), state.movie, currentDay, locationState.getCurrentLocation());
-        ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
-        list.setAdapter(cinemaListAdapter);
-        list.setOnScrollListener(notifier);
-    }
+        StoppableAndResumable sar = (StoppableAndResumable)movieListAdapter;
+        if (sar != null) sar.onStop();
 
-    public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)cinemaListAdapter;
-        adapter.setLocation(location);
+        movieListAdapter = new MovieItemWithScheduleAdapter(context, notifier, new ArrayList<Movie>(movies), state.cinema, currentDay, imageRetriever);
+        ListView list = (ListView)pageView.findViewById(R.id.movie_list);
+        list.setAdapter(movieListAdapter);
+
+        sar = (StoppableAndResumable)movieListAdapter;
+        sar.onResume();
     }
 }
