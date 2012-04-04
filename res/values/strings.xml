@@ -17,6 +17,7 @@
     <string name="url">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
+    <string name="julya">Огромное спасибо Юле Соколовой (sochok25) за то что поддерживала меня от первой идеи до последней реализации</string>
 
     <string name="new_version_caption">Что нового?</string>
     <string name="new_version">● Исправлены ошибки</string>
