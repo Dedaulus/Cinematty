@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -16,10 +17,12 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.CinemaMapView;
+import com.dedaulus.cinematty.framework.Metro;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.ExpandCollapseAnimationCreator;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -116,12 +119,23 @@ public class CinemaPage implements SliderPage {
                 intoView.setVisibility(View.GONE);
             }
 
-            TextView metroView = (TextView)region.findViewById(R.id.cinema_metro);
-            if (state.cinema.getMetros().isEmpty()) {
-                metroView.setVisibility(View.GONE);
+            ViewGroup metroRegion = (ViewGroup)region.findViewById(R.id.cinema_metro_region);
+            List<Metro> metros = state.cinema.getMetros();
+            if (metros.isEmpty()) {
+                metroRegion.setVisibility(View.GONE);
             } else {
                 //metroView.setText(getString(R.string.metro_near) + ": " + state.cinema.getMetros());
-                metroView.setVisibility(View.GONE);
+                LayoutInflater inflater = LayoutInflater.from(context);
+                for (Metro metro : metros) {
+                    View metroView = inflater.inflate(R.layout.metro_item, null);
+                    View indicator = metroView.findViewById(R.id.indicator);
+                    indicator.setBackgroundColor(metro.getColor());
+                    TextView caption = (TextView)metroView.findViewById(R.id.metro_caption);
+                    caption.setText(metro.getName());
+
+                    metroRegion.addView(metroView);
+                }
+                metroRegion.setVisibility(View.VISIBLE);
             }
 
             region.setOnClickListener(new View.OnClickListener() {

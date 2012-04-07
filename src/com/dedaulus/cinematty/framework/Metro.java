@@ -26,6 +26,10 @@ public class Metro implements Comparable<Metro> {
         return name;
     }
 
+    public int getColor() {
+        return color;
+    }
+
     public void addCinema(Cinema cinema) {
         cinemas.put(cinema.getName(), cinema);
     }

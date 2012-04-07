@@ -22,8 +22,8 @@
                 android:paddingBottom="4dp">
 
             <TextView android:id="@+id/cinema_url"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textSize="16sp"
@@ -32,8 +32,8 @@
         </RelativeLayout>
 
         <RelativeLayout android:id="@+id/cinema_address_region"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
                 android:paddingBottom="4dp"
                 android:layout_below="@id/cinema_url_region">
 
@@ -41,8 +41,8 @@
                      layout="@layout/data_divider"/>
 
             <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="2dp"
@@ -50,30 +50,34 @@
                     android:orientation="vertical">
 
                 <TextView android:id="@+id/cinema_address"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
-                        android:singleLine="true"
-                        android:ellipsize="end"
                         android:textSize="16sp"/>
 
                 <TextView android:id="@+id/cinema_into"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="fill_parent"
                         android:textSize="14sp"
                         android:textColor="@android:color/secondary_text_light"/>
-
+                <!--
                 <TextView android:id="@+id/cinema_metro"
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
                         android:textSize="14sp"/>
+                -->
+                <LinearLayout android:id="@+id/cinema_metro_region"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+
 
             </LinearLayout>
 
         </RelativeLayout>
 
         <RelativeLayout android:id="@+id/cinema_phone_region"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
                 android:paddingBottom="4dp"
                 android:layout_below="@id/cinema_address_region">
 
@@ -81,8 +85,8 @@
                      layout="@layout/data_divider"/>
 
             <TextView android:id="@+id/cinema_phone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="fill_parent"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="2dp"
