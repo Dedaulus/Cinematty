@@ -82,7 +82,7 @@ public class MovieWithScheduleListActivity extends SherlockActivity implements V
         pages = new ArrayList<SliderPage>();
         pages.add(new CinemaPage(this, activitiesState, state));
         pages.add(new MoviesWithSchedulePage(this, settings, activitiesState, state, app.getImageRetrievers().getMovieSmallImageRetriever()));
-        defaultPagePosition = SHOWTIME_PAGE_ID;
+        defaultPagePosition = getIntent().getIntExtra(Constants.CINEMA_PAGE_ID, Constants.CINEMA_SHOWTIME_PAGE_ID);
         currentPage = defaultPagePosition;
 
         adapter = new SliderAdapter(pages);

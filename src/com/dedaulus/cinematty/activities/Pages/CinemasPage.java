@@ -151,6 +151,7 @@ public class CinemasPage implements SliderPage, LocationClient {
 
         Intent intent = new Intent(context, MovieWithScheduleListActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+        intent.putExtra(Constants.CINEMA_PAGE_ID, Constants.CINEMA_SHOWTIME_PAGE_ID);
         context.startActivity(intent);
     }
 
