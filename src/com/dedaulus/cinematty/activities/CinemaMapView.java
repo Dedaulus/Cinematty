@@ -57,10 +57,10 @@ public class CinemaMapView extends MapActivity {
         }
         mapView.getOverlays().add(otherCinemasOnMapOverlay);
 
+        // adding current cinema
         CinemaOnMapOverlay cinemaOnMapOverlay = new CinemaOnMapOverlay(getResources().getDrawable(R.drawable.ic_map_marker), mapView, activitiesState);
         markerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_map_marker);
         cinemaOnMapOverlay.setBalloonBottomOffset((int)(markerBitmap.getHeight() * BALLOON_OFFSET));
-
         cinemaOnMapOverlay.addOverlay(new CinemaOnMapOverlay.CinemaOverlayItem(state.cinema));
         mapView.getOverlays().add(cinemaOnMapOverlay);
 
