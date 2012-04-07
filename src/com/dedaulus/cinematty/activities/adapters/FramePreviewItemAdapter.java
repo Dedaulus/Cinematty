@@ -20,6 +20,7 @@ import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.RejectedExecutionException;
 
 /**
  * User: Dedaulus
@@ -84,21 +85,38 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
             progressBar.setVisibility(View.VISIBLE);
             if (imageRetriever.hasImage(frameIdsStore.getUid(), frameId, true)) {
                 if (notifier.isIdle()) {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
-                            synchronized (cachedImages) {
-                                cachedImages.put(cachedImageKey, bitmap);
+                    try {
+                        new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+                                Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
+                                synchronized (cachedImages) {
+                                    cachedImages.put(cachedImageKey, bitmap);
+                                }
+                                return null;
                             }
-                            return null;
-                        }
 
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            notifier.askForNotifyDataSetChanged();
-                        }
-                    }.execute();
+                            @Override
+                            protected void onPostExecute(Void aVoid) {
+                                notifier.askForNotifyDataSetChanged();
+                            }
+                        }.execute();
+                    } catch (RejectedExecutionException e) {
+                        // crutch
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {}
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        notifier.askForNotifyDataSetChanged();
+                                    }
+                                });
+                            }
+                        });
+                    }
                 } else {
                     notifier.askForNotifyDataSetChanged();
                 }
