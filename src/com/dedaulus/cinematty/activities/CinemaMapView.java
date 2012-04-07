@@ -51,7 +51,7 @@ public class CinemaMapView extends MapActivity {
         Bitmap markerBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_map_marker_other);
         otherCinemasOnMapOverlay.setBalloonBottomOffset((int)(markerBitmap.getHeight() * BALLOON_OFFSET));
         for (Cinema cinema : app.getSettings().getCinemas().values()) {
-            if (!cinema.equals(state.cinema)) {
+            if (!cinema.equals(state.cinema) && cinema.getAddress() != null) {
                 otherCinemasOnMapOverlay.addOverlay(new CinemaOnMapOverlay.CinemaOverlayItem(cinema));
             }
         }
