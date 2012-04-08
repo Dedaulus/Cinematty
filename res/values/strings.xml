@@ -89,6 +89,7 @@
     <string name="sort_by_distance">По ближайшим</string>
     <string name="sort_by_popular">По популярности</string>
     <string name="sort_by_rating">По рейтингу</string>
+    <string name="sort_by_time_left">По времени до начала</string>
 
     <string name="menu_preferences">Настройки</string>
     <string name="menu_home">Домой</string>

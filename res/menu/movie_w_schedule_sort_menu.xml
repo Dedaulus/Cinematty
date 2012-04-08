@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_movie_sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_menu_sort"
+        android:showAsAction="ifRoom">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/submenu_movie_sort_by_caption"
+                    android:title="@string/sort_by_caption"/>
+
+                <item
+                    android:id="@+id/submenu_movie_sort_by_popular"
+                    android:title="@string/sort_by_popular"/>
+
+                <item
+                    android:id="@+id/submenu_movie_sort_by_rating"
+                    android:title="@string/sort_by_rating"/>
+
+                <item
+                    android:id="@+id/submenu_movie_sort_by_time_left"
+                    android:title="@string/sort_by_time_left"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

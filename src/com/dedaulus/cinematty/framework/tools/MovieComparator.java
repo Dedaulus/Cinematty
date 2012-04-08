@@ -1,10 +1,10 @@
 package com.dedaulus.cinematty.framework.tools;
 
+import android.util.Pair;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -13,11 +13,30 @@ import java.util.Comparator;
  */
 public class MovieComparator implements Comparator<Movie> {
     private MovieSortOrder sortOrder;
-    private int currentDay;
+    private int day;
+    private Map<String, Pair<Movie, List<Calendar>>> cinemaShowTimes;
+    private Calendar now;
+
+    public MovieComparator(MovieSortOrder sortOrder) {
+        this.sortOrder = sortOrder;
+    }
 
     public MovieComparator(MovieSortOrder sortOrder, int day) {
         this.sortOrder = sortOrder;
-        currentDay = day;
+        this.day = day;
+    }
+
+    public MovieComparator(MovieSortOrder sortOrder, Map<String, Pair<Movie, List<Calendar>>> cinemaShowTimes) {
+        this.sortOrder = sortOrder;
+        this.cinemaShowTimes = cinemaShowTimes;
+        now = Calendar.getInstance();
+    }
+
+    public MovieComparator(MovieSortOrder sortOrder, int day, Map<String, Pair<Movie, List<Calendar>>> cinemaShowTimes) {
+        this.sortOrder = sortOrder;
+        this.day = day;
+        this.cinemaShowTimes = cinemaShowTimes;
+        now = Calendar.getInstance();
     }
 
     public int compare(Movie o1, Movie o2) {
@@ -26,8 +45,8 @@ public class MovieComparator implements Comparator<Movie> {
             return o1.getName().compareTo(o2.getName());
 
         case BY_POPULAR:
-            Collection<Cinema> l1 = o1.getCinemas(currentDay).values();
-            Collection<Cinema> l2 = o2.getCinemas(currentDay).values();
+            Collection<Cinema> l1 = o1.getCinemas(day).values();
+            Collection<Cinema> l2 = o2.getCinemas(day).values();
             int size1 = l1 != null ? l1.size() : 0;
             int size2 = l2 != null ? l2.size() : 0;
             if (size1 == size2) return 0;
@@ -38,6 +57,37 @@ public class MovieComparator implements Comparator<Movie> {
             float imdb2 = o2.getImdb();
             if (imdb1 == imdb2) return 0;
             return imdb1 < imdb2 ? 1 : -1;
+
+        case BY_TIME_LEFT:
+            List<Calendar> showTimes1 = cinemaShowTimes.get(o1.getName()).second;
+            Calendar showTime1 = null;
+            if (showTimes1 != null) {
+                for (Calendar showTime : showTimes1) {
+                    if (now.before(showTime)) {
+                        showTime1 = showTime;
+                        break;
+                    }
+                }
+            }
+
+            List<Calendar> showTimes2 = cinemaShowTimes.get(o2.getName()).second;
+            Calendar showTime2 = null;
+            if (showTimes2 != null) {
+                for (Calendar showTime : showTimes2) {
+                    if (now.before(showTime)) {
+                        showTime2 = showTime;
+                        break;
+                    }
+                }
+            }
+
+            if (showTime1 == null) {
+                return 1;
+            } else if (showTime2 == null) {
+                return -1;
+            } else {
+                return showTime1.compareTo(showTime2);
+            }
 
         default:
             throw new RuntimeException("Sort order not implemented!");

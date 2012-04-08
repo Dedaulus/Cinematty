@@ -70,7 +70,7 @@ public class MoviesWithSchedulePage implements SliderPage {
             if (currentDay != settings.getCurrentDay()) {
                 setCurrentDay(settings.getCurrentDay());
             }
-            movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), settings.getCurrentDay()));
+            movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), currentDay, state.cinema.getShowTimes(currentDay)));
         }
     }
 
@@ -88,7 +88,7 @@ public class MoviesWithSchedulePage implements SliderPage {
 
         inflater.inflate(R.menu.select_day_menu, menu);
 
-        inflater.inflate(R.menu.movie_sort_menu, menu);
+        inflater.inflate(R.menu.movie_w_schedule_sort_menu, menu);
 
         switch (currentDay) {
             case Constants.TODAY_SCHEDULE:
@@ -104,7 +104,7 @@ public class MoviesWithSchedulePage implements SliderPage {
                 break;
         }
 
-        switch (settings.getMovieSortOrder()) {
+        switch (settings.getMovieWithScheduleSortOrder()) {
             case BY_CAPTION:
                 menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
                 break;
@@ -115,6 +115,10 @@ public class MoviesWithSchedulePage implements SliderPage {
 
             case BY_RATING:
                 menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+                break;
+
+            case BY_TIME_LEFT:
+                menu.findItem(R.id.submenu_movie_sort_by_time_left).setChecked(true);
                 break;
         }
 
@@ -129,19 +133,19 @@ public class MoviesWithSchedulePage implements SliderPage {
 
             case R.id.submenu_select_day_today:
                 setCurrentDay(Constants.TODAY_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TODAY_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.TODAY_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.TOMORROW_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.TOMORROW_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_after_tomorrow:
                 setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), Constants.AFTER_TOMORROW_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.AFTER_TOMORROW_SCHEDULE));
                 item.setChecked(true);
                 return true;
 
@@ -149,20 +153,26 @@ public class MoviesWithSchedulePage implements SliderPage {
                 return true;
 
             case R.id.submenu_movie_sort_by_caption:
-                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION, settings.getCurrentDay()));
-                settings.saveMovieSortOrder(MovieSortOrder.BY_CAPTION);
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_CAPTION));
+                settings.saveMovieWithScheduleSortOrder(MovieSortOrder.BY_CAPTION);
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_movie_sort_by_popular:
                 movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
-                settings.saveMovieSortOrder(MovieSortOrder.BY_POPULAR);
+                settings.saveMovieWithScheduleSortOrder(MovieSortOrder.BY_POPULAR);
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_movie_sort_by_rating:
-                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
-                settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING));
+                settings.saveMovieWithScheduleSortOrder(MovieSortOrder.BY_RATING);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_movie_sort_by_time_left:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_TIME_LEFT, state.cinema.getShowTimes(currentDay)));
+                settings.saveMovieWithScheduleSortOrder(MovieSortOrder.BY_TIME_LEFT);
                 item.setChecked(true);
                 return true;
 

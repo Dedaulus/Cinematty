@@ -43,6 +43,10 @@ public interface ApplicationSettings {
 
     MovieSortOrder getMovieSortOrder();
 
+    void saveMovieWithScheduleSortOrder(MovieSortOrder sortOrder);
+
+    MovieSortOrder getMovieWithScheduleSortOrder();
+
     void saveCurrentCity(City city);
 
     City getCurrentCity();

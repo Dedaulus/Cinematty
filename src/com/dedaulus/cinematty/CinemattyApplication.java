@@ -47,12 +47,13 @@ public class CinemattyApplication extends Application {
     private static final String CURRENT_VERSION = "current_version";
 
     private class ApplicationSettingsImpl implements ApplicationSettings {
-        private static final String FAV_CINEMAS_FILE       = "cinematty_fav_cinemas";
-        private static final String FAV_ACTORS_FILE        = "cinematty_fav_actors";
-        private static final String PREFERENCES_FILE       = "cinematty_preferences";
-        private static final String PREF_CINEMA_SORT_ORDER = "cinema_sort_order";
-        private static final String PREF_MOVIE_SORT_ORDER  = "movie_sort_order";
-        private static final String PREF_CURRENT_CITY      = "current_city";
+        private static final String FAV_CINEMAS_FILE                  = "cinematty_fav_cinemas";
+        private static final String FAV_ACTORS_FILE                   = "cinematty_fav_actors";
+        private static final String PREFERENCES_FILE                  = "cinematty_preferences";
+        private static final String PREF_CINEMA_SORT_ORDER            = "cinema_sort_order";
+        private static final String PREF_MOVIE_SORT_ORDER             = "movie_sort_order";
+        private static final String PREF_MOVIE_W_SCHEDULE_SORT_ORDER  = "movie_w_schedule_sort_order";
+        private static final String PREF_CURRENT_CITY                 = "current_city";
 
         private Map<String, Cinema> cinemas;
         private Map<String, Movie> movies;
@@ -207,12 +208,31 @@ public class CinemattyApplication extends Application {
         @Override
         public MovieSortOrder getMovieSortOrder() {
             SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
-            int order = preferences.getInt(PREF_MOVIE_SORT_ORDER, CinemaSortOrder.BY_CAPTION.ordinal());
+            int order = preferences.getInt(PREF_MOVIE_SORT_ORDER, MovieSortOrder.BY_POPULAR.ordinal());
             for (MovieSortOrder sortOrder : MovieSortOrder.values()) {
                 if (sortOrder.ordinal() == order) return sortOrder;
             }
 
-            return MovieSortOrder.BY_CAPTION;
+            return MovieSortOrder.BY_POPULAR;
+        }
+
+        @Override
+        public void saveMovieWithScheduleSortOrder(MovieSortOrder sortOrder) {
+            SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(PREF_MOVIE_W_SCHEDULE_SORT_ORDER, sortOrder.ordinal());
+            editor.commit();
+        }
+
+        @Override
+        public MovieSortOrder getMovieWithScheduleSortOrder() {
+            SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
+            int order = preferences.getInt(PREF_MOVIE_W_SCHEDULE_SORT_ORDER, MovieSortOrder.BY_POPULAR.ordinal());
+            for (MovieSortOrder sortOrder : MovieSortOrder.values()) {
+                if (sortOrder.ordinal() == order) return sortOrder;
+            }
+
+            return MovieSortOrder.BY_POPULAR;
         }
 
         @Override

@@ -8,5 +8,6 @@ package com.dedaulus.cinematty.framework.tools;
 public enum MovieSortOrder {
     BY_CAPTION,
     BY_POPULAR,
-    BY_RATING
+    BY_RATING,
+    BY_TIME_LEFT
 }
