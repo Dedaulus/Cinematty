@@ -60,34 +60,21 @@ public class MovieComparator implements Comparator<Movie> {
 
         case BY_TIME_LEFT:
             List<Calendar> showTimes1 = cinemaShowTimes.get(o1.getName()).second;
-            Calendar showTime1 = null;
-            if (showTimes1 != null) {
-                for (Calendar showTime : showTimes1) {
-                    if (now.before(showTime)) {
-                        showTime1 = showTime;
-                        break;
-                    }
-                }
-            }
+            Calendar showTime1 = DataConverter.getClosestTime(showTimes1, now);
 
             List<Calendar> showTimes2 = cinemaShowTimes.get(o2.getName()).second;
-            Calendar showTime2 = null;
-            if (showTimes2 != null) {
-                for (Calendar showTime : showTimes2) {
-                    if (now.before(showTime)) {
-                        showTime2 = showTime;
-                        break;
-                    }
-                }
-            }
+            Calendar showTime2 = DataConverter.getClosestTime(showTimes2, now);
 
+            if (showTime1 == showTime2) {
+                return 0;
+            }
             if (showTime1 == null) {
                 return 1;
-            } else if (showTime2 == null) {
-                return -1;
-            } else {
-                return showTime1.compareTo(showTime2);
             }
+            if (showTime2 == null) {
+                return -1;
+            }
+            return showTime1.compareTo(showTime2);
 
         default:
             throw new RuntimeException("Sort order not implemented!");

@@ -326,7 +326,7 @@ public class DataConverter {
         }
     }
 
-    private static Calendar getClosestTime(List<Calendar> showTimes, Calendar time) {
+    public static Calendar getClosestTime(List<Calendar> showTimes, Calendar time) {
         int id = Collections.binarySearch(showTimes, time, new Comparator<Calendar>() {
             public int compare(Calendar o1, Calendar o2) {
                 int day1 = o1.get(Calendar.DAY_OF_YEAR);
