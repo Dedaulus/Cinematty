@@ -184,29 +184,23 @@ public class DataConverter {
         return str;
     }
 
-    public static SpannableString showTimesToClosestTimeString(Context context, List<Calendar> showTimes) {
-        SpannableString timeLeftString;
+    public static String showTimesToClosestTimeString(Context context, List<Calendar> showTimes) {
+        String timeLeftString;
         if (!showTimes.isEmpty()) {
             Calendar now = Calendar.getInstance();
             Calendar closestTime = getClosestTime(showTimes, now);
             if (closestTime == null) {
-                timeLeftString = new SpannableString(context.getString(R.string.no_schedule) + " ");
-                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                timeLeftString = context.getString(R.string.no_schedule) + " ";
             } else if (closestTime.equals(now)) {
-                timeLeftString = new SpannableString(context.getString(R.string.schedule_now));
-                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.schedule_now).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                timeLeftString = context.getString(R.string.schedule_now);
             } else {
                 Calendar leftTime = (Calendar)closestTime.clone();
                 leftTime.add(Calendar.HOUR_OF_DAY, -now.get(Calendar.HOUR_OF_DAY));
                 leftTime.add(Calendar.MINUTE, -now.get(Calendar.MINUTE));
-
-                String str = DataConverter.timeToTimeLeft(context, leftTime);
-                timeLeftString = new SpannableString(str);
-                timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                timeLeftString = DataConverter.timeToTimeLeft(context, leftTime);
             }
         } else {
-            timeLeftString = new SpannableString(context.getString(R.string.no_schedule) + " ");
-            timeLeftString.setSpan(new StyleSpan(Typeface.ITALIC), 0, context.getString(R.string.no_schedule).length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            timeLeftString = context.getString(R.string.no_schedule) + " ";
         }
 
         return timeLeftString;

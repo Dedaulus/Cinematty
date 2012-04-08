@@ -124,7 +124,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         }
 
         if (currentDay == Constants.TODAY_SCHEDULE) {
-            SpannableString timeLeftStr = DataConverter.showTimesToClosestTimeString(context, showTimes);
+            String timeLeftStr = DataConverter.showTimesToClosestTimeString(context, showTimes);
             viewHolder.timeLeft.setText(timeLeftStr);
             viewHolder.timeLeft.setVisibility(View.VISIBLE);
         } else {

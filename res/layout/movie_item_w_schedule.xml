@@ -44,16 +44,16 @@
                   style="@style/ListItem.Caption.Movie"/>
 
         <TextView android:id="@+id/movie_genre"
-                  style="@style/ListItem.Data.MovieGenre"
-                  android:layout_below="@id/movie_caption"/>
+                style="@style/ListItem.Data.MovieGenre"
+                android:layout_below="@id/movie_caption"/>
 
         <TextView android:id="@+id/imdb"
-                  style="@style/ListItem.Data.MovieRating"
-                  android:layout_below="@id/movie_genre"/>
+                style="@style/ListItem.Data.MovieRating"
+                android:layout_below="@id/movie_genre"/>
 
         <TextView android:id="@+id/movie_actor"
-                  style="@style/ListItem.Data.MovieActor"
-                  android:layout_below="@id/imdb"/>
+                style="@style/ListItem.Data.MovieActor"
+                android:layout_below="@id/imdb"/>
 
         <TextView android:id="@+id/movie_schedule"
                 style="@style/ListItem.Data.MovieSchedule"
@@ -61,7 +61,8 @@
 
         <TextView android:id="@+id/time_left"
                 style="@style/ListItem.Data.MovieTimeLeft"
-                android:layout_below="@id/movie_schedule"/>
+                android:layout_below="@id/movie_schedule"
+                android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
 

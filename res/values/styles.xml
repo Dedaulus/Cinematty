@@ -174,7 +174,9 @@
         <item name="android:textColor">#FF4E00</item>
     </style>
     <!-- 0094FF -->
-    <style name="ListItem.Data.MovieTimeLeft"/>
+    <style name="ListItem.Data.MovieTimeLeft">
+        <item name="android:textColor">@color/advanced_color</item>
+    </style>
     <style name="ListItem.Data.MovieActor">
         <item name="android:singleLine">false</item>
         <item name="android:ellipsize">none</item>
