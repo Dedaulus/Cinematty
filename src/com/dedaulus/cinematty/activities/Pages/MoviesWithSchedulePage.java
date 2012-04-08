@@ -38,7 +38,7 @@ public class MoviesWithSchedulePage implements SliderPage {
     private ActivityState state;
     private MovieImageRetriever imageRetriever;
     private SortableAdapter<Movie> movieListAdapter;
-    IdleDataSetChangeNotifier notifier;
+    private IdleDataSetChangeNotifier notifier;
     private int currentDay;
     private View pageView;
     private boolean binded = false;
