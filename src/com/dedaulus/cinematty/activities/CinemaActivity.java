@@ -38,7 +38,7 @@ import java.util.UUID;
  * Date: 12.10.11
  * Time: 10:05
  */
-public class MovieWithScheduleListActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
+public class CinemaActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
     private static int DESCRIPTION_PAGE_ID = 0;
     private static int SHOWTIME_PAGE_ID    = 1;
 

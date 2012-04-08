@@ -223,7 +223,7 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
         state.activityType = ActivityState.MOVIE_LIST_W_CINEMA;
         activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(this, MovieWithScheduleListActivity.class);
+        Intent intent = new Intent(this, CinemaActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         startActivity(intent);
     }

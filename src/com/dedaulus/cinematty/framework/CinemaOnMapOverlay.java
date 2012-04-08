@@ -3,10 +3,8 @@ package com.dedaulus.cinematty.framework;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.widget.ListView;
 import com.dedaulus.cinematty.ActivitiesState;
-import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
-import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
+import com.dedaulus.cinematty.activities.CinemaActivity;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
@@ -80,7 +78,7 @@ public class CinemaOnMapOverlay extends BalloonItemizedOverlay {
             ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
             activitiesState.setState(cookie, state);
 
-            Intent intent = new Intent(context, MovieWithScheduleListActivity.class);
+            Intent intent = new Intent(context, CinemaActivity.class);
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             intent.putExtra(Constants.CINEMA_PAGE_ID, Constants.CINEMA_DESCRIPTION_PAGE_ID);
             context.startActivity(intent);

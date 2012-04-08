@@ -13,7 +13,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
-import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SearchAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
@@ -206,7 +205,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
             activitiesState.setState(cookie, state);
 
-            Intent intent = new Intent(this, MovieWithScheduleListActivity.class);
+            Intent intent = new Intent(this, CinemaActivity.class);
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
             startActivity(intent);
 

@@ -40,7 +40,7 @@
                        android:value=".activities.SearchableActivity"/>
         </activity>
 
-        <activity android:name=".activities.MovieWithScheduleListActivity"
+        <activity android:name=".activities.CinemaActivity"
                   android:theme="@style/StyledIndicators">
             <meta-data android:name="android.app.default_searchable"
                        android:value=".activities.SearchableActivity"/>

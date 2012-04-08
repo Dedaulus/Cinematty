@@ -12,7 +12,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
-import com.dedaulus.cinematty.activities.MovieWithScheduleListActivity;
+import com.dedaulus.cinematty.activities.CinemaActivity;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
 import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
 import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
@@ -149,7 +149,7 @@ public class CinemasPage implements SliderPage, LocationClient {
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
         activitiesState.setState(cookie, state);
 
-        Intent intent = new Intent(context, MovieWithScheduleListActivity.class);
+        Intent intent = new Intent(context, CinemaActivity.class);
         intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
         intent.putExtra(Constants.CINEMA_PAGE_ID, Constants.CINEMA_SHOWTIME_PAGE_ID);
         context.startActivity(intent);
