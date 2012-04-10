@@ -11,7 +11,9 @@ import com.dedaulus.cinematty.framework.CinemaOnMapOverlay;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
-import com.google.android.maps.*;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
 /**
  * User: Dedaulus

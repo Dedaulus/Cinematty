@@ -3,7 +3,6 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

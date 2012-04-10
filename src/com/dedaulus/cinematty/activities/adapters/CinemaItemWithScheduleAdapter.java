@@ -2,7 +2,6 @@ package com.dedaulus.cinematty.activities.adapters;
 
 import android.content.Context;
 import android.location.Location;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

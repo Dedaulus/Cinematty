@@ -2,12 +2,10 @@ package com.dedaulus.cinematty.framework.tools;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
-import android.text.style.StyleSpan;
 import android.util.Pair;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MovieActor;

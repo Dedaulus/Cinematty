@@ -11,7 +11,7 @@
 
     <string name="app_name">ГдеКИНО</string>
     <string name="app_version">1.2.0</string>
-    <string name="app_version_code">20</string>
+    <string name="app_version_code">21</string>
     <string name="copyright">© 2012, Dedaulus, Donytar, Aleserma</string>
     <string name="email">support@gdekino.net</string>
     <string name="url">gdekino.net</string>
@@ -91,7 +91,7 @@
     <string name="sort_by_distance">По ближайшим</string>
     <string name="sort_by_popular">По популярности</string>
     <string name="sort_by_rating">По рейтингу</string>
-    <string name="sort_by_time_left">По времени до начала</string>
+    <string name="sort_by_time_left">По времени до сеанса</string>
 
     <string name="menu_preferences">Настройки</string>
     <string name="menu_home">Домой</string>

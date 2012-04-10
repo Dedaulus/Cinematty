@@ -1,16 +1,7 @@
 package com.dedaulus.cinematty.activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -20,18 +11,18 @@ import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.activities.Pages.*;
-import com.dedaulus.cinematty.activities.adapters.*;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieFrameIdsStore;
+import com.dedaulus.cinematty.activities.Pages.CinemaPage;
+import com.dedaulus.cinematty.activities.Pages.MoviesWithSchedulePage;
+import com.dedaulus.cinematty.activities.Pages.SliderPage;
+import com.dedaulus.cinematty.activities.adapters.PageChangeListenerProxy;
+import com.dedaulus.cinematty.activities.adapters.SliderAdapter;
 import com.dedaulus.cinematty.framework.SyncStatus;
-import com.dedaulus.cinematty.framework.tools.*;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
+import com.dedaulus.cinematty.framework.tools.Constants;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * User: Dedaulus

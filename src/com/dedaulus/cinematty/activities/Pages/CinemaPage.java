@@ -20,7 +20,6 @@ import com.dedaulus.cinematty.activities.CinemaMapView;
 import com.dedaulus.cinematty.framework.Metro;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
-import com.dedaulus.cinematty.framework.tools.ExpandCollapseAnimationCreator;
 
 import java.util.List;
 import java.util.UUID;
