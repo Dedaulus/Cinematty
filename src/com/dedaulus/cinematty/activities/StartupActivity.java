@@ -81,6 +81,32 @@ public class StartupActivity extends Activity
         findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
     }
 
+    private void setUpdateString(String updateUrl) {
+        final String url;
+        if (updateUrl == null || updateUrl.length() == 0) {
+            url = "https://play.google.com/store/apps/details?id=com.dedaulus.cinematty";
+        } else {
+            url = updateUrl;
+        }
+
+        TextView textView = (TextView)findViewById(R.id.error_message);
+        textView.setText(R.string.sync_update_needed);
+        Button button = (Button)findViewById(R.id.error_button);
+        button.setText(getString(R.string.sync_update_needed_button));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+        button.setVisibility(View.VISIBLE);
+
+        findViewById(R.id.loading_schedule_panel).setVisibility(View.INVISIBLE);
+        findViewById(R.id.loading_error_panel).setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GET_CURRENT_CITY) {
@@ -110,14 +136,7 @@ public class StartupActivity extends Activity
                             startActivity(intent);
                             finish();
                         } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
-                            String updateUrl = app.getConnect().get(UPDATE_URL_KEY);
-                            if (updateUrl == null || updateUrl.length() == 0) {
-                                updateUrl = "https://play.google.com/store/apps/details?id=com.dedaulus.cinematty";
-                            }
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse(updateUrl));
-                            startActivity(intent);
-                            finish();
+                            setUpdateString(app.getConnect().get(UPDATE_URL_KEY));
                         } else {
                             setErrorString(syncStatus);
                         }
