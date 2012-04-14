@@ -33,7 +33,7 @@ public class ActorsPage implements SliderPage {
     private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
-    private SortableAdapter<MovieActor> actorListAdapter;
+    private ActorItemAdapter actorListAdapter;
     private boolean binded = false;
 
     public ActorsPage(Context context, CinemattyApplication app) {

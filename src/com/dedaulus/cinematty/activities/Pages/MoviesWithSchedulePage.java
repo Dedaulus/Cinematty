@@ -37,7 +37,7 @@ public class MoviesWithSchedulePage implements SliderPage {
     private ActivitiesState activitiesState;
     private ActivityState state;
     private MovieImageRetriever imageRetriever;
-    private SortableAdapter<Movie> movieListAdapter;
+    private MovieItemWithScheduleAdapter movieListAdapter;
     private IdleDataSetChangeNotifier notifier;
     private int currentDay;
     private View pageView;
@@ -66,7 +66,7 @@ public class MoviesWithSchedulePage implements SliderPage {
     @Override
     public void onResume() {
         if (binded) {
-            ((StoppableAndResumable) movieListAdapter).onResume();
+            movieListAdapter.onResume();
             if (currentDay != settings.getCurrentDay()) {
                 setCurrentDay(settings.getCurrentDay());
             }
@@ -79,7 +79,7 @@ public class MoviesWithSchedulePage implements SliderPage {
 
     @Override
     public void onStop() {
-        ((StoppableAndResumable) movieListAdapter).onStop();
+        movieListAdapter.onStop();
     }
 
     @Override
@@ -133,19 +133,19 @@ public class MoviesWithSchedulePage implements SliderPage {
 
             case R.id.submenu_select_day_today:
                 setCurrentDay(Constants.TODAY_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.TODAY_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), currentDay, state.cinema.getShowTimes(currentDay)));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_tomorrow:
                 setCurrentDay(Constants.TOMORROW_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.TOMORROW_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), currentDay, state.cinema.getShowTimes(currentDay)));
                 item.setChecked(true);
                 return true;
 
             case R.id.submenu_select_day_after_tomorrow:
                 setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
-                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), Constants.AFTER_TOMORROW_SCHEDULE));
+                movieListAdapter.sortBy(new MovieComparator(settings.getMovieWithScheduleSortOrder(), currentDay, state.cinema.getShowTimes(currentDay)));
                 item.setChecked(true);
                 return true;
 
@@ -159,7 +159,7 @@ public class MoviesWithSchedulePage implements SliderPage {
                 return true;
 
             case R.id.submenu_movie_sort_by_popular:
-                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, settings.getCurrentDay()));
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_POPULAR, currentDay));
                 settings.saveMovieWithScheduleSortOrder(MovieSortOrder.BY_POPULAR);
                 item.setChecked(true);
                 return true;
@@ -237,14 +237,14 @@ public class MoviesWithSchedulePage implements SliderPage {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
 
-        StoppableAndResumable sar = (StoppableAndResumable)movieListAdapter;
-        if (sar != null) sar.onStop();
+        if (movieListAdapter != null) {
+            movieListAdapter.onStop();
+        }
 
         movieListAdapter = new MovieItemWithScheduleAdapter(context, notifier, new ArrayList<Movie>(movies), state.cinema, currentDay, imageRetriever);
         ListView list = (ListView)pageView.findViewById(R.id.movie_list);
         list.setAdapter(movieListAdapter);
 
-        sar = (StoppableAndResumable)movieListAdapter;
-        sar.onResume();
+        movieListAdapter.onResume();
     }
 }

@@ -29,7 +29,7 @@ public class FramesPage implements SliderPage {
     private CinemattyApplication app;
     private ActivityState state;
     private FramePreviewItemAdapter itemAdapter;
-    MovieFrameIdsStore frameIdsStore;
+    private MovieFrameIdsStore frameIdsStore;
     private Boolean binded = false;
 
     public FramesPage(Context context, CinemattyApplication app, MovieFrameIdsStore frameIdsStore, ActivityState state) {

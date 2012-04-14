@@ -38,7 +38,7 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
     private ActivitiesState activitiesState;
     private LocationState locationState;
     private ActivityState state;
-    private SortableAdapter<Cinema> cinemaListAdapter;
+    private CinemaItemWithScheduleAdapter cinemaListAdapter;
     private int currentDay;
     private View pageView;
     private boolean binded = false;
@@ -232,7 +232,6 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
     }
 
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter)cinemaListAdapter;
-        adapter.setLocation(location);
+        cinemaListAdapter.setLocation(location);
     }
 }
