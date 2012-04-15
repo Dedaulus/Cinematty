@@ -44,7 +44,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module" module-name="ViewPagerIndicator" />
+    <orderEntry type="module" module-name="MapViewBalloons" />
+    <orderEntry type="module" module-name="ActionBarSherlok" />
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/android-support-v4.jar!/" />
@@ -53,9 +56,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="ViewPagerIndicator" exported="" />
-    <orderEntry type="module" module-name="MapViewBalloons" exported="" />
-    <orderEntry type="module" module-name="ActionBarSherlok" exported="" />
   </component>
 </module>
 

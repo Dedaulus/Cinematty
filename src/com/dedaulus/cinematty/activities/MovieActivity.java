@@ -174,7 +174,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
     @Override
-    public void onPageSelected(int position) {
+    public synchronized void onPageSelected(int position) {
         currentPage = position;
         invalidateOptionsMenu();
     }
