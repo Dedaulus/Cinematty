@@ -227,12 +227,12 @@ public class CinemattyApplication extends Application {
         @Override
         public MovieSortOrder getMovieWithScheduleSortOrder() {
             SharedPreferences preferences = getSharedPreferences(PREFERENCES_FILE, MODE_PRIVATE);
-            int order = preferences.getInt(PREF_MOVIE_W_SCHEDULE_SORT_ORDER, MovieSortOrder.BY_POPULAR.ordinal());
+            int order = preferences.getInt(PREF_MOVIE_W_SCHEDULE_SORT_ORDER, MovieSortOrder.BY_TIME_LEFT.ordinal());
             for (MovieSortOrder sortOrder : MovieSortOrder.values()) {
                 if (sortOrder.ordinal() == order) return sortOrder;
             }
 
-            return MovieSortOrder.BY_POPULAR;
+            return MovieSortOrder.BY_TIME_LEFT;
         }
 
         @Override
