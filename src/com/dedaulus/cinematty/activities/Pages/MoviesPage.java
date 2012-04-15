@@ -34,7 +34,7 @@ public class MoviesPage implements SliderPage {
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private MovieImageRetriever imageRetriever;
-    private SortableAdapter<Movie> movieListAdapter;
+    private MovieItemAdapter movieListAdapter;
     private boolean binded = false;
 
     public MoviesPage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, MovieImageRetriever imageRetriever) {
@@ -56,7 +56,7 @@ public class MoviesPage implements SliderPage {
 
     public void onResume() {
         if (binded) {
-            ((StoppableAndResumable) movieListAdapter).onResume();
+            movieListAdapter.onResume();
             movieListAdapter.sortBy(new MovieComparator(settings.getMovieSortOrder(), settings.getCurrentDay()));
         }
     }
@@ -64,7 +64,7 @@ public class MoviesPage implements SliderPage {
     public void onPause() {}
 
     public void onStop() {
-        ((StoppableAndResumable) movieListAdapter).onStop();
+        movieListAdapter.onStop();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

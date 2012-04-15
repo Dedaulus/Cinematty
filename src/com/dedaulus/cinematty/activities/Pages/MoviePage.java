@@ -41,7 +41,6 @@ import java.util.*;
  */
 public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageReceivedAction {
     private List<Pair<MovieActor, ImageView>> favIconHolders;
-    
     private Context context;
     private CinemattyApplication app;
     private ApplicationSettings settings;

@@ -32,7 +32,7 @@ public class CinemasPage implements SliderPage, LocationClient {
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private LocationState locationState;
-    private SortableAdapter<Cinema> cinemaListAdapter;
+    private CinemaItemAdapter cinemaListAdapter;
     private boolean binded = false;
 
     public CinemasPage(Context context, CinemattyApplication app) {
@@ -156,7 +156,6 @@ public class CinemasPage implements SliderPage, LocationClient {
     }
 
     public void onLocationChanged(Location location) {
-        LocationAdapter adapter = (LocationAdapter) cinemaListAdapter;
-        adapter.setLocation(location);
+        cinemaListAdapter.setLocation(location);
     }
 }
