@@ -23,39 +23,24 @@
         <option name="PACK_TEST_CODE" value="false" />
         <option name="RUN_PROGUARD" value="false" />
         <option name="PROGUARD_CFG_PATH" value="/proguard.cfg" />
-        <resOverlayFolders />
+        <resOverlayFolders>
+          <path>/res-overlay</path>
+        </resOverlayFolders>
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/bugsense-trace.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/android-support-v4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module" module-name="ViewPagerIndicator" exported="" />
-    <orderEntry type="module" module-name="MapViewBalloons" exported="" />
-    <orderEntry type="module" module-name="ActionBarSherlok" exported="" />
+    <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="module" module-name="ActionBarSherlock" />
+    <orderEntry type="module" module-name="ViewPageIndicator" />
+    <orderEntry type="module" module-name="MapViewBalloons" />
   </component>
 </module>
 
