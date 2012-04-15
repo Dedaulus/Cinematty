@@ -5,3 +5,5 @@
 *.iws
 classes
 gen-external-apklibs
+out
+gen
