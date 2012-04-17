@@ -7,3 +7,5 @@ classes
 gen-external-apklibs
 out
 gen
+proguard_logs*
+Cinematty.apk
