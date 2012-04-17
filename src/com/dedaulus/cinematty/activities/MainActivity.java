@@ -28,7 +28,6 @@ import java.util.List;
  */
 public class MainActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
     private static final String FAKE_STATE_ID = "fake_state";
-    private static final int SLIDERS_COUNT = 6;
 
     private CinemattyApplication app;
     private ActivitiesState activitiesState;
@@ -38,7 +37,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
     private Integer currentPage = 0;
 
     {
-        pages = new ArrayList<SliderPage>(SLIDERS_COUNT);
+        pages = new ArrayList<SliderPage>();
     }
 
     /** Called when the activity is first created. */
