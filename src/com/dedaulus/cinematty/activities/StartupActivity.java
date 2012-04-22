@@ -39,6 +39,7 @@ public class StartupActivity extends Activity
                 if (inProgress) return;
                 inProgress = true;
             }
+            app.getLocationState().startLocationListening();
             getSchedule();
         }
     }
