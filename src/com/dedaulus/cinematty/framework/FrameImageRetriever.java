@@ -11,9 +11,9 @@ import java.io.File;
  * Time: 1:55
  */
 public class FrameImageRetriever {
-    private static String FRAME_PREFIX = "frame_";
-    private static String PREVIEW_PREFIX = "preview_";
-    private static String POSTFIXES[] = {"_m.jpg", "_h.jpg", "_xh.jpg"};
+    private static final String FRAME_PREFIX = "frame_";
+    private static final String PREVIEW_PREFIX = "preview_";
+    private static final String POSTFIXES[] = {"_m.jpg", "_h.jpg", "_xh.jpg"};
     
     private static final int MEDIUM_SIZE = 700;
     private static final int BIG_SIZE    = 1000;
@@ -80,7 +80,6 @@ public class FrameImageRetriever {
     }
     
     private String createUrl(String uid, int frameId, boolean isPreview) {
-        StringBuilder builder = new StringBuilder(remoteFolder).append(uid).append("/").append(isPreview ? PREVIEW_PREFIX : FRAME_PREFIX).append(frameId).append(POSTFIXES[postfixId]);
-        return builder.toString();
+        return new StringBuilder(remoteFolder).append(uid).append("/").append(isPreview ? PREVIEW_PREFIX : FRAME_PREFIX).append(frameId).append(POSTFIXES[postfixId]).toString();
     }
 }
