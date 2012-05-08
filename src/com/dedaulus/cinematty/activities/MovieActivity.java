@@ -41,6 +41,10 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
     int defaultPagePosition;
     private String stateId;
 
+    {
+        pages = new ArrayList<SliderPage>();
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie);
@@ -143,7 +147,9 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
 
         inflater.inflate(R.menu.search_menu, menu);
 
-        pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+        if (!pages.isEmpty()) {
+            pages.get(getCurrentPage()).onCreateOptionsMenu(menu);
+        }
 
         inflater.inflate(R.menu.preferences_menu, menu);
 
