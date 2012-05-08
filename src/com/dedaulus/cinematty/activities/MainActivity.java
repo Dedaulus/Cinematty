@@ -93,20 +93,6 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
             pageChangeListenerProxy.addListener(indicator);
         }
 
-        /*
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        if (displayMetrics.widthPixels < displayMetrics.heightPixels) {
-            TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
-            indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
-            pageChangeListenerProxy.addListener(indicator);
-        } else {
-            TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.tabs);
-            indicator.setViewPager(slider, slideIds.get(Constants.WHATS_NEW_SLIDE));
-            pageChangeListenerProxy.addListener(indicator);
-        }
-        */
-
         pageChangeListenerProxy.addListener(this);
         slider.setOnPageChangeListener(pageChangeListenerProxy);
 
