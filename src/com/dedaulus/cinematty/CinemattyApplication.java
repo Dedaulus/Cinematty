@@ -335,7 +335,7 @@ public class CinemattyApplication extends Application {
                 currentLocation = null;
             } else if (coarseLocation != null && fineLocation == null) {
                 currentLocation = coarseLocation;
-            } else if (fineLocation != null && coarseLocation == null) {
+            } else if (coarseLocation == null) {
                 currentLocation = fineLocation;
             } else {
                 currentLocation = LocationHelper.selectBetterLocation(coarseLocation, fineLocation);
