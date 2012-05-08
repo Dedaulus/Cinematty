@@ -104,6 +104,8 @@
     <string name="generate_link">Создание ссылки...</string>
     <string name="generate_link_failed">В данный момент невозможно создать ссылку. Попробуйте позже</string>
 
+    <string name="location_changed">Ваше местоположение изменилось, сортирую кинотеатры...</string>
+
     <string name="km">км</string>
     <string name="m">м</string>
     <string name="inf">∞</string>

@@ -9,7 +9,6 @@ public class Constants {
     public static final String ACTIVITY_STATE_ID = "activity_state_id";
     public static final String FRAME_ID          = "frame_id";
 
-    public static final int CATEGORIES_SLIDE  = -1;
     public static final int CINEMAS_SLIDE     = 0;
     public static final int WHATS_NEW_SLIDE   = 1;
     public static final int MOVIES_SLIDE      = 2;
@@ -29,4 +28,8 @@ public class Constants {
     public static final String CINEMA_PAGE_ID = "cinema_page_id";
     public static final int CINEMA_DESCRIPTION_PAGE_ID = 0;
     public static final int CINEMA_SHOWTIME_PAGE_ID    = 1;
+
+    public static final int LOCATION_CHANGED_ENOUGH = 100;
+    public static final int TIME_CHANGED_ENOUGH = 15000;
+    public static final int LOCATION_CHANGED_ENOUGH_MESSAGE_TIMEOUT = 5000;
 }

@@ -1,5 +1,7 @@
 package com.dedaulus.cinematty.activities.Pages;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -20,6 +22,7 @@ import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -32,8 +35,11 @@ public class CinemasPage implements SliderPage, LocationClient {
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private LocationState locationState;
+    private Location locationUsedForSort;
+    private long timeOfLastLocationSort;
     private CinemaItemAdapter cinemaListAdapter;
     private boolean binded = false;
+    private boolean visible = false;
 
     public CinemasPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -59,6 +65,10 @@ public class CinemasPage implements SliderPage, LocationClient {
             locationState.startLocationListening();
             locationState.addLocationClient(this);
             cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+            if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE) {
+                locationUsedForSort = locationState.getCurrentLocation();
+                timeOfLastLocationSort = locationUsedForSort.getTime();
+            }
         }
     }
 
@@ -69,6 +79,11 @@ public class CinemasPage implements SliderPage, LocationClient {
     }
 
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = ((SherlockActivity) context).getSupportMenuInflater();
@@ -157,5 +172,40 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     public void onLocationChanged(Location location) {
         cinemaListAdapter.setLocation(location);
+        if (locationUsedForSort == null) {
+            locationUsedForSort = location;
+            timeOfLastLocationSort = location.getTime();
+        } else if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE &&
+                location.getTime() - timeOfLastLocationSort > Constants.TIME_CHANGED_ENOUGH &&
+                locationUsedForSort.distanceTo(location) > Constants.LOCATION_CHANGED_ENOUGH) {
+            CinemaComparator cmp = new CinemaComparator(CinemaSortOrder.BY_DISTANCE, location);
+            if (!cinemaListAdapter.isSorted(cmp)) {
+                if (visible) {
+                    final ProgressDialog progressDialog = new ProgressDialog(context);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage(context.getString(R.string.location_changed));
+                    progressDialog.setCancelable(true);
+                    progressDialog.show();
+
+                    final Context context = this.context;
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Thread.sleep(Constants.LOCATION_CHANGED_ENOUGH_MESSAGE_TIMEOUT);
+                            } catch (InterruptedException e){}
+                            ((Activity)context).runOnUiThread(new Runnable() {
+                                public void run() {
+                                    progressDialog.cancel();
+                                }
+                            });
+                        }
+                    }).start();
+                }
+
+                cinemaListAdapter.sortBy(cmp);
+                locationUsedForSort = location;
+                timeOfLastLocationSort = location.getTime();
+            }
+        }
     }
 }
