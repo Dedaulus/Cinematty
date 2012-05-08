@@ -33,6 +33,7 @@ public class WhatsNewPage implements SliderPage {
     private ActivitiesState activitiesState;
     private PosterItemAdapter posterItemAdapter;
     private Boolean binded = false;
+    private boolean visible = false;
 
     public WhatsNewPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -63,6 +64,11 @@ public class WhatsNewPage implements SliderPage {
 
     public void onStop() {
         posterItemAdapter.onStop();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

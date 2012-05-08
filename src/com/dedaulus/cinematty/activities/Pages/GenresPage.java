@@ -30,6 +30,7 @@ public class GenresPage implements SliderPage {
     private Context context;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
+    private boolean visible = false;
 
     public GenresPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -54,6 +55,11 @@ public class GenresPage implements SliderPage {
     public void onPause() {}
 
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

@@ -49,6 +49,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private int currentDay;
     private View pageView;
     private Boolean binded = false;
+    private boolean visible = false;
     
     public MoviePage(Context context, CinemattyApplication app, ActivityState state) {
         this.context = context;
@@ -87,6 +88,11 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
 
     @Override
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

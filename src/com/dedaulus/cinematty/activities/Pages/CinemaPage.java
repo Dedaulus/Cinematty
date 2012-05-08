@@ -33,6 +33,7 @@ public class CinemaPage implements SliderPage {
     Context context;
     ActivitiesState activitiesState;
     ActivityState state;
+    private boolean visible = false;
 
     public CinemaPage(Context context, ActivitiesState activitiesState, ActivityState state) {
         this.context = context;
@@ -64,6 +65,11 @@ public class CinemaPage implements SliderPage {
 
     @Override
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

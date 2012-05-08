@@ -22,6 +22,7 @@ public class CategoriesPage implements SliderPage {
     private CinemattyApplication app;
     private HashMap<Integer, Integer> slideIds;
     private ViewPager slider;
+    private boolean visible = false;
 
     public CategoriesPage(Context context, CinemattyApplication app, ViewPager slider, HashMap<Integer, Integer> slideIds) {
         this.slider = slider;
@@ -46,6 +47,11 @@ public class CategoriesPage implements SliderPage {
     public void onPause() {}
 
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

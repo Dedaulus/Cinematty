@@ -36,6 +36,7 @@ public class MoviesPage implements SliderPage {
     private MovieImageRetriever imageRetriever;
     private MovieItemAdapter movieListAdapter;
     private boolean binded = false;
+    private boolean visible = false;
 
     public MoviesPage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, MovieImageRetriever imageRetriever) {
         this.context = context;
@@ -65,6 +66,11 @@ public class MoviesPage implements SliderPage {
 
     public void onStop() {
         movieListAdapter.onStop();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

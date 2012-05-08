@@ -90,6 +90,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         adapter = new SliderAdapter(pages);
         slider.setAdapter(adapter);
         slider.setCurrentItem(defaultPagePosition);
+        pages.get(currentPage).setVisible(true);
 
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
         TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.titles);
@@ -182,6 +183,11 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
     @Override
     public synchronized void onPageSelected(int position) {
         currentPage = position;
+        int j = 0;
+        for (SliderPage page : adapter.getCreatedPages()) {
+            page.setVisible(j == currentPage);
+            ++j;
+        }
         invalidateOptionsMenu();
     }
 

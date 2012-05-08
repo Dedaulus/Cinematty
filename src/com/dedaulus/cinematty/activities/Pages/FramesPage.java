@@ -31,6 +31,7 @@ public class FramesPage implements SliderPage {
     private FramePreviewItemAdapter itemAdapter;
     private MovieFrameIdsStore frameIdsStore;
     private Boolean binded = false;
+    private boolean visible = false;
 
     public FramesPage(Context context, CinemattyApplication app, MovieFrameIdsStore frameIdsStore, ActivityState state) {
         this.context = context;
@@ -60,6 +61,11 @@ public class FramesPage implements SliderPage {
 
     public void onStop() {
         itemAdapter.onStop();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override

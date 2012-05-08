@@ -35,6 +35,7 @@ public class ActorsPage implements SliderPage {
     private ActivitiesState activitiesState;
     private ActorItemAdapter actorListAdapter;
     private boolean binded = false;
+    private boolean visible = false;
 
     public ActorsPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -72,6 +73,11 @@ public class ActorsPage implements SliderPage {
     }
 
     public void onStop() {}
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

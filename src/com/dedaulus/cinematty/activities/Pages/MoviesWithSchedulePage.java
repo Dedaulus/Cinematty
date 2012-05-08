@@ -42,6 +42,7 @@ public class MoviesWithSchedulePage implements SliderPage {
     private int currentDay;
     private View pageView;
     private boolean binded = false;
+    private boolean visible = false;
 
     public MoviesWithSchedulePage(Context context, ApplicationSettings settings, ActivitiesState activitiesState, ActivityState state, MovieImageRetriever imageRetriever) {
         this.context = context;
@@ -80,6 +81,11 @@ public class MoviesWithSchedulePage implements SliderPage {
     @Override
     public void onStop() {
         movieListAdapter.onStop();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override

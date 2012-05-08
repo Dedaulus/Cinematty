@@ -68,17 +68,18 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
         slideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
 
-        currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
-
         pages.add(new CinemasPage(this, app));
         pages.add(new WhatsNewPage(this, app));
         pages.add(new MoviesPage(this, settings, activitiesState, app.getImageRetrievers().getMovieSmallImageRetriever()));
         pages.add(new ActorsPage(this, app));
         pages.add(new GenresPage(this, app));
 
+        currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
+
         adapter = new SliderAdapter(pages);
         slider.setAdapter(adapter);
         slider.setCurrentItem(slideIds.get(Constants.WHATS_NEW_SLIDE));
+        pages.get(currentPage).setVisible(true);
 
         PageChangeListenerProxy pageChangeListenerProxy = new PageChangeListenerProxy();
 
@@ -175,14 +176,19 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
 
     public void onPageScrolled(int i, float v, int i1) {}
 
-    public synchronized void onPageSelected(int i) {
+    public void onPageSelected(int i) {
         currentPage = i;
+        int j = 0;
+        for (SliderPage page : adapter.getCreatedPages()) {
+            page.setVisible(j == currentPage);
+            ++j;
+        }
         invalidateOptionsMenu();
     }
 
     public void onPageScrollStateChanged(int i) {}
 
-    public synchronized int getCurrentPage() {
+    public int getCurrentPage() {
         return currentPage;
     }
 }

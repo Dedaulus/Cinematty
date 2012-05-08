@@ -17,6 +17,8 @@ public interface SliderPage {
     void onPause();
     void onStop();
 
+    void setVisible(boolean visible);
+
     boolean onCreateOptionsMenu(Menu menu);
     boolean onOptionsItemSelected(MenuItem item);
 }
