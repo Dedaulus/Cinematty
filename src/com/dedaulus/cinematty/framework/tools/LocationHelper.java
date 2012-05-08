@@ -8,8 +8,8 @@ import android.location.Location;
  * Time: 18:17
  */
 public class LocationHelper {
-    public static final int COARSE_TIME_LISTEN_TIMEOUT = 30000;
-    public static final int COARSE_LISTEN_DISTANCE = 10;
+    public static final int COARSE_TIME_LISTEN_TIMEOUT = 60000;
+    public static final int COARSE_LISTEN_DISTANCE = 200;
     public static final int FINE_TIME_LISTEN_TIMEOUT = 0;
     public static final int FINE_LISTEN_DISTANCE = 0;
 
@@ -17,7 +17,7 @@ public class LocationHelper {
 
     public static Location selectBetterLocation(Location location1, Location location2) {
         if (location1 == null) return location2;
-        else if (location2 == null) return location2;
+        else if (location2 == null) return location1;
         else {
             long time1 = location1.getTime();
             long time2 = location2.getTime();
