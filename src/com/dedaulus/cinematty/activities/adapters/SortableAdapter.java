@@ -11,4 +11,5 @@ import java.util.Comparator;
  */
 public interface SortableAdapter<T> extends ListAdapter {
     void sortBy(Comparator<T> comparator);
+    boolean isSorted(Comparator<T> comparator);
 }

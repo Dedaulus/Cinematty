@@ -157,6 +157,11 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         notifyDataSetChanged();
     }
 
+    @Override
+    public boolean isSorted(Comparator<Movie> movieComparator) {
+        throw new RuntimeException("Method not implemented");
+    }
+
     public void onImageReceived(boolean success) {
         Activity activity = (Activity)context;
         activity.runOnUiThread(new Runnable() {

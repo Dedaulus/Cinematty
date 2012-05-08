@@ -91,4 +91,9 @@ public class ActorItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         Collections.sort(actors, actorComparator);
         notifyDataSetChanged();
     }
+
+    @Override
+    public boolean isSorted(Comparator<MovieActor> movieActorComparator) {
+        throw new RuntimeException("Method not implemented");
+    }
 }

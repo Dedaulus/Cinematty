@@ -132,6 +132,11 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
         notifyDataSetChanged();
     }
 
+    @Override
+    public boolean isSorted(Comparator<Movie> movieComparator) {
+        throw new RuntimeException("Method not implemented");
+    }
+
     public void onImageReceived(boolean success) {
         Activity activity = (Activity)context;
         activity.runOnUiThread(new Runnable() {
