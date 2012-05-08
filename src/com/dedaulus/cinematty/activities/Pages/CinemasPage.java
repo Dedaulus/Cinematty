@@ -128,6 +128,8 @@ public class CinemasPage implements SliderPage, LocationClient {
 
         case R.id.submenu_cinema_sort_by_distance:
             cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
+            locationUsedForSort = locationState.getCurrentLocation();
+            timeOfLastLocationSort = locationUsedForSort.getTime();
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
