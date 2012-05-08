@@ -26,8 +26,8 @@ public class ImageRetriever implements Runnable {
         }
     }
     
-    private static int LIVE_DAYS = 7;
-    private static String PREPREFIX = "image_retriever_";
+    private static final int LIVE_DAYS = 7;
+    private static final String PREPREFIX = "image_retriever_";
 
     private static final Map<String, ImageRetriever> entities = new HashMap<String, ImageRetriever>();
 

@@ -11,8 +11,8 @@ import java.io.File;
  * Time: 0:15
  */
 public class MovieImageRetriever {
-    private static String IMAGE_NAME = "pic.jpg";
-    private static String SMALL_IMAGE_NAMES[] = {"pic_m.jpg", "pic_h.jpg", "pic_xh.jpg"};
+    private static final String IMAGE_NAME = "pic.jpg";
+    private static final String SMALL_IMAGE_NAMES[] = {"pic_m.jpg", "pic_h.jpg", "pic_xh.jpg"};
     private String smallImageName;
     private String remoteFolder;
     private ImageRetriever imageRetriever;

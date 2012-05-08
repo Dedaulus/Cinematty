@@ -317,8 +317,7 @@ public class DataConverter {
             wr.close();
             rd.close();
 
-            String shortUrl = new JSONObject(result).getString("id");
-            return shortUrl;
+            return new JSONObject(result).getString("id");
         } catch (Exception e) {
             return null;
         }

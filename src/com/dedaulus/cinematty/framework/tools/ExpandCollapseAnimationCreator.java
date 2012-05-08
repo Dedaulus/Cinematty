@@ -40,7 +40,7 @@ public class ExpandCollapseAnimationCreator {
         Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                int newHeight = 0;
+                int newHeight;
                 if (toExpand) {
                     newHeight = (int) (initialHeight * interpolatedTime);
                 } else {

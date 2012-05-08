@@ -29,9 +29,7 @@ import java.util.List;
  * Time: 22:28
  */
 public class MovieActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
-    private static int FRAMES_PAGE_ID      = 0;
-    private static int DESCRIPTION_PAGE_ID = 1;
-    private static int SHOWTIME_PAGE_ID    = 2;
+    private static final int DESCRIPTION_PAGE_ID = 1;
     
     private CinemattyApplication app;
     private ActivitiesState activitiesState;

@@ -30,7 +30,6 @@ import java.util.UUID;
  */
 public class ActorsPage implements SliderPage {
     private Context context;
-    private CinemattyApplication app;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private ActorItemAdapter actorListAdapter;
@@ -39,7 +38,6 @@ public class ActorsPage implements SliderPage {
 
     public ActorsPage(Context context, CinemattyApplication app) {
         this.context = context;
-        this.app = app;
 
         settings = app.getSettings();
         activitiesState = app.getActivitiesState();

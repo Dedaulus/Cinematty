@@ -118,8 +118,6 @@ public class ScheduleHandler extends DefaultHandler {
     private MovieReviewData currentReviewData;
     private List<MovieReviewData> currentReviewsData;
 
-    private int currentDay;
-
     public void getSchedule(
             Map<String, Cinema> cinemas,
             Map<String, Movie> movies,
@@ -228,7 +226,7 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
             Cinema cinema = cinemaIds.get(attributes.getValue(SHOWTIME_THEATER_ID_ATTR));
             Movie movie = movieIds.get(attributes.getValue(SHOWTIME_MOVIE_ID_ATTR));
-            currentDay = Integer.parseInt(attributes.getValue(SHOWTIME_DAY_ATTR));
+            int currentDay = Integer.parseInt(attributes.getValue(SHOWTIME_DAY_ATTR));
             String timesStr = attributes.getValue(SHOWTIME_TIMES_ATTR);
             cinema.addShowTime(movie, parseTimes(timesStr, currentDay), currentDay);
         } else if (qName.equalsIgnoreCase(POSTERS_TAG)) {

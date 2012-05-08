@@ -21,8 +21,6 @@ import java.util.ArrayList;
  * Time: 3:46
  */
 public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriever.PosterImageReceivedAction, StoppableAndResumable {
-    private static int PADDING = 4;
-
     private Context context;
     private ArrayList<MoviePoster> posters;
     private PosterImageRetriever imageRetriever;

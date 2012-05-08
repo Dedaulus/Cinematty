@@ -16,13 +16,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.CinemaActivity;
 import com.dedaulus.cinematty.activities.adapters.CinemaItemAdapter;
-import com.dedaulus.cinematty.activities.adapters.LocationAdapter;
-import com.dedaulus.cinematty.activities.adapters.SortableAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.UUID;
 
 /**

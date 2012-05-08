@@ -30,11 +30,7 @@ import java.util.List;
  * Time: 10:05
  */
 public class CinemaActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
-    private static int DESCRIPTION_PAGE_ID = 0;
-    private static int SHOWTIME_PAGE_ID    = 1;
-
     private CinemattyApplication app;
-    private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private SliderAdapter adapter;
     private List<SliderPage> pages;
@@ -60,7 +56,7 @@ public class CinemaActivity extends SherlockActivity implements ViewPager.OnPage
             return;
         }
 
-        settings = app.getSettings();
+        ApplicationSettings settings = app.getSettings();
         activitiesState = app.getActivitiesState();
 
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);

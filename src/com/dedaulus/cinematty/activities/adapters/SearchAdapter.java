@@ -64,7 +64,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     
     private Context context;
     private LayoutInflater inflater;
-    IdleDataSetChangeNotifier notifier;
+    private IdleDataSetChangeNotifier notifier;
     private ArrayList items;
     private Location location;
     private final Object locationMutex = new Object();

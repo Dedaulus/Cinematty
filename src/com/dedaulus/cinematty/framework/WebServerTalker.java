@@ -23,9 +23,9 @@ import java.util.Map;
  * Time: 13:55
  */
 public class WebServerTalker {
-    private static final int OK            = 0;
-    private static final int UPDATE_NEEDED = 1;
-    private static final int NO_RESPONSE   = 2;
+    //private static final int OK            = 0;
+    //private static final int UPDATE_NEEDED = 1;
+    //private static final int NO_RESPONSE   = 2;
 
     private static final String STATUS = "status";
     
@@ -61,7 +61,7 @@ public class WebServerTalker {
                 InputStream is = httpResponse.getEntity().getContent();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 StringBuilder builder = new StringBuilder();
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
                 }
