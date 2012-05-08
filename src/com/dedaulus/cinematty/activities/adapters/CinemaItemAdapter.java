@@ -138,6 +138,18 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
         notifyDataSetChanged();
     }
 
+    @Override
+    public boolean isSorted(Comparator<Cinema> cinemaComparator) {
+        if (!cinemas.isEmpty()) {
+            Cinema prev = cinemas.get(0);
+            for (Cinema next : cinemas) {
+                if (prev == null) continue;
+                if (cinemaComparator.compare(prev, next) > 0) return false;
+            }
+        }
+        return true;
+    }
+
     public void setLocation(Location location) {
         synchronized (locationMutex) {
             this.location = location;

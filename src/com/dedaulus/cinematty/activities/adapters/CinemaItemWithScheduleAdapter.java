@@ -43,7 +43,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private Movie movie;
     private int currentDay;
     private Location location;
-    private Object locationMutex = new Object();
+    private final Object locationMutex = new Object();
 
     public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie movie, int day, Location location) {
         this.context = context;
@@ -161,6 +161,18 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     public void sortBy(Comparator<Cinema> cinemaComparator) {
         Collections.sort(cinemas, cinemaComparator);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean isSorted(Comparator<Cinema> cinemaComparator) {
+        if (!cinemas.isEmpty()) {
+            Cinema prev = cinemas.get(0);
+            for (Cinema next : cinemas) {
+                if (prev == null) continue;
+                if (cinemaComparator.compare(prev, next) > 0) return false;
+            }
+        }
+        return true;
     }
 
     public void setLocation(Location location) {
