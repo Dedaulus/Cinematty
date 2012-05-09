@@ -32,8 +32,8 @@ public class CinemasPage implements SliderPage, LocationClient {
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
     private LocationState locationState;
-    private Location locationUsedForSort;
-    private long timeOfLastLocationSort;
+    private Location locationFix;
+    private long timeLocationFix;
     private CinemaItemAdapter cinemaListAdapter;
     private boolean binded = false;
     private boolean visible = false;
@@ -63,8 +63,8 @@ public class CinemasPage implements SliderPage, LocationClient {
             locationState.addLocationClient(this);
             cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE) {
-                locationUsedForSort = locationState.getCurrentLocation();
-                timeOfLastLocationSort = locationUsedForSort.getTime();
+                locationFix = locationState.getCurrentLocation();
+                timeLocationFix = locationFix.getTime();
             }
         }
     }
@@ -125,8 +125,8 @@ public class CinemasPage implements SliderPage, LocationClient {
 
         case R.id.submenu_cinema_sort_by_distance:
             cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
-            locationUsedForSort = locationState.getCurrentLocation();
-            timeOfLastLocationSort = locationUsedForSort.getTime();
+            locationFix = locationState.getCurrentLocation();
+            timeLocationFix = locationFix.getTime();
             settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
             item.setChecked(true);
             return true;
@@ -171,12 +171,16 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     public void onLocationChanged(Location location) {
         cinemaListAdapter.setLocation(location);
-        if (locationUsedForSort == null) {
-            locationUsedForSort = location;
-            timeOfLastLocationSort = location.getTime();
-        } else if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE &&
-                location.getTime() - timeOfLastLocationSort > Constants.TIME_CHANGED_ENOUGH &&
-                locationUsedForSort.distanceTo(location) > Constants.LOCATION_CHANGED_ENOUGH) {
+        if (locationFix == null) {
+            locationFix = location;
+            timeLocationFix = location.getTime();
+        } else if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE) {
+            if (location.getTime() - timeLocationFix < Constants.TIME_CHANGED_ENOUGH) return;
+            timeLocationFix = location.getTime();
+
+            if (locationFix.distanceTo(location) < Constants.LOCATION_CHANGED_ENOUGH) return;
+            locationFix = location;
+
             CinemaComparator cmp = new CinemaComparator(CinemaSortOrder.BY_DISTANCE, location);
             if (!cinemaListAdapter.isSorted(cmp)) {
                 if (visible) {
@@ -202,8 +206,6 @@ public class CinemasPage implements SliderPage, LocationClient {
                 }
 
                 cinemaListAdapter.sortBy(cmp);
-                locationUsedForSort = location;
-                timeOfLastLocationSort = location.getTime();
             }
         }
     }
