@@ -206,6 +206,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
 
             Intent intent = new Intent(this, CinemaActivity.class);
             intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+            intent.putExtra(Constants.CINEMA_PAGE_ID, Constants.CINEMA_DESCRIPTION_PAGE_ID);
             startActivity(intent);
 
             return true;
