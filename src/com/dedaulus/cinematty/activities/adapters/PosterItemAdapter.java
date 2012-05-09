@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.*;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PosterImageRetriever;
@@ -26,11 +25,13 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
     private PosterImageRetriever imageRetriever;
     private int imageHeight;
     private int imageWidth;
+    private LayoutInflater inflater;
 
     public PosterItemAdapter(Context context, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
         this.context = context;
         this.posters = posters;
         this.imageRetriever = imageRetriever;
+        inflater = LayoutInflater.from(context);
 
         int columns;
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
@@ -58,6 +59,28 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.poster_item, null);
+        }
+
+        ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
+        imageView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+        TextView textView = (TextView)convertView.findViewById(R.id.caption);
+
+        MoviePoster poster = posters.get(position);
+        Bitmap bitmap = imageRetriever.getImage(poster.getPosterPath());
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+            textView.setText(poster.getMovie().getName());
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            imageRetriever.addRequest(poster.getPosterPath(), this);
+            imageView.setImageResource(R.drawable.img_loading);
+            textView.setVisibility(View.GONE);
+        }
+
+        return convertView;
+        /*
         final ImageView imageView;
         if (convertView == null) {
             imageView = new ImageView(context);
@@ -78,10 +101,11 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         }
 
         return imageView;
+        */
     }
 
     public void onImageReceived(boolean success) {
-        Activity activity = (Activity) context;
+        Activity activity = (Activity)context;
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 notifyDataSetChanged();

@@ -7,4 +7,6 @@
     <!--<color name="link_color">#33B5E5</color>-->
     <color name="link_color">#0026ff</color>
     <color name="bar_color">#213A48</color>
+    <color name="image_text">#ffffff</color>
+    <color name="image_text_background">#99000000</color>
 </resources>
