@@ -29,8 +29,8 @@ import java.util.concurrent.RejectedExecutionException;
  */
 public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAndResumable {
     private Context context;
-    LayoutInflater inflater;
-    IdleDataSetChangeNotifier notifier;
+    private LayoutInflater inflater;
+    private IdleDataSetChangeNotifier notifier;
     private MovieFrameIdsStore frameIdsStore;
     private FrameImageRetriever imageRetriever;
     private int screenWidth;
