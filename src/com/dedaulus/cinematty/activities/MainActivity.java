@@ -65,14 +65,14 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         slideIds.put(Constants.CINEMAS_SLIDE, Constants.CINEMAS_SLIDE);
         slideIds.put(Constants.WHATS_NEW_SLIDE, Constants.WHATS_NEW_SLIDE);
         slideIds.put(Constants.MOVIES_SLIDE, Constants.MOVIES_SLIDE);
-        slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
         slideIds.put(Constants.GENRES_SLIDE, Constants.GENRES_SLIDE);
+        slideIds.put(Constants.ACTORS_SLIDE, Constants.ACTORS_SLIDE);
 
         pages.add(new CinemasPage(this, app));
         pages.add(new WhatsNewPage(this, app));
         pages.add(new MoviesPage(this, settings, activitiesState, app.getImageRetrievers().getMovieSmallImageRetriever()));
-        pages.add(new ActorsPage(this, app));
         pages.add(new GenresPage(this, app));
+        pages.add(new ActorsPage(this, app));
 
         currentPage = slideIds.get(Constants.WHATS_NEW_SLIDE);
 
