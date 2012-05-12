@@ -135,7 +135,9 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
             viewHolder.schedule.setVisibility(View.GONE);
         }
 
-        if (currentDay == Constants.TODAY_SCHEDULE) {
+        if (currentDay == Constants.TODAY_SCHEDULE &&
+                now.getTimeInMillis() == timeRange.first.getTimeInMillis() &&
+                now.before(timeRange.second)) {
             String timeLeftStr = DataConverter.showTimesToClosestTimeString(context, showTimes);
             viewHolder.timeLeft.setText(timeLeftStr);
             viewHolder.timeLeft.setVisibility(View.VISIBLE);

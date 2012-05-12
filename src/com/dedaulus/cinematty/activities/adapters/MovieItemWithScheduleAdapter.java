@@ -121,6 +121,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         if (now.after(timeRange.first)) {
             timeRange.first.setTimeInMillis(now.getTimeInMillis());
         }
+
         String showTimesStr = DataConverter.showTimesToString(showTimes, timeRange);
         if (showTimesStr.length() != 0) {
             viewHolder.schedule.setText(showTimesStr);
@@ -129,7 +130,9 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             viewHolder.schedule.setVisibility(View.GONE);
         }
 
-        if (currentDay == Constants.TODAY_SCHEDULE) {
+        if (currentDay == Constants.TODAY_SCHEDULE &&
+                now.getTimeInMillis() == timeRange.first.getTimeInMillis() &&
+                now.before(timeRange.second)) {
             String timeLeftStr = DataConverter.showTimesToClosestTimeString(context, showTimes);
             viewHolder.timeLeft.setText(timeLeftStr);
             viewHolder.timeLeft.setVisibility(View.VISIBLE);
