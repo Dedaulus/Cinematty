@@ -46,6 +46,12 @@ public class CinemaMapView extends MapActivity {
 
         MapView mapView = (MapView)findViewById(R.id.map_view);
         mapView.setBuiltInZoomControls(true);
+        // CRUNCH!
+        if (app.getCurrentCity().getName().equalsIgnoreCase("мурманск")) {
+            mapView.setSatellite(true);
+        } else {
+            mapView.setSatellite(false);
+        }
 
         // adding other cinemas
         CinemaOnMapOverlay otherCinemasOnMapOverlay = new CinemaOnMapOverlay(getResources().getDrawable(R.drawable.ic_map_marker_other), mapView, activitiesState);
