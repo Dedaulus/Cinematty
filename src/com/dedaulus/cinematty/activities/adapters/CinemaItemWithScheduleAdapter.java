@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities.adapters;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +43,11 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     private ArrayList<Cinema> cinemas;
     private Movie movie;
     private int currentDay;
+    private Pair<Calendar, Calendar> timeRange;
     private Location location;
     private final Object locationMutex = new Object();
 
-    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie movie, int day, Location location) {
+    public CinemaItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Cinema> cinemas, Movie movie, int day, Pair<Calendar, Calendar> timeRange, Location location) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
@@ -53,6 +55,7 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         this.cinemas = cinemas;
         this.movie = movie;
         currentDay = day;
+        this.timeRange = timeRange;
         this.location = location;
     }
 
@@ -120,7 +123,11 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
         }
 
         List<Calendar> showTimes = cinema.getShowTimes(currentDay).get(movie.getName()).second;
-        String showTimesStr = DataConverter.showTimesToString(showTimes);
+        Calendar now = Calendar.getInstance();
+        if (now.after(timeRange.first)) {
+            timeRange.first.setTimeInMillis(now.getTimeInMillis());
+        }
+        String showTimesStr = DataConverter.showTimesToString(showTimes, timeRange);
         if (showTimesStr.length() != 0) {
             viewHolder.schedule.setText(showTimesStr);
             viewHolder.schedule.setVisibility(View.VISIBLE);
@@ -166,10 +173,12 @@ public class CinemaItemWithScheduleAdapter extends BaseAdapter implements Sortab
     @Override
     public boolean isSorted(Comparator<Cinema> cinemaComparator) {
         if (!cinemas.isEmpty()) {
-            Cinema prev = cinemas.get(0);
+            Cinema prev = null;
             for (Cinema next : cinemas) {
-                if (prev == null) continue;
-                if (cinemaComparator.compare(prev, next) > 0) return false;
+                if (prev != null) {
+                    if (cinemaComparator.compare(prev, next) > 0) return false;
+                }
+                prev = next;
             }
         }
         return true;

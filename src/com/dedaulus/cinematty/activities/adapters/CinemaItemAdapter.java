@@ -141,10 +141,12 @@ public class CinemaItemAdapter extends BaseAdapter implements SortableAdapter<Ci
     @Override
     public boolean isSorted(Comparator<Cinema> cinemaComparator) {
         if (!cinemas.isEmpty()) {
-            Cinema prev = cinemas.get(0);
+            Cinema prev = null;
             for (Cinema next : cinemas) {
-                if (prev == null) continue;
-                if (cinemaComparator.compare(prev, next) > 0) return false;
+                if (prev != null) {
+                    if (cinemaComparator.compare(prev, next) > 0) return false;
+                }
+                prev = next;
             }
         }
         return true;
