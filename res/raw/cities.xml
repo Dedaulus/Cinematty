@@ -8,7 +8,9 @@
 		<city id="5"  name="Екатеринбург" file="ekaterinburg_schedule.xml"/>
 		<city id="6"  name="Казань" file="kazan_schedule.xml"/>
 		<city id="7"  name="Калининград" file="kalinigrad_schedule.xml"/>
+        <city id="17" name="Краснодар" file="krasnodar_schedule.xml"/>
         <city id="8"  name="Липецк" file="lipeck_schedule.xml"/>
+        <city id="19" name="Мурманск" file="murmansk_schedule.xml"/>
 		<city id="9"  name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>
 		<city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
         <city id="11" name="Пермь" file="perm_schedule.xml"/>
@@ -18,6 +20,7 @@
         <city id="14" name="Тула" file="tula_schedule.xml"/>
 		<city id="16" name="Уфа" file="ufa_schedule.xml"/>
 		<city id="15" name="Челябинск" file="chelyabinsk_schedule.xml"/>
+        <city id="18" name="Ярославль" file="yaroslavl_schedule.xml"/>
 		
 	</cities>
 </data>

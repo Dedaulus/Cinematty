@@ -3,6 +3,7 @@ package com.dedaulus.cinematty.activities.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,9 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
     private Cinema cinema;
     private int currentDay;
     private MovieImageRetriever imageRetriever;
+    private Pair<Calendar, Calendar> timeRange;
 
-    public MovieItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Movie> movies, Cinema cinema, int day, MovieImageRetriever imageRetriever) {
+    public MovieItemWithScheduleAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<Movie> movies, Cinema cinema, int day, Pair<Calendar, Calendar> timeRange, MovieImageRetriever imageRetriever) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
@@ -52,6 +54,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         this.movies = movies;
         this.cinema = cinema;
         currentDay = day;
+        this.timeRange = timeRange;
         this.imageRetriever = imageRetriever;
     }
 
@@ -114,7 +117,11 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         }
 
         List<Calendar> showTimes = cinema.getShowTimes(currentDay).get(movie.getName()).second;
-        String showTimesStr = DataConverter.showTimesToString(showTimes);
+        Calendar now = Calendar.getInstance();
+        if (now.after(timeRange.first)) {
+            timeRange.first.setTimeInMillis(now.getTimeInMillis());
+        }
+        String showTimesStr = DataConverter.showTimesToString(showTimes, timeRange);
         if (showTimesStr.length() != 0) {
             viewHolder.schedule.setText(showTimesStr);
             viewHolder.schedule.setVisibility(View.VISIBLE);

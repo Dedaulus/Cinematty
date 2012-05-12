@@ -108,31 +108,31 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menu_cinema_sort:
-            return true;
+            case R.id.menu_cinema_sort:
+                return true;
 
-        case R.id.submenu_cinema_sort_by_caption:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_caption:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_CAPTION, null));
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_CAPTION);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_cinema_sort_by_favourite:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_favourite:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_FAVOURITE, null));
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_FAVOURITE);
+                item.setChecked(true);
+                return true;
 
-        case R.id.submenu_cinema_sort_by_distance:
-            cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
-            locationFix = locationState.getCurrentLocation();
-            timeLocationFix = locationFix.getTime();
-            settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
-            item.setChecked(true);
-            return true;
+            case R.id.submenu_cinema_sort_by_distance:
+                cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
+                locationFix = locationState.getCurrentLocation();
+                timeLocationFix = locationFix.getTime();
+                settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
+                item.setChecked(true);
+                return true;
 
-        default:
-            return true;
+            default:
+                return true;
         }
     }
 

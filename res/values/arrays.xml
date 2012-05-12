@@ -10,7 +10,9 @@
         <item name="Екатеринбург">Екатеринбург</item>
         <item name="Казань">Казань</item>
         <item name="Калининград">Калининград</item>
+        <item name="Краснодар">Краснодар</item>
         <item name="Липецк">Липецк</item>
+        <item name="Мурманск">Мурманск</item>
         <item name="Нижний Новгород">Нижний Новгород</item>
         <item name="Новосибирск">Новосибирск</item>
         <item name="Пермь">Пермь</item>
@@ -19,6 +21,7 @@
         <item name="Тула">Тула</item>
         <item name="Уфа">Уфа</item>
         <item name="Челябинск">Челябинск</item>
+        <item name="Ярославль">Ярославль</item>
     </string-array>
 
     <string-array name="city_ids">
@@ -29,7 +32,9 @@
         <item name="Екатеринбург">5</item>
         <item name="Казань">6</item>
         <item name="Калининград">7</item>
+        <item name="Краснодар">17</item>
         <item name="Липецк">8</item>
+        <item name="Мурманск">19</item>
         <item name="Нижний Новгород">9</item>
         <item name="Новосибирск">10</item>
         <item name="Пермь">11</item>
@@ -38,6 +43,7 @@
         <item name="Тула">14</item>
         <item name="Уфа">16</item>
         <item name="Челябинск">15</item>
+        <item name="Ярославль">18</item>
     </string-array>
 
 </resources>

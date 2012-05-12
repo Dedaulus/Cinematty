@@ -8,6 +8,8 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.util.Pair;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieActor;
 import com.dedaulus.cinematty.framework.MovieGenre;
 import org.json.JSONObject;
@@ -95,13 +97,15 @@ public class DataConverter {
         return "";
     }
 
-    public static String showTimesToString(List<Calendar> showTimes) {
-        if (showTimes != null) {
-            Calendar now = Calendar.getInstance();
-            StringBuilder times = new StringBuilder();
+    //public static String showTimesToString(List<Calendar> showTimes) {
+    //    return showTimesToString(showTimes, Calendar.getInstance());
+    //}
 
+    public static String showTimesToString(List<Calendar> showTimes, Pair<Calendar, Calendar> timeRange) {
+        if (showTimes != null) {
+            StringBuilder times = new StringBuilder();
             for (Calendar showTime : showTimes) {
-                if (now.before(showTime)) {
+                if (timeRange.first.before(showTime) && timeRange.second.after(showTime)) {
                     String hours = Integer.toString(showTime.get(Calendar.HOUR_OF_DAY));
                     if (hours.length() == 1) {
                         hours = "0" + hours;
@@ -355,5 +359,92 @@ public class DataConverter {
             if (id == showTimes.size()) return null;
             else return showTimes.get(id);
         }
+    }
+
+    public static List<Movie> getMoviesFromTimeRange(
+            Map<String, Pair<Movie, List<Calendar>>> showTimes,
+            Pair<Calendar, Calendar> timeRange) {
+        List<Movie> movies = new ArrayList<Movie>(showTimes.size());
+        if (timeRange.second.before(timeRange.first)) return movies;
+
+        for (Pair<Movie, List<Calendar>> showTime : showTimes.values()) {
+            Calendar c = getClosestTime(showTime.second, timeRange.first);
+            if (c != null && c.before(timeRange.second)) {
+                movies.add(showTime.first);
+            }
+        }
+
+        return movies;
+    }
+
+    public static List<Cinema> getMovieCinemasFromTimeRange(
+            Collection<Cinema> cinemas, Movie movie, int day, Pair<Calendar, Calendar> timeRange)
+    {
+        List<Cinema> movieCinemas = new ArrayList<Cinema>(cinemas.size());
+        if (timeRange.second.before(timeRange.first)) return movieCinemas;
+
+        for (Cinema cinema : cinemas) {
+            List<Calendar> showTimes = cinema.getShowTimes(day).get(movie.getName()).second;
+            Calendar c = getClosestTime(showTimes, timeRange.first);
+            if (c != null && c.before(timeRange.second)) {
+                movieCinemas.add(cinema);
+            }
+        }
+
+        return movieCinemas;
+    }
+
+    public static Pair<Calendar, Calendar> getTimeRange(int specificTime, int day) {
+        Calendar from = Calendar.getInstance();
+        Calendar to = Calendar.getInstance();
+
+        from.set(Calendar.MINUTE, 0);
+        to.set(Calendar.MINUTE, 0);
+
+        int hour = from.get(Calendar.HOUR_OF_DAY);
+        if (hour < Constants.LAST_SHOWTIME_HOUR) {
+            from.add(Calendar.DAY_OF_MONTH, -1);
+            to.add(Calendar.DAY_OF_MONTH, -1);
+        }
+
+        switch (specificTime) {
+            case Constants.WHOLE_DAY:
+                from.set(Calendar.HOUR_OF_DAY, Constants.IN_MORNING);
+                to.set(Calendar.HOUR_OF_DAY, Constants.LAST_SHOWTIME_HOUR);
+                to.add(Calendar.DAY_OF_MONTH, 1);
+                break;
+
+            case Constants.IN_MORNING:
+                from.set(Calendar.HOUR_OF_DAY, Constants.IN_MORNING);
+                to.set(Calendar.HOUR_OF_DAY, Constants.IN_AFTERNOON);
+                break;
+
+            case Constants.IN_AFTERNOON:
+                from.set(Calendar.HOUR_OF_DAY, Constants.IN_AFTERNOON);
+                to.set(Calendar.HOUR_OF_DAY, Constants.IN_EVENING);
+                break;
+
+            case Constants.IN_EVENING:
+                from.set(Calendar.HOUR_OF_DAY, Constants.IN_EVENING);
+                to.set(Calendar.HOUR_OF_DAY, Constants.AT_NIGHT);
+                break;
+
+            case Constants.AT_NIGHT:
+                from.set(Calendar.HOUR_OF_DAY, Constants.AT_NIGHT);
+                to.set(Calendar.HOUR_OF_DAY, Constants.LAST_SHOWTIME_HOUR);
+                to.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        from.add(Calendar.DAY_OF_MONTH, day);
+        to.add(Calendar.DAY_OF_MONTH, day);
+
+        if (specificTime != Constants.WHOLE_DAY) {
+            Calendar now = Calendar.getInstance();
+            if (now.after(from)) {
+                from = now;
+            }
+        }
+
+        return Pair.create(from, to);
     }
 }

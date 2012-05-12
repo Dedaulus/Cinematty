@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_day_part"
+          android:title="@string/day_part"
+          android:icon="@drawable/ic_menu_day_part"
+          android:showAsAction="ifRoom">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item android:id="@+id/submenu_day_part_whole"
+                      android:title="@string/at_whole_day"/>
+
+                <item android:id="@+id/submenu_day_part_morning"
+                      android:title="@string/in_morning"/>
+
+                <item android:id="@+id/submenu_day_part_afternoon"
+                      android:title="@string/in_afternoon"/>
+
+                <item android:id="@+id/submenu_day_part_evening"
+                      android:title="@string/in_evening"/>
+
+                <item android:id="@+id/submenu_day_part_night"
+                      android:title="@string/at_night"/>
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

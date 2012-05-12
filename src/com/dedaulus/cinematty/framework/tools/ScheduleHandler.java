@@ -196,7 +196,7 @@ public class ScheduleHandler extends DefaultHandler {
             
             String yearStr = attributes.getValue(MOVIE_YEAR_ATTR);
             if (yearStr != null && yearStr.length() != 0) {
-                currentMovieData.year = Integer.parseInt(yearStr);
+                currentMovieData.year = Integer.parseInt(yearStr.trim());
             }
 
             currentMovieData.countries = parseStrings(attributes.getValue(MOVIE_COUNTRIES_ATTR), ";");
@@ -378,17 +378,15 @@ public class ScheduleHandler extends DefaultHandler {
                 now.set(Calendar.HOUR_OF_DAY, hours);
                 now.set(Calendar.MINUTE, minutes);
 
-                if (day == 0) {
-                    if (hourNow < Constants.LAST_SHOWTIME_HOUR) {
-                        now.add(Calendar.DAY_OF_MONTH, -1);
-                    }
-
-                    if (hours < Constants.LAST_SHOWTIME_HOUR) { /* holly fuck!*/
-                        now.add(Calendar.DAY_OF_MONTH, 1);
-                    }
-                } else {
-                    now.add(Calendar.DAY_OF_MONTH, day);
+                if (hourNow < Constants.LAST_SHOWTIME_HOUR) {
+                    now.add(Calendar.DAY_OF_MONTH, -1);
                 }
+
+                if (hours < Constants.LAST_SHOWTIME_HOUR) { /* holly fuck!*/
+                    now.add(Calendar.DAY_OF_MONTH, 1);
+                }
+
+                now.add(Calendar.DAY_OF_MONTH, day);
 
                 list.add(now);
             }

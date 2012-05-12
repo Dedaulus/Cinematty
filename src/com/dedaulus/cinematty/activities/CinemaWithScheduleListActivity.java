@@ -239,7 +239,7 @@ public class CinemaWithScheduleListActivity extends SherlockActivity implements 
             findViewById(R.id.no_schedule).setVisibility(View.GONE);
         }
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(this, notifier, new ArrayList<Cinema>(cinemas.values()), state.movie, settings.getCurrentDay(), locationState.getCurrentLocation());
+        //cinemaListAdapter = new CinemaItemWithScheduleAdapter(this, notifier, new ArrayList<Cinema>(cinemas.values()), state.movie, settings.getCurrentDay(), locationState.getCurrentLocation());
         ListView list = (ListView)findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
         list.setOnScrollListener(notifier);

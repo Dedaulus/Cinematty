@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,9 +24,7 @@ import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User: Dedaulus
@@ -42,6 +41,7 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
     private Location locationFix;
     private long timeLocationFix;
     private int currentDay;
+    private int dayPart;
     private View pageView;
     private boolean binded = false;
     private boolean visible = false;
@@ -110,6 +110,9 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
                 break;
         }
 
+        inflater.inflate(R.menu.day_part_menu, menu);
+        menu.findItem(R.id.submenu_day_part_whole).setChecked(true);
+
         inflater.inflate(R.menu.cinema_sort_menu, menu);
         switch (settings.getCinemaSortOrder()) {
             case BY_CAPTION:
@@ -150,6 +153,36 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
             case R.id.submenu_select_day_after_tomorrow:
                 setCurrentDay(Constants.AFTER_TOMORROW_SCHEDULE);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_day_part_whole:
+                setCurrentDayPart(Constants.WHOLE_DAY);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_day_part_morning:
+                setCurrentDayPart(Constants.IN_MORNING);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_day_part_afternoon:
+                setCurrentDayPart(Constants.IN_AFTERNOON);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_day_part_evening:
+                setCurrentDayPart(Constants.IN_EVENING);
+                cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_day_part_night:
+                setCurrentDayPart(Constants.AT_NIGHT);
                 cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
                 item.setChecked(true);
                 return true;
@@ -217,21 +250,46 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         currentDay = day;
 
         TextView dayIndicator = (TextView)pageView.findViewById(R.id.day_indicator).findViewById(R.id.caption);
+        StringBuilder builder = new StringBuilder();
         switch (currentDay) {
             case Constants.TODAY_SCHEDULE:
-                dayIndicator.setText(context.getString(R.string.today));
+                builder.append(context.getString(R.string.today));
                 break;
 
             case Constants.TOMORROW_SCHEDULE:
-                dayIndicator.setText(context.getString(R.string.tomorrow));
+                builder.append(context.getString(R.string.tomorrow));
                 break;
 
             case Constants.AFTER_TOMORROW_SCHEDULE:
-                dayIndicator.setText(context.getString(R.string.after_tomorrow));
+                builder.append(context.getString(R.string.after_tomorrow));
                 break;
         }
 
-        Map<String, Cinema> cinemas = state.movie.getCinemas(currentDay);
+        builder.append(" ");
+
+        switch (dayPart) {
+            case Constants.IN_MORNING:
+                builder.append(context.getString(R.string.in_morning).toLowerCase());
+                break;
+
+            case Constants.IN_AFTERNOON:
+                builder.append(context.getString(R.string.in_afternoon).toLowerCase());
+                break;
+
+            case Constants.IN_EVENING:
+                builder.append(context.getString(R.string.in_evening).toLowerCase());
+                break;
+
+            case Constants.AT_NIGHT:
+                builder.append(context.getString(R.string.at_night).toLowerCase());
+                break;
+        }
+
+        dayIndicator.setText(builder.toString());
+
+        Pair<Calendar, Calendar> timeRange = DataConverter.getTimeRange(dayPart, currentDay);
+        List<Cinema> cinemas = DataConverter.getMovieCinemasFromTimeRange(state.movie.getCinemas(currentDay).values(), state.movie, currentDay, timeRange);
+
         if (cinemas.isEmpty()) {
             pageView.findViewById(R.id.no_schedule).setVisibility(View.VISIBLE);
         } else {
@@ -239,10 +297,15 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         }
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, new ArrayList<Cinema>(cinemas.values()), state.movie, currentDay, locationState.getCurrentLocation());
+        cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, new ArrayList<Cinema>(cinemas), state.movie, currentDay, timeRange, locationState.getCurrentLocation());
         ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
         list.setOnScrollListener(notifier);
+    }
+
+    private void setCurrentDayPart(int dayPart) {
+        this.dayPart = dayPart;
+        setCurrentDay(currentDay);
     }
 
     public void onLocationChanged(Location location) {

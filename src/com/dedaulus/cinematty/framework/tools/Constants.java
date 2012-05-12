@@ -19,6 +19,13 @@ public class Constants {
     public static final int TOMORROW_SCHEDULE = 1;
     public static final int AFTER_TOMORROW_SCHEDULE = 2;
 
+    public static final int WHOLE_DAY    = 0;
+    public static final int IN_MORNING   = 6;
+    public static final int IN_AFTERNOON = 11;
+    public static final int IN_EVENING   = 17;
+    public static final int AT_NIGHT     = 22;
+
+
     public static final int LAST_SHOWTIME_HOUR = 6;
 
     public static final int CINEMA_TYPE_ID = 0;

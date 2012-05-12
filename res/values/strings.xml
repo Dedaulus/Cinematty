@@ -83,6 +83,14 @@
     <string name="tomorrow">Завтра</string>
     <string name="after_tomorrow">Послезавтра</string>
 
+    <string name="day_part">Время</string>
+    <string name="at_whole_day">Весь день</string>
+    <string name="in_morning">Утром</string>
+    <string name="in_afternoon">Днём</string>
+    <string name="in_evening">Вечером</string>
+    <string name="at_night">Ночью</string>
+
+
     <string name="metro_near">Метро</string>
 
     <string name="sort">Упорядочить</string>
