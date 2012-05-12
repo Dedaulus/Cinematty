@@ -73,7 +73,7 @@ public class MovieItemAdapter extends BaseAdapter implements SortableAdapter<Mov
                 viewHolder.image.setImageBitmap(picture);
                 viewHolder.image.setVisibility(View.VISIBLE);
             } else {
-                viewHolder.image.setVisibility(View.GONE);
+                viewHolder.image.setVisibility(View.INVISIBLE);
                 imageRetriever.addRequest(picId, true, this);
                 viewHolder.progress.setVisibility(View.VISIBLE);
             }

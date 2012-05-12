@@ -82,7 +82,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
                 viewHolder.image.setImageBitmap(picture);
                 viewHolder.image.setVisibility(View.VISIBLE);
             } else {
-                viewHolder.image.setVisibility(View.GONE);
+                viewHolder.image.setVisibility(View.INVISIBLE);
                 imageRetriever.addRequest(picId, true, this);
                 viewHolder.progress.setVisibility(View.VISIBLE);
             }
