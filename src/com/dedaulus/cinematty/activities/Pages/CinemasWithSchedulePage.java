@@ -74,7 +74,9 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
             cinemaListAdapter.sortBy(new CinemaComparator(settings.getCinemaSortOrder(), locationState.getCurrentLocation()));
             if (settings.getCinemaSortOrder() == CinemaSortOrder.BY_DISTANCE) {
                 locationFix = locationState.getCurrentLocation();
-                timeLocationFix = locationFix.getTime();
+                if (locationFix != null) {
+                    timeLocationFix = locationFix.getTime();
+                }
             }
         }
     }
@@ -205,7 +207,9 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
             case R.id.submenu_cinema_sort_by_distance:
                 cinemaListAdapter.sortBy(new CinemaComparator(CinemaSortOrder.BY_DISTANCE, locationState.getCurrentLocation()));
                 locationFix = locationState.getCurrentLocation();
-                timeLocationFix = locationFix.getTime();
+                if (locationFix != null) {
+                    timeLocationFix = locationFix.getTime();
+                }
                 settings.saveCinemaSortOrder(CinemaSortOrder.BY_DISTANCE);
                 item.setChecked(true);
                 return true;
