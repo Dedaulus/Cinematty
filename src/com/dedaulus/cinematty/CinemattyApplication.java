@@ -433,7 +433,7 @@ public class CinemattyApplication extends Application {
             movieSmallImageRetriever = new MovieImageRetriever(MOVIE_SMALL_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
             movieImageRetriever = new MovieImageRetriever(MOVIE_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(PICTURES_FOLDER_KEY), getCacheDir());
             frameImageRetriever = new FrameImageRetriever(FRAME_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(FRAMES_FOLDER_KEY), getCacheDir());
-            posterImageRetriever = new PosterImageRetriever(POSTER_IMAGE_RETRIEVER, getCacheDir());
+            posterImageRetriever = new PosterImageRetriever(POSTER_IMAGE_RETRIEVER, displayMetrics, connectStrings.get(POSTERS_FOLDER_KEY), getCacheDir());
         }
 
         @Override
