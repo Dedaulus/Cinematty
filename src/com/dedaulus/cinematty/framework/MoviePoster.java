@@ -7,18 +7,24 @@ package com.dedaulus.cinematty.framework;
  */
 public class MoviePoster {
     private Movie movie;
-    private String posterPath;
+    private String picId;
+    private String trailerUrl;
 
-    public MoviePoster(Movie movie, String posterPath) {
+    public MoviePoster(Movie movie, String picId, String trailerUrl) {
         this.movie = movie;
-        this.posterPath = posterPath;
+        this.picId = picId;
+        this.trailerUrl = trailerUrl;
     }
 
     public Movie getMovie() {
         return movie;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getPicId() {
+        return picId;
+    }
+
+    public String getTrailerUrl() {
+        return trailerUrl;
     }
 }

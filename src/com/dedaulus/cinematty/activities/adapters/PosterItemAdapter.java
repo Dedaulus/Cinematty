@@ -2,7 +2,9 @@ package com.dedaulus.cinematty.activities.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,43 +67,38 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
         ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-        TextView textView = (TextView)convertView.findViewById(R.id.caption);
+        View overlay = convertView.findViewById(R.id.overlay);
+        TextView textView = (TextView)overlay.findViewById(R.id.caption);
+        ImageView trailerIcon = (ImageView)overlay.findViewById(R.id.youtube);
 
         MoviePoster poster = posters.get(position);
-        Bitmap bitmap = imageRetriever.getImage(poster.getPosterPath());
+        textView.setText(poster.getMovie().getName());
+        final String trailerUrl = poster.getTrailerUrl();
+        if (trailerUrl.length() == 0) {
+            trailerIcon.setVisibility(View.GONE);
+        } else {
+            trailerIcon.setVisibility(View.VISIBLE);
+            trailerIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(trailerUrl));
+                    context.startActivity(intent);
+                }
+            });
+        }
+
+        Bitmap bitmap = imageRetriever.getImage(poster.getPicId());
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
-            textView.setText(poster.getMovie().getName());
-            textView.setVisibility(View.VISIBLE);
+            overlay.setVisibility(View.VISIBLE);
         } else {
-            imageRetriever.addRequest(poster.getPosterPath(), this);
+            imageRetriever.addRequest(poster.getPicId(), this);
             imageView.setImageResource(R.drawable.img_loading);
-            textView.setVisibility(View.GONE);
+            overlay.setVisibility(View.GONE);
         }
 
         return convertView;
-        /*
-        final ImageView imageView;
-        if (convertView == null) {
-            imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setAdjustViewBounds(false);
-            imageView.setLayoutParams(new GridView.LayoutParams(imageWidth, imageHeight));
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        MoviePoster poster = posters.get(position);
-        Bitmap bitmap = imageRetriever.getImage(poster.getPosterPath());
-        if (bitmap != null) {
-            imageView.setImageBitmap(bitmap);
-        } else {
-            imageRetriever.addRequest(poster.getPosterPath(), this);
-            imageView.setImageResource(R.drawable.img_loading);
-        }
-
-        return imageView;
-        */
     }
 
     public void onImageReceived(boolean success) {

@@ -55,7 +55,8 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String POSTERS_LIVE_TIME_ATTR    = "live_time";
     private static final String POSTERS_DATE_ATTR         = "date";
     private static final String POSTER_TAG                = "poster";
-    private static final String POSTER_IMAGE_ATTR         = "image";
+    private static final String POSTER_PICID_ATTR         = "picid";
+    private static final String POSTER_TRAILER_ATTR       = "youtube";
     private static final String POSTER_MOVIE_ATTR         = "movie";
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
@@ -235,7 +236,15 @@ public class ScheduleHandler extends DefaultHandler {
             String name = attributes.getValue(POSTER_MOVIE_ATTR);
             for (Movie movie : movieIds.values()) {
                 if (movie.getName().equalsIgnoreCase(name)) {
-                    posters.add(new MoviePoster(movie, attributes.getValue(POSTER_IMAGE_ATTR)));
+                    String picId = attributes.getValue(POSTER_PICID_ATTR);
+                    if (picId == null || picId.length() == 0) continue;
+
+                    String trailerUrl = attributes.getValue(POSTER_TRAILER_ATTR);
+                    if (trailerUrl == null) trailerUrl = "";
+                    posters.add(new MoviePoster(
+                            movie,
+                            attributes.getValue(POSTER_PICID_ATTR),
+                            trailerUrl));
                     break;
                 }
             }
