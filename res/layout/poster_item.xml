@@ -10,21 +10,47 @@
             android:scaleType="fitXY"
             android:adjustViewBounds="false"/>
 
-    <RelativeLayout android:id="@+id/caption_region"
+    <RelativeLayout
+            android:id="@+id/overlay"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:background="@color/image_text_background">
+            android:layout_alignParentBottom="true">
 
-        <TextView android:id="@+id/caption"
-                  android:layout_height="wrap_content"
-                  android:layout_width="wrap_content"
-                  android:layout_alignParentRight="true"
-                  android:paddingRight="8dp"
-                  android:singleLine="true"
-                  android:ellipsize="end"
-                  android:textSize="16sp"
-                  android:textColor="@color/image_text"/>
+        <RelativeLayout
+                android:id="@+id/youtube_region"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="8dp"
+                android:clickable="true">
+
+            <ImageView
+                    android:id="@+id/youtube"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_youtube"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/caption_region"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@id/youtube_region"
+                android:background="@color/image_text_background">
+
+            <TextView
+                    android:id="@+id/caption"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="8dp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:textColor="@color/image_text"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
