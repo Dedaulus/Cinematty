@@ -6,8 +6,8 @@
 
     <GridView
         android:id="@+id/whats_new_grid"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:numColumns="1"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
