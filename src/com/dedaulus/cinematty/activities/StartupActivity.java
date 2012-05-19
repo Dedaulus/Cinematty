@@ -29,7 +29,7 @@ public class StartupActivity extends Activity
         setContentView(R.layout.splash_screen);
 
         // TODO: uncomment following before release!!!
-        BugSenseHandler.setup(this, "97371d41");
+        // BugSenseHandler.setup(this, "97371d41");
 
         app = (CinemattyApplication)getApplication();
         if (app.getVersionState() == CinemattyApplication.NEW_INSTALLATION) {
