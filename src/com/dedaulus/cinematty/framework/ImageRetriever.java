@@ -42,7 +42,7 @@ public class ImageRetriever implements Runnable {
         String path;
         Bitmap image;
         boolean useMemoryCache;
-        Calendar liveDate;
+        long liveDate;
     }
 
     private static class Request {
@@ -83,7 +83,7 @@ public class ImageRetriever implements Runnable {
         this.entity = entity;
         prefix = PREPREFIX + entity;
         this.localFolder = localFolder;
-        stateFile = new File(localFolder, new StringBuilder(prefix).append(".xml").toString());
+        stateFile = new File(localFolder, prefix + ".xml");
         
         restoreState();
         
@@ -135,14 +135,7 @@ public class ImageRetriever implements Runnable {
 
         synchronized (images) {
             for (Map.Entry<String, ImageWrapper> entry : images.entrySet()) {
-                /*
-                Calendar liveDate = entry.getValue().liveDate;
-                String year = Integer.toString(liveDate.get(Calendar.YEAR));
-                String month = Integer.toString(liveDate.get(Calendar.MONTH));
-                String day = Integer.toString(liveDate.get(Calendar.DAY_OF_MONTH));
-                String dateStr = new StringBuilder().append(year).append(".").append(month).append(".").append(day).toString();
-                */
-                xmlBuffer.append("<image url=\"").append(entry.getKey()).append("\" path=\"").append(entry.getValue().path).append("\" useMemoryCache=\"").append(entry.getValue().useMemoryCache ? "1" : "0").append("\" liveDate=\"").append(entry.getValue().liveDate.getTimeInMillis()).append("\" />");
+                xmlBuffer.append("<image url=\"").append(entry.getKey()).append("\" path=\"").append(entry.getValue().path).append("\" useMemoryCache=\"").append(entry.getValue().useMemoryCache ? "1" : "0").append("\" liveDate=\"").append(entry.getValue().liveDate).append("\" />");
             }
         }
 
@@ -192,7 +185,7 @@ public class ImageRetriever implements Runnable {
                     liveDate.add(Calendar.DAY_OF_YEAR, LIVE_DAYS);
                     ImageWrapper wrapper = new ImageWrapper();
                     wrapper.path = path;
-                    wrapper.liveDate = liveDate;
+                    wrapper.liveDate = liveDate.getTimeInMillis();
                     wrapper.useMemoryCache = request.useMemoryCache;
                     if (wrapper.useMemoryCache) {
                         wrapper.image = loadImage(wrapper.path);
@@ -243,9 +236,9 @@ public class ImageRetriever implements Runnable {
                     ImageWrapper wrapper = new ImageWrapper();
                     wrapper.path = attributes.getNamedItem("path").getNodeValue();
                     wrapper.useMemoryCache = Integer.parseInt(attributes.getNamedItem("useMemoryCache").getNodeValue()) != 0;
-                    got.setTimeInMillis(Long.parseLong(attributes.getNamedItem("liveDate").getNodeValue()));
-                    wrapper.liveDate = got;
+                    wrapper.liveDate = Long.parseLong(attributes.getNamedItem("liveDate").getNodeValue());
 
+                    got.setTimeInMillis(wrapper.liveDate);
                     if (now.before(got)) {
                         File image = new File(wrapper.path);
                         if (image.exists()) {
@@ -272,7 +265,7 @@ public class ImageRetriever implements Runnable {
             URLConnection connection = url.openConnection();
             connection.connect();
 
-            File localFile = new File(localFolder, new StringBuilder(prefix).append(UUID.randomUUID().toString()).append(".jpg").toString());
+            File localFile = new File(localFolder, prefix + UUID.randomUUID().toString() + ".jpg");
             InputStream input = new BufferedInputStream(url.openStream());
             OutputStream output = new FileOutputStream(localFile);
 
