@@ -30,11 +30,6 @@
                        android:value=".activities.SearchableActivity"/>
         </activity>
 
-        <activity android:name=".activities.CinemaWithScheduleListActivity">
-            <meta-data android:name="android.app.default_searchable"
-                       android:value=".activities.SearchableActivity"/>
-        </activity>
-
         <activity android:name=".activities.MovieListActivity">
             <meta-data android:name="android.app.default_searchable"
                        android:value=".activities.SearchableActivity"/>
