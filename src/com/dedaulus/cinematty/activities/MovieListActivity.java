@@ -121,19 +121,21 @@ public class MovieListActivity extends SherlockActivity {
 
         inflater.inflate(R.menu.search_menu, menu);
 
-        inflater.inflate(R.menu.movie_sort_menu, menu);
-        switch (settings.getMovieSortOrder()) {
-            case BY_CAPTION:
-                menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
-                break;
-            case BY_POPULAR:
-                menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
-                break;
-            case BY_RATING:
-                menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
-                break;
-            default:
-                break;
+        if (settings != null) {
+            inflater.inflate(R.menu.movie_sort_menu, menu);
+            switch (settings.getMovieSortOrder()) {
+                case BY_CAPTION:
+                    menu.findItem(R.id.submenu_movie_sort_by_caption).setChecked(true);
+                    break;
+                case BY_POPULAR:
+                    menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
+                    break;
+                case BY_RATING:
+                    menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         inflater.inflate(R.menu.preferences_menu, menu);
