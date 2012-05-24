@@ -21,13 +21,12 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_alignParentRight="true"
-                android:padding="8dp"
                 android:clickable="true">
 
             <ImageView
-                    android:id="@+id/youtube"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:padding="8dp"
                     android:src="@drawable/ic_youtube"/>
 
         </RelativeLayout>

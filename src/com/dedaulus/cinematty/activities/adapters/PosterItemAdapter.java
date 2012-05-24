@@ -69,16 +69,16 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
         View overlay = convertView.findViewById(R.id.overlay);
         TextView textView = (TextView)overlay.findViewById(R.id.caption);
-        ImageView trailerIcon = (ImageView)overlay.findViewById(R.id.youtube);
+        RelativeLayout trailerRegion = (RelativeLayout)overlay.findViewById(R.id.youtube_region);
 
         MoviePoster poster = posters.get(position);
         textView.setText(poster.getMovie().getName());
         final String trailerUrl = poster.getTrailerUrl();
         if (trailerUrl.length() == 0) {
-            trailerIcon.setVisibility(View.GONE);
+            trailerRegion.setVisibility(View.GONE);
         } else {
-            trailerIcon.setVisibility(View.VISIBLE);
-            trailerIcon.setOnClickListener(new View.OnClickListener() {
+            trailerRegion.setVisibility(View.VISIBLE);
+            trailerRegion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
