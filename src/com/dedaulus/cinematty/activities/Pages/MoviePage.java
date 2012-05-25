@@ -84,7 +84,9 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     @Override
-    public void onPause() {}
+    public void onPause() {
+        settings.saveFavouriteActors();
+    }
 
     @Override
     public void onStop() {}
