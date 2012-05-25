@@ -1,14 +1,17 @@
 package com.dedaulus.cinematty;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
@@ -45,6 +48,7 @@ public class CinemattyApplication extends Application {
 
     private static final String VERSION_FILE    = "cinematty_preferences";
     private static final String CURRENT_VERSION = "current_version";
+    private static final String LAUNCH_NUMBER   = "launch_number";
 
     private class ApplicationSettingsImpl implements ApplicationSettings {
         private static final String FAV_CINEMAS_FILE                  = "cinematty_fav_cinemas";
@@ -591,6 +595,29 @@ public class CinemattyApplication extends Application {
         }
 
         return OLD_VERSION;
+    }
+
+    public void showRateUsIfNeeded(final Context context) {
+        SharedPreferences preferences = getSharedPreferences(VERSION_FILE, MODE_PRIVATE);
+        int launchNumber = preferences.getInt(LAUNCH_NUMBER, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(LAUNCH_NUMBER, launchNumber + 1);
+        editor.commit();
+
+        if (launchNumber == 5) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Спасибо что до сих пор пользуетесь нашим приложением! Мы будем очень рады, если вы добавите комментарий в Google Play Store.")
+                    .setCancelable(true)
+                    .setPositiveButton("Нивапрос!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.dedaulus.cinematty"));
+                            context.startActivity(intent);
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
     
     public Map<String, String> getConnect() {

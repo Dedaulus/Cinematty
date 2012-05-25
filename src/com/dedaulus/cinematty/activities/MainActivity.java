@@ -97,6 +97,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         slider.setOnPageChangeListener(pageChangeListenerProxy);
 
         //app.showWhatsNewIfNeeded(this);
+        app.showRateUsIfNeeded(this);
     }
 
     @Override
