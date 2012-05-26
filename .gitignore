@@ -9,3 +9,4 @@ out
 gen
 proguard_logs*
 Cinematty.apk
+*DS_Store*
