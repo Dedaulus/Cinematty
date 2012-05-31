@@ -15,6 +15,9 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * User: Dedaulus
  * Date: 03.03.12
@@ -47,7 +50,10 @@ public class CinemaMapView extends MapActivity {
         MapView mapView = (MapView)findViewById(R.id.map_view);
         mapView.setBuiltInZoomControls(true);
         // CRUNCH!
-        if (app.getCurrentCity().getName().equalsIgnoreCase("мурманск")) {
+        String cityName = app.getCurrentCity().getName();
+        if (cityName.equalsIgnoreCase("мурманск") ||
+                cityName.equalsIgnoreCase("тюмень") ||
+                cityName.equalsIgnoreCase("иркуткс")) {
             mapView.setSatellite(true);
         } else {
             mapView.setSatellite(false);
