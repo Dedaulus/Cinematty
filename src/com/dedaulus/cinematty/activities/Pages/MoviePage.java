@@ -50,6 +50,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private View pageView;
     private Boolean binded = false;
     private boolean visible = false;
+    private ProgressDialog progressDialog;
     
     public MoviePage(Context context, CinemattyApplication app, ActivityState state) {
         this.context = context;
@@ -86,6 +87,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     @Override
     public void onPause() {
         settings.saveFavouriteActors();
+        progressDialog = null;
     }
 
     @Override
@@ -463,7 +465,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     public void onShareButtonClick() {
         final boolean isScheduled = state.activityType == ActivityState.MOVIE_INFO_W_SCHED;
 
-        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage(context.getString(R.string.generate_link));
         progressDialog.setCancelable(true);
@@ -478,7 +480,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 final String shortUrl = url != null ? DataConverter.longUrlToShort(url) : null;
                 ((Activity)context).runOnUiThread(new Runnable() {
                     public void run() {
-                        progressDialog.cancel();
+                        if (progressDialog != null) progressDialog.cancel();
                         if (shortUrl != null) {
                             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                             sharingIntent.setType("text/plain");

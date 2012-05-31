@@ -37,6 +37,7 @@ public class CinemasPage implements SliderPage, LocationClient {
     private CinemaItemAdapter cinemaListAdapter;
     private boolean binded = false;
     private boolean visible = false;
+    private ProgressDialog progressDialog;
 
     public CinemasPage(Context context, CinemattyApplication app) {
         this.context = context;
@@ -75,6 +76,7 @@ public class CinemasPage implements SliderPage, LocationClient {
         locationState.removeLocationClient(this);
         locationState.stopLocationListening();
         settings.saveFavouriteCinemas();
+        progressDialog = null;
     }
 
     public void onStop() {}
@@ -188,7 +190,7 @@ public class CinemasPage implements SliderPage, LocationClient {
             CinemaComparator cmp = new CinemaComparator(CinemaSortOrder.BY_DISTANCE, location);
             if (!cinemaListAdapter.isSorted(cmp)) {
                 if (visible) {
-                    final ProgressDialog progressDialog = new ProgressDialog(context);
+                    progressDialog = new ProgressDialog(context);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setMessage(context.getString(R.string.location_changed));
                     progressDialog.setCancelable(true);
@@ -200,11 +202,13 @@ public class CinemasPage implements SliderPage, LocationClient {
                             try {
                                 Thread.sleep(Constants.LOCATION_CHANGED_ENOUGH_MESSAGE_TIMEOUT);
                             } catch (InterruptedException e){}
-                            ((Activity)context).runOnUiThread(new Runnable() {
-                                public void run() {
-                                    progressDialog.cancel();
-                                }
-                            });
+                            if (progressDialog != null) {
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        progressDialog.cancel();
+                                    }
+                                });
+                            }
                         }
                     }).start();
                 }
