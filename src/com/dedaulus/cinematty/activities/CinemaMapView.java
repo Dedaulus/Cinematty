@@ -53,7 +53,7 @@ public class CinemaMapView extends MapActivity {
         String cityName = app.getCurrentCity().getName();
         if (cityName.equalsIgnoreCase("мурманск") ||
                 cityName.equalsIgnoreCase("тюмень") ||
-                cityName.equalsIgnoreCase("иркуткс")) {
+                cityName.equalsIgnoreCase("иркутск")) {
             mapView.setSatellite(true);
         } else {
             mapView.setSatellite(false);
