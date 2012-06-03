@@ -16,6 +16,7 @@
         <item name="Мурманск">Мурманск</item>
         <item name="Нижний Новгород">Нижний Новгород</item>
         <item name="Новосибирск">Новосибирск</item>
+        <item name="Омск">Омск</item>
         <item name="Пермь">Пермь</item>
         <!--<item name="Петрозаводск">Петрозаводск</item>-->
         <item name="Самара">Самара</item>
@@ -40,6 +41,7 @@
         <item name="Мурманск">19</item>
         <item name="Нижний Новгород">9</item>
         <item name="Новосибирск">10</item>
+        <item name="Омск">22</item>
         <item name="Пермь">11</item>
         <!--<item name="Петрозаводск">12</item>-->
         <item name="Самара">13</item>
