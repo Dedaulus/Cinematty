@@ -15,6 +15,7 @@
 		<city id="9"  name="Нижний Новгород" file="nijny_novgorod_schedule.xml"/>
 		<city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
         <city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
+        <city id="11" name="Пермь" file="perm_schedule.xml"/>
         <city id="22" name="Омск" file="omsk_schedule.xml"/>
         <!--<city id="12" name="Петрозаводск" file="petrozavodsk_schedule.xml"/>-->
 		<!--<city id="13" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>-->
