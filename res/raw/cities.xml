@@ -3,6 +3,7 @@
 	<cities>
 		<city id="1"  name="Москва" file="moscow_schedule.xml"/>
 		<city id="2"  name="Санкт-Петербург" file="spb_schedule.xml"/>
+        <city id="23" name="Владивосток" file="vladivostok_schedule.xml"/>
 		<city id="3"  name="Волгоград" file="volgograd_schedule.xml"/>
         <city id="4"  name="Воронеж" file="voronej_schedule.xml"/>
 		<city id="5"  name="Екатеринбург" file="ekaterinburg_schedule.xml"/>

@@ -15,6 +15,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,11 +51,10 @@ public class CinemaMapView extends MapActivity {
         MapView mapView = (MapView)findViewById(R.id.map_view);
         mapView.setBuiltInZoomControls(true);
         // CRUNCH!
+        Set<String> poorCities = new HashSet<String>(
+                Arrays.asList("мурманск", "тюмень", "иркутск", "омск", "владивосток"));
         String cityName = app.getCurrentCity().getName();
-        if (cityName.equalsIgnoreCase("мурманск") ||
-                cityName.equalsIgnoreCase("тюмень") ||
-                cityName.equalsIgnoreCase("иркутск") ||
-                cityName.equalsIgnoreCase("омск")) {
+        if (poorCities.contains(cityName.toLowerCase())) {
             mapView.setSatellite(true);
         } else {
             mapView.setSatellite(false);

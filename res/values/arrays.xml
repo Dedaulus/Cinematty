@@ -5,6 +5,7 @@
     <string-array name="city_names">
         <item name="Москва">Москва</item>
         <item name="Санкт-Петербург">Санкт-Петербург</item>
+        <item name="Владивосток">Владивосток</item>
         <item name="Волгоград">Волгоград</item>
         <item name="Воронеж">Воронеж</item>
         <item name="Екатеринбург">Екатеринбург</item>
@@ -30,6 +31,7 @@
     <string-array name="city_ids">
         <item name="Москва">1</item>
         <item name="Санкт-Петербург">2</item>
+        <item name="Владивосток">23</item>
         <item name="Волгоград">3</item>
         <item name="Воронеж">4</item>
         <item name="Екатеринбург">5</item>
