@@ -52,7 +52,7 @@ public class CinemaMapView extends MapActivity {
         mapView.setBuiltInZoomControls(true);
         // CRUNCH!
         Set<String> poorCities = new HashSet<String>(
-                Arrays.asList("мурманск", "тюмень", "иркутск", "омск", "владивосток"));
+                Arrays.asList("ростов-на-дону", "тюмень", "красноярск", "саратов", "владивосток"));
         String cityName = app.getCurrentCity().getName();
         if (poorCities.contains(cityName.toLowerCase())) {
             mapView.setSatellite(true);
