@@ -60,6 +60,8 @@ public class ScheduleReceiver {
             return SyncStatus.BAD_RESPONSE;
         } catch (OutOfDateException e) {
             return SyncStatus.OUT_OF_DATE;
+        } catch (NumberFormatException e) { // In case we received bad data to parse
+            return SyncStatus.BAD_RESPONSE;
         }
     }
 
