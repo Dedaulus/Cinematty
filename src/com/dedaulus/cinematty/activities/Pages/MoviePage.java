@@ -478,7 +478,9 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 final String shortUrl = url != null ? DataConverter.longUrlToShort(url) : null;
                 ((Activity)context).runOnUiThread(new Runnable() {
                     public void run() {
-                        progressDialog.cancel();
+                        try {
+                            progressDialog.cancel();
+                        } catch (Exception e) {}
                         if (shortUrl != null) {
                             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                             sharingIntent.setType("text/plain");

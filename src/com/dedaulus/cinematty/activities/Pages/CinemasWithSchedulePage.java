@@ -342,7 +342,9 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
                             ((Activity)context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    progressDialog.cancel();
+                                    try {
+                                        progressDialog.cancel();
+                                    } catch (Exception e) {}
                                 }
                             });
                         }
