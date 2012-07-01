@@ -44,12 +44,32 @@
                     android:layout_width="wrap_content"
                     android:layout_alignParentRight="true"
                     android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textSize="16sp"
                     android:textColor="@color/image_text"/>
 
         </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/schedule_overlay"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@color/image_text_background">
+
+        <TextView
+                android:id="@+id/first_schedule"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:padding="6dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:textColor="#FF6A00"
+                android:text="10:00, 15:30, 17:45, 20:10"/>
 
     </RelativeLayout>
 

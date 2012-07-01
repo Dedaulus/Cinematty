@@ -5,16 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.SpannableString;
+import android.util.Pair;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PosterImageRetriever;
+import com.dedaulus.cinematty.framework.tools.Constants;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * User: Dedaulus
@@ -27,7 +35,13 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
     private PosterImageRetriever imageRetriever;
     private int imageHeight;
     private int imageWidth;
+    private List<Cinema> closestCinemas;
+    private boolean showSchedule;
     private LayoutInflater inflater;
+
+    {
+        closestCinemas = new ArrayList<Cinema>();
+    }
 
     public PosterItemAdapter(Context context, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
         this.context = context;
@@ -70,6 +84,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         View overlay = convertView.findViewById(R.id.overlay);
         TextView textView = (TextView)overlay.findViewById(R.id.caption);
         RelativeLayout trailerRegion = (RelativeLayout)overlay.findViewById(R.id.youtube_region);
+        View scheduleOverlay = convertView.findViewById(R.id.schedule_overlay);
 
         MoviePoster poster = posters.get(position);
         textView.setText(poster.getMovie().getName());
@@ -98,6 +113,27 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
             overlay.setVisibility(View.GONE);
         }
 
+        if (showSchedule) {
+            if (closestCinemas.isEmpty()) {
+                scheduleOverlay.setVisibility(View.GONE);
+            } else {
+                Cinema cinema = closestCinemas.get(0);
+                TextView scheduleTextView = (TextView)scheduleOverlay.findViewById(R.id.first_schedule);
+                Pair<Movie, List<Calendar>> showTimes = cinema.getShowTimes(0).get(poster.getMovie().getName());
+                Pair<Calendar, Calendar> timeRange = DataConverter.getTimeRange(Constants.WHOLE_DAY, 0);
+                timeRange.first.setTimeInMillis(Calendar.getInstance().getTimeInMillis());
+                String showTimesStr = DataConverter.showTimesToString(showTimes == null ? null : showTimes.second, timeRange);
+                if (showTimesStr.length() != 0) {
+                    scheduleTextView.setText(showTimesStr);
+                    scheduleOverlay.setVisibility(View.VISIBLE);
+                } else {
+                    scheduleOverlay.setVisibility(View.GONE);
+                }
+            }
+        } else {
+            scheduleOverlay.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
@@ -117,4 +153,10 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
     @Override
     public void onResume() {}
+
+    public void setClosestCinemas(List<Cinema> cinemas, boolean showSchedule) {
+        closestCinemas = cinemas;
+        this.showSchedule = showSchedule;
+        notifyDataSetChanged();
+    }
 }

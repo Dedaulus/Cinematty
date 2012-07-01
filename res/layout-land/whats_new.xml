@@ -4,10 +4,41 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+    <RelativeLayout
+            android:id="@+id/closest_cinema"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_near"/>
+
+        <Button
+                android:id="@+id/button"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/icon"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="4dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+    </RelativeLayout>
+
     <GridView
         android:id="@+id/whats_new_grid"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_above="@id/closest_cinema"
         android:numColumns="2"
         android:stretchMode="columnWidth"
         android:gravity="center"/>

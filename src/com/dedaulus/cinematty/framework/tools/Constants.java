@@ -39,4 +39,6 @@ public class Constants {
     public static final int LOCATION_CHANGED_ENOUGH = 100;
     public static final int TIME_CHANGED_ENOUGH = 15000;
     public static final int LOCATION_CHANGED_ENOUGH_MESSAGE_TIMEOUT = 5000;
+
+    public static final int CLOSEST_CINEMA_DISTANCE = 10000;
 }
