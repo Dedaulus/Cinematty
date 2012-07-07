@@ -242,7 +242,7 @@ public class WhatsNewPage implements SliderPage, LocationClient {
             cinemaView.setVisibility(View.VISIBLE);
         }
 
-        Activity parent = (Activity)context;
+        SherlockActivity parent = (SherlockActivity)context;
         parent.invalidateOptionsMenu();
     }
 }
