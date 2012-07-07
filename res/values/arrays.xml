@@ -22,6 +22,7 @@
         <!--<item name="Петрозаводск">Петрозаводск</item>-->
         <item name="Ростов-на-Дону">Ростов-на-Дону</item>
         <item name="Самара">Самара</item>
+        <item name="Саратов">Саратов</item>
         <item name="Тула">Тула</item>
         <item name="Тюмень">Тюмень</item>
         <item name="Уфа">Уфа</item>
@@ -49,6 +50,7 @@
         <!--<item name="Петрозаводск">12</item>-->
         <item name="Ростов-на-Дону">24</item>
         <item name="Самара">13</item>
+        <item name="Саратов">25</item>
         <item name="Тула">14</item>
         <item name="Тюмень">20</item>
         <item name="Уфа">16</item>
