@@ -241,8 +241,9 @@ public class ScheduleHandler extends DefaultHandler {
             isPostersUpToDate = isPostersUpToDate(attributes.getValue(POSTERS_DATE_ATTR), attributes.getValue(POSTERS_LIVE_TIME_ATTR));
         } else if (qName.equalsIgnoreCase(POSTER_TAG) && isPostersUpToDate) {
             String name = attributes.getValue(POSTER_MOVIE_ATTR);
+            String name3d = name + " 3d";
             for (Movie movie : movieIds.values()) {
-                if (movie.getName().equalsIgnoreCase(name)) {
+                if (movie.getName().equalsIgnoreCase(name) || movie.getName().equalsIgnoreCase(name3d)) {
                     String picId = attributes.getValue(POSTER_PICID_ATTR);
                     if (picId == null || picId.length() == 0) continue;
 
