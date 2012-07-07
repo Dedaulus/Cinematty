@@ -12,10 +12,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -343,21 +340,20 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 favIconHolders = new ArrayList<Pair<MovieActor, ImageView>>(actors.size());
                 LayoutInflater inflater = LayoutInflater.from(context);
                 for (MovieActor actor : actors) {                                        
-                    View actorView = inflater.inflate(R.layout.actor_item, null);
-                    TextView caption = (TextView)actorView.findViewById(R.id.actor_caption);
+                    View actorView = inflater.inflate(R.layout.actor_item2, null);
+                    Button caption = (Button)actorView.findViewById(R.id.actor_caption);
                     ImageView icon = (ImageView)actorView.findViewById(R.id.fav_icon);
                     Pair<MovieActor, ImageView> iconHolder = Pair.create(actor, icon);
 
                     caption.setText(actor.getName());
-                    View actorDataRegion = actorView.findViewById(R.id.actor_data_region);
-                    actorDataRegion.setTag(actor);
-                    actorDataRegion.setOnClickListener(new View.OnClickListener() {
+                    caption.setTag(actor);
+                    caption.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             onActorClick(view);
                         }
                     });
-                    
+
                     if (actor.getFavourite() > 0) {
                         icon.setImageResource(R.drawable.ic_list_fav_on);
                     } else {
