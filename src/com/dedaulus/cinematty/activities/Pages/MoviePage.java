@@ -160,7 +160,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 setYearAndCountry();
                 setDirector();
                 setLength();
-                setImdb();
+                setRating();
                 setTrailerLink();
                 setGenre();
                 setActors();
@@ -281,11 +281,20 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         }
     }
 
-    private void setImdb() {
+    private void setRating() {
         TextView textView = (TextView)pageView.findViewById(R.id.imdb);
         float imdb = state.movie.getImdb();
         if (imdb > 0) {
             textView.setText(DataConverter.imdbToString(imdb).toUpperCase());
+            textView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setVisibility(View.GONE);
+        }
+
+        textView = (TextView)pageView.findViewById(R.id.kp);
+        float kp = state.movie.getKp();
+        if (kp > 0) {
+            textView.setText(DataConverter.kpToString(kp).toUpperCase());
             textView.setVisibility(View.VISIBLE);
         } else {
             textView.setVisibility(View.GONE);

@@ -42,6 +42,7 @@ public class Movie implements Comparable<Movie> {
     private Map<String, MovieActor> actors;
     private Map<String, MovieGenre> genres;
     private float imdb;
+    private float kp;
     private List<MovieReview> reviews;
     private Map<Integer, Map<String, Cinema>> cinemas;
 
@@ -66,7 +67,8 @@ public class Movie implements Comparable<Movie> {
             String description,
             Map<String, MovieActor> actors,
             Map<String, MovieGenre> genres,
-            float imdb) {
+            float imdb,
+            float kp) {
         this.name = name;
         this.id = id;
         this.picId = picId;
@@ -99,6 +101,7 @@ public class Movie implements Comparable<Movie> {
         }
         
         this.imdb = imdb;
+        this.kp = kp;
     }
 
     public String getName() {
@@ -147,6 +150,10 @@ public class Movie implements Comparable<Movie> {
 
     public float getImdb() {
         return imdb;
+    }
+
+    public float getKp() {
+        return kp;
     }
     
     public void addReview(MovieReview review) {

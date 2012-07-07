@@ -64,12 +64,22 @@
                         android:textSize="14sp"
                         android:textColor="@android:color/secondary_text_light"/>
 
-                <TextView android:id="@+id/imdb"
-                        style="@style/ListItem.Data.MovieRating"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/advanced_color"
-                        android:paddingTop="2dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingTop="2dp">
+
+                    <TextView android:id="@+id/imdb"
+                              android:paddingRight="8dp"
+                              style="@style/ListItem.Data.ImdbRating"
+                              android:textSize="14sp"/>
+
+                    <TextView android:id="@+id/kp"
+                              style="@style/ListItem.Data.KpRating"
+                              android:textSize="14sp"/>
+
+                </LinearLayout>
 
                 <TextView android:id="@+id/movie_trailer_url"
                         android:layout_width="wrap_content"

@@ -32,6 +32,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
         TextView caption;
         TextView genres;
         TextView imdb;
+        TextView kp;
         TextView favActors;
         TextView schedule;
         TextView timeLeft;
@@ -108,6 +109,14 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             viewHolder.imdb.setVisibility(View.GONE);
         }
 
+        String kp = DataConverter.kpToString(movie.getKp());
+        if (kp.length() != 0) {
+            viewHolder.kp.setText(kp);
+            viewHolder.kp.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.kp.setVisibility(View.GONE);
+        }
+
         String actors = DataConverter.favActorsToString(movie.getActors().values());
         if (actors.length() != 0) {
             viewHolder.favActors.setText(actors);
@@ -151,6 +160,7 @@ public class MovieItemWithScheduleAdapter extends BaseAdapter implements Sortabl
             viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption);
             viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre);
             viewHolder.imdb = (TextView)convertView.findViewById(R.id.imdb);
+            viewHolder.kp = (TextView)convertView.findViewById(R.id.kp);
             viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor);
             viewHolder.schedule = (TextView)convertView.findViewById(R.id.movie_schedule);
             viewHolder.timeLeft = (TextView)convertView.findViewById(R.id.time_left);

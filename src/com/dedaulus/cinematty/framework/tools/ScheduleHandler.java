@@ -34,6 +34,7 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String MOVIE_LENGTH_ATTR         = "length";
     private static final String MOVIE_TYPE_ATTR           = "type";
     private static final String MOVIE_IMDB_ATTR           = "imdb";
+    private static final String MOVIE_KP_ATTR             = "kp";
     private static final String MOVIE_ACTORS_TAG          = "actors";
     private static final String MOVIE_DESCRIPTION_TAG     = "description";
     private static final String MOVIE_REVIEWS_TAG         = "reviews";
@@ -89,9 +90,10 @@ public class ScheduleHandler extends DefaultHandler {
         Map<String, MovieActor> actors;
         Map<String, MovieGenre> genres;
         float imdb;
+        float kp;
 
         public Movie createMovie() {
-            return new Movie(name, id, picId, frameIdsStore, length, year, countries, directors, description, actors, genres, imdb);
+            return new Movie(name, id, picId, frameIdsStore, length, year, countries, directors, description, actors, genres, imdb, kp);
         }
     }
 
@@ -209,6 +211,11 @@ public class ScheduleHandler extends DefaultHandler {
             String imdbStr = attributes.getValue(MOVIE_IMDB_ATTR);
             if (imdbStr != null && imdbStr.length() != 0) {
                 currentMovieData.imdb = Float.parseFloat(imdbStr);
+            }
+
+            String kpStr = attributes.getValue(MOVIE_KP_ATTR);
+            if (kpStr != null && kpStr.length() != 0) {
+                currentMovieData.kp = Float.parseFloat(kpStr);
             }
         } else if (qName.equalsIgnoreCase(MOVIE_FRAMES_TAG)) {
             currentMovieData.frameIdsStore = new MovieFrameIdsStore(attributes.getValue(MOVIE_FRAMES_ID_ATTR));

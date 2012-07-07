@@ -47,13 +47,24 @@
                 style="@style/ListItem.Data.MovieGenre"
                 android:layout_below="@id/movie_caption"/>
 
-        <TextView android:id="@+id/imdb"
-                style="@style/ListItem.Data.MovieRating"
-                android:layout_below="@id/movie_genre"/>
+        <LinearLayout android:id="@+id/rating"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/movie_genre">
+
+            <TextView android:id="@+id/imdb"
+                      android:paddingRight="8dp"
+                      style="@style/ListItem.Data.ImdbRating"/>
+
+            <TextView android:id="@+id/kp"
+                      style="@style/ListItem.Data.KpRating"/>
+
+        </LinearLayout>
 
         <TextView android:id="@+id/movie_actor"
                 style="@style/ListItem.Data.MovieActor"
-                android:layout_below="@id/imdb"/>
+                android:layout_below="@id/rating"/>
 
     </RelativeLayout>
 

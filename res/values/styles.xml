@@ -166,8 +166,12 @@
         <item name="android:textColor">#FF4E00</item>
     </style>
     <style name="ListItem.Data.MovieGenre"/>
-    <style name="ListItem.Data.MovieRating">
+    <style name="ListItem.Data.ImdbRating">
         <item name="android:textColor">@color/advanced_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ListItem.Data.KpRating">
+        <item name="android:textColor">@color/kp_color</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="ListItem.Data.MovieSchedule">

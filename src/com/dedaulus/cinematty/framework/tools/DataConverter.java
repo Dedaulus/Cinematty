@@ -28,6 +28,13 @@ public class DataConverter {
         }
         return "";
     }
+
+    public static String kpToString(float kp) {
+        if (kp > 0) {
+            return String.format(Locale.US, "кп: %.1f", kp);
+        }
+        return "";
+    }
     
     public static String directorsToString(Collection<String> directors) {
         if (!directors.isEmpty()) {
