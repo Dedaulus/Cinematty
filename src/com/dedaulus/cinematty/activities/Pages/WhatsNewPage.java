@@ -77,10 +77,7 @@ public class WhatsNewPage implements SliderPage, LocationClient {
             if (location != null) {
                 onLocationChanged(location);
             }
-            //locationFix = locationState.getCurrentLocation();
-            //if (locationFix != null) {
-            //    timeLocationFix = locationFix.getTime();
-            //}
+
             posterItemAdapter.onResume();
         }
     }
