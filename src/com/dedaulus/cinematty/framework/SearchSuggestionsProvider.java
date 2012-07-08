@@ -55,7 +55,7 @@ public class SearchSuggestionsProvider extends ContentProvider {
 
         if (selectionArgs[0].length() > 1) {
             String searchString = selectionArgs[0];
-            String pattern = new StringBuilder().append("(?i).* ").append(searchString).append(".*|(?i)^").append(searchString).append(".*").toString();
+            String pattern = new StringBuilder().append("(?i).* [\"«„”‘]*").append(searchString).append(".*|(?i)^[\"«„”‘]*").append(searchString).append(".*").toString();
             int i = 0;
 
             Map<String, Cinema> cinemas = app.getSettings().getCinemas();
