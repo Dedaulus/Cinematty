@@ -46,6 +46,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         TextView caption;
         TextView genres;
         TextView imdb;
+        TextView kp;
         TextView favActors;
     }
 
@@ -157,6 +158,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                     viewHolder.caption = (TextView)convertView.findViewById(R.id.movie_caption);
                     viewHolder.genres = (TextView)convertView.findViewById(R.id.movie_genre);
                     viewHolder.imdb = (TextView)convertView.findViewById(R.id.imdb);
+                    viewHolder.kp = (TextView)convertView.findViewById(R.id.kp);
                     viewHolder.favActors = (TextView)convertView.findViewById(R.id.movie_actor);
                     convertView.setTag(viewHolder);
                 } else {
@@ -310,6 +312,14 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             viewHolder.imdb.setVisibility(View.VISIBLE);
         } else {
             viewHolder.imdb.setVisibility(View.GONE);
+        }
+
+        String kp = DataConverter.kpToString(movie.getKp());
+        if (kp.length() != 0) {
+            viewHolder.kp.setText(kp);
+            viewHolder.kp.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.kp.setVisibility(View.GONE);
         }
 
         String actors = DataConverter.favActorsToString(movie.getActors().values());
