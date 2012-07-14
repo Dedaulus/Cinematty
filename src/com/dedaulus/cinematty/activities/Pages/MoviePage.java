@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.activities.Pages;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -413,14 +414,22 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     }
 
     public void onUrlClick() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(context.getString(R.string.youtube_search_url));
-        buffer.append(" \"\"");
-        buffer.insert(buffer.length() - 1, state.movie.getName());
+        try {
+            Intent intent = new Intent(Intent.ACTION_SEARCH);
+            intent.setPackage("com.google.android.youtube");
+            intent.putExtra("query", context.getString(R.string.youtube_search_url2) + state.movie.getName());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append(context.getString(R.string.youtube_search_url));
+            buffer.append(" ");
+            buffer.append(state.movie.getName());
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(buffer.toString()));
-        context.startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(buffer.toString()));
+            context.startActivity(intent);
+        }
     }
 
     public void onImageClick() {
