@@ -111,7 +111,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     
     private void processSearch(Intent intent) {
         String query = intent.getStringExtra(SearchManager.QUERY);
-        String pattern = new StringBuilder().append("(?i).* ").append(query).append(".*|(?i)^").append(query).append(".*").toString();
+        String pattern = new StringBuilder().append("(?i).* [\"«„”‘]*").append(query).append(".*|(?i)^[\"«„”‘]*").append(query).append(".*").append("|(?i).*-").append(query).append(".*").toString();
 
         List<Cinema> foundCinemas = new ArrayList<Cinema>();
         Map<String, Cinema> cinemas = settings.getCinemas();
