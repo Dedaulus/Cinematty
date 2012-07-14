@@ -417,7 +417,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
         try {
             Intent intent = new Intent(Intent.ACTION_SEARCH);
             intent.setPackage("com.google.android.youtube");
-            intent.putExtra("query", context.getString(R.string.youtube_search_url2) + state.movie.getName());
+            intent.putExtra("query", context.getString(R.string.youtube_search_url2) + " " + state.movie.getName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
