@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--26-->
+<!--27-->
 <data>
 	<cities>
 		<city id="1"  name="Москва" file="moscow_schedule.xml"/>
@@ -19,6 +19,7 @@
 		<city id="10" name="Новосибирск" file="novosibirsk_schedule.xml"/>
         <city id="11" name="Пермь" file="perm_schedule.xml"/>
         <city id="22" name="Омск" file="omsk_schedule.xml"/>
+        <city id="27" name="Орёл" file="orel_schedule.xml"/>
         <!--<city id="12" name="Петрозаводск" file="petrozavodsk_schedule.xml"/>-->
 		<city id="24" name="Ростов-на-Дону" file="rostov-na-donu_schedule.xml"/>
 		<city id="13" name="Самара" file="samara_schedule.xml"/>
