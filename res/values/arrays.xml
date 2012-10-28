@@ -20,6 +20,7 @@
         <item name="Новосибирск">Новосибирск</item>
         <item name="Омск">Омск</item>
         <item name="Орёл">Орёл</item>
+        <item name="Пенза">Пенза</item>
         <item name="Пермь">Пермь</item>
         <!--<item name="Петрозаводск">Петрозаводск</item>-->
         <item name="Ростов-на-Дону">Ростов-на-Дону</item>
@@ -51,6 +52,7 @@
         <item name="Новосибирск">10</item>
         <item name="Омск">22</item>
         <item name="Орёл">27</item>
+        <item name="Пенза">29</item>
         <item name="Пермь">11</item>
         <!--<item name="Петрозаводск">12</item>-->
         <item name="Ростов-на-Дону">24</item>
