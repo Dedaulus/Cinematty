@@ -242,18 +242,38 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(POSTER_TAG) && isPostersUpToDate) {
             String name = attributes.getValue(POSTER_MOVIE_ATTR);
             String name3d = name + " 3d";
-            for (Movie movie : movieIds.values()) {
-                if (movie.getName().equalsIgnoreCase(name) || movie.getName().equalsIgnoreCase(name3d)) {
-                    String picId = attributes.getValue(POSTER_PICID_ATTR);
-                    if (picId == null || picId.length() == 0) continue;
 
+            Movie popularTypeMovie = null;
+
+            for (Movie movie : movieIds.values()) {
+                if (movie.getName().equalsIgnoreCase(name)) {
+                    popularTypeMovie = movie;
+                    break;
+                }
+            }
+
+            for (Movie movie : movieIds.values()) {
+                if (movie.getName().equalsIgnoreCase(name3d)) {
+                    if (popularTypeMovie != null) {
+                        if (popularTypeMovie.getCinemas(Constants.TODAY_SCHEDULE).size() < movie.getCinemas(Constants.TODAY_SCHEDULE).size()) {
+                            popularTypeMovie = movie;
+                        }
+                    } else {
+                        popularTypeMovie = movie;
+                    }
+                    break;
+                }
+            }
+
+            if (popularTypeMovie != null) {
+                String picId = attributes.getValue(POSTER_PICID_ATTR);
+                if (picId != null && picId.length() > 0) {
                     String trailerUrl = attributes.getValue(POSTER_TRAILER_ATTR);
                     if (trailerUrl == null) trailerUrl = "";
                     posters.add(new MoviePoster(
-                            movie,
+                            popularTypeMovie,
                             attributes.getValue(POSTER_PICID_ATTR),
                             trailerUrl));
-                    break;
                 }
             }
         }
