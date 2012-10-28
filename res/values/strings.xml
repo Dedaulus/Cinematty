@@ -97,7 +97,8 @@
     <string name="sort_by_fav">По любимым</string>
     <string name="sort_by_distance">По ближайшим</string>
     <string name="sort_by_popular">По популярности</string>
-    <string name="sort_by_rating">По рейтингу</string>
+    <string name="sort_by_imdb">По рейтингу IMDB</string>
+    <string name="sort_by_kp">По рейтингу КП</string>
     <string name="sort_by_time_left">По времени до сеанса</string>
 
     <string name="menu_preferences">Настройки</string>

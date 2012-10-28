@@ -52,11 +52,17 @@ public class MovieComparator implements Comparator<Movie> {
             if (size1 == size2) return 0;
             return (size1 < size2) ? 1 : -1;
 
-        case BY_RATING:
+        case BY_IMDB:
             float imdb1 = o1.getImdb();
             float imdb2 = o2.getImdb();
             if (imdb1 == imdb2) return 0;
             return imdb1 < imdb2 ? 1 : -1;
+
+        case BY_KP:
+            float kp1 = o1.getKp();
+            float kp2 = o2.getKp();
+            if (kp1 == kp2) return 0;
+            return kp1 < kp2 ? 1 : -1;
 
         case BY_TIME_LEFT:
             List<Calendar> showTimes1 = cinemaShowTimes.get(o1.getName()).second;

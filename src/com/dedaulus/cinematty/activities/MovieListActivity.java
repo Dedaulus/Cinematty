@@ -130,8 +130,11 @@ public class MovieListActivity extends SherlockActivity {
                 case BY_POPULAR:
                     menu.findItem(R.id.submenu_movie_sort_by_popular).setChecked(true);
                     break;
-                case BY_RATING:
-                    menu.findItem(R.id.submenu_movie_sort_by_rating).setChecked(true);
+                case BY_IMDB:
+                    menu.findItem(R.id.submenu_movie_sort_by_imdb).setChecked(true);
+                    break;
+                case BY_KP:
+                    menu.findItem(R.id.submenu_movie_sort_by_kp).setChecked(true);
                     break;
                 default:
                     break;
@@ -165,9 +168,15 @@ public class MovieListActivity extends SherlockActivity {
                 item.setChecked(true);
                 return true;
 
-            case R.id.submenu_movie_sort_by_rating:
-                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_RATING, settings.getCurrentDay()));
-                settings.saveMovieSortOrder(MovieSortOrder.BY_RATING);
+            case R.id.submenu_movie_sort_by_imdb:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_IMDB, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_IMDB);
+                item.setChecked(true);
+                return true;
+
+            case R.id.submenu_movie_sort_by_kp:
+                movieListAdapter.sortBy(new MovieComparator(MovieSortOrder.BY_KP, settings.getCurrentDay()));
+                settings.saveMovieSortOrder(MovieSortOrder.BY_KP);
                 item.setChecked(true);
                 return true;
 

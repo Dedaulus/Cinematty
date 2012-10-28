@@ -21,8 +21,12 @@
                     android:title="@string/sort_by_popular"/>
 
                 <item
-                    android:id="@+id/submenu_movie_sort_by_rating"
-                    android:title="@string/sort_by_rating"/>
+                    android:id="@+id/submenu_movie_sort_by_imdb"
+                    android:title="@string/sort_by_imdb"/>
+
+                <item
+                    android:id="@+id/submenu_movie_sort_by_kp"
+                    android:title="@string/sort_by_kp"/>
 
                 <item
                     android:id="@+id/submenu_movie_sort_by_time_left"
