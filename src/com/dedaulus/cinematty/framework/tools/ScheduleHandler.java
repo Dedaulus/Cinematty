@@ -240,40 +240,42 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(POSTERS_TAG)) {
             isPostersUpToDate = isPostersUpToDate(attributes.getValue(POSTERS_DATE_ATTR), attributes.getValue(POSTERS_LIVE_TIME_ATTR));
         } else if (qName.equalsIgnoreCase(POSTER_TAG) && isPostersUpToDate) {
-            String name = attributes.getValue(POSTER_MOVIE_ATTR);
-            String name3d = name + " 3d";
+            if (posters.size() < 13) {
+                String name = attributes.getValue(POSTER_MOVIE_ATTR);
+                String name3d = name + " 3d";
 
-            Movie popularTypeMovie = null;
+                Movie popularTypeMovie = null;
 
-            for (Movie movie : movieIds.values()) {
-                if (movie.getName().equalsIgnoreCase(name)) {
-                    popularTypeMovie = movie;
-                    break;
+                for (Movie movie : movieIds.values()) {
+                    if (movie.getName().equalsIgnoreCase(name)) {
+                        popularTypeMovie = movie;
+                        break;
+                    }
                 }
-            }
 
-            for (Movie movie : movieIds.values()) {
-                if (movie.getName().equalsIgnoreCase(name3d)) {
-                    if (popularTypeMovie != null) {
-                        if (popularTypeMovie.getCinemas(Constants.TODAY_SCHEDULE).size() < movie.getCinemas(Constants.TODAY_SCHEDULE).size()) {
+                for (Movie movie : movieIds.values()) {
+                    if (movie.getName().equalsIgnoreCase(name3d)) {
+                        if (popularTypeMovie != null) {
+                            if (popularTypeMovie.getCinemas(Constants.TODAY_SCHEDULE).size() < movie.getCinemas(Constants.TODAY_SCHEDULE).size()) {
+                                popularTypeMovie = movie;
+                            }
+                        } else {
                             popularTypeMovie = movie;
                         }
-                    } else {
-                        popularTypeMovie = movie;
+                        break;
                     }
-                    break;
                 }
-            }
 
-            if (popularTypeMovie != null) {
-                String picId = attributes.getValue(POSTER_PICID_ATTR);
-                if (picId != null && picId.length() > 0) {
-                    String trailerUrl = attributes.getValue(POSTER_TRAILER_ATTR);
-                    if (trailerUrl == null) trailerUrl = "";
-                    posters.add(new MoviePoster(
-                            popularTypeMovie,
-                            attributes.getValue(POSTER_PICID_ATTR),
-                            trailerUrl));
+                if (popularTypeMovie != null) {
+                    String picId = attributes.getValue(POSTER_PICID_ATTR);
+                    if (picId != null && picId.length() > 0) {
+                        String trailerUrl = attributes.getValue(POSTER_TRAILER_ATTR);
+                        if (trailerUrl == null) trailerUrl = "";
+                        posters.add(new MoviePoster(
+                                popularTypeMovie,
+                                attributes.getValue(POSTER_PICID_ATTR),
+                                trailerUrl));
+                    }
                 }
             }
         }
