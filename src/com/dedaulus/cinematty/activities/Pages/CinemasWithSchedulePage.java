@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -305,6 +306,11 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
         ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
         list.setAdapter(cinemaListAdapter);
         list.setOnScrollListener(notifier);
+
+        String timeRangeString = DataConverter.getTimeRangeString(context, dayPart);
+        if (timeRangeString != null) {
+            Toast.makeText(context, timeRangeString, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setCurrentDayPart(int dayPart) {

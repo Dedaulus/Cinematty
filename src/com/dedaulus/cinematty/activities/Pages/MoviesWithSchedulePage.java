@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -316,6 +317,11 @@ public class MoviesWithSchedulePage implements SliderPage {
         list.setAdapter(movieListAdapter);
 
         movieListAdapter.onResume();
+
+        String timeRangeString = DataConverter.getTimeRangeString(context, dayPart);
+        if (timeRangeString != null) {
+            Toast.makeText(context, timeRangeString, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setCurrentDayPart(int dayPart) {

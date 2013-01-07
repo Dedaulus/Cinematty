@@ -454,4 +454,26 @@ public class DataConverter {
 
         return Pair.create(from, to);
     }
+
+    public static String getTimeRangeString(Context context, int specificTime) {
+        String template = context.getString(R.string.time_range);
+
+        switch (specificTime) {
+            case Constants.IN_MORNING:
+                return String.format(template, Constants.IN_MORNING, Constants.IN_AFTERNOON);
+
+            case Constants.IN_AFTERNOON:
+                return String.format(template, Constants.IN_AFTERNOON, Constants.IN_EVENING);
+
+            case Constants.IN_EVENING:
+                return String.format(template, Constants.IN_EVENING, Constants.AT_NIGHT);
+
+            case Constants.AT_NIGHT:
+                return String.format(template, Constants.AT_NIGHT, Constants.LAST_SHOWTIME_HOUR);
+
+            case Constants.WHOLE_DAY:
+            default:
+                return null;
+        }
+    }
 }

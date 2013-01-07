@@ -17,7 +17,7 @@
     <string name="url">gdekino.net</string>
     <string name="copyright_icons">В программе используется набор иконок MetroStation от Yanko Andreev</string>
     <string name="icons_url">yankoa.deviantart.com</string>
-    <string name="julya">Спасибо Юле Соколовой (sochok25) за любовь к тому что я делаю</string>
+    <string name="julya">Спасибо красавице Юле Соколовой (sochok25) за любовь к тому что я делаю</string>
 
     <string name="new_version_caption">Что нового?</string>
     <string name="new_version">● Исправлены ошибки</string>
@@ -114,6 +114,8 @@
     <string name="generate_link_failed">В данный момент невозможно создать ссылку. Попробуйте позже</string>
 
     <string name="location_changed">Ваше местоположение изменилось, сортирую кинотеатры...</string>
+
+    <string name="time_range" formatted="false">Сеансы с %d:00 до %d:00</string>
 
     <string name="km">км</string>
     <string name="m">м</string>
