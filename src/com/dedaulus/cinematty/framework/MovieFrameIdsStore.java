@@ -25,7 +25,9 @@ public class MovieFrameIdsStore {
     }
 
     public void addFrameId(int id) {
-        frameIds.add(id);
+        if (frameIds.size() < 10) {
+            frameIds.add(id);
+        }
     }
     
     public List<Integer> getFrameIds() {
