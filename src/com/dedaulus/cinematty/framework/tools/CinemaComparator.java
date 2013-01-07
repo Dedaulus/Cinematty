@@ -50,9 +50,8 @@ public class CinemaComparator implements Comparator<Cinema> {
                 if (distance1[0] == distance2[0]) return 0;
                 return (distance1[0] < distance2[0]) ? -1 : 1;
 
-            } else if (location != null) {
-                if (o1.getCoordinate() != null) return 1;
-                else if (o2.getCoordinate() != null) return -1;
+            } else if (location != null && (o1.getCoordinate() != null || o2.getCoordinate() != null)) {
+                return o1.getCoordinate() != null ? 1 : -1;
             }
 
             return o1.getName().compareTo(o2.getName());
