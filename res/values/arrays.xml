@@ -22,7 +22,7 @@
         <item name="Орёл">Орёл</item>
         <item name="Пенза">Пенза</item>
         <item name="Пермь">Пермь</item>
-        <!--<item name="Петрозаводск">Петрозаводск</item>-->
+        <item name="Петрозаводск">Петрозаводск</item>
         <item name="Ростов-на-Дону">Ростов-на-Дону</item>
         <item name="Рязань">Рязань</item>
         <item name="Самара">Самара</item>
@@ -30,7 +30,9 @@
         <item name="Тула">Тула</item>
         <item name="Тюмень">Тюмень</item>
         <item name="Уфа">Уфа</item>
+        <item name="Хабаровск">Хабаровск</item>
         <item name="Челябинск">Челябинск</item>
+        <item name="Южно-Сахалинск">Южно-Сахалинск</item>
         <item name="Ярославль">Ярославль</item>
     </string-array>
 
@@ -54,7 +56,7 @@
         <item name="Орёл">27</item>
         <item name="Пенза">29</item>
         <item name="Пермь">11</item>
-        <!--<item name="Петрозаводск">12</item>-->
+        <item name="Петрозаводск">12</item>
         <item name="Ростов-на-Дону">24</item>
         <item name="Рязань">28</item>
         <item name="Самара">13</item>
@@ -62,7 +64,9 @@
         <item name="Тула">14</item>
         <item name="Тюмень">20</item>
         <item name="Уфа">16</item>
+        <item name="Хабаровск">30</item>
         <item name="Челябинск">15</item>
+        <item name="Южно-Сахалинск">31</item>
         <item name="Ярославль">18</item>
     </string-array>
 
