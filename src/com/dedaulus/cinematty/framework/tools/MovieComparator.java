@@ -83,7 +83,7 @@ public class MovieComparator implements Comparator<Movie> {
             return showTime1.compareTo(showTime2);
 
         default:
-            throw new RuntimeException("Sort order not implemented!");
+            throw new RuntimeException("Sort order is not implemented!");
         }
     }
 }

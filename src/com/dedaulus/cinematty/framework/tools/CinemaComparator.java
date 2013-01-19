@@ -59,7 +59,7 @@ public class CinemaComparator implements Comparator<Cinema> {
             return o1.getName().compareTo(o2.getName());
 
         default:
-            throw new RuntimeException("Sort order not implemented!");
+            throw new RuntimeException("Sort order is not implemented!");
         }
     }
 }
