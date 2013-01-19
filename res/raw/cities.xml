@@ -29,9 +29,9 @@
         <city id="14" name="Тула" file="tula_schedule.xml"/>
         <city id="20" name="Тюмень" file="tumen_schedule.xml"/>
 		<city id="16" name="Уфа" file="ufa_schedule.xml"/>
-        <city id="30" name="Хабаровск" file="habarovsk.xml"/>
+        <city id="30" name="Хабаровск" file="habarovsk_schedule.xml"/>
 		<city id="15" name="Челябинск" file="chelyabinsk_schedule.xml"/>
-        <city id="31" name="Южно-Сахалинск" file="yujno-sahalinsk.xml"/>
+        <city id="31" name="Южно-Сахалинск" file="yujno-sahalinsk_schedule.xml"/>
         <city id="18" name="Ярославль" file="yaroslavl_schedule.xml"/>
 		
 	</cities>
