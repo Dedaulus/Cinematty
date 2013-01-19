@@ -64,12 +64,12 @@
                 android:id="@+id/first_schedule"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:padding="6dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textSize="16sp"
-                android:textColor="#FF6A00"
-                android:text="10:00, 15:30, 17:45, 20:10"/>
+                android:textColor="#FF6A00"/>
 
     </RelativeLayout>
 
