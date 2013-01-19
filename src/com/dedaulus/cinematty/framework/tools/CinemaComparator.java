@@ -37,21 +37,23 @@ public class CinemaComparator implements Comparator<Cinema> {
             return (o1.getFavourite() < o2.getFavourite()) ? 1 : -1;
 
         case BY_DISTANCE:
-            if (location != null && o1.getCoordinate() != null && o2.getCoordinate() != null) {
-                Location.distanceBetween(
-                        location.getLatitude(), location.getLongitude(),
-                        o1.getCoordinate().latitude, o1.getCoordinate().longitude,
-                        distance1);
-                Location.distanceBetween(
-                        location.getLatitude(), location.getLongitude(),
-                        o2.getCoordinate().latitude, o2.getCoordinate().longitude,
-                        distance2);
+            if (location != null) {
+                if (o1.getCoordinate() != null && o2.getCoordinate() != null) {
+                    Location.distanceBetween(
+                            location.getLatitude(), location.getLongitude(),
+                            o1.getCoordinate().latitude, o1.getCoordinate().longitude,
+                            distance1);
+                    Location.distanceBetween(
+                            location.getLatitude(), location.getLongitude(),
+                            o2.getCoordinate().latitude, o2.getCoordinate().longitude,
+                            distance2);
 
-                if (distance1[0] == distance2[0]) return 0;
-                return (distance1[0] < distance2[0]) ? -1 : 1;
+                    if (distance1[0] == distance2[0]) return 0;
+                    return (distance1[0] < distance2[0]) ? -1 : 1;
 
-            } else if (location != null && (o1.getCoordinate() != null || o2.getCoordinate() != null)) {
-                return o1.getCoordinate() != null ? 1 : -1;
+                } else if (o1.getCoordinate() != null || o2.getCoordinate() != null) {
+                    return o1.getCoordinate() != null ? 1 : -1;
+                }
             }
 
             return o1.getName().compareTo(o2.getName());
