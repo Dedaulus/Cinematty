@@ -15,6 +15,7 @@
         <item name="Краснодар">Краснодар</item>
         <item name="Красноярск">Красноярск</item>
         <item name="Липецк">Липецк</item>
+        <item name="Магнитогорск">Магнитогорск</item>
         <item name="Мурманск">Мурманск</item>
         <item name="Нижний Новгород">Нижний Новгород</item>
         <item name="Новосибирск">Новосибирск</item>
@@ -49,6 +50,7 @@
         <item name="Краснодар">17</item>
         <item name="Красноярск">26</item>
         <item name="Липецк">8</item>
+        <item name="Магнитогорск">32</item>
         <item name="Мурманск">19</item>
         <item name="Нижний Новгород">9</item>
         <item name="Новосибирск">10</item>
