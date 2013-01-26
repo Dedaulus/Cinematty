@@ -33,29 +33,6 @@ public class PreferencesActivity extends SherlockPreferenceActivity implements S
         }
         previousCity = app.getCurrentCity();
         final Context context = this;
-        
-        Preference problemPreference = getPreferenceScreen().findPreference("problem");
-        problemPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-
-                String email = context.getString(R.string.email);
-                String subject = String.format(
-                        context.getString(R.string.support_email_subject), 
-                        context.getString(R.string.app_name), 
-                        context.getString(R.string.app_version),
-                        context.getString(R.string.app_version_code));
-                
-                emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-                //emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Text");
-
-                context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.support_email_intent_caption)));
-                return true;
-            }
-        });
 
         Preference aboutPreference = getPreferenceScreen().findPreference("about");
         aboutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

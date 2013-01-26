@@ -95,6 +95,8 @@ public class GenreListActivity extends SherlockActivity {
 
         inflater.inflate(R.menu.preferences_menu, menu);
 
+        inflater.inflate(R.menu.problem_menu, menu);
+
         return true;
     }
 
@@ -111,6 +113,10 @@ public class GenreListActivity extends SherlockActivity {
 
             case R.id.menu_preferences:
                 app.showPreferences(this);
+                return true;
+
+            case R.id.menu_problem:
+                app.showProblemResolver(this);
                 return true;
 
             default:

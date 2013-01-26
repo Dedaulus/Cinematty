@@ -6,12 +6,12 @@
     <string name="pref_about">О программе</string>
     <string name="pref_about_summary" formatted="false">Версия %s b%s</string>
 
-    <string name="support_email_subject" formatted="false">Проблема в %s %s b%s</string>
+    <string name="support_email_subject" formatted="false">Проблема в %s %s b%s, город %s</string>
     <string name="support_email_intent_caption">Сообщить о проблеме</string>
 
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.5.8</string>
-    <string name="app_version_code">41</string>
+    <string name="app_version">1.5.9</string>
+    <string name="app_version_code">42</string>
     <string name="copyright">© 2013, Dedaulus, Donytar, Aleserma</string>
     <string name="email">support@gdekino.net</string>
     <string name="url">gdekino.net</string>
@@ -106,6 +106,8 @@
     <string name="menu_share">Поделиться</string>
     <string name="menu_search">Поиск</string>
     <string name="menu_near">Сеансы</string>
+    <string name="menu_search">Поиск</string>
+    <string name="menu_problem">Сообщить о проблеме</string>
 
     <string name="send_link">Отправить ссылку</string>
     <string name="generate_link">Создание ссылки...</string>

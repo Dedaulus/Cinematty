@@ -11,10 +11,6 @@
             android:entryValues="@array/city_ids"/>
 
     <Preference
-            android:key="problem"
-            android:title="@string/pref_problem"/>
-
-    <Preference
             android:key="about"
             android:title="@string/pref_about"/>
 
