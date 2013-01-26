@@ -304,15 +304,16 @@ public class CinemattyApplication extends Application {
             LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
 
             Criteria criteria = new Criteria();
-
-            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
             criteria.setAltitudeRequired(false);
             criteria.setBearingRequired(false);
             criteria.setCostAllowed(true);
+
+            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
             criteria.setPowerRequirement(Criteria.POWER_LOW);
             String coarseProvider = locationManager.getBestProvider(criteria, true);
 
             criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            criteria.setPowerRequirement(Criteria.POWER_HIGH);
             String fineProvider = locationManager.getBestProvider(criteria, true);
 
             Location coarseLocation = null;
@@ -576,6 +577,24 @@ public class CinemattyApplication extends Application {
 
     public void showPreferences(Activity activity) {
         activity.startActivity(new Intent(activity, PreferencesActivity.class));
+    }
+
+    public void showProblemResolver(Context context) {
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        String email = context.getString(R.string.email);
+        String subject = String.format(
+                context.getString(R.string.support_email_subject),
+                context.getString(R.string.app_name),
+                context.getString(R.string.app_version),
+                context.getString(R.string.app_version_code),
+                getCurrentCity().getName());
+
+        emailIntent.setType("plain/text");
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+
+        context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.support_email_intent_caption)));
     }
 
     public int getVersionState() {
