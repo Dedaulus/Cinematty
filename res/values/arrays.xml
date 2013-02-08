@@ -9,6 +9,7 @@
         <item name="Волгоград">Волгоград</item>
         <item name="Воронеж">Воронеж</item>
         <item name="Екатеринбург">Екатеринбург</item>
+        <item name="Иваново">Иваново</item>
         <item name="Иркутск">Иркутск</item>
         <item name="Казань">Казань</item>
         <item name="Калининград">Калининград</item>
@@ -44,6 +45,7 @@
         <item name="Волгоград">3</item>
         <item name="Воронеж">4</item>
         <item name="Екатеринбург">5</item>
+        <item name="Иваново">33</item>
         <item name="Иркутск">21</item>
         <item name="Казань">6</item>
         <item name="Калининград">7</item>

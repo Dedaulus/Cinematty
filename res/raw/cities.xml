@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--32-->
+<!--33-->
 <data>
 	<cities>
 		<city id="1"  name="Москва" file="moscow_schedule.xml"/>
@@ -8,6 +8,7 @@
 		<city id="3"  name="Волгоград" file="volgograd_schedule.xml"/>
         <city id="4"  name="Воронеж" file="voronej_schedule.xml"/>
 		<city id="5"  name="Екатеринбург" file="ekaterinburg_schedule.xml"/>
+        <city id="33" name="Иваново" file="ivanovo_schedule.xml"/>
         <city id="21" name="Иркутск" file="irkutsk_schedule.xml"/>
 		<city id="6"  name="Казань" file="kazan_schedule.xml"/>
 		<city id="7"  name="Калининград" file="kalinigrad_schedule.xml"/>
