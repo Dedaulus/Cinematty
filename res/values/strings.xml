@@ -10,8 +10,8 @@
     <string name="support_email_intent_caption">Сообщить о проблеме</string>
 
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.5.10</string>
-    <string name="app_version_code">43</string>
+    <string name="app_version">1.5.12</string>
+    <string name="app_version_code">45</string>
     <string name="copyright">© 2013, Dedaulus, Donytar, Aleserma</string>
     <string name="email">support@gdekino.net</string>
     <string name="url">gdekino.net</string>

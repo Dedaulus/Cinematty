@@ -13,6 +13,7 @@
         <item name="Иркутск">Иркутск</item>
         <item name="Казань">Казань</item>
         <item name="Калининград">Калининград</item>
+        <item name="Киров">Киров</item>
         <item name="Краснодар">Краснодар</item>
         <item name="Красноярск">Красноярск</item>
         <item name="Липецк">Липецк</item>
@@ -29,10 +30,12 @@
         <item name="Рязань">Рязань</item>
         <item name="Самара">Самара</item>
         <item name="Саратов">Саратов</item>
+        <item name="Ставрополь">Ставрополь</item>
         <item name="Тула">Тула</item>
         <item name="Тюмень">Тюмень</item>
         <item name="Уфа">Уфа</item>
         <item name="Хабаровск">Хабаровск</item>
+        <item name="Чебоксары">Чебоксары</item>
         <item name="Челябинск">Челябинск</item>
         <item name="Южно-Сахалинск">Южно-Сахалинск</item>
         <item name="Ярославль">Ярославль</item>
@@ -49,6 +52,7 @@
         <item name="Иркутск">21</item>
         <item name="Казань">6</item>
         <item name="Калининград">7</item>
+        <item name="Киров">36</item>
         <item name="Краснодар">17</item>
         <item name="Красноярск">26</item>
         <item name="Липецк">8</item>
@@ -65,10 +69,12 @@
         <item name="Рязань">28</item>
         <item name="Самара">13</item>
         <item name="Саратов">25</item>
+        <item name="Ставрополь">35</item>
         <item name="Тула">14</item>
         <item name="Тюмень">20</item>
         <item name="Уфа">16</item>
         <item name="Хабаровск">30</item>
+        <item name="Чебоксары">34</item>
         <item name="Челябинск">15</item>
         <item name="Южно-Сахалинск">31</item>
         <item name="Ярославль">18</item>

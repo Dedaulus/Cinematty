@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--33-->
+<!--36-->
 <data>
 	<cities>
 		<city id="1"  name="Москва" file="moscow_schedule.xml"/>
@@ -12,6 +12,7 @@
         <city id="21" name="Иркутск" file="irkutsk_schedule.xml"/>
 		<city id="6"  name="Казань" file="kazan_schedule.xml"/>
 		<city id="7"  name="Калининград" file="kalinigrad_schedule.xml"/>
+        <city id="36" name="Киров" file="kirov_schedule.xml"/>
         <city id="17" name="Краснодар" file="krasnodar_schedule.xml"/>
         <city id="26" name="Красноярск" file="krasnoyarsk_schedule.xml"/>
         <city id="8"  name="Липецк" file="lipeck_schedule.xml"/>
@@ -28,10 +29,12 @@
         <city id="28" name="Рязань" file="ryazan_schedule.xml"/>
 		<city id="13" name="Самара" file="samara_schedule.xml"/>
         <city id="25" name="Саратов" file="saratov_schedule.xml"/>
+        <city id="35" name="Ставрополь" file="stavropol_schedule.xml"/>
         <city id="14" name="Тула" file="tula_schedule.xml"/>
         <city id="20" name="Тюмень" file="tumen_schedule.xml"/>
 		<city id="16" name="Уфа" file="ufa_schedule.xml"/>
         <city id="30" name="Хабаровск" file="habarovsk_schedule.xml"/>
+        <city id="34" name="Чебоксары" file="cheboksari_schedule.xml"/>
 		<city id="15" name="Челябинск" file="chelyabinsk_schedule.xml"/>
         <city id="31" name="Южно-Сахалинск" file="yujno-sahalinsk_schedule.xml"/>
         <city id="18" name="Ярославль" file="yaroslavl_schedule.xml"/>
