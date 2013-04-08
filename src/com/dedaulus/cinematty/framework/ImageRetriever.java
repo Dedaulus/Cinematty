@@ -2,6 +2,7 @@ package com.dedaulus.cinematty.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.util.LruCache;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -38,26 +39,23 @@ public class ImageRetriever implements Runnable {
     private volatile boolean stopped;
     private volatile boolean paused;
     
-    private static class ImageWrapper {
+    private static class ImageMeta {
         String path;
-        Bitmap image;
-        boolean useMemoryCache;
         long liveDate;
     }
 
     private static class Request {
         String url;
-        boolean useMemoryCache;
         ImageReceivedAction action;
         
-        Request(String url, boolean useMemoryCache, ImageReceivedAction action) {
+        Request(String url, ImageReceivedAction action) {
             this.url = url;
-            this.useMemoryCache = useMemoryCache;
             this.action = action;
         }
     }
     
-    private final Map<String, ImageWrapper> images;
+    private final Map<String, ImageMeta> imageMetas;
+    private LruCache<String, Bitmap> images;
     private final Queue<Request> requests;
 
     public static interface ImageReceivedAction {
@@ -65,7 +63,20 @@ public class ImageRetriever implements Runnable {
     }
     
     {
-        images = new HashMap<String, ImageWrapper>();
+        imageMetas = new HashMap<String, ImageMeta>();
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+        images = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                //return bitmap.getByteCount() / 1024;
+                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+            }
+        };
+
         requests = new LinkedList<Request>();
     }
 
@@ -91,39 +102,30 @@ public class ImageRetriever implements Runnable {
     }
     
     public Bitmap getImage(String url) {
-        ImageWrapper wrapper;
-        synchronized (images) {
-            wrapper = images.get(url);
+        ImageMeta wrapper;
+        synchronized (imageMetas) {
+            wrapper = imageMetas.get(url);
         }
 
         if (wrapper != null) {
-            if (wrapper.image != null) {
-                return wrapper.image;
-            } else {
-                Bitmap image = loadImage(wrapper.path);
-                if (wrapper.useMemoryCache) {
-                    wrapper.image = image;
-                }
+            Bitmap image = images.get(wrapper.path);
+            if (image != null) {
                 return image;
             }
-        } else {
-            return null;
         }
+
+        return null;
     }
     
     public boolean hasImage(String url) {
-        synchronized (images) {
-            return images.containsKey(url);
+        synchronized (imageMetas) {
+            return imageMetas.containsKey(url);
         }
     }
     
-    public synchronized void addRequest(String url, boolean useMemoryCache, ImageReceivedAction action) {
-        synchronized (images) {
-            if (images.containsKey(url)) return;
-        }
-        
+    public synchronized void addRequest(String url, ImageReceivedAction action) {
         synchronized (requests) {
-            requests.add(new Request(url, useMemoryCache, action));
+            requests.add(new Request(url, action));
         }
 
         notify();
@@ -133,9 +135,9 @@ public class ImageRetriever implements Runnable {
         StringBuilder xmlBuffer = new StringBuilder();
         xmlBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data>");
 
-        synchronized (images) {
-            for (Map.Entry<String, ImageWrapper> entry : images.entrySet()) {
-                xmlBuffer.append("<image url=\"").append(entry.getKey()).append("\" path=\"").append(entry.getValue().path).append("\" useMemoryCache=\"").append(entry.getValue().useMemoryCache ? "1" : "0").append("\" liveDate=\"").append(entry.getValue().liveDate).append("\" />");
+        synchronized (imageMetas) {
+            for (Map.Entry<String, ImageMeta> entry : imageMetas.entrySet()) {
+                xmlBuffer.append("<image url=\"").append(entry.getKey()).append("\" path=\"").append(entry.getValue().path).append("\" liveDate=\"").append(entry.getValue().liveDate).append("\" />");
             }
         }
 
@@ -183,19 +185,34 @@ public class ImageRetriever implements Runnable {
                     }
                     Calendar liveDate = Calendar.getInstance();
                     liveDate.add(Calendar.DAY_OF_YEAR, LIVE_DAYS);
-                    ImageWrapper wrapper = new ImageWrapper();
+                    ImageMeta wrapper = new ImageMeta();
                     wrapper.path = path;
                     wrapper.liveDate = liveDate.getTimeInMillis();
-                    wrapper.useMemoryCache = request.useMemoryCache;
-                    if (wrapper.useMemoryCache) {
-                        wrapper.image = loadImage(wrapper.path);
+
+                    synchronized (imageMetas) {
+                        imageMetas.put(request.url, wrapper);
                     }
-                    synchronized (images) {
-                        images.put(request.url, wrapper);
+
+                    Bitmap image = loadImage(wrapper.path);
+                    if (image != null) {
+                        images.put(wrapper.path, image);
                     }
 
                     if (request.action != null) {
-                        request.action.onImageReceived(request.url, true);
+                        request.action.onImageReceived(request.url, image != null);
+                    }
+                } else {
+                    ImageMeta meta = imageMetas.get(request.url);
+                    Bitmap image = images.get(meta.path);
+                    if (image == null) {
+                        image = loadImage(meta.path);
+                        if (image != null) {
+                            images.put(meta.path, image);
+                        }
+                    }
+
+                    if (request.action != null) {
+                        request.action.onImageReceived(request.url, image != null);
                     }
                 }
             }
@@ -233,19 +250,15 @@ public class ImageRetriever implements Runnable {
                 NodeList items = root.getElementsByTagName("image");
                 for (int i = 0; i < items.getLength(); i++) {
                     NamedNodeMap attributes = items.item(i).getAttributes();
-                    ImageWrapper wrapper = new ImageWrapper();
+                    ImageMeta wrapper = new ImageMeta();
                     wrapper.path = attributes.getNamedItem("path").getNodeValue();
-                    wrapper.useMemoryCache = Integer.parseInt(attributes.getNamedItem("useMemoryCache").getNodeValue()) != 0;
                     wrapper.liveDate = Long.parseLong(attributes.getNamedItem("liveDate").getNodeValue());
 
                     got.setTimeInMillis(wrapper.liveDate);
                     if (now.before(got)) {
                         File image = new File(wrapper.path);
                         if (image.exists()) {
-                            if (wrapper.useMemoryCache) {
-                                wrapper.image = loadImage(wrapper.path);
-                            }
-                            images.put(attributes.getNamedItem("url").getNodeValue(), wrapper);
+                            imageMetas.put(attributes.getNamedItem("url").getNodeValue(), wrapper);
                         }
                     } else {
                         new File(wrapper.path).delete();

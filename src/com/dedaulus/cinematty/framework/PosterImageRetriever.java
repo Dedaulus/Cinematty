@@ -55,7 +55,7 @@ public class PosterImageRetriever {
     public void addRequest(String uid, final PosterImageReceivedAction action) {
         String url = createImageUrl(uid);
 
-        imageRetriever.addRequest(url, true, new ImageRetriever.ImageReceivedAction() {
+        imageRetriever.addRequest(url, new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
                 action.onImageReceived(downloaded);

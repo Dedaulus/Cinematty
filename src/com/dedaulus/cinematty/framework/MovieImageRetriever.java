@@ -54,7 +54,7 @@ public class MovieImageRetriever {
     public void addRequest(String uid, boolean small, final MovieImageReceivedAction action) {
         String url = createImageUrl(uid, small);
 
-        imageRetriever.addRequest(url, small, new ImageRetriever.ImageReceivedAction() {
+        imageRetriever.addRequest(url, new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
                 action.onImageReceived(downloaded);

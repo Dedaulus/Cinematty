@@ -55,7 +55,7 @@ public class FrameImageRetriever {
     }
 
     public void addRequest(String uid, int frameId, boolean isPreview, final FrameImageReceivedAction action) {
-        imageRetriever.addRequest(createUrl(uid, frameId, isPreview), false, new ImageRetriever.ImageReceivedAction() {
+        imageRetriever.addRequest(createUrl(uid, frameId, isPreview), new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
                 action.onImageReceived(downloaded);
