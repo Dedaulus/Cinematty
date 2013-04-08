@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
@@ -62,7 +63,7 @@ public class ActorListActivity extends SherlockActivity {
         if (state == null) throw new RuntimeException("ActivityState error");
 
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_actor_list);
-        ListView list = (ListView)findViewById(R.id.actor_list);
+        GridView grid = (GridView)findViewById(R.id.actor_list);
 
         switch (state.activityType) {
         case ActivityState.ACTOR_LIST:
@@ -80,8 +81,8 @@ public class ActorListActivity extends SherlockActivity {
             throw new RuntimeException("ActivityType error");
         }
 
-        list.setAdapter(actorListAdapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        grid.setAdapter(actorListAdapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onActorItemClick(adapterView, view, i, l);
             }
@@ -159,8 +160,7 @@ public class ActorListActivity extends SherlockActivity {
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ActorItemAdapter adapter = (ActorItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        MovieActor actor = (MovieActor)adapter.getItem(i - list.getHeaderViewsCount());
+        MovieActor actor = (MovieActor)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();

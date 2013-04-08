@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -230,9 +227,9 @@ public class MoviesWithSchedulePage implements SliderPage {
     private View bindView(View view) {
         notifier = new IdleDataSetChangeNotifier();
         setCurrentDay(settings.getCurrentDay());
-        ListView list = (ListView)view.findViewById(R.id.movie_list);
-        list.setOnScrollListener(notifier);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)view.findViewById(R.id.movie_list);
+        grid.setOnScrollListener(notifier);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);
             }
@@ -313,8 +310,8 @@ public class MoviesWithSchedulePage implements SliderPage {
         }
 
         movieListAdapter = new MovieItemWithScheduleAdapter(context, notifier, new ArrayList<Movie>(movies), state.cinema, currentDay, timeRange, imageRetriever);
-        ListView list = (ListView)pageView.findViewById(R.id.movie_list);
-        list.setAdapter(movieListAdapter);
+        GridView grid = (GridView)pageView.findViewById(R.id.movie_list);
+        grid.setAdapter(movieListAdapter);
 
         movieListAdapter.onResume();
 

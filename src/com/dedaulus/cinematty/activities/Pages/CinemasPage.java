@@ -8,6 +8,7 @@ import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -144,10 +145,10 @@ public class CinemasPage implements SliderPage, LocationClient {
         view.findViewById(R.id.day_indicator).findViewById(R.id.caption).setVisibility(View.GONE);
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
         cinemaListAdapter = new CinemaItemAdapter(context, notifier, new ArrayList<Cinema>(settings.getCinemas().values()), locationState.getCurrentLocation());
-        ListView list = (ListView)view.findViewById(R.id.cinema_list);
-        list.setAdapter(cinemaListAdapter);
-        list.setOnScrollListener(notifier);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)view.findViewById(R.id.cinema_list);
+        grid.setAdapter(cinemaListAdapter);
+        grid.setOnScrollListener(notifier);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onCinemaItemClick(adapterView, view, i, l);
             }
@@ -160,8 +161,7 @@ public class CinemasPage implements SliderPage, LocationClient {
 
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CinemaItemAdapter adapter = (CinemaItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+        Cinema cinema = (Cinema)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);

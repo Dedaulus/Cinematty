@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -70,9 +71,9 @@ public class GenresPage implements SliderPage {
     }
 
     private View bindView(View view) {
-        ListView list = (ListView)view.findViewById(R.id.genre_list);
-        list.setAdapter(new GenreItemAdapter(context, new ArrayList<MovieGenre>(settings.getGenres().values())));
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)view.findViewById(R.id.genre_list);
+        grid.setAdapter(new GenreItemAdapter(context, new ArrayList<MovieGenre>(settings.getGenres().values())));
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onGenreItemClick(adapterView, view, i, l);
             }
@@ -83,8 +84,7 @@ public class GenresPage implements SliderPage {
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         GenreItemAdapter adapter = (GenreItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
+        MovieGenre genre = (MovieGenre)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_GENRE, null, null, null, genre);
         activitiesState.setState(cookie, state);

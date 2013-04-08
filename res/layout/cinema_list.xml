@@ -6,8 +6,8 @@
     <include android:id="@+id/day_indicator"
             layout="@layout/schedule_day_indicator"/>
 
-    <ListView android:id="@+id/cinema_list"
-            style="@style/List.Cinemas"
+    <GridView android:id="@+id/cinema_list"
+            style="@style/Grid.Cinemas"
             android:layout_below="@id/day_indicator"/>
 
     <TextView android:id="@+id/no_schedule"

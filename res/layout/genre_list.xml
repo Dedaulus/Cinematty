@@ -3,20 +3,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ContentContainer">
 
-    <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+    <TextView
+        android:id="@+id/movie_caption_in_genre_list"
+        style="@style/ListCaption.Movie"
+        android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/movie_caption_in_genre_list"
-            style="@style/ListCaption.Movie"
-            android:visibility="gone"/>
-
-        <ListView
-            android:id="@+id/genre_list"
-            style="@style/List.Genres"
-            android:layout_below="@id/movie_caption_in_genre_list"/>
-
-    </RelativeLayout>
+    <GridView
+        android:id="@+id/genre_list"
+        style="@style/Grid.Genres"
+        android:layout_below="@id/movie_caption_in_genre_list"/>
 
 </RelativeLayout>

@@ -89,6 +89,19 @@
         <item name="android:text">@string/genres_caption</item>
     </style>
 
+    <style name="Grid">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:gravity">center</item>
+        <item name="android:numColumns">1</item>
+    </style>
+
+    <style name="Grid.Cinemas"/>
+    <style name="Grid.Movies"/>
+    <style name="Grid.Actors"/>
+    <style name="Grid.Genres"/>
+
     <style name="List">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

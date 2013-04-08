@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -86,10 +87,10 @@ public class ActorsPage implements SliderPage {
     }
 
     private View bindView(View view) {
-        ListView list = (ListView)view.findViewById(R.id.actor_list);
+        GridView grid = (GridView)view.findViewById(R.id.actor_list);
         actorListAdapter = new ActorItemAdapter(context, new ArrayList<MovieActor>(settings.getActors().values()));
-        list.setAdapter(actorListAdapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        grid.setAdapter(actorListAdapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onActorItemClick(adapterView, view, i, l);
             }
@@ -103,8 +104,7 @@ public class ActorsPage implements SliderPage {
 
     private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ActorItemAdapter adapter = (ActorItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        MovieActor actor = (MovieActor)adapter.getItem(i - list.getHeaderViewsCount());
+        MovieActor actor = (MovieActor)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, actor, null);

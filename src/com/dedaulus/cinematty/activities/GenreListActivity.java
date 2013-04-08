@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
@@ -56,13 +57,13 @@ public class GenreListActivity extends SherlockActivity {
         if (state == null) throw new RuntimeException("ActivityState error");
 
         TextView movieLabel = (TextView)findViewById(R.id.movie_caption_in_genre_list);
-        ListView list = (ListView)findViewById(R.id.genre_list);
+        GridView grid = (GridView)findViewById(R.id.genre_list);
 
         switch (state.activityType) {
         case ActivityState.GENRE_LIST:
             movieLabel.setVisibility(View.GONE);
-            list.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(app.getSettings().getGenres().values())));
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            grid.setAdapter(new GenreItemAdapter(this, new ArrayList<MovieGenre>(app.getSettings().getGenres().values())));
+            grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     onGenreItemClick(adapterView, view, i, l);
                 }
@@ -126,8 +127,7 @@ public class GenreListActivity extends SherlockActivity {
 
     private void onGenreItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         GenreItemAdapter adapter = (GenreItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        MovieGenre genre = (MovieGenre)adapter.getItem(i - list.getHeaderViewsCount());
+        MovieGenre genre = (MovieGenre)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();

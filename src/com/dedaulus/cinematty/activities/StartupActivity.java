@@ -26,10 +26,11 @@ public class StartupActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_screen);
 
         // TODO: uncomment following before release!!!
-        //BugSenseHandler.initAndStartSession(this, "97371d41");
+        BugSenseHandler.initAndStartSession(this, "97371d41");
+
+        setContentView(R.layout.splash_screen);
 
         app = (CinemattyApplication)getApplication();
         if (app.getVersionState() == CinemattyApplication.NEW_INSTALLATION) {

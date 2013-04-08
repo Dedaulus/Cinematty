@@ -8,10 +8,7 @@ import android.location.Location;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -222,8 +219,8 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
     private View bindView(View view) {
         setCurrentDay(settings.getCurrentDay());
-        ListView list = (ListView)view.findViewById(R.id.cinema_list);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)view.findViewById(R.id.cinema_list);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onCinemaItemClick(adapterView, view, i, l);
             }
@@ -235,8 +232,7 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
     private void onCinemaItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CinemaItemWithScheduleAdapter adapter = (CinemaItemWithScheduleAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Cinema cinema = (Cinema)adapter.getItem(i - list.getHeaderViewsCount());
+        Cinema cinema = (Cinema)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();
@@ -303,9 +299,9 @@ public class CinemasWithSchedulePage implements SliderPage, LocationClient {
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
         cinemaListAdapter = new CinemaItemWithScheduleAdapter(context, notifier, new ArrayList<Cinema>(cinemas), state.movie, currentDay, timeRange, locationState.getCurrentLocation());
-        ListView list = (ListView)pageView.findViewById(R.id.cinema_list);
-        list.setAdapter(cinemaListAdapter);
-        list.setOnScrollListener(notifier);
+        GridView grid = (GridView)pageView.findViewById(R.id.cinema_list);
+        grid.setAdapter(cinemaListAdapter);
+        grid.setOnScrollListener(notifier);
 
         String timeRangeString = DataConverter.getTimeRangeString(context, dayPart);
         if (timeRangeString != null) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -80,10 +81,10 @@ public class MovieListActivity extends SherlockActivity {
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
         movieListAdapter = new MovieItemAdapter(this, notifier, new ArrayList<Movie>(scopeMovies.values()), app.getImageRetrievers().getMovieSmallImageRetriever());
-        ListView list = (ListView)findViewById(R.id.movie_list_external).findViewById(R.id.movie_list);
-        list.setAdapter(movieListAdapter);
-        list.setOnScrollListener(notifier);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)findViewById(R.id.movie_list_external).findViewById(R.id.movie_list);
+        grid.setAdapter(movieListAdapter);
+        grid.setOnScrollListener(notifier);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);
             }
@@ -201,8 +202,7 @@ public class MovieListActivity extends SherlockActivity {
 
     private void onMovieItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         MovieItemAdapter adapter = (MovieItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        Movie movie = (Movie)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
         ActivityState state = this.state.clone();

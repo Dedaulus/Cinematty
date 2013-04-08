@@ -3,8 +3,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 style="@style/ContentContainer">
 
-    <ListView android:id="@+id/movie_list"
+    <!--<ListView android:id="@+id/movie_list"
             style="@style/List.Movies"/>
+    -->
+    <GridView
+            android:id="@+id/movie_list"
+            style="@style/Grid.Movies"/>
 
     <TextView android:id="@+id/no_schedule"
             android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -136,10 +137,10 @@ public class MoviesPage implements SliderPage {
     private View bindView(View view) {
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
         movieListAdapter = new MovieItemAdapter(context, notifier, new ArrayList<Movie>(settings.getMovies().values()), imageRetriever);
-        ListView list = (ListView)view.findViewById(R.id.movie_list);
-        list.setAdapter(movieListAdapter);
-        list.setOnScrollListener(notifier);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView grid = (GridView)view.findViewById(R.id.movie_list);
+        grid.setAdapter(movieListAdapter);
+        grid.setOnScrollListener(notifier);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onMovieItemClick(adapterView, view, i, l);
             }
@@ -151,8 +152,7 @@ public class MoviesPage implements SliderPage {
 
     private void onMovieItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         MovieItemAdapter adapter = (MovieItemAdapter)adapterView.getAdapter();
-        ListView list = (ListView)view.getParent();
-        Movie movie = (Movie)adapter.getItem(i - list.getHeaderViewsCount());
+        Movie movie = (Movie)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
         ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, movie, null, null);
         activitiesState.setState(cookie, state);
