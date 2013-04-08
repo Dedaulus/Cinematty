@@ -15,6 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:padding="100dp"
-            style="@android:style/Widget.ProgressBar.Small"/>
+            style="@style/Sherlock.__Widget.Holo.Spinner"/>
 
 </RelativeLayout>

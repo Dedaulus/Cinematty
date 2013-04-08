@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -19,7 +22,10 @@ import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MovieImageRetriever;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.UUID;
 
 /**
  * User: Dedaulus

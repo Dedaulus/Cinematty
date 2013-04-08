@@ -8,7 +8,10 @@ import android.location.Location;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -22,7 +25,10 @@ import com.dedaulus.cinematty.activities.adapters.CinemaItemWithScheduleAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.tools.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * User: Dedaulus

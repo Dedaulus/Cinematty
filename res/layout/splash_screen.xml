@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                android:background="@drawable/splash_screen_background">
+                android:background="#ff612a">
 
     <RelativeLayout android:id="@+id/loading_error_panel"
             android:layout_width="match_parent"
@@ -46,11 +46,19 @@
         <ImageView android:id="@+id/splash_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="20dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/splash"/>
 
+        <ProgressBar
+                android:id="@+id/progress"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/splash_icon"
+                style="@style/Sherlock.__Widget.Holo.Spinner"/>
+        <!--style="@style/Sherlock.__Widget.Holo.Spinner"-->
+
+        <!--
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,6 +82,7 @@
                     android:text="@string/loading_schedule"/>
 
         </RelativeLayout>
+        -->
 
     </RelativeLayout>
 

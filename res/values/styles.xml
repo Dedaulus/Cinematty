@@ -1,29 +1,9 @@
 <resources>
-    <style name="StyledIndicators" parent="CustomActionBar">
+    <style name="StyledIndicators" parent="Theme.Myactionbar">
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiTabTextStyle">@style/CustomTabPageIndicator.Text</item>
     </style>
-
-    <style name="CustomActionBar" parent="Theme.Sherlock.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse.NewBackground</item>
-    </style>
-
-    <style name="Widget.Sherlock.Light.ActionBar.Solid.Inverse.NewBackground">
-        <item name="background">@drawable/action_bar_background</item>
-        <item name="backgroundSplit">@drawable/split_bar_background</item>
-    </style>
-
-    <!--
-    <style name="Theme.Sherlock.DarkActionBar">
-        <item name="abBackground">#222222</item>
-        <item name="abTitleTextStyle">@style/TextAppearance.Widget.Title.Custom</item>
-    </style>
-
-    <style name="TextAppearance.Widget.Title.Custom">
-        <item name="android:textColor">#ffffff</item>
-    </style>
-    -->
 
     <style name="CustomTitlePageIndicator" parent="Widget.TitlePageIndicator">
         <item name="footerColor">@color/main_color</item>
