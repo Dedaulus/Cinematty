@@ -20,17 +20,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="ViewPagerIndicator" />
     <orderEntry type="module" module-name="MapViewBalloons" />
-    <orderEntry type="module" module-name="ActionBarSherlok" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/android-support-v4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="ActionBarSherlock" />
     <orderEntry type="library" name="bugsense3.2.2" level="project" />
+    <orderEntry type="library" name="android-support-v4" level="project" />
   </component>
 </module>
 
