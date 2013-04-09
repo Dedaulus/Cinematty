@@ -363,9 +363,13 @@ public class CinemattyApplication extends Application {
 
         private Map<String, ActivityState> states;
 
-        public ActivitiesStateImpl(ApplicationSettings settings) {
+        public ActivitiesStateImpl(ApplicationSettings settings, boolean local) {
             ActivitiesStateRestorer restorer = new ActivitiesStateRestorer(new File(getCacheDir(), DUMP_FILE), settings);
-            states = restorer.getStates();
+            if (local) {
+                states = restorer.getStates();
+            } else {
+                states = new HashMap<String, ActivityState>();
+            }
         }
 
         @Override
@@ -521,7 +525,7 @@ public class CinemattyApplication extends Application {
             }
 
             settings = new ApplicationSettingsImpl(cinemas, movies, actors, genres, posters);
-            activitiesState = new ActivitiesStateImpl(settings);
+            activitiesState = new ActivitiesStateImpl(settings, local);
         } catch (MalformedURLException e) {
             return (syncStatus = SyncStatus.BAD_RESPONSE);
         }
