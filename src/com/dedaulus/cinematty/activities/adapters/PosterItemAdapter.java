@@ -37,7 +37,6 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
     private List<Cinema> closestCinemas;
     private boolean showSchedule;
     private LayoutInflater inflater;
-    private boolean progressVisible = false;
 
     {
         closestCinemas = new ArrayList<Cinema>();
@@ -106,18 +105,12 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
         Bitmap bitmap = imageRetriever.getImage(poster.getPicId());
         if (bitmap != null) {
-            progressVisible = false;
             progressBar.setVisibility(View.GONE);
             imageView.setImageBitmap(bitmap);
             imageView.setVisibility(View.VISIBLE);
             overlay.setVisibility(View.VISIBLE);
         } else {
-            if (!progressVisible) {
-                progressVisible = true;
-                progressBar.setVisibility(View.VISIBLE);
-            } else {
-                progressBar.setVisibility(View.GONE);
-            }
+            progressBar.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
             overlay.setVisibility(View.GONE);
             imageRetriever.addRequest(poster.getPicId(), this);
