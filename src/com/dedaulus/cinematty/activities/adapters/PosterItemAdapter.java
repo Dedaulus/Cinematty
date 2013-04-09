@@ -10,10 +10,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
@@ -40,6 +37,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
     private List<Cinema> closestCinemas;
     private boolean showSchedule;
     private LayoutInflater inflater;
+    private boolean progressVisible = false;
 
     {
         closestCinemas = new ArrayList<Cinema>();
@@ -82,6 +80,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         }
 
         ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
+        ProgressBar progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
         View overlay = convertView.findViewById(R.id.overlay);
         TextView textView = (TextView)overlay.findViewById(R.id.caption);
@@ -107,12 +106,21 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
 
         Bitmap bitmap = imageRetriever.getImage(poster.getPicId());
         if (bitmap != null) {
+            progressVisible = false;
+            progressBar.setVisibility(View.GONE);
             imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
             overlay.setVisibility(View.VISIBLE);
         } else {
-            imageRetriever.addRequest(poster.getPicId(), this);
-            imageView.setImageResource(R.drawable.img_loading);
+            if (!progressVisible) {
+                progressVisible = true;
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+            imageView.setVisibility(View.GONE);
             overlay.setVisibility(View.GONE);
+            imageRetriever.addRequest(poster.getPicId(), this);
         }
 
         if (showSchedule) {

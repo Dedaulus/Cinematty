@@ -10,6 +10,14 @@
             android:scaleType="fitXY"
             android:adjustViewBounds="false"/>
 
+    <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_centerInParent="true"
+            style="@style/Sherlock.__Widget.Holo.Spinner"/>
+
     <RelativeLayout
             android:id="@+id/overlay"
             android:layout_height="wrap_content"
