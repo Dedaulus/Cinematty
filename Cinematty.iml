@@ -18,11 +18,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="ViewPagerIndicator" />
-    <orderEntry type="module" module-name="MapViewBalloons" />
-    <orderEntry type="module" module-name="ActionBarSherlock" />
     <orderEntry type="library" name="bugsense3.2.2" level="project" />
     <orderEntry type="library" name="android-support-v4" level="project" />
+    <orderEntry type="module" module-name="MapViewBalloons" />
+    <orderEntry type="module" module-name="ActionBarSherlock" />
+    <orderEntry type="module" module-name="ViewPagerIndicator" />
   </component>
 </module>
 

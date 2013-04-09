@@ -5,7 +5,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import com.dedaulus.cinematty.activities.Pages.SliderPage;
-import com.viewpagerindicator.TitleProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
  * Date: 04.09.11
  * Time: 19:57
  */
-public class SliderAdapter extends PagerAdapter implements TitleProvider {
+public class SliderAdapter extends PagerAdapter {
     private List<SliderPage> pages;
     private List<SliderPage> createdPages;
 
@@ -73,7 +72,8 @@ public class SliderAdapter extends PagerAdapter implements TitleProvider {
     @Override
     public void restoreState(Parcelable parcelable, ClassLoader classLoader) {}
 
-    public String getTitle(int pos) {
-        return pages.get(pos).getTitle();
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return pages.get(position).getTitle().toUpperCase();
     }
 }

@@ -36,9 +36,11 @@
     </style>
 
     <style name="ActionBar.Solid.Myactionbar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/ab_solid_myactionbar</item>
+        <!--<item name="background">@drawable/ab_solid_myactionbar</item>-->
         <item name="backgroundStacked">@drawable/ab_stacked_solid_myactionbar</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_myactionbar</item>
+        <item name="background">@drawable/action_bar_background</item>
+        <!--<item name="backgroundSplit">@drawable/ab_bottom_solid_myactionbar</item>-->
+        <item name="backgroundSplit">@drawable/split_bar_background</item>
         <item name="progressBarStyle">@style/ProgressBar.Myactionbar</item>
     </style>
 
@@ -46,11 +48,11 @@
         <item name="background">@drawable/ab_transparent_myactionbar</item>
         <item name="progressBarStyle">@style/ProgressBar.Myactionbar</item>
     </style>
-	
-    <style name="PopupMenu.Myactionbar" parent="@style/Widget.Sherlock.ListPopupWindow">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_myactionbar</item>	
+
+    <style name="PopupMenu.Myactionbar" parent="@style/Widget.Sherlock.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_myactionbar</item>
     </style>
-	
+
     <style name="DropDownListView.Myactionbar" parent="@style/Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_myactionbar</item>
     </style>
@@ -58,21 +60,21 @@
     <style name="ActionBarTabStyle.Myactionbar" parent="@style/Widget.Sherlock.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_myactionbar</item>
     </style>
-	
+
     <style name="DropDownNav.Myactionbar" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_myactionbar</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_myactionbar</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_myactionbar</item>
     </style>
-    
+
     <style name="ProgressBar.Myactionbar" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_myactionbar</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Myactionbar" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_myactionbar</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Myactionbar.Widget" parent="@style/Theme.Sherlock">
         <item name="popupMenuStyle">@style/PopupMenu.Myactionbar</item>

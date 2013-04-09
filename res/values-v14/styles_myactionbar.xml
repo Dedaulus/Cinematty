@@ -36,9 +36,11 @@
     </style>
 
     <style name="ActionBar.Solid.Myactionbar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/ab_solid_myactionbar</item>
+        <!--<item name="android:background">@drawable/ab_solid_myactionbar</item>-->
+        <item name="android:background">@drawable/action_bar_background</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_myactionbar</item>
-        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_myactionbar</item>
+        <!--<item name="android:backgroundSplit">@drawable/ab_bottom_solid_myactionbar</item>-->
+        <item name="android:backgroundSplit">@drawable/split_bar_background</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Myactionbar</item>
     </style>
 

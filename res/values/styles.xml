@@ -2,27 +2,40 @@
     <style name="StyledIndicators" parent="Theme.Myactionbar">
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/CustomTabPageIndicator.Text</item>
     </style>
 
-    <style name="CustomTitlePageIndicator" parent="Widget.TitlePageIndicator">
+    <style name="CustomTitlePageIndicator">
+        <!--<item name="android:background">#18FF0000</item>-->
         <item name="footerColor">@color/main_color</item>
-        <item name="textSize">15sp</item>
-        <item name="textColor">@android:color/secondary_text_light</item>
+        <item name="footerLineHeight">1dp</item>
+        <!--<item name="footerIndicatorHeight">3dp</item>-->
+        <item name="footerIndicatorStyle">underline</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/secondary_text_light</item>
         <item name="selectedColor">@android:color/primary_text_light</item>
+        <item name="selectedBold">true</item>
     </style>
 
     <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
+        <item name="android:background">@drawable/tab_indicator_ab_myactionbar</item>
+        <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:dividerPadding">10dp</item>
+        <item name="android:showDividers">middle</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
     </style>
 
-    <style name="CustomTabPageIndicator.Text" parent="Widget.TabPageIndicator.Text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/vpi__light_theme</item>
+    <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
+        <!--<item name="android:typeface">monospace</item>-->
     </style>
+
 
     <style name="ContentContainer">
         <item name="android:layout_height">match_parent</item>
