@@ -240,7 +240,7 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(POSTERS_TAG)) {
             isPostersUpToDate = isPostersUpToDate(attributes.getValue(POSTERS_DATE_ATTR), attributes.getValue(POSTERS_LIVE_TIME_ATTR));
         } else if (qName.equalsIgnoreCase(POSTER_TAG) && isPostersUpToDate) {
-            if (posters.size() < 13) {
+            if (posters.size() < 30) {
                 String name = attributes.getValue(POSTER_MOVIE_ATTR);
                 String name3d = name + " 3d";
 
