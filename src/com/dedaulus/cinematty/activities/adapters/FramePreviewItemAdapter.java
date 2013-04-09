@@ -27,19 +27,14 @@ import java.util.concurrent.RejectedExecutionException;
  * Date: 23.02.12
  * Time: 14:34
  */
-public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAndResumable {
+public class FramePreviewItemAdapter extends BaseAdapter
+        implements StoppableAndResumable, FrameImageRetriever.FrameImageReceivedAction {
     private Context context;
     private LayoutInflater inflater;
     private IdleDataSetChangeNotifier notifier;
     private MovieFrameIdsStore frameIdsStore;
     private FrameImageRetriever imageRetriever;
     private int screenWidth;
-
-    private final Map<Pair<String, Integer>, Bitmap> cachedImages;
-
-    {
-        cachedImages = new HashMap<Pair<String, Integer>, Bitmap>();
-    }
 
     public FramePreviewItemAdapter(Context context, IdleDataSetChangeNotifier notifier, MovieFrameIdsStore frameIdsStore, FrameImageRetriever imageRetriever) {
         this.context = context;
@@ -73,81 +68,20 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
         final ProgressBar progressBar = (ProgressBar)convertView.findViewById(R.id.progress);
 
-        final int frameId = frameIdsStore.getFrameIds().get(position);
-        final Pair<String, Integer> cachedImageKey = Pair.create(frameIdsStore.getUid(), frameId);
-        Bitmap bitmap;
-        synchronized (cachedImages) {
-            bitmap = cachedImages.get(cachedImageKey);
-        }
-
-        if (bitmap == null) {
-            imageView.setVisibility(View.GONE);
+        int frameId = frameIdsStore.getFrameIds().get(position);
+        Bitmap picture = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
+        if (picture != null) {
+            Pair<Integer, Integer> sizeHeightWidth = getProperImageSize(picture);
+            imageView.setLayoutParams(new RelativeLayout.LayoutParams(sizeHeightWidth.second, sizeHeightWidth.first));
+            imageView.setImageBitmap(picture);
+            imageView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+        } else {
+            imageView.setVisibility(View.INVISIBLE);
+            imageRetriever.addRequest(frameIdsStore.getUid(), frameId, true, this);
             progressBar.setVisibility(View.VISIBLE);
-            if (imageRetriever.hasImage(frameIdsStore.getUid(), frameId, true)) {
-                if (notifier.isIdle()) {
-                    try {
-                        new AsyncTask<Void, Void, Void>() {
-                            @Override
-                            protected Void doInBackground(Void... voids) {
-                                Bitmap bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
-                                synchronized (cachedImages) {
-                                    cachedImages.put(cachedImageKey, bitmap);
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            protected void onPostExecute(Void aVoid) {
-                                notifier.askForNotifyDataSetChanged();
-                            }
-                        }.execute();
-                    } catch (RejectedExecutionException e) {
-                        // crutch
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException e) {}
-                                ((Activity)context).runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        notifier.askForNotifyDataSetChanged();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                } else {
-                    notifier.askForNotifyDataSetChanged();
-                }
-            } else {
-                imageRetriever.addRequest(frameIdsStore.getUid(), frameId, true, new FrameImageRetriever.FrameImageReceivedAction() {
-                    @Override
-                    public void onImageReceived(boolean downloaded) {
-                        if (downloaded) {
-                            /*
-                            synchronized (cachedImages) {
-                                Bitmap bitmap = cachedImages.get(cachedImageKey);
-                                if (bitmap == null) {
-                                    bitmap = imageRetriever.getImage(frameIdsStore.getUid(), frameId, true);
-                                    cachedImages.put(cachedImageKey, bitmap);
-                                }
-                                ((Activity)context).runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        notifier.askForNotifyDataSetChanged();
-                                    }
-                                });
-                            }
-                            */
-                            ((Activity)context).runOnUiThread(new Runnable() {
-                                public void run() {
-                                    notifier.askForNotifyDataSetChanged();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
+        }
+        /*
         } else {
             Pair<Integer, Integer> sizeHeightWidth = getProperImageSize(bitmap);
             imageView.setLayoutParams(new RelativeLayout.LayoutParams(sizeHeightWidth.second, sizeHeightWidth.first));
@@ -155,6 +89,7 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
             imageView.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
         }
+        */
 
         return convertView;
     }
@@ -162,9 +97,6 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
     @Override
     public void onStop() {
         imageRetriever.saveState();
-        synchronized (cachedImages) {
-            cachedImages.clear();
-        }
     }
 
     @Override
@@ -173,5 +105,15 @@ public class FramePreviewItemAdapter extends BaseAdapter implements StoppableAnd
     private Pair<Integer, Integer> getProperImageSize(Bitmap bitmap) {
         double heightMultiplier = (double)screenWidth / bitmap.getWidth();
         return Pair.create((int)(bitmap.getHeight() * heightMultiplier), screenWidth);
+    }
+
+    @Override
+    public void onImageReceived(boolean downloaded) {
+        Activity activity = (Activity)context;
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                notifier.askForNotifyDataSetChanged();
+            }
+        });
     }
 }
