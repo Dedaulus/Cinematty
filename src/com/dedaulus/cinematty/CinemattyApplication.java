@@ -485,9 +485,19 @@ public class CinemattyApplication extends Application {
     public void resetSyncStatus() {
         syncStatus = null;
     }
-    
-    public SyncStatus syncSchedule(Activity activity, boolean local) {
-        if (syncStatus != null) return syncStatus;
+
+    public SyncStatus syncSchedule(
+            Activity activity,
+            DataConverter.SharedPageContent sharedPageContent,
+            boolean local) {
+        if (sharedPageContent == null && syncStatus != null) return syncStatus;
+
+        if (sharedPageContent != null
+            && sharedPageContent.cityName != null
+            && !sharedPageContent.cityName.equalsIgnoreCase(
+                getCurrentCity().getFileName().replace("_schedule.xml", ""))) {
+            return (syncStatus = SyncStatus.SHARED_PAGE_IN_WEBVIEW);
+        }
 
         try {
             if (local) {
@@ -513,7 +523,7 @@ public class CinemattyApplication extends Application {
             URL input = new URL(urlBuilder.toString());
             File output = new File(getCacheDir(), getCurrentCityImpl().getFileName());
             ScheduleReceiver receiver = new ScheduleReceiver(input, output);
-            
+
             Map<String, Cinema> cinemas = new HashMap<String, Cinema>();
             Map<String, Movie> movies = new HashMap<String, Movie>();
             Map<String, MovieActor> actors = new HashMap<String, MovieActor>();
@@ -537,8 +547,46 @@ public class CinemattyApplication extends Application {
         } catch (ImageRetriever.ObjectAlreadyExists e) {
             throw new RuntimeException(e);
         }
-        
+
+        if (sharedPageContent != null) {
+            Movie movie = null;
+            if (sharedPageContent.movieId != null) {
+                for (Movie m : getSettings().getMovies().values()) {
+                    if (m.getId().equalsIgnoreCase(sharedPageContent.movieId)) {
+                        movie = m;
+                        break;
+                    }
+                }
+            }
+
+            if (movie == null) {
+                return SyncStatus.SHARED_PAGE_IN_WEBVIEW;
+            }
+
+            Cinema cinema = null;
+            if (sharedPageContent.cinemaId != null) {
+                for (Cinema c : getSettings().getCinemas().values()) {
+                    if (c.getId().equalsIgnoreCase(sharedPageContent.cinemaId)) {
+                        cinema = c;
+                        break;
+                    }
+                }
+            }
+
+            if (cinema != null) {
+                if (!cinema.getMovies(sharedPageContent.day).containsKey(movie.getName())) {
+                    return SyncStatus.SHARED_PAGE_IN_WEBVIEW;
+                }
+            }
+
+            return SyncStatus.createSharedPageStatus(movie, sharedPageContent.day, cinema);
+        }
+
         return syncStatus;
+    }
+    
+    public SyncStatus syncSchedule(Activity activity, boolean local) {
+        return syncSchedule(activity, null, local);
     }
 
     public ApplicationSettings getSettings() {

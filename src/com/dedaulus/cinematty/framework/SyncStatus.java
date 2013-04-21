@@ -8,8 +8,19 @@ package com.dedaulus.cinematty.framework;
 public class SyncStatus {
     private int statusCode;
 
+    public Movie movie;
+    public int day;
+    public Cinema cinema;
+
     private SyncStatus(int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public static SyncStatus createSharedPageStatus(Movie movie, int day, Cinema cinema) {
+        SHARED_PAGE.movie = movie;
+        SHARED_PAGE.day = day;
+        SHARED_PAGE.cinema = cinema;
+        return SHARED_PAGE;
     }
 
     public static final SyncStatus OK = new SyncStatus(0);
@@ -22,7 +33,18 @@ public class SyncStatus {
 
     public static final SyncStatus OUT_OF_DATE = new SyncStatus(4);
 
-    private static final SyncStatus[] STATS = {OK, UPDATE_NEEDED, NO_RESPONSE, BAD_RESPONSE, OUT_OF_DATE};
+    public static final SyncStatus SHARED_PAGE_IN_WEBVIEW = new SyncStatus(5);
+
+    public static final SyncStatus SHARED_PAGE = new SyncStatus(6);
+
+    private static final SyncStatus[] STATS = {
+            OK,
+            UPDATE_NEEDED,
+            NO_RESPONSE,
+            BAD_RESPONSE,
+            OUT_OF_DATE,
+            SHARED_PAGE_IN_WEBVIEW,
+            SHARED_PAGE};
 
     public static SyncStatus valueOf(int statusCode) {
         return STATS[statusCode];

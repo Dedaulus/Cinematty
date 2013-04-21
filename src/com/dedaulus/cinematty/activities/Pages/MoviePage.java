@@ -49,12 +49,14 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     private Boolean binded = false;
     private boolean visible = false;
 
-    public MoviePage(Context context, CinemattyApplication app, ActivityState state) {
+    public MoviePage(Context context, CinemattyApplication app, ActivityState state, int currentDay) {
         this.context = context;
         this.app = app;
         this.state = state;
+        this.currentDay = currentDay;
 
         settings = app.getSettings();
+        settings.setCurrentDay(currentDay);
         activitiesState = app.getActivitiesState();
     }
     

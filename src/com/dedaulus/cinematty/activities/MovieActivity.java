@@ -29,6 +29,8 @@ import java.util.List;
  * Time: 22:28
  */
 public class MovieActivity extends SherlockActivity implements ViewPager.OnPageChangeListener {
+    public static final String DAY_ID = "day_id";
+
     private static final int DESCRIPTION_PAGE_ID = 1;
     
     private CinemattyApplication app;
@@ -82,7 +84,9 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         }
         currentPage = defaultPagePosition;
 
-        pages.add(new MoviePage(this, app, state));
+        int currentDay = getIntent().getIntExtra(DAY_ID, 0);
+
+        pages.add(new MoviePage(this, app, state, currentDay));
         pages.add(new CinemasWithSchedulePage(this, settings, activitiesState, locationState, state));
 
         adapter = new SliderAdapter(pages);

@@ -1,6 +1,7 @@
 package com.dedaulus.cinematty.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,17 @@ import android.widget.TextView;
 import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
+import com.dedaulus.cinematty.activities.Pages.MoviePage;
+import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
+import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
+import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.SyncStatus;
+import com.dedaulus.cinematty.framework.tools.ActivityState;
+import com.dedaulus.cinematty.framework.tools.Constants;
+import com.dedaulus.cinematty.framework.tools.DataConverter;
+
+import java.util.UUID;
 
 public class StartupActivity extends Activity
 {
@@ -20,6 +31,7 @@ public class StartupActivity extends Activity
     private CinemattyApplication app;
     private static volatile boolean inProgress;
     private static final Object mutex = new Object();
+    private String sharedPageUrl;
 
     /** Called when the activity is first created. */
     @Override
@@ -32,6 +44,13 @@ public class StartupActivity extends Activity
 
         setContentView(R.layout.splash_screen);
 
+        DataConverter.SharedPageContent sharedPageContent = null;
+        Uri data = getIntent().getData();
+        if (data != null) {
+            sharedPageUrl = data.toString();
+            sharedPageContent = DataConverter.getSharedPageContent(sharedPageUrl);
+        }
+
         app = (CinemattyApplication)getApplication();
         if (app.getVersionState() == CinemattyApplication.NEW_INSTALLATION) {
             getCitiesList();
@@ -41,7 +60,7 @@ public class StartupActivity extends Activity
                 inProgress = true;
             }
             app.getLocationState().startLocationListening();
-            getSchedule();
+            getSchedule(sharedPageContent);
         }
     }
 
@@ -122,23 +141,28 @@ public class StartupActivity extends Activity
         }
     }
 
-    private void getSchedule() {
+    private void getSchedule(DataConverter.SharedPageContent sharedPageContent) {
         final Activity activity = this;
+        final DataConverter.SharedPageContent sharedPageContent1 = sharedPageContent;
         
         new Thread(new Runnable() {
             private SyncStatus syncStatus;
             public void run() {
-                syncStatus = app.syncSchedule(activity, false);
+                syncStatus = app.syncSchedule(activity, sharedPageContent1, false);
                 inProgress = false;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         if (syncStatus == SyncStatus.OK) {
-                            Intent intent = new Intent(activity, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+                            launchNormal(activity);
                             finish();
                         } else if (syncStatus == SyncStatus.UPDATE_NEEDED) {
                             setUpdateString(app.getConnect().get(UPDATE_URL_KEY));
+                        } else if (syncStatus == SyncStatus.SHARED_PAGE_IN_WEBVIEW) {
+                            launchWebView(activity, sharedPageUrl);
+                            finish();
+                        } else if (syncStatus == SyncStatus.SHARED_PAGE) {
+                            launchMovieActivity(activity, syncStatus);
+                            finish();
                         } else {
                             setErrorString(syncStatus);
                         }
@@ -146,6 +170,56 @@ public class StartupActivity extends Activity
                 });
             }
         }).start();
+    }
+
+    private void launchNormal(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void launchWebView(Context context, String url) {
+        Intent intent = new Intent(context, SharedPageActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(SharedPageActivity.URL_ID, url);
+        startActivity(intent);
+    }
+
+    private void launchMovieActivity(Context context, SyncStatus status) {
+        if (status.cinema == null) {
+            String cookie = UUID.randomUUID().toString();
+
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_INFO,
+                    null,
+                    status.movie,
+                    null,
+                    null);
+
+            app.getActivitiesState().setState(cookie, state);
+
+            Intent intent = new Intent(context, MovieActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+            startActivity(intent);
+        } else {
+            String cookie = UUID.randomUUID().toString();
+
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_INFO_W_SCHED,
+                    status.cinema,
+                    status.movie,
+                    null,
+                    null);
+
+            app.getActivitiesState().setState(cookie, state);
+
+            Intent intent = new Intent(context, MovieActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+            intent.putExtra(MovieActivity.DAY_ID, status.day);
+            startActivity(intent);
+        }
     }
 
     private void getCitiesList() {

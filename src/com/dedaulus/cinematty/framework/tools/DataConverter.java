@@ -20,6 +20,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataConverter {
     public static String imdbToString(float imdb) {
@@ -475,5 +477,52 @@ public class DataConverter {
             default:
                 return null;
         }
+    }
+
+    public static class SharedPageContent {
+        public final String cityName;
+        public final String movieId;
+        public final int day;
+        public final String cinemaId;
+
+        public SharedPageContent(String cityName, String movieId, int day, String cinemaId) {
+            this.cityName = cityName;
+            this.movieId = movieId;
+            this.day = day;
+            this.cinemaId = cinemaId;
+        }
+    }
+
+    public static SharedPageContent getSharedPageContent(String url) {
+        if (url == null || url.length() == 0) return null;
+
+        String cityName = null;
+        String movieId = null;
+        int day = -1;
+        String cinemaId = null;
+
+        //cinematty/shared/spb/2012.9.1/5e8404da171f39ea_0_7436591850080613233_3.html
+        //cinematty/shared/spb/e626356d1d16149a_3.html
+        String patternLong = ".*shared/([^/]+)/[^/]+/([^_]+)_([^_]+)_([^_]+).*";
+        String patternShort = ".*shared/([^/]+)/([^_]+).*";
+
+        Pattern pattern = Pattern.compile(patternLong);
+        Matcher matcher = pattern.matcher(url);
+        if (matcher.matches()) {
+            cityName = matcher.group(1);
+            movieId = matcher.group(2);
+            day = new Integer(matcher.group(3));
+            cinemaId = matcher.group(4);
+
+        } else {
+            pattern = Pattern.compile(patternShort);
+            matcher = pattern.matcher(url);
+            if (matcher.matches()) {
+                cityName = matcher.group(1);
+                movieId = matcher.group(2);
+            }
+        }
+
+        return cityName == null ? null : new SharedPageContent(cityName, movieId, day, cinemaId);
     }
 }
