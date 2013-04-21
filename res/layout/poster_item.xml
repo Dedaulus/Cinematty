@@ -48,15 +48,8 @@
 
             <TextView
                     android:id="@+id/caption"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingRight="8dp"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:textSize="16sp"
-                    android:textColor="@color/image_text"/>
+                    style="@style/PosterItem.MovieCaption"
+                    android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 
@@ -70,14 +63,7 @@
 
         <TextView
                 android:id="@+id/first_schedule"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:paddingRight="8dp"
-                android:paddingLeft="8dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textSize="16sp"
-                android:textColor="#FF6A00"/>
+                style="@style/PosterItem.Schedule"/>
 
     </RelativeLayout>
 

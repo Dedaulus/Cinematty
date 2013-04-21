@@ -210,4 +210,20 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="PosterItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="PosterItem.MovieCaption">
+        <item name="android:textColor">@color/image_text</item>
+    </style>
+    <style name="PosterItem.Schedule">
+        <item name="android:textColor">#FF6A00</item>
+    </style>
+
 </resources>
