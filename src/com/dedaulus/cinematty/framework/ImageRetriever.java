@@ -55,13 +55,13 @@ public class ImageRetriever implements Runnable {
     }
     
     private final Map<String, ImageMeta> imageMetas;
-    private LruCache<String, Bitmap> images;
+    private final LruCache<String, Bitmap> images;
     private final Queue<Request> requests;
 
     public static interface ImageReceivedAction {
         void onImageReceived(String url, boolean downloaded);
     }
-    
+    /*
     {
         imageMetas = new HashMap<String, ImageMeta>();
 
@@ -79,18 +79,31 @@ public class ImageRetriever implements Runnable {
 
         requests = new LinkedList<Request>();
     }
-
-    public static ImageRetriever create(String entity, File localFolder) {
+    */
+    public static ImageRetriever create(String entity, File localFolder, int cacheSize) {
         if (entities.containsKey(entity)) {
             return entities.get(entity);
         }
 
-        ImageRetriever retriever = new ImageRetriever(entity, localFolder);
+        ImageRetriever retriever = new ImageRetriever(entity, localFolder, cacheSize);
         entities.put(entity, retriever);
         return retriever;
     }
     
-    private ImageRetriever(String entity, File localFolder) {
+    private ImageRetriever(String entity, File localFolder, int cacheSize) {
+        imageMetas = new HashMap<String, ImageMeta>();
+        images = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                //return bitmap.getByteCount() / 1024;
+                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+            }
+        };
+
+        requests = new LinkedList<Request>();
+
         this.entity = entity;
         prefix = PREPREFIX + entity;
         this.localFolder = localFolder;

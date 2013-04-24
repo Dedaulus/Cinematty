@@ -18,6 +18,7 @@ import com.dedaulus.cinematty.framework.MoviePoster;
 import com.dedaulus.cinematty.framework.PosterImageRetriever;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
+import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,16 +38,19 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
     private List<Cinema> closestCinemas;
     private boolean showSchedule;
     private LayoutInflater inflater;
+    private IdleDataSetChangeNotifier notifier;
 
     {
         closestCinemas = new ArrayList<Cinema>();
     }
 
-    public PosterItemAdapter(Context context, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
+    public PosterItemAdapter(Context context, IdleDataSetChangeNotifier notifier, ArrayList<MoviePoster> posters, PosterImageRetriever imageRetriever) {
         this.context = context;
         this.posters = posters;
         this.imageRetriever = imageRetriever;
         inflater = LayoutInflater.from(context);
+        this.notifier = notifier;
+        notifier.setAdapter(this);
 
         int columns;
         Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
@@ -107,11 +111,12 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         if (bitmap != null) {
             progressBar.setVisibility(View.GONE);
             imageView.setImageBitmap(bitmap);
-            imageView.setVisibility(View.VISIBLE);
+            //imageView.setVisibility(View.VISIBLE);
             overlay.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.VISIBLE);
-            imageView.setVisibility(View.GONE);
+            imageView.setImageResource(R.drawable.img_loading);
+            //imageView.setVisibility(View.GONE);
             overlay.setVisibility(View.GONE);
             imageRetriever.addRequest(poster.getPicId(), this);
         }
@@ -144,7 +149,7 @@ public class PosterItemAdapter extends BaseAdapter implements PosterImageRetriev
         Activity activity = (Activity)context;
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                notifyDataSetChanged();
+                notifier.askForNotifyDataSetChanged();
             }
         });
     }

@@ -39,8 +39,10 @@ public class MovieImageRetriever {
         if (!this.remoteFolder.endsWith("/")) {
             this.remoteFolder += "/";
         }
-        
-        imageRetriever = ImageRetriever.create(entity, localFolder);
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 10;
+        imageRetriever = ImageRetriever.create(entity, localFolder, cacheSize);
     }
     
     public Bitmap getImage(String uid, boolean small) {

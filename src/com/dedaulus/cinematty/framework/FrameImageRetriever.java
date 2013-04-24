@@ -43,7 +43,9 @@ public class FrameImageRetriever {
             postfixId = 2;
         }
 
-        imageRetriever = ImageRetriever.create(entity, localFolder);
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 10;
+        imageRetriever = ImageRetriever.create(entity, localFolder, cacheSize);
     }
 
     public Bitmap getImage(String uid, int frameId, boolean isPreview) {

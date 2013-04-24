@@ -121,9 +121,11 @@ public class WhatsNewPage implements SliderPage, LocationClient {
     }
 
     private View bindView(View view) {
+        IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
+        posterItemAdapter = new PosterItemAdapter(context, notifier, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever());
         GridView whatsNewGrid = (GridView)view.findViewById(R.id.whats_new_grid);
-        posterItemAdapter = new PosterItemAdapter(context, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever());
         whatsNewGrid.setAdapter(posterItemAdapter);
+        whatsNewGrid.setOnScrollListener(notifier);
         whatsNewGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onPosterItemClick(adapterView, view, i, l);

@@ -41,7 +41,9 @@ public class PosterImageRetriever {
             imageName = IMAGE_NAMES[2];
         }
 
-        imageRetriever = ImageRetriever.create(entity, localFolder);
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory * 3 / 10;
+        imageRetriever = ImageRetriever.create(entity, localFolder, cacheSize);
     }
 
     public Bitmap getImage(String uid) {
