@@ -158,6 +158,7 @@ public class WhatsNewPage implements SliderPage, LocationClient {
                 null,
                 null,
                 null,
+                null,
                 null);
         activitiesState.setState(cookie, state);
 
@@ -175,6 +176,7 @@ public class WhatsNewPage implements SliderPage, LocationClient {
                 ActivityState.MOVIE_INFO,
                 null,
                 poster.getMovie(),
+                null,
                 null,
                 null,
                 null);

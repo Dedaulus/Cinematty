@@ -57,7 +57,7 @@ public class MainActivity extends SherlockActivity implements ViewPager.OnPageCh
         activitiesState = app.getActivitiesState();
         locationState = app.getLocationState();
 
-        activitiesState.setState(FAKE_STATE_ID, new ActivityState(0, null, null, null, null, null));
+        activitiesState.setState(FAKE_STATE_ID, new ActivityState(0, null, null, null, null, null, null));
 
         ViewPager slider = (ViewPager)findViewById(R.id.slider);
 

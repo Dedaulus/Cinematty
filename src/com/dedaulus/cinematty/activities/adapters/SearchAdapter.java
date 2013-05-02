@@ -59,12 +59,17 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         TextView caption;
     }
 
+    private static class MetroViewHolder {
+        View indicator;
+        TextView caption;
+    }
+
     private static class SeparatorViewHolder {
         TextView caption;
     }
 
     public static final int SEPARATOR_TYPE_ID = -1;
-    private static final int VIEW_TYPE_COUNT = 5;
+    private static final int VIEW_TYPE_COUNT = 6;
     
     private Context context;
     private LayoutInflater inflater;
@@ -78,6 +83,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     private Pair<Integer, Integer> moviesRange;
     private Pair<Integer, Integer> directorsRange;
     private Pair<Integer, Integer> actorsRange;
+    private Pair<Integer, Integer> metrosRange;
 
     {
         items = new ArrayList();
@@ -91,7 +97,8 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             List<Movie> movies,
             MovieImageRetriever imageRetriever,
             List<MovieDirector> directors,
-            List<MovieActor> actors) {
+            List<MovieActor> actors,
+            List<Metro> metros) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
@@ -127,6 +134,13 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             items.add(context.getString(R.string.actors_separator));
             items.addAll(actors);
             actorsRange = Pair.create(prev, position);
+        }
+        if (metros != null && metros.size() != 0) {
+            int prev = position + 1;
+            position += metros.size() + 1;
+            items.add(context.getString(R.string.metros_separator));
+            items.addAll(metros);
+            metrosRange = Pair.create(prev, position);
         }
     }
 
@@ -218,6 +232,21 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 setActorView(position, viewHolder);
             }
             break;
+
+            case Constants.METRO_TYPE_ID: {
+                MetroViewHolder viewHolder;
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.metro_item2, null);
+                    viewHolder = new MetroViewHolder();
+                    viewHolder.caption = (TextView)convertView.findViewById(R.id.metro_caption);
+                    viewHolder.indicator = convertView.findViewById(R.id.indicator);
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (MetroViewHolder)convertView.getTag();
+                }
+                setMetroView(position, viewHolder);
+            }
+            break;
             
             case SEPARATOR_TYPE_ID: {
                 SeparatorViewHolder viewHolder;
@@ -247,7 +276,9 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             return Constants.DIRECTOR_TYPE_ID;
         } else if (actorsRange != null && inRange(position, actorsRange)) {
             return Constants.ACTOR_TYPE_ID;
-        } else {
+        } else if (metrosRange != null && inRange(position, metrosRange)) {
+            return Constants.METRO_TYPE_ID;
+        }else {
             return SEPARATOR_TYPE_ID;
         }
     }
@@ -412,6 +443,12 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 }
             }
         });
+    }
+
+    private void setMetroView(int position, MetroViewHolder viewHolder) {
+        final Metro metro = (Metro)items.get(position);
+        viewHolder.caption.setText(metro.getName());
+        viewHolder.indicator.setBackgroundColor(metro.getColor());
     }
 
     private void setSeparatorView(int position, SeparatorViewHolder viewHolder) {

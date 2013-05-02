@@ -1,6 +1,8 @@
 package com.dedaulus.cinematty.framework.tools;
 
 import com.dedaulus.cinematty.ApplicationSettings;
+import com.dedaulus.cinematty.framework.Cinema;
+import com.dedaulus.cinematty.framework.Metro;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -38,12 +40,21 @@ public class ActivitiesStateRestorer {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
+
+            Map<String, Metro> metros = new HashMap<String, Metro>();
+            for (Cinema cinema : settings.getCinemas().values()) {
+                for (Metro metro : cinema.getMetros()) {
+                    metros.put(metro.getName(), metro);
+                }
+            }
+
             ActivitiesStateHandler handler = new ActivitiesStateHandler(
                     settings.getCinemas(),
                     settings.getMovies(),
                     settings.getDirectors(),
                     settings.getActors(),
-                    settings.getGenres());
+                    settings.getGenres(),
+                    metros);
             parser.parse(is, handler);
             return handler.getStates();
         } catch (Exception e) {

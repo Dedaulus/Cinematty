@@ -169,6 +169,7 @@ public class CinemasPage implements SliderPage, LocationClient {
                 null,
                 null,
                 null,
+                null,
                 null);
         activitiesState.setState(cookie, state);
 

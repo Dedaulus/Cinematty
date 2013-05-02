@@ -56,6 +56,11 @@
                        android:value=".activities.SearchableActivity"/>
         </activity>
 
+        <activity android:name=".activities.CinemaListActivity">
+            <meta-data android:name="android.app.default_searchable"
+                       android:value=".activities.SearchableActivity"/>
+        </activity>
+
         <activity android:name=".activities.MovieActivity"
                   android:theme="@style/StyledIndicators">
             <meta-data android:name="android.app.default_searchable"
@@ -96,6 +101,7 @@
         <activity android:name=".activities.FramesActivity"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                   android:screenOrientation="landscape"/>
+
         <activity android:name=".activities.SharedPageActivity"/>
 
         <provider android:name="com.dedaulus.cinematty.framework.SearchSuggestionsProvider"

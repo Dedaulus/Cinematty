@@ -23,6 +23,7 @@ public class ActivitiesStateHandler extends DefaultHandler {
     private static final String STATE_DIRECTOR_ATTR = "director";
     private static final String STATE_ACTOR_ATTR    = "actor";
     private static final String STATE_GENRE_ATTR    = "genre";
+    private static final String STATE_METRO_ATTR    = "metro";
 
     private static final Object INVALID_FIELD = new Object();
 
@@ -33,6 +34,7 @@ public class ActivitiesStateHandler extends DefaultHandler {
     private Map<String, MovieDirector> directors;
     private Map<String, MovieActor> actors;
     private Map<String, MovieGenre> genres;
+    private Map<String, Metro> metros;
 
     {
         states = ActivitiesStateRestorer.BLANK_STATES;
@@ -43,12 +45,14 @@ public class ActivitiesStateHandler extends DefaultHandler {
             Map<String, Movie> movieList,
             Map<String, MovieDirector> directorList,
             Map<String, MovieActor> actorList,
-            Map<String, MovieGenre> genreList) {
+            Map<String, MovieGenre> genreList,
+            Map<String, Metro> metroList) {
         cinemas = cinemaList;
         movies = movieList;
         directors = directorList;
         actors = actorList;
         genres = genreList;
+        metros = metroList;
     }
 
     @Override
@@ -98,6 +102,13 @@ public class ActivitiesStateHandler extends DefaultHandler {
                 return;
             }
             state.genre = (MovieGenre)genre;
+
+            Object metro = getActivityStateField(attributes, STATE_METRO_ATTR, metros);
+            if (metro == INVALID_FIELD) {
+                states = ActivitiesStateRestorer.BLANK_STATES;
+                return;
+            }
+            state.metro = (Metro)metro;
 
             states.put(attributes.getValue(STATE_COOKIE_ATTR), state);
         }

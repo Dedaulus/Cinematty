@@ -23,6 +23,7 @@ public class ActivityState implements Cloneable {
     public static final int CINEMA_ON_MAP         = 13;
     public static final int VIEW_FRAME            = 14;
     public static final int MOVIE_LIST_W_DIRECTOR = 15;
+    public static final int CINEMA_LIST_W_METRO   = 16;
 
     public int activityType;
     public Cinema cinema;
@@ -30,6 +31,7 @@ public class ActivityState implements Cloneable {
     public MovieDirector director;
     public MovieActor actor;
     public MovieGenre genre;
+    public Metro metro;
 
     public ActivityState() {}
 
@@ -39,16 +41,18 @@ public class ActivityState implements Cloneable {
             Movie movie,
             MovieDirector director,
             MovieActor actor,
-            MovieGenre genre) {
+            MovieGenre genre,
+            Metro metro) {
         this.activityType = activityType;
         this.cinema = cinema;
         this.movie = movie;
         this.director = director;
         this.actor = actor;
         this.genre = genre;
+        this.metro = metro;
     }
 
     public ActivityState clone() {
-        return new ActivityState(activityType, cinema, movie, director, actor, genre);
+        return new ActivityState(activityType, cinema, movie, director, actor, genre, metro);
     }
 }

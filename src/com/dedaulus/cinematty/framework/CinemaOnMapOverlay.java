@@ -81,6 +81,7 @@ public class CinemaOnMapOverlay extends BalloonItemizedOverlay {
                     null,
                     null,
                     null,
+                    null,
                     null);
             activitiesState.setState(cookie, state);
 

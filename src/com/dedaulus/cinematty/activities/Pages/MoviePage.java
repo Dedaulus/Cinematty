@@ -515,6 +515,7 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
                 null,
                 director,
                 null,
+                null,
                 null);
         activitiesState.setState(cookie, state);
 
@@ -526,7 +527,14 @@ public class MoviePage implements SliderPage, MovieImageRetriever.MovieImageRece
     public void onActorClick(View view) {
         MovieActor actor = (MovieActor)view.getTag();
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, null, actor, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_LIST_W_ACTOR,
+                null,
+                null,
+                null,
+                actor,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieListActivity.class);

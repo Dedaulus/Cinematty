@@ -110,7 +110,14 @@ public class DirectorsPage implements SliderPage {
         MovieDirector director = (MovieDirector)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_DIRECTOR, null, null, director, null, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_LIST_W_DIRECTOR,
+                null,
+                null,
+                director,
+                null,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieListActivity.class);

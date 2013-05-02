@@ -153,7 +153,14 @@ public class MoviesPage implements SliderPage {
         MovieItemAdapter adapter = (MovieItemAdapter)adapterView.getAdapter();
         Movie movie = (Movie)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, movie, null, null, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_INFO,
+                null,
+                movie,
+                null,
+                null,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieActivity.class);

@@ -55,6 +55,7 @@
     <string name="description_separator">ОПИСАНИЕ</string>
     <string name="address_separator">АДРЕС</string>
     <string name="phone_separator">ТЕЛЕФОН</string>
+    <string name="metros_separator">МЕТРО</string>
     <string name="empty_search">Ничего не найдено</string>
 
     <string name="movie_trailer_link">"Трейлеры на YouTube</string>

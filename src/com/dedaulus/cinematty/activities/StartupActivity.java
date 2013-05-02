@@ -190,6 +190,7 @@ public class StartupActivity extends Activity
                     status.movie,
                     null,
                     null,
+                    null,
                     null);
 
             app.getActivitiesState().setState(cookie, state);
@@ -205,6 +206,7 @@ public class StartupActivity extends Activity
                     ActivityState.MOVIE_INFO_W_SCHEDULE,
                     status.cinema,
                     status.movie,
+                    null,
                     null,
                     null,
                     null);

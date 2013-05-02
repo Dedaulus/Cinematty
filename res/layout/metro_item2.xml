@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+    <View android:id="@+id/indicator"
+          android:layout_width="18sp"
+          android:layout_height="18sp"
+          android:layout_marginRight="8dp"
+          android:layout_centerVertical="true"/>
+
+    <TextView android:id="@+id/metro_caption"
+              style="@style/ListItem.Caption.Metro"
+              android:layout_centerVertical="true"
+              android:layout_toRightOf="@id/indicator"/>
+
+</RelativeLayout>

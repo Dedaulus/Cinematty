@@ -133,7 +133,6 @@
     <style name="ListCaption.Actor"/>
     <style name="ListCaption.Genre"/>
 
-
     <style name="ListItem">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -153,8 +152,9 @@
     <style name="ListItem.Caption.Director"/>
     <style name="ListItem.Caption.Actor"/>
     <style name="ListItem.Caption.Genre"/>
+    <style name="ListItem.Caption.Metro"/>
     <style name="ListItem.Caption.City">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="ListItem.Data">

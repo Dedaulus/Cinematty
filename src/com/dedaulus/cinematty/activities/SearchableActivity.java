@@ -33,6 +33,12 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     ActivitiesState activitiesState;
     LocationState locationState;
     SearchAdapter searchAdapter;
+
+    Map<String, Metro> metros;
+
+    {
+        metros = new TreeMap<String, Metro>();
+    }
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +129,12 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
 
         List<Cinema> foundCinemas = new ArrayList<Cinema>();
         Map<String, Cinema> cinemas = settings.getCinemas();
-        for (String caption : cinemas.keySet()) {
-            if (caption.matches(pattern)) {
-                foundCinemas.add(cinemas.get(caption));
+        for (Cinema cinema : cinemas.values()) {
+            for (Metro metro : cinema.getMetros()) {
+                metros.put(metro.getName(), metro);
+            }
+            if (cinema.getName().matches(pattern)) {
+                foundCinemas.add(cinema);
             }
         }
         Collections.sort(foundCinemas);
@@ -156,8 +165,19 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             }
         }
         Collections.sort(foundActors);
+
+        List<Metro> foundMetros = new ArrayList<Metro>();
+        for (Metro metro : metros.values()) {
+            if (metro.getName().matches(pattern)) {
+                foundMetros.add(metro);
+            }
+        }
         
-        if (foundCinemas.isEmpty() && foundMovies.isEmpty() && foundDirectors.isEmpty() && foundActors.isEmpty()) {
+        if (foundCinemas.isEmpty()
+                && foundMovies.isEmpty()
+                && foundDirectors.isEmpty()
+                && foundActors.isEmpty()
+                && foundMetros.isEmpty()) {
             findViewById(R.id.empty_search).setVisibility(View.VISIBLE);
             return;
         }
@@ -171,7 +191,8 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                 foundMovies,
                 app.getImageRetrievers().getMovieSmallImageRetriever(),
                 foundDirectors,
-                foundActors);
+                foundActors,
+                foundMetros);
         ListView list = (ListView)findViewById(R.id.search_list);
         list.setAdapter(searchAdapter);
         list.setOnScrollListener(notifier);
@@ -198,6 +219,11 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                         MovieActor actor = (MovieActor)adapter.getItem(position);
                         showActor(actor);
                         break;
+
+                    case Constants.METRO_TYPE_ID:
+                        Metro metro = (Metro)adapter.getItem(position);
+                        showMetro(metro);
+                        break;
                 }
             }
         });
@@ -223,6 +249,15 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             case Constants.ACTOR_TYPE_ID:
                 succeeded = showActor(caption);
                 break;
+
+            case Constants.METRO_TYPE_ID:
+                for (Cinema cinema : settings.getCinemas().values()) {
+                    for (Metro metro : cinema.getMetros()) {
+                        metros.put(metro.getName(), metro);
+                    }
+                }
+                succeeded = showMetro(caption);
+                break;
         }
         
         if (!succeeded) {
@@ -238,6 +273,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             ActivityState state = new ActivityState(
                     ActivityState.MOVIE_LIST_W_CINEMA,
                     cinema,
+                    null,
                     null,
                     null,
                     null,
@@ -268,6 +304,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                     movie,
                     null,
                     null,
+                    null,
                     null);
             activitiesState.setState(cookie, state);
 
@@ -293,6 +330,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                     null,
                     null,
                     director,
+                    null,
                     null,
                     null);
             activitiesState.setState(cookie, state);
@@ -320,6 +358,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                     null,
                     null,
                     actor,
+                    null,
                     null);
             activitiesState.setState(cookie, state);
 
@@ -335,6 +374,33 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
 
     private boolean showActor(String caption) {
         return showActor(settings.getActors().get(caption));
+    }
+
+    private boolean showMetro(Metro metro) {
+        if (metro != null) {
+            String cookie = UUID.randomUUID().toString();
+            ActivityState state = new ActivityState(
+                    ActivityState.CINEMA_LIST_W_METRO,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    metro);
+            activitiesState.setState(cookie, state);
+
+            Intent intent = new Intent(this, CinemaListActivity.class);
+            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+            startActivity(intent);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean showMetro(String caption) {
+        return showMetro(metros.get(caption));
     }
 
     @Override

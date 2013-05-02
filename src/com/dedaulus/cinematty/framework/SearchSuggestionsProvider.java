@@ -15,6 +15,8 @@ import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * User: Dedaulus
@@ -58,15 +60,20 @@ public class SearchSuggestionsProvider extends ContentProvider {
             String pattern = new StringBuilder().append("(?i).* [\"«„”‘(]*").append(searchString).append(".*|(?i)^[\"«„”‘]*").append(searchString).append(".*").append("|(?i).*[-(/]+").append(searchString).append(".*").toString();
             int i = 0;
 
+            Set<String> metros = new TreeSet<String>();
+
             Map<String, Cinema> cinemas = app.getSettings().getCinemas();
-            for (String caption : cinemas.keySet()) {
-                if (caption.matches(pattern)) {
+            for (Cinema cinema : cinemas.values()) {
+                for (Metro metro : cinema.getMetros()) {
+                    metros.add(metro.getName());
+                }
+                if (cinema.getName().matches(pattern)) {
                     MatrixCursor.RowBuilder row = cursor.newRow();
                     row.add(i);
-                    row.add(caption);
+                    row.add(cinema.getName());
                     row.add(Constants.CINEMA_TYPE_ID);
-                    row.add(caption);
-                    row.add(cinemas.get(caption).getAddress());
+                    row.add(cinema.getName());
+                    row.add(cinemas.get(cinema.getName()).getAddress());
                     row.add(R.drawable.ic_search_cinema);
                     ++i;
                 }
@@ -110,6 +117,19 @@ public class SearchSuggestionsProvider extends ContentProvider {
                     row.add(caption);
                     row.add(null);
                     row.add(R.drawable.ic_search_actor);
+                    ++i;
+                }
+            }
+
+            for (String caption : metros) {
+                if (caption.matches(pattern)) {
+                    MatrixCursor.RowBuilder row = cursor.newRow();
+                    row.add(i);
+                    row.add(caption);
+                    row.add(Constants.METRO_TYPE_ID);
+                    row.add(caption);
+                    row.add(null);
+                    row.add(R.drawable.ic_search_metro);
                     ++i;
                 }
             }

@@ -91,7 +91,8 @@ public class GenresPage implements SliderPage {
                 null,
                 null,
                 null,
-                genre);
+                genre,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieListActivity.class);
