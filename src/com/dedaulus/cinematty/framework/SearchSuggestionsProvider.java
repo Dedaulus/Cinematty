@@ -86,6 +86,20 @@ public class SearchSuggestionsProvider extends ContentProvider {
                 }
             }
 
+            Map<String, MovieDirector> directors = app.getSettings().getDirectors();
+            for (String caption : directors.keySet()) {
+                if (caption.matches(pattern)) {
+                    MatrixCursor.RowBuilder row = cursor.newRow();
+                    row.add(i);
+                    row.add(caption);
+                    row.add(Constants.DIRECTOR_TYPE_ID);
+                    row.add(caption);
+                    row.add(null);
+                    row.add(R.drawable.ic_search_actor);
+                    ++i;
+                }
+            }
+
             Map<String, MovieActor> actors = app.getSettings().getActors();
             for (String caption : actors.keySet()) {
                 if (caption.matches(pattern)) {

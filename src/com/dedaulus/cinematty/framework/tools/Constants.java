@@ -29,9 +29,10 @@ public class Constants {
 
     public static final int LAST_SHOWTIME_HOUR = 6;
 
-    public static final int CINEMA_TYPE_ID = 0;
-    public static final int MOVIE_TYPE_ID = 1;
-    public static final int ACTOR_TYPE_ID = 2;
+    public static final int CINEMA_TYPE_ID   = 0;
+    public static final int MOVIE_TYPE_ID    = 1;
+    public static final int DIRECTOR_TYPE_ID = 2;
+    public static final int ACTOR_TYPE_ID    = 3;
 
     public static final String CINEMA_PAGE_ID = "cinema_page_id";
     public static final int CINEMA_DESCRIPTION_PAGE_ID = 0;

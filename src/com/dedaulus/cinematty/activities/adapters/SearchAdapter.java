@@ -13,10 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieImageRetriever;
+import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.Coordinate;
 import com.dedaulus.cinematty.framework.tools.DataConverter;
@@ -50,6 +47,12 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         TextView favActors;
     }
 
+    private static class DirectorViewHolder {
+        View favIconRegion;
+        ImageView favIcon;
+        TextView caption;
+    }
+
     private static class ActorViewHolder {
         View favIconRegion;
         ImageView favIcon;
@@ -61,7 +64,7 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     }
 
     public static final int SEPARATOR_TYPE_ID = -1;
-    private static final int VIEW_TYPE_COUNT = 4;
+    private static final int VIEW_TYPE_COUNT = 5;
     
     private Context context;
     private LayoutInflater inflater;
@@ -73,13 +76,22 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
     
     private Pair<Integer, Integer> cinemasRange;
     private Pair<Integer, Integer> moviesRange;
+    private Pair<Integer, Integer> directorsRange;
     private Pair<Integer, Integer> actorsRange;
 
     {
         items = new ArrayList();
     }
 
-    public SearchAdapter(Context context, IdleDataSetChangeNotifier notifier, List<Cinema> cinemas, Location location, List<Movie> movies, MovieImageRetriever imageRetriever, List<MovieActor> actors) {
+    public SearchAdapter(
+            Context context,
+            IdleDataSetChangeNotifier notifier,
+            List<Cinema> cinemas,
+            Location location,
+            List<Movie> movies,
+            MovieImageRetriever imageRetriever,
+            List<MovieDirector> directors,
+            List<MovieActor> actors) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.notifier = notifier;
@@ -101,6 +113,13 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             items.addAll(movies);
             moviesRange = Pair.create(prev, position);
             this.imageRetriever = imageRetriever;
+        }
+        if (directors != null && directors.size() != 0) {
+            int prev = position + 1;
+            position += directors.size() + 1;
+            items.add(context.getString(R.string.director_separator));
+            items.addAll(directors);
+            directorsRange = Pair.create(prev, position);
         }
         if (actors != null && actors.size() != 0) {
             int prev = position + 1;
@@ -167,6 +186,22 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
                 setMovieView(position, viewHolder);
             }
             break;
+
+            case Constants.DIRECTOR_TYPE_ID: {
+                DirectorViewHolder viewHolder;
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.director_item, null);
+                    viewHolder = new DirectorViewHolder();
+                    viewHolder.favIconRegion = convertView.findViewById(R.id.fav_icon_region);
+                    viewHolder.favIcon = (ImageView)viewHolder.favIconRegion.findViewById(R.id.fav_icon);
+                    viewHolder.caption = (TextView)convertView.findViewById(R.id.director_caption);
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (DirectorViewHolder)convertView.getTag();
+                }
+                setDirectorView(position, viewHolder);
+            }
+            break;
             
             case Constants.ACTOR_TYPE_ID: {
                 ActorViewHolder viewHolder;
@@ -208,6 +243,8 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
             return Constants.CINEMA_TYPE_ID;
         } else if (moviesRange != null && inRange(position, moviesRange)) {
             return Constants.MOVIE_TYPE_ID;
+        } else if (directorsRange != null && inRange(position, directorsRange)) {
+            return Constants.DIRECTOR_TYPE_ID;
         } else if (actorsRange != null && inRange(position, actorsRange)) {
             return Constants.ACTOR_TYPE_ID;
         } else {
@@ -329,6 +366,29 @@ public class SearchAdapter extends BaseAdapter implements LocationAdapter, Movie
         } else {
             viewHolder.favActors.setVisibility(View.GONE);
         }
+    }
+
+    private void setDirectorView(int position, DirectorViewHolder viewHolder) {
+        final MovieDirector director = (MovieDirector)items.get(position);
+        viewHolder.caption.setText(director.getName());
+
+        if (director.getFavourite() > 0) {
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_on);
+        } else {
+            viewHolder.favIcon.setImageResource(R.drawable.ic_list_fav_off);
+        }
+        viewHolder.favIconRegion.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                ImageView imageView = (ImageView)view.findViewById(R.id.fav_icon);
+                if (director.getFavourite() > 0) {
+                    director.setFavourite(false);
+                    imageView.setImageResource(R.drawable.ic_list_fav_off);
+                } else {
+                    director.setFavourite(true);
+                    imageView.setImageResource(R.drawable.ic_list_fav_on);
+                }
+            }
+        });
     }
 
     private void setActorView(int position, ActorViewHolder viewHolder) {
