@@ -152,7 +152,7 @@ public class WhatsNewPage implements SliderPage, LocationClient {
         });
 
         // precaching
-        for (int i = posters.size() - 1; i > -1; --i) {
+        for (int i = 0; i < posters.size() / 2; ++i) {
             imageRetriever.addRequest(posters.get(i).getPicId(), null);
         }
 
