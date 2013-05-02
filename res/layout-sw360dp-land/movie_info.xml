@@ -126,9 +126,6 @@
                 <include android:id="@+id/director_divider"
                          layout="@layout/data_divider"/>
 
-                <TextView android:id="@+id/director"
-                          style="@style/MovieInfoContent"/>
-
             </LinearLayout>
 
             <LinearLayout android:id="@+id/description_region"
