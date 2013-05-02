@@ -14,10 +14,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.*;
 import com.dedaulus.cinematty.activities.adapters.SearchAdapter;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.SyncStatus;
+import com.dedaulus.cinematty.framework.*;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 import com.dedaulus.cinematty.framework.tools.IdleDataSetChangeNotifier;
@@ -93,6 +90,9 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     protected void onPause() {
         locationState.removeLocationClient(this);
         locationState.stopLocationListening();
+        settings.saveFavouriteCinemas();
+        settings.saveFavouriteDirectors();
+        settings.saveFavouriteActors();
         super.onPause();
     }
 
@@ -119,7 +119,7 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     
     private void processSearch(Intent intent) {
         String query = intent.getStringExtra(SearchManager.QUERY);
-        String pattern = new StringBuilder().append("(?i).* [\"«„”‘(]*").append(query).append(".*|(?i)^[\"«„”‘]*").append(query).append(".*").append("|(?i).*[-(]+").append(query).append(".*").toString();
+        String pattern = new StringBuilder().append("(?i).* [\"«„”‘(]*").append(query).append(".*|(?i)^[\"«„”‘]*").append(query).append(".*").append("|(?i).*[-(/]+").append(query).append(".*").toString();
 
         List<Cinema> foundCinemas = new ArrayList<Cinema>();
         Map<String, Cinema> cinemas = settings.getCinemas();
@@ -139,6 +139,15 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
         }
         Collections.sort(foundMovies);
 
+        List<MovieDirector> foundDirectors = new ArrayList<MovieDirector>();
+        Map<String, MovieDirector> directors = settings.getDirectors();
+        for (String caption : directors.keySet()) {
+            if (caption.matches(pattern)) {
+                foundDirectors.add(directors.get(caption));
+            }
+        }
+        Collections.sort(foundDirectors);
+
         List<MovieActor> foundActors = new ArrayList<MovieActor>();
         Map<String, MovieActor> actors = settings.getActors();
         for (String caption : actors.keySet()) {
@@ -148,13 +157,21 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
         }
         Collections.sort(foundActors);
         
-        if (foundCinemas.isEmpty() && foundMovies.isEmpty() && foundActors.isEmpty()) {
+        if (foundCinemas.isEmpty() && foundMovies.isEmpty() && foundDirectors.isEmpty() && foundActors.isEmpty()) {
             findViewById(R.id.empty_search).setVisibility(View.VISIBLE);
             return;
         }
 
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        searchAdapter = new SearchAdapter(this, notifier, foundCinemas, locationState.getCurrentLocation(), foundMovies, app.getImageRetrievers().getMovieSmallImageRetriever(), foundActors);
+        searchAdapter = new SearchAdapter(
+                this,
+                notifier,
+                foundCinemas,
+                locationState.getCurrentLocation(),
+                foundMovies,
+                app.getImageRetrievers().getMovieSmallImageRetriever(),
+                foundDirectors,
+                foundActors);
         ListView list = (ListView)findViewById(R.id.search_list);
         list.setAdapter(searchAdapter);
         list.setOnScrollListener(notifier);
@@ -170,6 +187,11 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
                     case Constants.MOVIE_TYPE_ID:
                         Movie movie = (Movie)adapter.getItem(position);
                         showMovie(movie);
+                        break;
+
+                    case Constants.DIRECTOR_TYPE_ID:
+                        MovieDirector director = (MovieDirector)adapter.getItem(position);
+                        showDirector(director);
                         break;
 
                     case Constants.ACTOR_TYPE_ID:
@@ -192,6 +214,10 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
             
             case Constants.MOVIE_TYPE_ID:
                 succeeded = showMovie(caption);
+                break;
+
+            case Constants.DIRECTOR_TYPE_ID:
+                succeeded = showDirector(caption);
                 break;
             
             case Constants.ACTOR_TYPE_ID:
@@ -257,6 +283,32 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
 
     private boolean showMovie(String caption) {
         return showMovie(settings.getMovies().get(caption));
+    }
+
+    private boolean showDirector(MovieDirector director) {
+        if (director != null) {
+            String cookie = UUID.randomUUID().toString();
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_LIST_W_DIRECTOR,
+                    null,
+                    null,
+                    director,
+                    null,
+                    null);
+            activitiesState.setState(cookie, state);
+
+            Intent intent = new Intent(this, MovieListActivity.class);
+            intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
+            startActivity(intent);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean showDirector(String caption) {
+        return showDirector(settings.getDirectors().get(caption));
     }
 
     private boolean showActor(MovieActor actor) {
