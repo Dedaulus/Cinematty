@@ -22,6 +22,7 @@ import com.dedaulus.cinematty.activities.adapters.PosterItemAdapter;
 import com.dedaulus.cinematty.framework.Cinema;
 import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.MoviePoster;
+import com.dedaulus.cinematty.framework.PosterImageRetriever;
 import com.dedaulus.cinematty.framework.tools.*;
 
 import java.util.*;
@@ -122,7 +123,13 @@ public class WhatsNewPage implements SliderPage, LocationClient {
 
     private View bindView(View view) {
         IdleDataSetChangeNotifier notifier = new IdleDataSetChangeNotifier();
-        posterItemAdapter = new PosterItemAdapter(context, notifier, new ArrayList<MoviePoster>(settings.getPosters()), app.getImageRetrievers().getPosterImageRetriever());
+        PosterImageRetriever imageRetriever = app.getImageRetrievers().getPosterImageRetriever();
+        List<MoviePoster> posters = new ArrayList<MoviePoster>(settings.getPosters());
+        posterItemAdapter = new PosterItemAdapter(
+                context,
+                notifier,
+                new ArrayList<MoviePoster>(posters),
+                imageRetriever);
         GridView whatsNewGrid = (GridView)view.findViewById(R.id.whats_new_grid);
         whatsNewGrid.setAdapter(posterItemAdapter);
         whatsNewGrid.setOnScrollListener(notifier);
@@ -143,6 +150,11 @@ public class WhatsNewPage implements SliderPage, LocationClient {
                 }
             }
         });
+
+        // precaching
+        for (int i = posters.size() - 1; i > -1; --i) {
+            imageRetriever.addRequest(posters.get(i).getPicId(), null);
+        }
 
         binded = true;
         onResume();

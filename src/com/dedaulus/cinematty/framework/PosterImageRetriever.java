@@ -60,7 +60,9 @@ public class PosterImageRetriever {
         imageRetriever.addRequest(url, new ImageRetriever.ImageReceivedAction() {
             @Override
             public void onImageReceived(String url, boolean downloaded) {
-                action.onImageReceived(downloaded);
+                if (action != null) {
+                    action.onImageReceived(downloaded);
+                }
             }
         });
     }
