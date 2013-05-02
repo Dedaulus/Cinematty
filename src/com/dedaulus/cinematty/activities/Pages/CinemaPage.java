@@ -237,7 +237,7 @@ public class CinemaPage implements SliderPage {
 
     private void showCinemaOnMap() {
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.CINEMA_ON_MAP, this.state.cinema, null, null, null);
+        ActivityState state = new ActivityState(ActivityState.CINEMA_ON_MAP, this.state.cinema, null, null, null, null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, CinemaMapView.class);

@@ -13,8 +13,8 @@ import com.dedaulus.cinematty.ApplicationSettings;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.activities.MovieListActivity;
-import com.dedaulus.cinematty.activities.adapters.ActorItemAdapter;
-import com.dedaulus.cinematty.framework.MovieActor;
+import com.dedaulus.cinematty.activities.adapters.DirectorItemAdapter;
+import com.dedaulus.cinematty.framework.MovieDirector;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
 
@@ -23,40 +23,42 @@ import java.util.Comparator;
 import java.util.UUID;
 
 /**
- * User: Dedaulus
- * Date: 04.09.11
- * Time: 20:18
+ * User: dedaulus
+ * Date: 02.05.13
+ * Time: 4:27
  */
-public class ActorsPage implements SliderPage {
+public class DirectorsPage implements SliderPage {
     private Context context;
     private ApplicationSettings settings;
     private ActivitiesState activitiesState;
-    private ActorItemAdapter actorListAdapter;
+    private DirectorItemAdapter directorItemAdapter;
     private boolean binded = false;
-    private boolean visible = false;
 
-    public ActorsPage(Context context, CinemattyApplication app) {
+    public DirectorsPage(Context context, CinemattyApplication app) {
         this.context = context;
 
         settings = app.getSettings();
         activitiesState = app.getActivitiesState();
     }
 
+    @Override
     public View getView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.actor_list, null, false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.director_list, null, false);
 
         return bindView(view);
     }
 
+    @Override
     public String getTitle() {
-        return context.getString(R.string.actors_caption);
+        return context.getString(R.string.directors_caption);
     }
 
+    @Override
     public void onResume() {
         if (binded) {
-            actorListAdapter.sortBy(new Comparator<MovieActor>() {
-                public int compare(MovieActor a1, MovieActor a2) {
+            directorItemAdapter.sortBy(new Comparator<MovieDirector>() {
+                public int compare(MovieDirector a1, MovieDirector a2) {
                     if (a1.getFavourite() == a2.getFavourite()) {
                         return a1.getName().compareTo(a2.getName());
                     } else return a1.getFavourite() < a2.getFavourite() ? 1 : -1;
@@ -65,32 +67,35 @@ public class ActorsPage implements SliderPage {
         }
     }
 
+    @Override
     public void onPause() {
-        settings.saveFavouriteActors();
+        settings.saveFavouriteDirectors();
     }
 
+    @Override
     public void onStop() {}
 
     @Override
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
+    public void setVisible(boolean visible) {}
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return false;
     }
 
     private View bindView(View view) {
         GridView grid = (GridView)view.findViewById(R.id.actor_list);
-        actorListAdapter = new ActorItemAdapter(context, new ArrayList<MovieActor>(settings.getActors().values()));
-        grid.setAdapter(actorListAdapter);
+        directorItemAdapter = new DirectorItemAdapter(
+                context, new ArrayList<MovieDirector>(settings.getDirectors().values()));
+        grid.setAdapter(directorItemAdapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onActorItemClick(adapterView, view, i, l);
+                onDirectorItemClick(adapterView, view, i, l);
             }
         });
 
@@ -100,12 +105,12 @@ public class ActorsPage implements SliderPage {
         return view;
     }
 
-    private void onActorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ActorItemAdapter adapter = (ActorItemAdapter)adapterView.getAdapter();
-        MovieActor actor = (MovieActor)adapter.getItem(i);
+    private void onDirectorItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        DirectorItemAdapter adapter = (DirectorItemAdapter)adapterView.getAdapter();
+        MovieDirector director = (MovieDirector)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, null, actor, null);
+        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_DIRECTOR, null, null, director, null, null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieListActivity.class);

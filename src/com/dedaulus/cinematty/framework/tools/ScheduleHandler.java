@@ -85,15 +85,15 @@ public class ScheduleHandler extends DefaultHandler {
         int length;
         int year;
         List<String> countries;
-        List<String> directors;
         String description;
+        Map<String, MovieDirector> directors;
         Map<String, MovieActor> actors;
         Map<String, MovieGenre> genres;
         float imdb;
         float kp;
 
         public Movie createMovie() {
-            return new Movie(name, id, picId, frameIdsStore, length, year, countries, directors, description, actors, genres, imdb, kp);
+            return new Movie(name, id, picId, frameIdsStore, length, year, countries, description, directors, actors, genres, imdb, kp);
         }
     }
 
@@ -110,6 +110,7 @@ public class ScheduleHandler extends DefaultHandler {
 
     private Map<String, Cinema> cinemaIds;
     private Map<String, Movie> movieIds;
+    private Map<String, MovieDirector> directors;
     private Map<String, MovieActor> actors;
     private Map<String, MovieGenre> genres;
     private List<MoviePoster> posters;
@@ -124,11 +125,13 @@ public class ScheduleHandler extends DefaultHandler {
     public void getSchedule(
             Map<String, Cinema> cinemas,
             Map<String, Movie> movies,
+            Map<String, MovieDirector> directors,
             Map<String, MovieActor> actors,
             Map<String, MovieGenre> genres,
             List<MoviePoster> posters) {
         cinemas.clear();
         movies.clear();
+        directors.clear();
         actors.clear();
         genres.clear();
         posters.clear();
@@ -141,6 +144,7 @@ public class ScheduleHandler extends DefaultHandler {
             movies.put(movie.getName(), movie);
         }
 
+        directors.putAll(this.directors);
         actors.putAll(this.actors);
         genres.putAll(this.genres);
         posters.addAll(this.posters);
@@ -152,6 +156,7 @@ public class ScheduleHandler extends DefaultHandler {
 
         cinemaIds = new HashMap<String, Cinema>();
         movieIds = new HashMap<String, Movie>();
+        directors = new HashMap<String, MovieDirector>();
         actors = new HashMap<String, MovieActor>();
         genres = new HashMap<String, MovieGenre>();
         posters = new ArrayList<MoviePoster>();
@@ -204,7 +209,7 @@ public class ScheduleHandler extends DefaultHandler {
 
             currentMovieData.countries = parseStrings(attributes.getValue(MOVIE_COUNTRIES_ATTR), ";");
 
-            currentMovieData.directors = parseStrings(attributes.getValue(MOVIE_DIRECTORS_ATTR), ";");
+            currentMovieData.directors = parseDirectors(attributes.getValue(MOVIE_DIRECTORS_ATTR));
 
             currentMovieData.genres = parseGenres(attributes.getValue(MOVIE_TYPE_ATTR));
 
@@ -347,6 +352,24 @@ public class ScheduleHandler extends DefaultHandler {
         }
 
         return metros;
+    }
+
+    private Map<String, MovieDirector> parseDirectors(String directorsStr) {
+        if (directorsStr == null || directorsStr.length() == 0) return null;
+
+        Map<String, MovieDirector> directors = new HashMap<String, MovieDirector>();
+        StringTokenizer st = new StringTokenizer(directorsStr, ";");
+        while (st.hasMoreTokens()) {
+            String name = st.nextToken();
+            MovieDirector director = this.directors.get(name);
+            if (director == null) {
+                director = new MovieDirector(name);
+                this.directors.put(name, director);
+            }
+            directors.put(name, director);
+        }
+
+        return directors;
     }
 
     private Map<String, MovieGenre> parseGenres(String genresStr) {

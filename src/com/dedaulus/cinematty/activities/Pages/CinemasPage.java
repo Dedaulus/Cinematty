@@ -163,7 +163,13 @@ public class CinemasPage implements SliderPage, LocationClient {
         Cinema cinema = (Cinema)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
 
-        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_LIST_W_CINEMA,
+                cinema,
+                null,
+                null,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, CinemaActivity.class);

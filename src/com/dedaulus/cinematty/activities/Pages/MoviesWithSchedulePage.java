@@ -252,7 +252,7 @@ public class MoviesWithSchedulePage implements SliderPage {
 
         ActivityState state = this.state.clone();
         state.movie = movie;
-        state.activityType = ActivityState.MOVIE_INFO_W_SCHED;
+        state.activityType = ActivityState.MOVIE_INFO_W_SCHEDULE;
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieActivity.class);

@@ -1,9 +1,6 @@
 package com.dedaulus.cinematty.framework.tools;
 
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
-import com.dedaulus.cinematty.framework.MovieActor;
-import com.dedaulus.cinematty.framework.MovieGenre;
+import com.dedaulus.cinematty.framework.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -16,15 +13,16 @@ import java.util.*;
  * Time: 17:47
  */
 public class ActivitiesStateHandler extends DefaultHandler {
-    private static final String DATA_TAG          = "data";
-    private static final String DATA_DATE_ATTR    = "date";
-    private static final String STATE_TAG         = "state";
-    private static final String STATE_COOKIE_ATTR = "cookie";
-    private static final String STATE_TYPE_ATTR   = "type";
-    private static final String STATE_CINEMA_ATTR = "cinema";
-    private static final String STATE_MOVIE_ATTR  = "movie";
-    private static final String STATE_ACTOR_ATTR  = "actor";
-    private static final String STATE_GENRE_ATTR  = "genre";
+    private static final String DATA_TAG            = "data";
+    private static final String DATA_DATE_ATTR      = "date";
+    private static final String STATE_TAG           = "state";
+    private static final String STATE_COOKIE_ATTR   = "cookie";
+    private static final String STATE_TYPE_ATTR     = "type";
+    private static final String STATE_CINEMA_ATTR   = "cinema";
+    private static final String STATE_MOVIE_ATTR    = "movie";
+    private static final String STATE_DIRECTOR_ATTR = "director";
+    private static final String STATE_ACTOR_ATTR    = "actor";
+    private static final String STATE_GENRE_ATTR    = "genre";
 
     private static final Object INVALID_FIELD = new Object();
 
@@ -32,6 +30,7 @@ public class ActivitiesStateHandler extends DefaultHandler {
 
     private Map<String, Cinema> cinemas;
     private Map<String, Movie> movies;
+    private Map<String, MovieDirector> directors;
     private Map<String, MovieActor> actors;
     private Map<String, MovieGenre> genres;
 
@@ -42,10 +41,12 @@ public class ActivitiesStateHandler extends DefaultHandler {
     public ActivitiesStateHandler(
             Map<String, Cinema> cinemaList,
             Map<String, Movie> movieList,
+            Map<String, MovieDirector> directorList,
             Map<String, MovieActor> actorList,
             Map<String, MovieGenre> genreList) {
         cinemas = cinemaList;
         movies = movieList;
+        directors = directorList;
         actors = actorList;
         genres = genreList;
     }
@@ -76,6 +77,13 @@ public class ActivitiesStateHandler extends DefaultHandler {
                 return;
             }
             state.movie = (Movie)movie;
+
+            Object director = getActivityStateField(attributes, STATE_DIRECTOR_ATTR, directors);
+            if (director == INVALID_FIELD) {
+                states = ActivitiesStateRestorer.BLANK_STATES;
+                return;
+            }
+            state.director = (MovieDirector)director;
 
             Object actor = getActivityStateField(attributes, STATE_ACTOR_ATTR, actors);
             if (actor == INVALID_FIELD) {

@@ -11,6 +11,9 @@
 
     <style name="Grid.Cinemas"/>
     <style name="Grid.Movies"/>
+    <style name="Grid.Directors">
+        <item name="android:numColumns">3</item>
+    </style>
     <style name="Grid.Actors">
         <item name="android:numColumns">3</item>
     </style>

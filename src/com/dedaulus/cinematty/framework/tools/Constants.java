@@ -14,6 +14,7 @@ public class Constants {
     public static final int MOVIES_SLIDE      = 2;
     public static final int ACTORS_SLIDE      = 3;
     public static final int GENRES_SLIDE      = 4;
+    public static final int DIRECTORS_SLIDE   = 5;
 
     public static final int TODAY_SCHEDULE    = 0;
     public static final int TOMORROW_SCHEDULE = 1;

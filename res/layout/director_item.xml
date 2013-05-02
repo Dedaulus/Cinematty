@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout android:id="@+id/fav_icon_region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:clickable="true">
+
+        <ImageView android:id="@+id/fav_icon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerInParent="true"
+                   android:padding="6dp"
+                   android:src="@drawable/ic_list_fav_off"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/director_data_region"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/fav_icon_region"
+                    android:paddingRight="6dp">
+
+        <ImageView android:id="@+id/more_icon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                   android:paddingLeft="6dp"
+                   android:visibility="gone"/>
+
+        <TextView android:id="@+id/director_caption"
+                  style="@style/ListItem.Caption.Director"
+                  android:layout_centerVertical="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_toLeftOf="@id/more_icon"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

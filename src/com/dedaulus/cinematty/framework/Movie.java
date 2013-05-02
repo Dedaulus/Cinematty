@@ -21,12 +21,12 @@ import java.util.Map;
  * Time: 21:58
  */
 public class Movie implements Comparable<Movie> {
-    private static final List<String> BLANK_COUNTRIES             = new ArrayList<String>();
-    private static final List<String> BLANK_DIRECTORS             = new ArrayList<String>();
-    private static final Map<String, Cinema> BLANK_CINEMAS_IN_DAY = new HashMap<String, Cinema>();
-    private static final Map<String, MovieActor> BLANK_ACTORS     = new HashMap<String, MovieActor>();
-    private static final Map<String, MovieGenre> BLANK_GENRES     = new HashMap<String, MovieGenre>();
-    private static final List<MovieReview> BLANK_REVIEWS          = new ArrayList<MovieReview>();
+    private static final List<String> BLANK_COUNTRIES               = new ArrayList<String>();
+    private static final Map<String, Cinema> BLANK_CINEMAS_IN_DAY   = new HashMap<String, Cinema>();
+    private static final Map<String, MovieDirector> BLANK_DIRECTORS = new HashMap<String, MovieDirector>();
+    private static final Map<String, MovieActor> BLANK_ACTORS       = new HashMap<String, MovieActor>();
+    private static final Map<String, MovieGenre> BLANK_GENRES       = new HashMap<String, MovieGenre>();
+    private static final List<MovieReview> BLANK_REVIEWS            = new ArrayList<MovieReview>();
 
     private static String sharedUrl = "http://gdekino.net/cinematty/shared.php";
 
@@ -37,8 +37,8 @@ public class Movie implements Comparable<Movie> {
     private int length; // in minutes
     private int year;
     private List<String> countries;
-    private List<String> directors;
     private String description;
+    private Map<String, MovieDirector> directors;
     private Map<String, MovieActor> actors;
     private Map<String, MovieGenre> genres;
     private float imdb;
@@ -48,8 +48,8 @@ public class Movie implements Comparable<Movie> {
 
     {
         countries = BLANK_COUNTRIES;
-        directors = BLANK_DIRECTORS;
         genres = BLANK_GENRES;
+        directors = BLANK_DIRECTORS;
         actors = BLANK_ACTORS;
         reviews = BLANK_REVIEWS;
         cinemas = new HashMap<Integer, Map<String, Cinema>>();
@@ -62,9 +62,9 @@ public class Movie implements Comparable<Movie> {
             MovieFrameIdsStore frameIdsStore, 
             int length, 
             int year, 
-            List<String> countries, 
-            List<String> directors,
+            List<String> countries,
             String description,
+            Map<String, MovieDirector> directors,
             Map<String, MovieActor> actors,
             Map<String, MovieGenre> genres,
             float imdb,
@@ -82,6 +82,9 @@ public class Movie implements Comparable<Movie> {
         
         if (directors != null) {
             this.directors = directors;
+            for (MovieDirector director : this.directors.values()) {
+                director.addMovie(this);
+            }
         }
         
         this.description = description;
@@ -131,8 +134,8 @@ public class Movie implements Comparable<Movie> {
     public List<String> getCountries() {
         return countries;
     }
-    
-    public List<String> getDirectors() {
+
+    public Map<String, MovieDirector> getDirectors() {
         return directors;
     }
 

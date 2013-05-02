@@ -12,11 +12,6 @@ import android.widget.TextView;
 import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.activities.Pages.MoviePage;
-import com.dedaulus.cinematty.activities.adapters.MovieItemAdapter;
-import com.dedaulus.cinematty.activities.adapters.MovieItemWithScheduleAdapter;
-import com.dedaulus.cinematty.framework.Cinema;
-import com.dedaulus.cinematty.framework.Movie;
 import com.dedaulus.cinematty.framework.SyncStatus;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
 import com.dedaulus.cinematty.framework.tools.Constants;
@@ -194,6 +189,7 @@ public class StartupActivity extends Activity
                     null,
                     status.movie,
                     null,
+                    null,
                     null);
 
             app.getActivitiesState().setState(cookie, state);
@@ -206,9 +202,10 @@ public class StartupActivity extends Activity
             String cookie = UUID.randomUUID().toString();
 
             ActivityState state = new ActivityState(
-                    ActivityState.MOVIE_INFO_W_SCHED,
+                    ActivityState.MOVIE_INFO_W_SCHEDULE,
                     status.cinema,
                     status.movie,
+                    null,
                     null,
                     null);
 

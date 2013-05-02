@@ -11,6 +11,7 @@
 
     <style name="Grid.Cinemas"/>
     <style name="Grid.Movies"/>
+    <style name="Grid.Directors"/>
     <style name="Grid.Actors"/>
     <style name="Grid.Genres"/>
 </resources>

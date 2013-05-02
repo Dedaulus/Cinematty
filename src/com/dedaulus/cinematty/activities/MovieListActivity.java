@@ -60,19 +60,26 @@ public class MovieListActivity extends SherlockActivity {
 
         Map<String, Movie> scopeMovies;
         switch (state.activityType) {
+            case ActivityState.MOVIE_LIST_W_DIRECTOR: {
+                setContentView(R.layout.movie_list_w_director);
+                actionBar.setTitle(state.director.getName());
+                scopeMovies = state.director.getMovies();
+            }
+            break;
+
             case ActivityState.MOVIE_LIST_W_ACTOR: {
-                    setContentView(R.layout.movie_list_w_actor);
-                    actionBar.setTitle(state.actor.getName());
-                    scopeMovies = state.actor.getMovies();
-                }
-                break;
+                setContentView(R.layout.movie_list_w_actor);
+                actionBar.setTitle(state.actor.getName());
+                scopeMovies = state.actor.getMovies();
+            }
+            break;
 
             case ActivityState.MOVIE_LIST_W_GENRE: {
-                    setContentView(R.layout.movie_list_w_genre);
-                    actionBar.setTitle(state.genre.getName());
-                    scopeMovies = state.genre.getMovies();
-                }
-                break;
+                setContentView(R.layout.movie_list_w_genre);
+                actionBar.setTitle(state.genre.getName());
+                scopeMovies = state.genre.getMovies();
+            }
+            break;
 
             default:
                 throw new RuntimeException("ActivityType error");

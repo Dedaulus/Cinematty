@@ -66,7 +66,7 @@ public class MovieActivity extends SherlockActivity implements ViewPager.OnPageC
         stateId = getIntent().getStringExtra(Constants.ACTIVITY_STATE_ID);
         ActivityState state = activitiesState.getState(stateId);
         if (state == null) throw new RuntimeException("ActivityState error");
-        if (state.activityType != ActivityState.MOVIE_INFO && state.activityType != ActivityState.MOVIE_INFO_W_SCHED) {
+        if (state.activityType != ActivityState.MOVIE_INFO && state.activityType != ActivityState.MOVIE_INFO_W_SCHEDULE) {
             throw new RuntimeException("ActivityType error");
         }
 

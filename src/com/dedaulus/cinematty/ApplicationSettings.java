@@ -21,11 +21,15 @@ public interface ApplicationSettings {
 
     Map<String, Movie> getMovies();
 
+    Map<String, MovieDirector> getDirectors();
+
     Map<String, MovieActor> getActors();
 
     Map<String, MovieGenre> getGenres();
 
     List<MoviePoster> getPosters();
+
+    void saveFavouriteDirectors();
 
     void saveFavouriteActors();
 

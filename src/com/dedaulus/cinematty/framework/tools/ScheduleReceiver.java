@@ -36,6 +36,7 @@ public class ScheduleReceiver {
     public SyncStatus getSchedule(
             Map<String, Cinema> cinemas,
             Map<String, Movie> movies,
+            Map<String, MovieDirector> directors,
             Map<String, MovieActor> actors,
             Map<String, MovieGenre> genres,
             List<MoviePoster> posters,
@@ -48,7 +49,7 @@ public class ScheduleReceiver {
             SAXParser parser = factory.newSAXParser();
             ScheduleHandler handler = new ScheduleHandler();
             parser.parse(is, handler);
-            handler.getSchedule(cinemas, movies, actors, genres, posters);
+            handler.getSchedule(cinemas, movies, directors, actors, genres, posters);
             return SyncStatus.OK;
         } catch (FileNotFoundException e) {
             return SyncStatus.BAD_RESPONSE;

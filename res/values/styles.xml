@@ -92,6 +92,7 @@
 
     <style name="Grid.Cinemas"/>
     <style name="Grid.Movies"/>
+    <style name="Grid.Directors"/>
     <style name="Grid.Actors"/>
     <style name="Grid.Genres"/>
 
@@ -149,6 +150,7 @@
 
     <style name="ListItem.Caption.Cinema"/>
     <style name="ListItem.Caption.Movie"/>
+    <style name="ListItem.Caption.Director"/>
     <style name="ListItem.Caption.Actor"/>
     <style name="ListItem.Caption.Genre"/>
     <style name="ListItem.Caption.City">

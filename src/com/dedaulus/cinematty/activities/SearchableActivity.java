@@ -209,7 +209,13 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     private boolean showCinema(Cinema cinema) {
         if (cinema != null) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_LIST_W_CINEMA,
+                    cinema,
+                    null,
+                    null,
+                    null,
+                    null);
             activitiesState.setState(cookie, state);
 
             Intent intent = new Intent(this, CinemaActivity.class);
@@ -230,7 +236,13 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     private boolean showMovie(Movie movie) {
         if (movie != null) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, movie, null, null);
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_INFO,
+                    null,
+                    movie,
+                    null,
+                    null,
+                    null);
             activitiesState.setState(cookie, state);
 
             Intent intent = new Intent(this,MovieActivity.class);
@@ -250,7 +262,13 @@ public class SearchableActivity extends SherlockActivity implements LocationClie
     private boolean showActor(MovieActor actor) {
         if (actor != null) {
             String cookie = UUID.randomUUID().toString();
-            ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_ACTOR, null, null, actor, null);
+            ActivityState state = new ActivityState(
+                    ActivityState.MOVIE_LIST_W_ACTOR,
+                    null,
+                    null,
+                    null,
+                    actor,
+                    null);
             activitiesState.setState(cookie, state);
 
             Intent intent = new Intent(this, MovieListActivity.class);

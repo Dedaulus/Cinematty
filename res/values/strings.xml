@@ -40,6 +40,7 @@
     <string name="showtime_caption">Сеансы</string>
     <string name="frames_caption">Кадры</string>
     <string name="description_caption">Описание</string>
+    <string name="directors_caption">Режиссёры</string>
     <string name="actors_caption">Актёры</string>
     <string name="genres_caption">Жанры</string>
     <string name="about_caption">О программе</string>

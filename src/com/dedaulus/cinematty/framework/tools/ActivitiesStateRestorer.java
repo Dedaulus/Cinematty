@@ -38,7 +38,12 @@ public class ActivitiesStateRestorer {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            ActivitiesStateHandler handler = new ActivitiesStateHandler(settings.getCinemas(), settings.getMovies(), settings.getActors(), settings.getGenres());
+            ActivitiesStateHandler handler = new ActivitiesStateHandler(
+                    settings.getCinemas(),
+                    settings.getMovies(),
+                    settings.getDirectors(),
+                    settings.getActors(),
+                    settings.getGenres());
             parser.parse(is, handler);
             return handler.getStates();
         } catch (Exception e) {

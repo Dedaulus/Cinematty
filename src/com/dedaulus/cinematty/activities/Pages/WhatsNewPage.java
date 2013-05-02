@@ -152,7 +152,13 @@ public class WhatsNewPage implements SliderPage, LocationClient {
 
     private void onCinemaItemClick(Cinema cinema) {
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.MOVIE_LIST_W_CINEMA, cinema, null, null, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_LIST_W_CINEMA,
+                cinema,
+                null,
+                null,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, CinemaActivity.class);
@@ -165,7 +171,13 @@ public class WhatsNewPage implements SliderPage, LocationClient {
         PosterItemAdapter adapter = (PosterItemAdapter)adapterView.getAdapter();
         MoviePoster poster = (MoviePoster)adapter.getItem(i);
         String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(ActivityState.MOVIE_INFO, null, poster.getMovie(), null, null);
+        ActivityState state = new ActivityState(
+                ActivityState.MOVIE_INFO,
+                null,
+                poster.getMovie(),
+                null,
+                null,
+                null);
         activitiesState.setState(cookie, state);
 
         Intent intent = new Intent(context, MovieActivity.class);

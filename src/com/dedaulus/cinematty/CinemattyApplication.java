@@ -53,6 +53,7 @@ public class CinemattyApplication extends Application {
     private class ApplicationSettingsImpl implements ApplicationSettings {
         private static final String FAV_CINEMAS_FILE                  = "cinematty_fav_cinemas";
         private static final String FAV_ACTORS_FILE                   = "cinematty_fav_actors";
+        private static final String FAV_DIRECTORS_FILE                = "cinematty_fav_directors";
         private static final String PREFERENCES_FILE                  = "cinematty_preferences";
         private static final String PREF_CINEMA_SORT_ORDER            = "cinema_sort_order";
         private static final String PREF_MOVIE_SORT_ORDER             = "movie_sort_order";
@@ -61,23 +62,27 @@ public class CinemattyApplication extends Application {
 
         private Map<String, Cinema> cinemas;
         private Map<String, Movie> movies;
+        private Map<String, MovieDirector> directors;
         private Map<String, MovieActor> actors;
         private Map<String, MovieGenre> genres;
         private List<MoviePoster> posters;
 
         private Map<String, Cinema> favoriteCinemas;
+        private Map<String, MovieDirector> favoriteDirectors;
         private Map<String, MovieActor> favoriteActors;
 
         private int currentDay = Constants.TODAY_SCHEDULE;
 
         public ApplicationSettingsImpl(
                 Map<String, Cinema> cinemas, 
-                Map<String, Movie> movies, 
+                Map<String, Movie> movies,
+                Map<String, MovieDirector> directors,
                 Map<String, MovieActor> actors, 
                 Map<String, MovieGenre> genres, 
                 List<MoviePoster> posters) {
             this.cinemas = new TreeMap<String, Cinema>(cinemas);
             this.movies = new TreeMap<String, Movie>(movies);
+            this.directors = new TreeMap<String, MovieDirector>(directors);
             this.actors = new TreeMap<String, MovieActor>(actors);
             this.genres = new TreeMap<String, MovieGenre>(genres);
             this.posters = new ArrayList<MoviePoster>(posters);
@@ -91,6 +96,19 @@ public class CinemattyApplication extends Application {
                     if (cinema != null) {
                         cinema.setFavourite((Long)favs.get(name));
                         favoriteCinemas.put(name, cinema);
+                    }
+                }
+            }
+
+            favoriteDirectors = new HashMap<String, MovieDirector>();
+            preferences = getSharedPreferences(FAV_DIRECTORS_FILE, MODE_PRIVATE);
+            if (preferences != null) {
+                Map<String, ?> favs = preferences.getAll();
+                for (String name : favs.keySet()) {
+                    MovieDirector director = directors.get(name);
+                    if (director != null) {
+                        director.setFavourite((Long) favs.get(name));
+                        favoriteDirectors.put(name, director);
                     }
                 }
             }
@@ -130,6 +148,11 @@ public class CinemattyApplication extends Application {
         }
 
         @Override
+        public Map<String, MovieDirector> getDirectors() {
+            return directors;
+        }
+
+        @Override
         public Map<String, MovieActor> getActors() {
             return actors;
         }
@@ -142,6 +165,20 @@ public class CinemattyApplication extends Application {
         @Override
         public List<MoviePoster> getPosters() {
             return posters;
+        }
+
+        @Override
+        public void saveFavouriteDirectors() {
+            SharedPreferences preferences = getSharedPreferences(FAV_DIRECTORS_FILE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            for (MovieDirector director : directors.values()) {
+                if (director.getFavourite() > 0) {
+                    editor.putLong(director.getName(), director.getFavourite());
+                } else {
+                    editor.remove(director.getName());
+                }
+            }
+            editor.commit();
         }
 
         @Override
@@ -526,15 +563,16 @@ public class CinemattyApplication extends Application {
 
             Map<String, Cinema> cinemas = new HashMap<String, Cinema>();
             Map<String, Movie> movies = new HashMap<String, Movie>();
+            Map<String, MovieDirector> directors = new HashMap<String, MovieDirector>();
             Map<String, MovieActor> actors = new HashMap<String, MovieActor>();
             Map<String, MovieGenre> genres = new HashMap<String, MovieGenre>();
             List<MoviePoster> posters = new ArrayList<MoviePoster>();
-            syncStatus = receiver.getSchedule(cinemas, movies, actors, genres, posters, local);
+            syncStatus = receiver.getSchedule(cinemas, movies, directors, actors, genres, posters, local);
             if (syncStatus != SyncStatus.OK) {
                 return syncStatus;
             }
 
-            settings = new ApplicationSettingsImpl(cinemas, movies, actors, genres, posters);
+            settings = new ApplicationSettingsImpl(cinemas, movies, directors, actors, genres, posters);
             activitiesState = new ActivitiesStateImpl(settings, local);
         } catch (MalformedURLException e) {
             return (syncStatus = SyncStatus.BAD_RESPONSE);
