@@ -9,7 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.bugsense.trace.BugSenseHandler;
 import com.dedaulus.cinematty.CinemattyApplication;
 import com.dedaulus.cinematty.R;
 import com.dedaulus.cinematty.framework.SyncStatus;
@@ -35,7 +34,7 @@ public class StartupActivity extends Activity
         super.onCreate(savedInstanceState);
 
         // TODO: uncomment following before release!!!
-        BugSenseHandler.initAndStartSession(this, "97371d41");
+        //BugSenseHandler.initAndStartSession(this, "97371d41");
 
         setContentView(R.layout.splash_screen);
 
