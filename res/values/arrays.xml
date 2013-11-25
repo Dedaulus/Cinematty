@@ -14,9 +14,9 @@
         <item name="Вологда">Вологда</item>
         <item name="Воронеж">Воронеж</item>
         <item name="Екатеринбург">Екатеринбург</item>
-        <item name="Иваново">Иваново</item>
+        <!--<item name="Иваново">Иваново</item>-->
         <item name="Ижевск">Ижевск</item>
-        <item name="Иркутск">Иркутск</item>
+        <!--<item name="Иркутск">Иркутск</item>-->
         <item name="Казань">Казань</item>
         <item name="Калининград">Калининград</item>
         <item name="Кемерово">Кемерово</item>
@@ -24,7 +24,7 @@
         <item name="Краснодар">Краснодар</item>
         <item name="Красноярск">Красноярск</item>
         <item name="Липецк">Липецк</item>
-        <item name="Магнитогорск">Магнитогорск</item>
+        <!--<item name="Магнитогорск">Магнитогорск</item>-->
         <item name="Мурманск">Мурманск</item>
         <item name="Нижневартовск">Нижневартовск</item>
         <item name="Нижний Новгород">Нижний Новгород</item>
@@ -65,9 +65,9 @@
         <item name="Вологда">47</item>
         <item name="Воронеж">4</item>
         <item name="Екатеринбург">5</item>
-        <item name="Иваново">33</item>
+        <!--<item name="Иваново">33</item>-->
         <item name="Ижевск">38</item>
-        <item name="Иркутск">21</item>
+        <!--<item name="Иркутск">21</item>-->
         <item name="Казань">6</item>
         <item name="Калининград">7</item>
         <item name="Кемерово">42</item>
@@ -75,7 +75,7 @@
         <item name="Краснодар">17</item>
         <item name="Красноярск">26</item>
         <item name="Липецк">8</item>
-        <item name="Магнитогорск">32</item>
+        <!--<item name="Магнитогорск">32</item>-->
         <item name="Мурманск">19</item>
         <item name="Нижневартовск">48</item>
         <item name="Нижний Новгород">9</item>
