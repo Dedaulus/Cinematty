@@ -7,7 +7,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * User: Dedaulus
@@ -35,22 +34,27 @@ public class ScheduleDateHandler extends DefaultHandler {
         return mDate;
     }
 
-    private void parseDate(String dateStr, int hours) {
-        List<Integer> list = new ArrayList<Integer>();
-        StringTokenizer st = new StringTokenizer(dateStr, ".");
+    private void parseDate(String dateTimeStr, int hours) {
+        mDate = Calendar.getInstance();
+        List<Integer> date = new ArrayList<Integer>(3);
+        List<Integer> time = new ArrayList<Integer>(3);
 
-        while (st.hasMoreTokens()) {
-            list.add(Integer.parseInt(st.nextToken()));
+        String[] dateTimeStrings = dateTimeStr.split("\\.");
+
+        for (String s : dateTimeStrings[0].split("-")) {
+            date.add(Integer.parseInt(s));
         }
 
-        mDate = Calendar.getInstance();
+        for (String s : dateTimeStrings[1].split(":")) {
+            time.add(Integer.parseInt(s));
+        }
 
-        mDate.set(Calendar.YEAR, list.get(0));
-        mDate.set(Calendar.MONTH, list.get(1) - 1);
-        mDate.set(Calendar.DAY_OF_MONTH, list.get(2));
-        mDate.set(Calendar.HOUR_OF_DAY, list.get(3));
-        mDate.set(Calendar.MINUTE, list.get(4));
-        mDate.set(Calendar.SECOND, list.get(5));
+        mDate.set(Calendar.YEAR, date.get(0));
+        mDate.set(Calendar.MONTH, date.get(1) - 1);
+        mDate.set(Calendar.DAY_OF_MONTH, date.get(2));
+        mDate.set(Calendar.HOUR_OF_DAY, time.get(0));
+        mDate.set(Calendar.MINUTE, time.get(1));
+        mDate.set(Calendar.SECOND, time.get(2));
 
         mDate.add(Calendar.HOUR_OF_DAY, hours);
     }

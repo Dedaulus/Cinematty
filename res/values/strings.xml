@@ -10,8 +10,8 @@
     <string name="support_email_intent_caption">Сообщить о проблеме</string>
 
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.6.5</string>
-    <string name="app_version_code">55</string>
+    <string name="app_version">1.6.6</string>
+    <string name="app_version_code">60</string>
     <string name="copyright">© 2013, Dedaulus, Donytar, Aleserma</string>
     <string name="email">support@gdekino.net</string>
     <string name="url">gdekino.net</string>
@@ -128,7 +128,7 @@
     <string name="wiki">Википедия</string>
 
     <string name="cities_file">cities.xml</string>
-    <string name="connect_url">http://gdekino.net/cinematty/connect.php</string>
+    <string name="connect_url">http://gdekino.net/cinematty/api2/connect.php</string>
 
     <string name="youtube_search_url">http://m.youtube.com/#/results?q=Трейлер фильма</string>
     <string name="youtube_search_url2">Трейлер фильма</string>

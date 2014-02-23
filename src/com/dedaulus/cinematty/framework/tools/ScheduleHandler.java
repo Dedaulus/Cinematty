@@ -13,29 +13,29 @@ import java.util.*;
  * Time: 22:50
  */
 public class ScheduleHandler extends DefaultHandler {
-    private static final String CINEMA_TAG                = "theater";
+    private static final String CINEMA_TAG                = "cinema";
     private static final String CINEMA_ID_ATTR            = "id";
-    private static final String CINEMA_TITLE_ATTR         = "title";
-    private static final String CINEMA_ADDRESS_ATTR       = "address";
+    private static final String CINEMA_NAME_ATTR          = "name";
+    private static final String CINEMA_STREET_ATTR        = "street";
     private static final String CINEMA_LATITUDE_ATTR      = "latitude";
     private static final String CINEMA_LONGITUDE_ATTR     = "longitude";
     private static final String CINEMA_INTO_ATTR          = "into";
-    private static final String CINEMA_METRO_ATTR         = "metro2";
+    private static final String CINEMA_METRO_ATTR         = "metro";
     private static final String CINEMA_PHONE_ATTR         = "phone";
-    private static final String CINEMA_URL_ATTR           = "www";
+    private static final String CINEMA_URL_ATTR           = "url";
 
     private static final String MOVIE_TAG                 = "movie";
-    private static final String MOVIE_TITLE_ATTR          = "title";
+    private static final String MOVIE_NAME_ATTR           = "name";
     private static final String MOVIE_ID_ATTR             = "id";
     private static final String MOVIE_PICID_ATTR          = "picid";
-    private static final String MOVIE_DIRECTORS_ATTR      = "director";
+    private static final String MOVIE_DIRECTORS_ATTR      = "directors";
     private static final String MOVIE_COUNTRIES_ATTR      = "countries";
     private static final String MOVIE_YEAR_ATTR           = "year";
     private static final String MOVIE_LENGTH_ATTR         = "length";
-    private static final String MOVIE_TYPE_ATTR           = "type";
+    private static final String MOVIE_GENRE_ATTR          = "genre";
     private static final String MOVIE_IMDB_ATTR           = "imdb";
     private static final String MOVIE_KP_ATTR             = "kp";
-    private static final String MOVIE_ACTORS_TAG          = "actors";
+    private static final String MOVIE_ACTORS_ATTR         = "actors";
     private static final String MOVIE_DESCRIPTION_TAG     = "description";
     private static final String MOVIE_REVIEWS_TAG         = "reviews";
     private static final String MOVIE_REVIEW_TAG          = "review";
@@ -47,18 +47,15 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String MOVIE_FRAME_ID_ATTR       = "id";
 
     private static final String SHOWTIME_TAG              = "showtime";
-    private static final String SHOWTIME_THEATER_ID_ATTR  = "theater_id";
+    private static final String SHOWTIME_CINEMA_ID_ATTR   = "cinema_id";
     private static final String SHOWTIME_MOVIE_ID_ATTR    = "movie_id";
     private static final String SHOWTIME_DAY_ATTR         = "day";
     private static final String SHOWTIME_TIMES_ATTR       = "times";
 
-    private static final String POSTERS_TAG               = "posters";
-    private static final String POSTERS_LIVE_TIME_ATTR    = "live_time";
-    private static final String POSTERS_DATE_ATTR         = "date";
     private static final String POSTER_TAG                = "poster";
     private static final String POSTER_PICID_ATTR         = "picid";
-    private static final String POSTER_TRAILER_ATTR       = "youtube";
-    private static final String POSTER_MOVIE_ATTR         = "movie";
+    private static final String POSTER_YOUTUBE_ATTR       = "youtube";
+    private static final String POSTER_MOVIE_ID_ATTR      = "movie_id";
 
     private static final String ACTORS_BUG_SUFFIX = " - ;";
 
@@ -115,7 +112,6 @@ public class ScheduleHandler extends DefaultHandler {
     private Map<String, MovieGenre> genres;
     private List<MoviePoster> posters;
     private Map<String, Metro> metros;
-    private boolean isPostersUpToDate;
     private StringBuilder buffer;
     private CinemaData currentCinemaData;
     private MovieData currentMovieData;
@@ -161,7 +157,6 @@ public class ScheduleHandler extends DefaultHandler {
         genres = new HashMap<String, MovieGenre>();
         posters = new ArrayList<MoviePoster>();
         metros = new HashMap<String, Metro>();
-        isPostersUpToDate = false;
         buffer = new StringBuilder();
     }
 
@@ -172,7 +167,7 @@ public class ScheduleHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase(CINEMA_TAG)) {
             currentCinemaData = new CinemaData();
 
-            currentCinemaData.name = attributes.getValue(CINEMA_TITLE_ATTR);
+            currentCinemaData.name = attributes.getValue(CINEMA_NAME_ATTR);
 
             currentCinemaData.id = attributes.getValue(CINEMA_ID_ATTR);
 
@@ -182,7 +177,7 @@ public class ScheduleHandler extends DefaultHandler {
                 currentCinemaData.coordinate = new Coordinate(parseLatitude(latitude), parseLongitude(longitude));
             }
 
-            currentCinemaData.address = attributes.getValue(CINEMA_ADDRESS_ATTR);
+            currentCinemaData.address = attributes.getValue(CINEMA_STREET_ATTR);
 
             currentCinemaData.into = attributes.getValue(CINEMA_INTO_ATTR);
 
@@ -194,7 +189,7 @@ public class ScheduleHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
             currentMovieData = new MovieData();
 
-            currentMovieData.name = attributes.getValue(MOVIE_TITLE_ATTR);
+            currentMovieData.name = attributes.getValue(MOVIE_NAME_ATTR);
 
             currentMovieData.id = attributes.getValue(MOVIE_ID_ATTR);
 
@@ -211,7 +206,9 @@ public class ScheduleHandler extends DefaultHandler {
 
             currentMovieData.directors = parseDirectors(attributes.getValue(MOVIE_DIRECTORS_ATTR));
 
-            currentMovieData.genres = parseGenres(attributes.getValue(MOVIE_TYPE_ATTR));
+            currentMovieData.genres = parseGenres(attributes.getValue(MOVIE_GENRE_ATTR));
+
+            currentMovieData.actors = parseActors(attributes.getValue(MOVIE_ACTORS_ATTR));
 
             String imdbStr = attributes.getValue(MOVIE_IMDB_ATTR);
             if (imdbStr != null && imdbStr.length() != 0) {
@@ -237,49 +234,24 @@ public class ScheduleHandler extends DefaultHandler {
 
             currentReviewsData.add(currentReviewData);
         } else if (qName.equalsIgnoreCase(SHOWTIME_TAG)) {
-            Cinema cinema = cinemaIds.get(attributes.getValue(SHOWTIME_THEATER_ID_ATTR));
+            Cinema cinema = cinemaIds.get(attributes.getValue(SHOWTIME_CINEMA_ID_ATTR));
             Movie movie = movieIds.get(attributes.getValue(SHOWTIME_MOVIE_ID_ATTR));
             int currentDay = Integer.parseInt(attributes.getValue(SHOWTIME_DAY_ATTR));
             String timesStr = attributes.getValue(SHOWTIME_TIMES_ATTR);
             cinema.addShowTime(movie, parseTimes(timesStr, currentDay), currentDay);
-        } else if (qName.equalsIgnoreCase(POSTERS_TAG)) {
-            isPostersUpToDate = isPostersUpToDate(attributes.getValue(POSTERS_DATE_ATTR), attributes.getValue(POSTERS_LIVE_TIME_ATTR));
-        } else if (qName.equalsIgnoreCase(POSTER_TAG) && isPostersUpToDate) {
+        } else if (qName.equalsIgnoreCase(POSTER_TAG)) {
             if (posters.size() < 30) {
-                String name = attributes.getValue(POSTER_MOVIE_ATTR);
-                String name3d = name + " 3d";
-
-                Movie popularTypeMovie = null;
-
-                for (Movie movie : movieIds.values()) {
-                    if (movie.getName().equalsIgnoreCase(name)) {
-                        popularTypeMovie = movie;
-                        break;
-                    }
-                }
-
-                for (Movie movie : movieIds.values()) {
-                    if (movie.getName().equalsIgnoreCase(name3d)) {
-                        if (popularTypeMovie != null) {
-                            if (popularTypeMovie.getCinemas(Constants.TODAY_SCHEDULE).size() < movie.getCinemas(Constants.TODAY_SCHEDULE).size()) {
-                                popularTypeMovie = movie;
-                            }
-                        } else {
-                            popularTypeMovie = movie;
+                String movie_id = attributes.getValue(POSTER_MOVIE_ID_ATTR);
+                Movie movie = movieIds.get(movie_id);
+                if (movie != null) {
+                    String picid = attributes.getValue(POSTER_PICID_ATTR);
+                    if (picid != null && picid.length() > 0) {
+                        String youtube = attributes.getValue(POSTER_YOUTUBE_ATTR);
+                        if (youtube == null) {
+                            youtube = "";
                         }
-                        break;
-                    }
-                }
 
-                if (popularTypeMovie != null) {
-                    String picId = attributes.getValue(POSTER_PICID_ATTR);
-                    if (picId != null && picId.length() > 0) {
-                        String trailerUrl = attributes.getValue(POSTER_TRAILER_ATTR);
-                        if (trailerUrl == null) trailerUrl = "";
-                        posters.add(new MoviePoster(
-                                popularTypeMovie,
-                                attributes.getValue(POSTER_PICID_ATTR),
-                                trailerUrl));
+                        posters.add(new MoviePoster(movie, picid, youtube));
                     }
                 }
             }
@@ -305,8 +277,6 @@ public class ScheduleHandler extends DefaultHandler {
             movieIds.put(currentMovieData.id, currentMovieData.createMovie());
         } else if (qName.equalsIgnoreCase(MOVIE_DESCRIPTION_TAG) && buffer.length() != 0) {
             currentMovieData.description = buffer.toString();
-        } else if (qName.equalsIgnoreCase(MOVIE_ACTORS_TAG) && buffer.length() != 0) {
-            currentMovieData.actors = parseActors(buffer.toString());
         } else if (qName.equalsIgnoreCase(MOVIE_REVIEW_TAG) && buffer.length() != 0) {
             currentReviewData.text = buffer.toString();
         }
@@ -376,7 +346,7 @@ public class ScheduleHandler extends DefaultHandler {
         if (genresStr == null || genresStr.length() == 0) return null;
         
         Map<String, MovieGenre> genres = new HashMap<String, MovieGenre>();
-        StringTokenizer st = new StringTokenizer(genresStr, "/");
+        StringTokenizer st = new StringTokenizer(genresStr, ";");
         while (st.hasMoreTokens()) {
             String name = st.nextToken();
             MovieGenre genre = this.genres.get(name);
@@ -463,29 +433,5 @@ public class ScheduleHandler extends DefaultHandler {
 
     private double parseLongitude(String longitude) {
         return Double.parseDouble(longitude);
-    }
-    
-    private boolean isPostersUpToDate(String dateStr, String liveTimeStr) {
-        if (dateStr == null || dateStr.length() == 0 || liveTimeStr == null || liveTimeStr.length() == 0) return false;
-
-        int liveDays = Integer.parseInt(liveTimeStr);
-        List<Integer> list = new ArrayList<Integer>();
-        StringTokenizer st = new StringTokenizer(dateStr, ".");
-
-        while (st.hasMoreTokens()) {
-            list.add(Integer.parseInt(st.nextToken()));
-        }
-
-        Calendar date = Calendar.getInstance();
-
-        date.set(Calendar.MONTH, list.get(1) - 1);
-        date.set(Calendar.DAY_OF_MONTH, list.get(2));
-        date.set(Calendar.HOUR_OF_DAY, 6);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.add(Calendar.DAY_OF_MONTH, liveDays);
-
-        Calendar now = Calendar.getInstance();
-        return now.before(date);
     }
 }
