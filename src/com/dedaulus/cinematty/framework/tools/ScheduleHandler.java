@@ -32,7 +32,7 @@ public class ScheduleHandler extends DefaultHandler {
     private static final String MOVIE_COUNTRIES_ATTR      = "countries";
     private static final String MOVIE_YEAR_ATTR           = "year";
     private static final String MOVIE_LENGTH_ATTR         = "length";
-    private static final String MOVIE_GENRE_ATTR          = "genre";
+    private static final String MOVIE_GENRE_ATTR          = "genres";
     private static final String MOVIE_IMDB_ATTR           = "imdb";
     private static final String MOVIE_KP_ATTR             = "kp";
     private static final String MOVIE_ACTORS_ATTR         = "actors";
@@ -178,14 +178,26 @@ public class ScheduleHandler extends DefaultHandler {
             }
 
             currentCinemaData.address = attributes.getValue(CINEMA_STREET_ATTR);
+            if (currentCinemaData.address.length() == 0) {
+                currentCinemaData.address = null;
+            }
 
             currentCinemaData.into = attributes.getValue(CINEMA_INTO_ATTR);
+            if (currentCinemaData.into.length() == 0) {
+                currentCinemaData.into = null;
+            }
 
             currentCinemaData.metros = parseMetros(attributes.getValue(CINEMA_METRO_ATTR));
 
             currentCinemaData.phone = attributes.getValue(CINEMA_PHONE_ATTR);
+            if (currentCinemaData.phone.length() == 0) {
+                currentCinemaData.phone = null;
+            }
 
             currentCinemaData.url = attributes.getValue(CINEMA_URL_ATTR);
+            if (currentCinemaData.url.length() == 0) {
+                currentCinemaData.url = null;
+            }
         } else if (qName.equalsIgnoreCase(MOVIE_TAG)) {
             currentMovieData = new MovieData();
 
@@ -194,11 +206,14 @@ public class ScheduleHandler extends DefaultHandler {
             currentMovieData.id = attributes.getValue(MOVIE_ID_ATTR);
 
             currentMovieData.picId = attributes.getValue(MOVIE_PICID_ATTR);
+            if (currentMovieData.picId.length() == 0) {
+                currentMovieData.picId = null;
+            }
 
             currentMovieData.length = parseLength(attributes.getValue(MOVIE_LENGTH_ATTR));
             
             String yearStr = attributes.getValue(MOVIE_YEAR_ATTR);
-            if (yearStr != null && yearStr.length() != 0) {
+            if (yearStr.length() != 0) {
                 currentMovieData.year = Integer.parseInt(yearStr.trim());
             }
 
@@ -211,12 +226,12 @@ public class ScheduleHandler extends DefaultHandler {
             currentMovieData.actors = parseActors(attributes.getValue(MOVIE_ACTORS_ATTR));
 
             String imdbStr = attributes.getValue(MOVIE_IMDB_ATTR);
-            if (imdbStr != null && imdbStr.length() != 0) {
+            if (imdbStr.length() != 0) {
                 currentMovieData.imdb = Float.parseFloat(imdbStr);
             }
 
             String kpStr = attributes.getValue(MOVIE_KP_ATTR);
-            if (kpStr != null && kpStr.length() != 0) {
+            if (kpStr.length() != 0) {
                 currentMovieData.kp = Float.parseFloat(kpStr);
             }
         } else if (qName.equalsIgnoreCase(MOVIE_FRAMES_TAG)) {
