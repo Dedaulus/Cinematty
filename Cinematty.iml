@@ -7,7 +7,6 @@
           <file>file:///System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/tools/proguard/proguard-android.txt</file>
         </proGuardCfgFiles>
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
-        <resOverlayFolders />
       </configuration>
     </facet>
   </component>
