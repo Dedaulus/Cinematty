@@ -171,11 +171,9 @@ public class ScheduleHandler extends DefaultHandler {
 
             currentCinemaData.id = attributes.getValue(CINEMA_ID_ATTR);
 
-            String latitude = attributes.getValue(CINEMA_LATITUDE_ATTR);
-            String longitude = attributes.getValue(CINEMA_LONGITUDE_ATTR);
-            if (latitude != null && longitude != null) {
-                currentCinemaData.coordinate = new Coordinate(parseLatitude(latitude), parseLongitude(longitude));
-            }
+            currentCinemaData.coordinate = parseCoordinate(
+                    attributes.getValue(CINEMA_LATITUDE_ATTR),
+                    attributes.getValue(CINEMA_LONGITUDE_ATTR));
 
             currentCinemaData.address = attributes.getValue(CINEMA_STREET_ATTR);
             if (currentCinemaData.address.length() == 0) {
@@ -442,11 +440,11 @@ public class ScheduleHandler extends DefaultHandler {
         return list;
     }
 
-    private double parseLatitude(String latitude) {
-        return Double.parseDouble(latitude);
-    }
-
-    private double parseLongitude(String longitude) {
-        return Double.parseDouble(longitude);
+    private Coordinate parseCoordinate(String latitude, String longitude) {
+        if (latitude.length() == 0 || longitude.length() == 0) {
+            return null;
+        } else {
+            return new Coordinate(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        }
     }
 }
