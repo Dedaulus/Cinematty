@@ -10,12 +10,12 @@
     <string name="support_email_intent_caption">Сообщить о проблеме</string>
 
     <string name="app_name">ГдеКИНО</string>
-    <string name="app_version">1.6.7</string>
-    <string name="app_version_code">61</string>
+    <string name="app_version">1.6.8</string>
+    <string name="app_version_code">63</string>
     <string name="copyright">© 2014, Dedaulus, Donytar, Aleserma</string>
     <string name="email">support@gdekino.net</string>
     <string name="url">gdekino.net</string>
-    <string name="julya"></string>
+    <string name="julya">Отдельное спасибо красавице Юле Соколовой (sochok25)</string>
 
     <string name="new_version_caption">Что нового?</string>
     <string name="new_version">● Исправлены ошибки</string>
