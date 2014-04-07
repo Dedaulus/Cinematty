@@ -16,13 +16,10 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.dedaulus.cinematty.ActivitiesState;
 import com.dedaulus.cinematty.R;
-import com.dedaulus.cinematty.activities.CinemaMapView;
 import com.dedaulus.cinematty.framework.Metro;
 import com.dedaulus.cinematty.framework.tools.ActivityState;
-import com.dedaulus.cinematty.framework.tools.Constants;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * User: Dedaulus
@@ -75,10 +72,6 @@ public class CinemaPage implements SliderPage {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = ((SherlockActivity)context).getSupportMenuInflater();
 
-        if (state.cinema.getAddress() != null) {
-            inflater.inflate(R.menu.show_map_menu, menu);
-        }
-
         if (state.cinema.getPhone() != null) {
             inflater.inflate(R.menu.call_menu, menu);
         }
@@ -91,10 +84,6 @@ public class CinemaPage implements SliderPage {
         switch (item.getItemId()) {
             case R.id.menu_call:
                 onCinemaPhoneClick();
-                break;
-
-            case R.id.menu_show_map:
-                showCinemaOnMap();
                 break;
         }
 
@@ -142,13 +131,6 @@ public class CinemaPage implements SliderPage {
                 }
                 metroRegion.setVisibility(View.VISIBLE);
             }
-
-            region.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showCinemaOnMap();
-                }
-            });
             region.setVisibility(View.VISIBLE);
         } else {
             region.setVisibility(View.GONE);
@@ -233,22 +215,5 @@ public class CinemaPage implements SliderPage {
             state.cinema.setFavourite(true);
             ((ImageView)view).setImageResource(R.drawable.ic_list_fav_on);
         }
-    }
-
-    private void showCinemaOnMap() {
-        String cookie = UUID.randomUUID().toString();
-        ActivityState state = new ActivityState(
-                ActivityState.CINEMA_ON_MAP,
-                this.state.cinema,
-                null,
-                null,
-                null,
-                null,
-                null);
-        activitiesState.setState(cookie, state);
-
-        Intent intent = new Intent(context, CinemaMapView.class);
-        intent.putExtra(Constants.ACTIVITY_STATE_ID, cookie);
-        context.startActivity(intent);
     }
 }
